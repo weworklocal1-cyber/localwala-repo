@@ -36,6 +36,7 @@ import mongoose from 'mongoose';
 import fs from 'node:fs';
 import path from 'node:path';
 import { appAuth, webAuth } from './auth/fastifyAuth';
+import { registerAuthRateLimit, RATE_LIMIT_MESSAGE } from './plugins/authRateLimit';
 
 const config = require('./config/config');
 const ApiError = require('./utils/ApiError');
@@ -43,7 +44,55 @@ const logger = require('./config/logger');
 const httpStatus = require('http-status').status;
 const etag = require('etag');
 const fp = require('fastify-plugin');
+const compressible = require('compressible') as (contentType: string) => boolean;
 const { buildHealthPage } = require('./utils/healthPage');
+
+/** Verbatim copy of compression/index.js:43. */
+const cacheControlNoTransformRegExp = /(?:^|,)\s*?no-transform\s*?(?:,|$)/;
+
+/**
+ * Reproduce `compression`'s `vary(res, 'Accept-Encoding')` decision, then
+ * de-duplicate and title-case the token list.
+ *
+ * Express calls `vary()` after only two checks - `shouldCompress` (the content
+ * type is compressible) and `shouldTransform` (no `Cache-Control:
+ * no-transform`) - and does so *before* the size check, so it applies to every
+ * response body. `@fastify/compress` applies it only to payloads it actually
+ * compresses. Being idempotent is what lets this run from both an instance
+ * hook and a route hook without producing a duplicated token.
+ */
+function normaliseVary(reply: FastifyReply): void {
+  const raw = reply.getHeader('vary');
+  const tokens =
+    typeof raw === 'string' && raw.length
+      ? raw
+          .split(',')
+          .map((token) => token.trim())
+          .filter(Boolean)
+      : [];
+
+  const contentType = reply.getHeader('content-type');
+  const cacheControl = reply.getHeader('cache-control');
+  if (
+    typeof contentType === 'string' &&
+    compressible(contentType) &&
+    !(cacheControl !== undefined && cacheControlNoTransformRegExp.test(String(cacheControl)))
+  ) {
+    tokens.push('Accept-Encoding');
+  }
+
+  const seen = new Set<string>();
+  const unique = tokens
+    .map((token) => (token.toLowerCase() === 'accept-encoding' ? 'Accept-Encoding' : token))
+    .filter((token) => {
+      const key = token.toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+  if (unique.length) reply.header('vary', unique.join(', '));
+}
 
 /** Express used `express.json({ limit: '5mb' })` + the same for urlencoded. */
 const BODY_LIMIT = 5 * 1024 * 1024;
@@ -104,6 +153,13 @@ interface AppErrorShape extends Error {
  * development-only `stack`.
  */
 function renderError(err: AppErrorShape, request: FastifyRequest, reply: FastifyReply): FastifyReply {
+  // express-rate-limit answers with a bare text/html string, not JSON. See
+  // src/plugins/authRateLimit.ts - @fastify/rate-limit throws instead, so the
+  // shape has to be restored on the error path to stay byte-identical.
+  if ((err as AppErrorShape & { rateLimitExceeded?: boolean }).rateLimitExceeded) {
+    return reply.code(429).type('text/html; charset=utf-8').send(RATE_LIMIT_MESSAGE);
+  }
+
   let error = err;
   if (!(error instanceof ApiError)) {
     const statusCode =
@@ -185,6 +241,10 @@ export async function buildFastify(): Promise<FastifyInstance> {
   // the route manifest reads is attached identically by both.
   app.decorate('appAuth', appAuth);
   app.decorate('webAuth', webAuth);
+
+  // Production-only, `/v1/auth` only - guarded inside to mirror `if
+  // (config.env === 'production') { app.use('/v1/auth', authLimiter) }`.
+  await registerAuthRateLimit(app);
 
   await app.register(helmet, {
     frameguard: { action: 'deny' },
@@ -310,34 +370,37 @@ export async function buildFastify(): Promise<FastifyInstance> {
   // case-insensitive, so no client can tell, but keeping the bytes identical
   // makes the parity gate strict instead of quietly lenient.
   //
-  // This has to be a *route* hook: @fastify/compress injects its own via
-  // `onRoute` and those run after every instance-level onSend, so an instance
-  // hook registered afterwards would still be too early. Registering after
-  // @fastify/compress appends ours to the end of each route's chain.
+  // Express also emits the token *before* it checks the payload size
+  // (compression/index.js:175), so every sub-threshold response carries it.
+  // @fastify/compress only calls setVaryHeader once it has actually compressed
+  // (index.js:395/407) and returns early for anything below `threshold` - which
+  // in practice is every JSON response this API returns.
+  //
+  // `normaliseVary` is registered twice, because the response has two shapes:
+  //   - instance hook - the only one that runs for the not-found handler and
+  //     for errors raised before a route matches, neither of which has a
+  //     route-level onSend chain to hang from;
+  //   - route hook, appended after @fastify/compress - the only position that
+  //     runs *after* compress, whose own `setVaryHeader` is case-sensitive and
+  //     would otherwise leave `Accept-Encoding, accept-encoding` behind.
+  // Both call the same idempotent function, so running one, the other, or both
+  // produces the same header.
   //
   // `content-length` is deliberately not normalised: Fastify recomputes it for
   // buffered payloads after hooks run, so Express's chunked encoding cannot be
   // reproduced from here. It is excluded in tests/fastify.parity.test.js.
+  app.addHook('onSend', async (_request, reply, payload) => {
+    normaliseVary(reply);
+    return payload;
+  });
+
   app.addHook('onRoute', (routeOptions: RouteOptions) => {
     const existing = routeOptions.onSend;
     const chain = existing ? (Array.isArray(existing) ? existing : [existing]) : [];
     routeOptions.onSend = [
       ...chain,
       async (_request, reply, payload) => {
-        const vary = reply.getHeader('vary');
-        if (typeof vary === 'string' && vary.length) {
-          reply.header(
-            'vary',
-            vary
-              .split(',')
-              .map((token) => token.trim())
-              .filter(Boolean)
-              .map((token) =>
-                token.toLowerCase() === 'accept-encoding' ? 'Accept-Encoding' : token
-              )
-              .join(', ')
-          );
-        }
+        normaliseVary(reply);
         return payload;
       },
     ];

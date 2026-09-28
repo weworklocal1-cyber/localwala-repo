@@ -252,7 +252,7 @@
 | 2.15 | `index.js`: `await fastify.ready()` → `socketIo(fastify.server)`; cron → `onReady`/`onClose` hooks |
 | 2.16 | Route-manifest parity diff + full smoke suite |
 
-**Internal order:** 2.1 → 2.2–2.4 → 2.5 spike → 2.6 → 2.9 (read routes) → 2.10 → 2.11 → 2.12 (hardest: `auth.controller`, `payment.initiation`) → 2.13–2.15 → 2.16.
+**Internal order:** 2.1 → 2.2–2.4 → 2.5 spike → 2.6 → 2.7 → 2.8 → 2.9 (read routes) → 2.10 → 2.11 → 2.12 (hardest: `auth.controller`, `payment.initiation`) → 2.13–2.15 → 2.16.
 
 **Exit criteria:** all routes identical, tests green, `express` removed from `package.json`.
 
@@ -279,6 +279,23 @@
 > - **What is live now:** `@fastify/jwt` registered with `config.jwt.secret`; token *extraction* stays in `src/auth/fastifyAuth.ts` and reproduces passport-jwt's bundled `lib/auth_header.js` regex `(\S+)\s+(\S+)` **verbatim**, so `Bearer <jwt> trailing-junk` extracts the same credential both sides do. `appAuth`/`webAuth` are also exposed as Fastify decorators.
 > - **Temporary duplication, knowingly accepted:** Express routes still run `passport`, Fastify routes run `@fastify/jwt`. Both are held byte-identical by `tests/auth.parity.test.js`, which fires every request at both servers and diffs status + body (missing/malformed/expired/forged/HS512/refresh/orphan tokens, `bearer` casing, `Basic` scheme, strategy mismatch, Forbidden, self-escape, and a double-execution guard). **Nothing may change on one side without that test changing in the same commit.**
 > - **Delete when Phase 2.9 moves the last route:** `src/middlewares/auth.factory.js`, `src/config/passport.js`, and the `passport` / `passport-jwt` dependencies. The parity test then collapses to a single-server auth suite.
+
+> **2.7 done (`src/plugins/authRateLimit.ts` + `tests/ratelimit.parity.test.js`, 4 assertions).** `express-rate-limit` → `@fastify/rate-limit@11.2.0`, scoped to `/v1/auth`, production only. Four behaviours `@fastify/rate-limit` does not have and had to be hand-closed:
+> - **`skipSuccessfulRequests`.** `@fastify/rate-limit` has **zero** support for it (no `decrement` anywhere in the store interface, which is `incr(key, cb, timeWindow, max)` + `child()` only). The shim reuses express-rate-limit's own `MemoryStore` algorithm - `previous`/`current` maps, `decrement` as `if (totalHits > 0) totalHits--` - and refunds from an `onResponse` hook whenever `statusCode < 400`.
+> - **`X-RateLimit-Reset` as an absolute epoch second.** The plugin emits *remaining seconds*; an `onSend` hook rewrites it from the shim store's `resetTimeOf(key)`. `Retry-After` already matches (both relative).
+> - **The 429 body.** express-rate-limit's default is a bare **`text/html; charset=utf-8`** string - *not* JSON - so `errorResponseBuilder` throws a marker `RateLimitError` and `renderError()` in `src/fastify.ts` has a dedicated branch that returns `reply.code(429).type('text/html; charset=utf-8').send(MESSAGE)`.
+> - **Path scoping.** `app.use('/v1/auth', authLimiter)` is `if (config.env === 'production')` in `app.js` (same block as `app.set('trust proxy', ...)`), so the limiter's `onRoute` only attaches `config.rateLimit` to `/^\/v1\/auth(\/|$)/` and the hook must be added **before** `app.register(rateLimit, ...)` (the plugin's `onRoute` reads `routeOptions.config?.rateLimit != null`).
+>
+> Two accepted deviations, both documented in the test rather than papered over:
+> - **Express rate-limits 404s under `/v1/auth` and Fastify does not.** Express's limiter is a `app.use` path mount that runs *before* routing; `@fastify/rate-limit` is a per-route hook. Only unreachable paths differ - reachable routes are identical.
+> - **The limiter sits at `preValidation`** (Fastify's `hook` option), so a body-parse error still wins over the 429. That matches Express: `bodyParser` runs before the `app.use('/v1/auth', authLimiter)` mount.
+>
+> Test plumbing worth remembering, because each of these bit once: **(a)** routes added from outside `app.js` are unreachable - `app.js` ends with a catch-all `app.use((req,res,next) => next(new ApiError(404,...)))` at index `length - 3`, so the probes are spliced into `expressApp.router.stack` at that index; **(b)** `morgan`'s two handlers are stubbed in the require cache *before* dynamic `import('../src/app')` (static imports hoist, and `vi.mock` does not work in this CJS codebase); **(c)** `fastify.inject` never sends `accept-encoding` while supertest always does.
+
+> **Unrelated bug found while gating 2.7 - fixed here because it was about to poison 2.9.** Express's `compression` runs `vary(res, 'Accept-Encoding')` **before** its size check (`node_modules/compression/index.js:175`), but `@fastify/compress` only calls `setVaryHeader` **after** it has actually compressed (`node_modules/@fastify/compress/index.js:395/407`) and returns early for anything under `threshold`. So on **every** sub-threshold response - i.e. almost every JSON response in this API - Fastify was omitting `Vary: Accept-Encoding` entirely. The 2.2-2.4 gate never caught it because it only diffed full headers on `GET /`, whose body is over 1KB. Now fixed:
+> - `compressible@2.0.18` promoted to a declared dependency (it is the exact module `compression` uses, so the compressible/not-compressible decision matches by construction), and `cacheControlNoTransformRegExp` copied verbatim from `compression/index.js:43`.
+> - `normaliseVary()` in `src/fastify.ts` re-evaluates Express's two pre-checks (`shouldCompress` + `shouldTransform`), appends `Accept-Encoding`, then de-duplicates and title-cases. It is **idempotent** and registered twice: as an instance `onSend` (the only hook that runs for `setNotFoundHandler` and for errors raised before a route matches, neither of which has a route-level chain) and as a route hook appended after `@fastify/compress` (the only position that runs after it, whose own `setVaryHeader` is case-sensitive and would otherwise leave `Accept-Encoding, accept-encoding`).
+> - `tests/fastify.parity.test.js` now diffs **all** headers on the 404 as well, so this cannot regress silently.
 
 ---
 

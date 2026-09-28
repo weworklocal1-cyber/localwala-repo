@@ -97,9 +97,10 @@ describe('Phase 2.2-2.4: Fastify shell parity with Express', () => {
   });
 
   it('unknown URL returns the same 404 JSON body', async () => {
+    const headers = { 'accept-encoding': 'gzip, deflate' };
     const [expressRes, fastifyRes] = await Promise.all([
-      getExpress('/definitely-not-a-route'),
-      getFastify(fastify, '/definitely-not-a-route'),
+      getExpress('/definitely-not-a-route', headers),
+      getFastify(fastify, '/definitely-not-a-route', headers),
     ]);
 
     expect(expressRes.status).toBe(404);
@@ -109,6 +110,13 @@ describe('Phase 2.2-2.4: Fastify shell parity with Express', () => {
     expect(strip(fastifyRes.body)).toEqual(strip(expressRes.body));
     expect(fastifyRes.body).toMatchObject({ success: false, code: 404, message: 'Not found' });
     expect(fastifyRes.headers['content-type']).toBe(expressRes.headers['content-type']);
+
+    // A 404 JSON body is far below @fastify/compress's 1KB threshold, and this
+    // is exactly where Express's `vary(res, 'Accept-Encoding')` (which runs
+    // before its own size check) diverges from @fastify/compress's (which runs
+    // after). Comparing headers here too keeps that regression visible.
+    const diffs = headerDiff(expressRes, fastifyRes);
+    expect(diffs, `header differences:\n${diffs.join('\n')}`).toEqual([]);
   });
 
   it('response headers match, including the helmet CSP', async () => {
