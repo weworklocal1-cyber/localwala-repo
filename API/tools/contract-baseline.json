@@ -1,0 +1,5914 @@
+{
+  "meta": {
+    "generatedAt": "2026-09-28T14:38:12.273Z",
+    "total": 580,
+    "source": "tools/http.db.probe.json (status === 200)"
+  },
+  "contracts": {
+    "GET /v1/accountant/accountant_header_content": {
+      "status": 200,
+      "json": {
+        "locales": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/accountant/city_list": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/accountant/collect_cash_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/accountant/customer_report": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [
+          {
+            "contactEmail": "string",
+            "contactNumber": "string",
+            "countryCode": "number",
+            "createdAt": "string",
+            "diningBookings": "number",
+            "diningGrandTotal": "number",
+            "diningRefund": "number",
+            "favFood": "number",
+            "favOrders": "number",
+            "favRest": "number",
+            "firstName": "string",
+            "hiddenRest": "number",
+            "id": "string",
+            "image": "string",
+            "lastName": "string",
+            "loyaltyPoints": "number",
+            "medias": "number",
+            "orderCount": "number",
+            "orderGrandTotal": "number",
+            "orderRefund": "number",
+            "role": "string",
+            "tiffinPackageGrandTotal": "number",
+            "tiffinPackages": "number",
+            "tiffinRefund": "number"
+          }
+        ],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/accountant/dashboard": {
+      "status": 200,
+      "json": {
+        "diningBookingEarningStats": [
+          {
+            "commission": "number",
+            "count": "number",
+            "grandTotal": "number",
+            "label": "string"
+          }
+        ],
+        "expenses": {
+          "adsExpense": "number",
+          "couponExpense": "number",
+          "deliveryChargeExpense": "number",
+          "diningCouponExpense": "number",
+          "employeeExpense": "number",
+          "itSupportExpense": "number",
+          "loyaltyPointsExpense": "number",
+          "otherExpense": "number",
+          "outSourceExpense": "number",
+          "paymentGatewayChargeExpense": "number",
+          "referralChargeExpense": "number",
+          "walletBonusExpense": "number",
+          "walletCreditExpense": "number"
+        },
+        "orderEarningStats": [
+          {
+            "commission": "number",
+            "count": "number",
+            "grandTotal": "number",
+            "label": "string"
+          }
+        ],
+        "posOrderEarningStats": [
+          {
+            "commission": "number",
+            "count": "number",
+            "grandTotal": "number",
+            "label": "string"
+          }
+        ],
+        "success": "boolean",
+        "tableOrderEarningStats": [
+          {
+            "commission": "number",
+            "count": "number",
+            "grandTotal": "number",
+            "label": "string"
+          }
+        ]
+      }
+    },
+    "GET /v1/accountant/deliveryman_cash_in_hand/:deliveryman": {
+      "status": 200,
+      "json": {
+        "cashInHandAmount": "string",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/accountant/deliveryman_disbursement": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/accountant/deliveryman_disbursement_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/accountant/deliveryman_initial_disbursement": {
+      "status": 200,
+      "json": {
+        "cities": [],
+        "methods": [],
+        "stats": {
+          "approved": {
+            "amount": "number",
+            "count": "number"
+          },
+          "cancelled": {
+            "amount": "number",
+            "count": "number"
+          },
+          "pending": {
+            "amount": "number",
+            "count": "number"
+          }
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/accountant/deliveryman_report": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/accountant/deliveryman_with_city/:city": {
+      "status": 200,
+      "json": {
+        "deliveryman": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/accountant/deliveryman_withdrawal_request": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/accountant/dining_booking_report": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/accountant/expense": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/accountant/expense_initial": {
+      "status": 200,
+      "json": {
+        "adsExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "couponExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "deliveryChargeExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "diningCouponExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "employeeExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "itSupportExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "limit": "number",
+        "loyaltyPointsExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "otherExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "outSourceExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "page": "number",
+        "paymentGatewayChargeExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "referralChargeExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "results": [],
+        "totalExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "totalPages": "number",
+        "totalResults": "number",
+        "walletBonusExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "walletCreditExpenseData": {
+          "amount": "number",
+          "count": "number"
+        }
+      }
+    },
+    "GET /v1/accountant/food_report/": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/accountant/media_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/accountant/payment_transaction_report/": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/accountant/pos_order_detail/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/accountant/regular_chat_messages/:id": {
+      "status": 200,
+      "json": {
+        "chats": [],
+        "limit": "number",
+        "page": "number",
+        "roomId": "string",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/accountant/regular_order_detail/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/accountant/restaurant_cash_in_hand/:vendor": {
+      "status": 200,
+      "json": {
+        "cashInHandAmount": "string",
+        "creditAmount": "string",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/accountant/restaurant_disbursement": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/accountant/restaurant_disbursement_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/accountant/restaurant_initial_disbursement": {
+      "status": 200,
+      "json": {
+        "cities": [],
+        "methods": [],
+        "stats": {
+          "approved": {
+            "amount": "number",
+            "count": "number"
+          },
+          "cancelled": {
+            "amount": "number",
+            "count": "number"
+          },
+          "pending": {
+            "amount": "number",
+            "count": "number"
+          }
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/accountant/restaurant_report": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/accountant/restaurant_report_initial": {
+      "status": 200,
+      "json": {
+        "city": [],
+        "restaurantType": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/accountant/restaurant_with_city/:cityId": {
+      "status": 200,
+      "json": {
+        "restaurants": []
+      }
+    },
+    "GET /v1/accountant/table_order_detail/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/accountant/tiffin_packages_purchase_detail/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/accountant/wallet_transaction_report/": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/accountant/withdrawal_method_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "methods": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/addons/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/admin_header_content": {
+      "status": 200,
+      "json": {
+        "locales": [],
+        "notifications": [],
+        "success": "boolean",
+        "supportChat": [],
+        "unread": "number"
+      }
+    },
+    "GET /v1/admin/app_pages/get/:slug": {
+      "status": 200,
+      "text": true,
+      "contentType": ""
+    },
+    "GET /v1/admin/app_web_settings/get": {
+      "status": 200,
+      "text": true,
+      "contentType": ""
+    },
+    "GET /v1/admin/banners/export/": {
+      "status": 200,
+      "text": true,
+      "contentType": "text/csv"
+    },
+    "GET /v1/admin/banners/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/business_settings/get": {
+      "status": 200,
+      "text": true,
+      "contentType": ""
+    },
+    "GET /v1/admin/cashCollection/list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/category/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/category/getCategoryList": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/admin/cities/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/cities/listAllCities": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/admin/cities/map_dialog/:city": {
+      "status": 200,
+      "json": {
+        "allDrivers": [],
+        "allRestaurants": [],
+        "area": "null",
+        "banners": "number",
+        "coupons": "number",
+        "diningCampaign": "number",
+        "diningCoupon": "number",
+        "drivers": [],
+        "foodCampaign": "number",
+        "info": "null",
+        "locality": "number",
+        "restaurantCampaign": "number",
+        "restaurants": [],
+        "success": "boolean",
+        "totalDeliveryman": "number",
+        "totalRestaurants": "number"
+      }
+    },
+    "GET /v1/admin/complaints/get": {
+      "status": 200,
+      "json": {
+        "complaints": [],
+        "limit": "number",
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/complaints_reason/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/country/getAll": {
+      "status": 200,
+      "json": {
+        "filter": {},
+        "options": {}
+      }
+    },
+    "GET /v1/admin/coupon/get": {
+      "status": 200,
+      "json": {
+        "coupons": [],
+        "limit": "number",
+        "page": "number",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/coupon/request": {
+      "status": 200,
+      "json": {
+        "coupons": [],
+        "limit": "number",
+        "page": "number",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/cronScheduler/getInfo": {
+      "status": 200,
+      "json": {
+        "isRunning": "boolean",
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/cronScheduler/start": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/cronScheduler/stop": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/cuisine/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/cuisine/listAllCuisine": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/admin/customer/customerAllFavourite": {
+      "status": 200,
+      "json": {
+        "food": {
+          "foodFavourite": [],
+          "totalResultsFood": "number"
+        },
+        "order": {
+          "favouriteOrders": [],
+          "totalResultsOrder": "number"
+        },
+        "restaurant": {
+          "restaurantFavourite": [],
+          "totalResultsRestaurant": "number"
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/customer/customerAllRefundRequest": {
+      "status": 200,
+      "json": {
+        "bookingRefund": {
+          "bookingRefundRequest": [],
+          "totalResultsBookingRefund": "number"
+        },
+        "orderRefund": {
+          "orderRefundRequest": [],
+          "totalResultsOrderRefund": "number"
+        },
+        "success": "boolean",
+        "tiffinRefund": {
+          "tiffinRefundRequest": [],
+          "totalResultsTiffinRefund": "number"
+        }
+      }
+    },
+    "GET /v1/admin/customer/customerAllReviews": {
+      "status": 200,
+      "json": {
+        "deliveryman": {
+          "deliverymanReviews": [],
+          "totalResultsDeliveryman": "number"
+        },
+        "food": {
+          "foodReviews": [],
+          "totalResultsFood": "number"
+        },
+        "restaurant": {
+          "restaurantReviews": [],
+          "totalResultsRestaurant": "number"
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/customer/customerBookingRefundList": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/customer/customerComplaintList": {
+      "status": 200,
+      "json": {
+        "complaints": [],
+        "limit": "number",
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/customer/customerDeliverymanReview": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/customer/customerFavouriteFood": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/customer/customerFavouriteOrders": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/customer/customerFavouriteRestaurant": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/customer/customerFoodReview": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/customer/customerHiddenRestaurants": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/customer/customerMediaFiles": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/customer/customerOrderRefundList": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/customer/customerRestaurantReview": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/customer/customerTiffinRefundList": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/customer/deleted_accounts": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/customer/deliveryAddressList": {
+      "status": 200,
+      "json": {
+        "address": [],
+        "limit": "number",
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/customer/diningBookingList": {
+      "status": 200,
+      "json": {
+        "bookings": [],
+        "limit": "number",
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/customer/getList": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [
+          {
+            "contactEmail": "string",
+            "contactNumber": "string",
+            "countryCode": "number",
+            "createdAt": "string",
+            "firstName": "string",
+            "id": "string",
+            "image": "string",
+            "lastName": "string",
+            "orderCount": "number",
+            "role": "string",
+            "status": "boolean",
+            "totalGrandTotal": "number"
+          }
+        ],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/customer/loyaltyPointsReport": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/customer/orderList": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "orders": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/customer/purchasedTiffinPackages": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/customer/walletFundList": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [
+          {
+            "contactEmail": "string",
+            "createdAt": "string",
+            "firstName": "string",
+            "id": "string",
+            "image": "string",
+            "lastName": "string",
+            "loyaltyPoints": "number",
+            "orderCount": "number",
+            "status": "boolean",
+            "totalGrandTotal": "number"
+          }
+        ],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/customer/wallet_transactions": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/dashboard": {
+      "status": 200,
+      "json": {
+        "count": {
+          "accepted": "number",
+          "cancelled": "number",
+          "delivered": "number",
+          "fresh": "number",
+          "handover": "number",
+          "ongoing": "number",
+          "partially": "number",
+          "pending": "number",
+          "preparing": "number",
+          "ready": "number",
+          "refunded": "number",
+          "rejected": "number"
+        },
+        "diningBookingEarningStats": [
+          {
+            "commission": "number",
+            "count": "number",
+            "grandTotal": "number",
+            "label": "string"
+          }
+        ],
+        "expenses": {
+          "adsExpense": "number",
+          "couponExpense": "number",
+          "deliveryChargeExpense": "number",
+          "diningCouponExpense": "number",
+          "employeeExpense": "number",
+          "itSupportExpense": "number",
+          "loyaltyPointsExpense": "number",
+          "otherExpense": "number",
+          "outSourceExpense": "number",
+          "paymentGatewayChargeExpense": "number",
+          "referralChargeExpense": "number",
+          "walletBonusExpense": "number",
+          "walletCreditExpense": "number"
+        },
+        "orderEarningStats": [
+          {
+            "commission": "number",
+            "count": "number",
+            "grandTotal": "number",
+            "label": "string"
+          }
+        ],
+        "posOrderEarningStats": [
+          {
+            "commission": "number",
+            "count": "number",
+            "grandTotal": "number",
+            "label": "string"
+          }
+        ],
+        "roles": {
+          "totalAccountant": "number",
+          "totalCityMaster": "number",
+          "totalDeliveryman": "number",
+          "totalGuest": "number",
+          "totalKitchenOwner": "number",
+          "totalOutlet": "number",
+          "totalSupportTeam": "number",
+          "totalUsers": "number",
+          "totalVendor": "number",
+          "totalVendorDeliveryman": "number",
+          "totalWaiter": "number"
+        },
+        "success": "boolean",
+        "tableOrderEarningStats": [
+          {
+            "commission": "number",
+            "count": "number",
+            "grandTotal": "number",
+            "label": "string"
+          }
+        ],
+        "topOrderHandlingDeliveryan": [],
+        "topOrderedFood": [],
+        "topOrderedRestaurant": [],
+        "topRatedDeliveryman": [],
+        "topRatedFood": [],
+        "topRatedRestaurant": []
+      }
+    },
+    "GET /v1/admin/delete_account_reason_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/deliveryShiftSchedule/get": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/delivery_instruction/get": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/deliveryman/cashInHand/:deliveryman": {
+      "status": 200,
+      "json": {
+        "cashInHandAmount": "string",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/deliveryman/deleted_deliveryman": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/deliveryman_detail/collected_cash_list": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/deliveryman_detail/complaint_orders": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/deliveryman_detail/complaint_vendor": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/deliveryman_detail/complaints": {
+      "status": 200,
+      "json": {
+        "order": {
+          "orderComplaint": [],
+          "totalResultsOrder": "number"
+        },
+        "restaurant": {
+          "restaurantComplaint": [],
+          "totalResultsRestaurant": "number"
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/deliveryman_detail/disbursement_list": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/deliveryman_detail/media_files": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/deliveryman_detail/order_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "orders": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/deliveryman_detail/payout_accounts": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "methods": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/deliveryman_detail/reviews": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/deliveryman_detail/wallet_transactions": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/deliveryman_detail/withdrawal_request_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/deliveryman_joining_form": {
+      "status": 200,
+      "json": {
+        "result": "null",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/dining/notice/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/dining_booking/coupon/:id": {
+      "status": 200,
+      "json": {
+        "bookings": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/dining_booking/getDiningBookingCount": {
+      "status": 200,
+      "json": {
+        "accepted": "number",
+        "all": "number",
+        "cancelled": "number",
+        "completed": "number",
+        "fresh": "number",
+        "partially": "number",
+        "pending": "number",
+        "refunded": "number",
+        "rejected": "number",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/dining_booking_refund_request/info/:requestId": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/dining_booking_refund_request_reason/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/dining_campaign/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/dining_campaign_request/get/:campaignId": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/dining_cancel_reason/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/dining_category/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/dining_coupon/get": {
+      "status": 200,
+      "json": {
+        "coupons": [],
+        "limit": "number",
+        "page": "number",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/dining_coupon/request": {
+      "status": 200,
+      "json": {
+        "coupons": [],
+        "limit": "number",
+        "page": "number",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/dining_settings/get": {
+      "status": 200,
+      "json": {
+        "categories": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "totalPages": "number",
+          "totalResults": "number"
+        },
+        "notice": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "totalPages": "number",
+          "totalResults": "number"
+        },
+        "reasons": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "totalPages": "number",
+          "totalResults": "number"
+        },
+        "settings": "null"
+      }
+    },
+    "GET /v1/admin/disbursement/deliveryman": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/disbursement/restaurant": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/disbursement_settings/get": {
+      "status": 200,
+      "text": true,
+      "contentType": ""
+    },
+    "GET /v1/admin/driver/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/driver/getAllVendorDeliveryman": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/driver/getBasicData": {
+      "status": 200,
+      "json": {
+        "cities": [],
+        "vehicles": []
+      }
+    },
+    "GET /v1/admin/driver/getByCity/:city": {
+      "status": 200,
+      "json": {
+        "deliveryman": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/driver/map_dialog/:city": {
+      "status": 200,
+      "json": {
+        "drivers": [],
+        "success": "boolean",
+        "totalDeliveryman": "number"
+      }
+    },
+    "GET /v1/admin/driver/walletFundList": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [
+          {
+            "contactEmail": "string",
+            "createdAt": "string",
+            "firstName": "string",
+            "id": "string",
+            "image": "string",
+            "lastName": "string",
+            "orderCount": "number",
+            "orderEarning": "number",
+            "role": "string",
+            "status": "boolean"
+          }
+        ],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/driver_incentive/get": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/driver_offline_messages/get": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/driver_settings/get": {
+      "status": 200,
+      "json": {
+        "gratitude": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "totalPages": "number",
+          "totalResults": "number"
+        },
+        "incentives": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "totalPages": "number",
+          "totalResults": "number"
+        },
+        "instruction": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "totalPages": "number",
+          "totalResults": "number"
+        },
+        "offlines": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "totalPages": "number",
+          "totalResults": "number"
+        },
+        "settings": "null"
+      }
+    },
+    "GET /v1/admin/email_config/get": {
+      "status": 200,
+      "text": true,
+      "contentType": ""
+    },
+    "GET /v1/admin/email_config/media_list": {
+      "status": 200,
+      "text": true,
+      "contentType": ""
+    },
+    "GET /v1/admin/email_templates/:slug": {
+      "status": 200,
+      "json": {
+        "media": "null",
+        "template": "null"
+      }
+    },
+    "GET /v1/admin/food/getFoodsByCity/:cityId": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/admin/food/getRestaurantByCityId/:cityId": {
+      "status": 200,
+      "json": {
+        "restaurants": []
+      }
+    },
+    "GET /v1/admin/food_campaign/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/food_campaign/getBasicData": {
+      "status": 200,
+      "json": {
+        "cities": []
+      }
+    },
+    "GET /v1/admin/food_campaign/getFoodByRestaurant/:restaurantId": {
+      "status": 200,
+      "json": {
+        "foods": []
+      }
+    },
+    "GET /v1/admin/food_campaign/getRestaurantByCityId/:cityId": {
+      "status": 200,
+      "json": {
+        "restaurants": []
+      }
+    },
+    "GET /v1/admin/food_campaign_request/get/:campaignId": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/food_taxation/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/foods/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/foods/getBasicData/:restaurant": {
+      "status": 200,
+      "json": {
+        "addons": [],
+        "category": [],
+        "taxation": [],
+        "vendorCategory": []
+      }
+    },
+    "GET /v1/admin/gratitude/get": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/hide/restaurant": {
+      "status": 200,
+      "json": {
+        "hidden": [],
+        "limit": "number",
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/hide_reason/restaurant/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/invoice/instruction/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/kitchen/deleted_kitchen_owner": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/kitchen_owner_setting/get": {
+      "status": 200,
+      "json": {
+        "settings": "null"
+      }
+    },
+    "GET /v1/admin/kitchen_owners/list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/landing_page/get_content": {
+      "status": 200,
+      "json": {
+        "result": "null",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/language/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/localities/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/localities/getByCityId/:cityId": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/admin/media_storage_setting/get": {
+      "status": 200,
+      "text": true,
+      "contentType": ""
+    },
+    "GET /v1/admin/medias/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/medias/getMediaList": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "media": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/notification_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/order_cancel_reason/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/order_notification_translation/getBySlug/:slug": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/order_rating_message/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/order_settings/get": {
+      "status": 200,
+      "json": {
+        "invoices": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "totalPages": "number",
+          "totalResults": "number"
+        },
+        "ratings": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "totalPages": "number",
+          "totalResults": "number"
+        },
+        "reasons": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "totalPages": "number",
+          "totalResults": "number"
+        },
+        "settings": "null"
+      }
+    },
+    "GET /v1/admin/orders/coupon/:id": {
+      "status": 200,
+      "json": {
+        "orders": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/orders/detailAdmin/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/orders/getOrderCount": {
+      "status": 200,
+      "json": {
+        "accepted": "number",
+        "all": "number",
+        "cancelled": "number",
+        "delivered": "number",
+        "fresh": "number",
+        "handover": "number",
+        "ongoing": "number",
+        "partially": "number",
+        "pending": "number",
+        "preparing": "number",
+        "ready": "number",
+        "refunded": "number",
+        "rejected": "number",
+        "schedule": "number",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/orders/invoice/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/payment_config/get/:slug": {
+      "status": 200,
+      "text": true,
+      "contentType": ""
+    },
+    "GET /v1/admin/pos/categories/:restaurantId": {
+      "status": 200,
+      "json": {
+        "categories": {
+          "category": [],
+          "own": []
+        },
+        "restaurant": "null",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/pos/initial": {
+      "status": 200,
+      "json": {
+        "business": "null",
+        "cities": [],
+        "customer": "null",
+        "orders": "null",
+        "packaging": "null",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/pos/restaurants/:cityId": {
+      "status": 200,
+      "json": {
+        "restaurants": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/pos/search/:vendor/:searchQuery": {
+      "status": 200,
+      "json": {
+        "foods": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/posOrders/detail/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/posOrders/invoice/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/refund_request/info/:requestId": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/refund_request_reason/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/regular_chat_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/regular_chat_messages/:id": {
+      "status": 200,
+      "json": {
+        "chats": [],
+        "limit": "number",
+        "page": "number",
+        "roomId": "string",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/report_issue/restaurant/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/report_issue_list/restaurant/get": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "reports": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/reports/customer": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [
+          {
+            "contactEmail": "string",
+            "contactNumber": "string",
+            "countryCode": "number",
+            "createdAt": "string",
+            "diningBookings": "number",
+            "diningGrandTotal": "number",
+            "diningRefund": "number",
+            "favFood": "number",
+            "favOrders": "number",
+            "favRest": "number",
+            "firstName": "string",
+            "hiddenRest": "number",
+            "id": "string",
+            "image": "string",
+            "lastName": "string",
+            "loyaltyPoints": "number",
+            "medias": "number",
+            "orderCount": "number",
+            "orderGrandTotal": "number",
+            "orderRefund": "number",
+            "role": "string",
+            "tiffinPackageGrandTotal": "number",
+            "tiffinPackages": "number",
+            "tiffinRefund": "number"
+          }
+        ],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/reports/deliveryman": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/reports/deliverymanDisbursement": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/reports/deliverymanDisbursementReportInitial": {
+      "status": 200,
+      "json": {
+        "cities": [],
+        "methods": [],
+        "stats": {
+          "approved": {
+            "amount": "number",
+            "count": "number"
+          },
+          "cancelled": {
+            "amount": "number",
+            "count": "number"
+          },
+          "pending": {
+            "amount": "number",
+            "count": "number"
+          }
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/reports/diningBooking": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/reports/disbursementReportInitial": {
+      "status": 200,
+      "json": {
+        "cities": [],
+        "methods": [],
+        "stats": {
+          "approved": {
+            "amount": "number",
+            "count": "number"
+          },
+          "cancelled": {
+            "amount": "number",
+            "count": "number"
+          },
+          "pending": {
+            "amount": "number",
+            "count": "number"
+          }
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/reports/expense": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/reports/expenseInitial": {
+      "status": 200,
+      "json": {
+        "adsExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "couponExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "deliveryChargeExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "diningCouponExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "employeeExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "itSupportExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "limit": "number",
+        "loyaltyPointsExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "otherExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "outSourceExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "page": "number",
+        "paymentGatewayChargeExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "referralChargeExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "results": [],
+        "totalExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "totalPages": "number",
+        "totalResults": "number",
+        "walletBonusExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "walletCreditExpenseData": {
+          "amount": "number",
+          "count": "number"
+        }
+      }
+    },
+    "GET /v1/admin/reports/food_report/": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/reports/restaurant": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/reports/restaurantDisbursement": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/reports/restaurantInitial": {
+      "status": 200,
+      "json": {
+        "city": [],
+        "restaurantType": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/reports/wallet_transaction/": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/restaurant/cashInHand/:vendor": {
+      "status": 200,
+      "json": {
+        "cashInHandAmount": "string",
+        "creditAmount": "string",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/restaurant/facilities/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/restaurant/filter_data": {
+      "status": 200,
+      "json": {
+        "categories": [],
+        "cities": [],
+        "cuisine": [],
+        "facilities": [],
+        "success": "boolean",
+        "types": []
+      }
+    },
+    "GET /v1/admin/restaurant/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/restaurant/getBasicDataForNewRestaurant": {
+      "status": 200,
+      "json": {
+        "cities": [],
+        "cuisine": [],
+        "facilities": [],
+        "licenses": [],
+        "subscription": [],
+        "types": []
+      }
+    },
+    "GET /v1/admin/restaurant/getDiningSupportedRestaurantByCityId/:cityId": {
+      "status": 200,
+      "json": {
+        "restaurants": []
+      }
+    },
+    "GET /v1/admin/restaurant/getOutlets": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/restaurant/getRestaurantByCityCollectCash/:cityId": {
+      "status": 200,
+      "json": {
+        "restaurants": []
+      }
+    },
+    "GET /v1/admin/restaurant/getRestaurantByCityId/:cityId": {
+      "status": 200,
+      "json": {
+        "restaurants": []
+      }
+    },
+    "GET /v1/admin/restaurant/getRestaurantByCityIdForTiffinPackages/:cityId": {
+      "status": 200,
+      "json": {
+        "restaurants": []
+      }
+    },
+    "GET /v1/admin/restaurant/getRestaurantByCityIdLimitedData/:cityId": {
+      "status": 200,
+      "json": {
+        "restaurants": []
+      }
+    },
+    "GET /v1/admin/restaurant/map_dialog/:city": {
+      "status": 200,
+      "json": {
+        "restaurants": [],
+        "success": "boolean",
+        "totalRestaurants": "number"
+      }
+    },
+    "GET /v1/admin/restaurant/notice/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/restaurantType/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/restaurant_campaign/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/restaurant_campaign/getBasicData": {
+      "status": 200,
+      "json": {
+        "cities": []
+      }
+    },
+    "GET /v1/admin/restaurant_campaign/getRestaurantByCityId/:cityId": {
+      "status": 200,
+      "json": {
+        "restaurants": []
+      }
+    },
+    "GET /v1/admin/restaurant_campaign_request/get/:campaignId": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/restaurant_complaints/get": {
+      "status": 200,
+      "json": {
+        "complaints": [],
+        "limit": "number",
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/restaurant_food_license/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/restaurant_joining_form": {
+      "status": 200,
+      "json": {
+        "result": "null",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/restaurant_settings/get": {
+      "status": 200,
+      "json": {
+        "license": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "totalPages": "number",
+          "totalResults": "number"
+        },
+        "notice": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "totalPages": "number",
+          "totalResults": "number"
+        },
+        "settings": "null"
+      }
+    },
+    "GET /v1/admin/restaurants/deleted_restaurants": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/sms_provider/get/:slug": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/social_signin/getList": {
+      "status": 200,
+      "text": true,
+      "contentType": ""
+    },
+    "GET /v1/admin/subCategory/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/sub_category/getActive": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/sub_category/getByCategoryId/:category": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/admin/subscriber/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/subscription/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/support_chat_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/support_chat_messages/:id": {
+      "status": 200,
+      "json": {
+        "chats": [],
+        "limit": "number",
+        "page": "number",
+        "roomId": "string",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/tableOrders/detail/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/tableOrders/invoice/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/tiffin_packages/foods/:restaurant": {
+      "status": 200,
+      "json": {
+        "foods": []
+      }
+    },
+    "GET /v1/admin/tiffin_packages/getTiffinSubscriptionPurchaseDetail/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/tiffin_subscription_refund_request/info/:requestId": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/tiffin_subscription_refund_request_reason/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/user_avatar/list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/user_settings/get": {
+      "status": 200,
+      "json": {
+        "reasons": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "totalPages": "number",
+          "totalResults": "number"
+        },
+        "settings": "null"
+      }
+    },
+    "GET /v1/admin/users/search/:name": {
+      "status": 200,
+      "json": {
+        "success": "boolean",
+        "users": []
+      }
+    },
+    "GET /v1/admin/vehicle/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/all_refund_request": {
+      "status": 200,
+      "json": {
+        "bookingRefund": {
+          "bookingRefundRequest": [],
+          "totalResultsBookingRefund": "number"
+        },
+        "orderRefund": {
+          "orderRefundRequest": [],
+          "totalResultsOrderRefund": "number"
+        },
+        "success": "boolean",
+        "tiffinRefund": {
+          "tiffinRefundRequest": [],
+          "totalResultsTiffinRefund": "number"
+        }
+      }
+    },
+    "GET /v1/admin/vendor_detail/all_reviews": {
+      "status": 200,
+      "json": {
+        "food": {
+          "foodReviews": [],
+          "totalResultsFood": "number"
+        },
+        "restaurant": {
+          "restaurantReviews": [],
+          "totalResultsRestaurant": "number"
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/vendor_detail/booking_list": {
+      "status": 200,
+      "json": {
+        "bookings": [],
+        "limit": "number",
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/collected_cash_list": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/complaint_orders": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/complaint_vendor": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/complaints": {
+      "status": 200,
+      "json": {
+        "order": {
+          "orderComplaint": [],
+          "totalResultsOrder": "number"
+        },
+        "restaurant": {
+          "restaurantComplaint": [],
+          "totalResultsRestaurant": "number"
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/admin/vendor_detail/deliveryman_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/dining_refund_request": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/disbursement_list": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/food_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/kitchen_owner_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/orderList": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "orders": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/order_refund_request": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/outlet_list": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/payout_accounts": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "methods": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/pos_order_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "orders": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/table_order_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "orders": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/tiffin_package_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/tiffin_subscription_refund_request": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/vendor_food_reviews": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/vendor_reviews": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/waiter_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_detail/withdrawal_request_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/vendor_sub_category/getActiveByCategoryId/:category/:restaurant": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/admin/waiter/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/waiter_settings/get": {
+      "status": 200,
+      "json": {
+        "settings": "null"
+      }
+    },
+    "GET /v1/admin/waiters/deleted_waiter": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/wallet/bonus/getAll": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/admin/withdrawalMethod/list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "methods": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/auth/installations": {
+      "status": 200,
+      "json": {
+        "isDone": "boolean"
+      }
+    },
+    "GET /v1/cityzen/cityzen_order_detail/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/cityzen_order_invoice/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/cityzen_pos_order_detail/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/cityzen_pos_order_invoice/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/cityzen_table_order_detail/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/cityzen_table_order_invoice/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/coupon_dining_booking/:id": {
+      "status": 200,
+      "json": {
+        "bookings": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/customer_detail_all_reviews": {
+      "status": 200,
+      "json": {
+        "deliveryman": {
+          "deliverymanReviews": [],
+          "totalResultsDeliveryman": "number"
+        },
+        "food": {
+          "foodReviews": [],
+          "totalResultsFood": "number"
+        },
+        "restaurant": {
+          "restaurantReviews": [],
+          "totalResultsRestaurant": "number"
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/customer_detail_delivery_address_list": {
+      "status": 200,
+      "json": {
+        "address": [],
+        "limit": "number",
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/customer_detail_deliveryman_reviews": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/customer_detail_dining_booking_list": {
+      "status": 200,
+      "json": {
+        "bookings": [],
+        "limit": "number",
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/customer_detail_dining_refund_request": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/customer_detail_favourite_foods": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/customer_detail_favourite_list": {
+      "status": 200,
+      "json": {
+        "food": {
+          "foodFavourite": [],
+          "totalResultsFood": "number"
+        },
+        "order": {
+          "favouriteOrders": [],
+          "totalResultsOrder": "number"
+        },
+        "restaurant": {
+          "restaurantFavourite": [],
+          "totalResultsRestaurant": "number"
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/customer_detail_favourite_orders": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/customer_detail_favourite_restaurants": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/customer_detail_food_reviews": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/customer_detail_hidden_restaurants": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/customer_detail_media_files": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/customer_detail_order_complaint_list": {
+      "status": 200,
+      "json": {
+        "complaints": [],
+        "limit": "number",
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/customer_detail_order_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "orders": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/customer_detail_order_refund_request": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/customer_detail_purchased_tiffin_packages": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/customer_detail_refund_request_list": {
+      "status": 200,
+      "json": {
+        "bookingRefund": {
+          "bookingRefundRequest": [],
+          "totalResultsBookingRefund": "number"
+        },
+        "orderRefund": {
+          "orderRefundRequest": [],
+          "totalResultsOrderRefund": "number"
+        },
+        "success": "boolean",
+        "tiffinRefund": {
+          "tiffinRefundRequest": [],
+          "totalResultsTiffinRefund": "number"
+        }
+      }
+    },
+    "GET /v1/cityzen/customer_detail_restaurant_reviews": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/customer_detail_tiffin_refund_request": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/customer_detail_wallet_transactions": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/customer_purchased_tiffin_package_detail/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/deliveryman_cash_in_hand/:deliveryman": {
+      "status": 200,
+      "json": {
+        "cashInHandAmount": "string",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/deliveryman_detail_collected_cash_list": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/deliveryman_detail_complaint_orders": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/deliveryman_detail_complaint_vendor": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/deliveryman_detail_complaints": {
+      "status": 200,
+      "json": {
+        "order": {
+          "orderComplaint": [],
+          "totalResultsOrder": "number"
+        },
+        "restaurant": {
+          "restaurantComplaint": [],
+          "totalResultsRestaurant": "number"
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/deliveryman_detail_disbursement_list": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/deliveryman_detail_media_files": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/deliveryman_detail_order_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "orders": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/deliveryman_detail_payout_accounts": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "methods": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/deliveryman_detail_reviews": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/deliveryman_detail_wallet_transactions": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/deliveryman_detail_withdrawal_request_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/dining_booking_refund_request/info/:requestId": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/dining_campaign_request_list/:campaignId": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/filter_restaurant_data": {
+      "status": 200,
+      "json": {
+        "categories": [],
+        "cuisine": [],
+        "facilities": [],
+        "success": "boolean",
+        "types": []
+      }
+    },
+    "GET /v1/cityzen/food_campaign_request_list/:campaignId": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/food_get_basic_data/:restaurant": {
+      "status": 200,
+      "json": {
+        "addons": [],
+        "category": [],
+        "taxation": [],
+        "vendorCategory": []
+      }
+    },
+    "GET /v1/cityzen/food_list_for_campaign/:restaurantId": {
+      "status": 200,
+      "json": {
+        "foods": []
+      }
+    },
+    "GET /v1/cityzen/food_list_for_tiffin_packages/:restaurant": {
+      "status": 200,
+      "json": {
+        "foods": []
+      }
+    },
+    "GET /v1/cityzen/localities_from_city/:cityId": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/cityzen/media_files/:userId": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/media_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/order_refund_request_detail/:requestId": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/pos_categories/:restaurantId": {
+      "status": 200,
+      "json": {
+        "categories": {
+          "category": [],
+          "own": []
+        },
+        "restaurant": "null",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/pos_search/:vendor/:searchQuery": {
+      "status": 200,
+      "json": {
+        "foods": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/redeem_order_list/:id": {
+      "status": 200,
+      "json": {
+        "orders": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/regular_chat_messages/:id": {
+      "status": 200,
+      "json": {
+        "chats": [],
+        "limit": "number",
+        "page": "number",
+        "roomId": "string",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_campaign_request_list/:campaignId": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_cash_in_hand/:vendor": {
+      "status": 200,
+      "json": {
+        "cashInHandAmount": "string",
+        "creditAmount": "string",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_all_refund_request": {
+      "status": 200,
+      "json": {
+        "bookingRefund": {
+          "bookingRefundRequest": [],
+          "totalResultsBookingRefund": "number"
+        },
+        "orderRefund": {
+          "orderRefundRequest": [],
+          "totalResultsOrderRefund": "number"
+        },
+        "success": "boolean",
+        "tiffinRefund": {
+          "tiffinRefundRequest": [],
+          "totalResultsTiffinRefund": "number"
+        }
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_all_reviews": {
+      "status": 200,
+      "json": {
+        "food": {
+          "foodReviews": [],
+          "totalResultsFood": "number"
+        },
+        "restaurant": {
+          "restaurantReviews": [],
+          "totalResultsRestaurant": "number"
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_booking_list": {
+      "status": 200,
+      "json": {
+        "bookings": [],
+        "limit": "number",
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_collected_cash_list": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_complaint_list": {
+      "status": 200,
+      "json": {
+        "order": {
+          "orderComplaint": [],
+          "totalResultsOrder": "number"
+        },
+        "restaurant": {
+          "restaurantComplaint": [],
+          "totalResultsRestaurant": "number"
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_deliveryman_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_dining_refund_request": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_disbursement_list": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_food_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_order_complaint_list": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_order_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "orders": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_order_refund_request": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_outlet_list": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_own_complaint_list": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_own_reviews": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_payout_accounts": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "methods": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_pos_order_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "orders": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_table_order_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "orders": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_tiffin_packages_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_tiffin_subscription_refund_request": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_vendor_food_reviews": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_waiter_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/restaurant_detail_withdrawal_request_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/search_customer/:name": {
+      "status": 200,
+      "json": {
+        "success": "boolean",
+        "users": []
+      }
+    },
+    "GET /v1/cityzen/sub_cateories_list/:category": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/cityzen/support_chat_messages/:id": {
+      "status": 200,
+      "json": {
+        "chats": [],
+        "limit": "number",
+        "page": "number",
+        "roomId": "string",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/tiffin_subscription_refund_request_detail/:requestId": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/cityzen/vendor_detail/kitchen_owner_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/cityzen/vendor_sub_categories_list/:category/:restaurant": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/driver/account_setting/notification_setting/:id": {
+      "status": 200,
+      "json": {
+        "setting": {
+          "id": "string",
+          "importantUpdate": "boolean",
+          "newsletters": "boolean",
+          "orderEmail": "boolean",
+          "orderNotification": "boolean",
+          "orderWhatsApp": "boolean",
+          "promoEmail": "boolean",
+          "promoNotification": "boolean",
+          "promoWhatsApp": "boolean",
+          "socialEmail": "boolean",
+          "socialNotification": "boolean",
+          "user": "string"
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/driver/cancellation/driver": {
+      "status": 200,
+      "json": {
+        "reasons": []
+      }
+    },
+    "GET /v1/driver/chat_room/list/:user": {
+      "status": 200,
+      "json": {
+        "chats": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/driver/delete_account_reason_list": {
+      "status": 200,
+      "json": {
+        "result": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/driver/depositeDetail/:deliveryman": {
+      "status": 200,
+      "json": {
+        "cashInHandAmount": "string",
+        "collected": [],
+        "history": [],
+        "limit": "number",
+        "page": "number",
+        "success": "boolean",
+        "totalCollectedPages": "number",
+        "totalCollectedResults": "number",
+        "totalHistoryPages": "number",
+        "totalHistoryResults": "number"
+      }
+    },
+    "GET /v1/driver/driver_offline_messages/getMessagesList": {
+      "status": 200,
+      "json": {
+        "offlines": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/driver/insight/overall/:uid": {
+      "status": 200,
+      "json": {
+        "averageDeliveryTimeOfDelivery": "number",
+        "chartCount": [
+          {
+            "count": "number",
+            "status": "string"
+          }
+        ],
+        "deliveredOrders": "number",
+        "earningChartData": {
+          "totalBonuses": "number",
+          "totalEarnings": "number",
+          "totalExtraShiftEarning": "number",
+          "totalTips": "number"
+        },
+        "findMode": "string",
+        "hourlyPerformanceChart": [],
+        "recentOrders": [],
+        "recentReviews": [],
+        "success": "boolean",
+        "totalEarning": "number"
+      }
+    },
+    "GET /v1/driver/notification/readAll/:user": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/driver/orders/activeOrder/:driverId": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/driver/orders/newOrder/:driverId": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/driver/orders/orderDetails/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/driver/payoutMethod/list": {
+      "status": 200,
+      "json": {
+        "methods": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/driver/payoutMethod/myPayoutList/:deliveryman": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "methods": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/driver/support_chat_room/list/:user": {
+      "status": 200,
+      "json": {
+        "chats": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/driver/wallet/getWalletTransaction/:user": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/driver/wallet/withdrawalDetail/:deliveryman": {
+      "status": 200,
+      "json": {
+        "methods": [],
+        "success": "boolean",
+        "walletInfo": "null"
+      }
+    },
+    "GET /v1/driver/wallet/withdrawalHistory/:deliveryman": {
+      "status": 200,
+      "json": {
+        "acceptedRequest": "number",
+        "createdRequest": "number",
+        "limit": "number",
+        "page": "number",
+        "rejectedRequest": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/kitchen/account_setting/notification_setting/:id": {
+      "status": 200,
+      "json": {
+        "setting": {
+          "id": "string",
+          "importantUpdate": "boolean",
+          "newsletters": "boolean",
+          "orderEmail": "boolean",
+          "orderNotification": "boolean",
+          "orderWhatsApp": "boolean",
+          "promoEmail": "boolean",
+          "promoNotification": "boolean",
+          "promoWhatsApp": "boolean",
+          "socialEmail": "boolean",
+          "socialNotification": "boolean",
+          "user": "string"
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/kitchen/delete_account_reason_list": {
+      "status": 200,
+      "json": {
+        "result": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/kitchen/notification/readAll/:user": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/public/app_pages/content/:slug": {
+      "status": 200,
+      "text": true,
+      "contentType": ""
+    },
+    "GET /v1/public/app_pages/getContent/:slug": {
+      "status": 200,
+      "json": {
+        "content": "string",
+        "success": "boolean",
+        "translations": []
+      }
+    },
+    "GET /v1/public/customer_header_content": {
+      "status": 200,
+      "json": {
+        "languages": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/public/deliveryman_joining/getBasicDataDeliverymanRequest": {
+      "status": 200,
+      "json": {
+        "cities": [],
+        "joiningForm": {
+          "result": "null",
+          "success": "boolean"
+        },
+        "success": "boolean",
+        "vehicles": []
+      }
+    },
+    "GET /v1/public/getDriverSettings": {
+      "status": 200,
+      "json": {
+        "defaultLocale": "null",
+        "driver": "null",
+        "imagePath": "string",
+        "locales": [],
+        "settings": "null",
+        "social": {
+          "appleSignin": "boolean",
+          "facebookSignin": "boolean",
+          "googleOAuth": {
+            "google_client_id": "string",
+            "google_server_id": "string"
+          },
+          "googleSignin": "boolean"
+        },
+        "versions": {
+          "androidUrl": "string",
+          "androidVersion": "string",
+          "iosUrl": "string",
+          "iosVersion": "string",
+          "success": "boolean"
+        }
+      }
+    },
+    "GET /v1/public/getKitchenSetting": {
+      "status": 200,
+      "json": {
+        "defaultLocale": "null",
+        "imagePath": "string",
+        "kitchen": "null",
+        "locales": [],
+        "settings": "null",
+        "social": {
+          "appleSignin": "boolean",
+          "facebookSignin": "boolean",
+          "googleOAuth": {
+            "google_client_id": "string",
+            "google_server_id": "string"
+          },
+          "googleSignin": "boolean"
+        },
+        "versions": {
+          "androidUrl": "string",
+          "androidVersion": "string",
+          "iosUrl": "string",
+          "iosVersion": "string",
+          "success": "boolean"
+        }
+      }
+    },
+    "GET /v1/public/getVendorSettings": {
+      "status": 200,
+      "json": {
+        "business": "null",
+        "imagePath": "string",
+        "language": "null",
+        "social": {
+          "appleSignin": "boolean",
+          "facebookSignin": "boolean",
+          "googleOAuth": {
+            "google_client_id": "string",
+            "google_server_id": "string"
+          },
+          "googleSignin": "boolean"
+        },
+        "vendor": "null",
+        "versions": {
+          "androidUrl": "string",
+          "androidVersion": "string",
+          "iosUrl": "string",
+          "iosVersion": "string",
+          "success": "boolean"
+        }
+      }
+    },
+    "GET /v1/public/getWaiterSettings": {
+      "status": 200,
+      "json": {
+        "defaultLocale": "null",
+        "imagePath": "string",
+        "locales": [],
+        "settings": "null",
+        "social": {
+          "appleSignin": "boolean",
+          "facebookSignin": "boolean",
+          "googleOAuth": {
+            "google_client_id": "string",
+            "google_server_id": "string"
+          },
+          "googleSignin": "boolean"
+        },
+        "versions": {
+          "androidUrl": "string",
+          "androidVersion": "string",
+          "iosUrl": "string",
+          "iosVersion": "string",
+          "success": "boolean"
+        },
+        "waiter": "null"
+      }
+    },
+    "GET /v1/public/get_web_settings/": {
+      "status": 200,
+      "json": {
+        "defaultLocale": "null",
+        "imagePath": "string",
+        "locales": [],
+        "selfRegister": {
+          "driver": "boolean",
+          "vendor": "boolean"
+        },
+        "settings": "null",
+        "user": "null",
+        "vendor": "null"
+      }
+    },
+    "GET /v1/public/landing_page/get_content": {
+      "status": 200,
+      "json": {
+        "result": "null",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/public/localities_from_city/:id": {
+      "status": 200,
+      "json": {
+        "localities": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/public/otp/failed/:id": {
+      "status": 200,
+      "text": true,
+      "contentType": "text/html"
+    },
+    "GET /v1/public/otp/success/:id": {
+      "status": 200,
+      "text": true,
+      "contentType": "text/html"
+    },
+    "GET /v1/public/payments/paid_failed/:id": {
+      "status": 200,
+      "text": true,
+      "contentType": "text/html"
+    },
+    "GET /v1/public/payments/payment_processed/": {
+      "status": 200,
+      "text": true,
+      "contentType": "text/html"
+    },
+    "GET /v1/public/payments/payment_repeated/": {
+      "status": 200,
+      "text": true,
+      "contentType": "text/html"
+    },
+    "GET /v1/public/register/getBasicDataRestaurantRequest": {
+      "status": 200,
+      "json": {
+        "cities": [],
+        "joiningForm": {
+          "result": "null",
+          "success": "boolean"
+        },
+        "licenses": [],
+        "payment": {
+          "success": "boolean"
+        },
+        "settings": "null",
+        "subscriptionPackages": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/public/register/restaurant_web_self_register_detail": {
+      "status": 200,
+      "json": {
+        "cities": [],
+        "cuisine": [],
+        "facilities": [],
+        "joiningForm": {
+          "result": "null",
+          "success": "boolean"
+        },
+        "licenses": [],
+        "payment": {
+          "success": "boolean"
+        },
+        "settings": "null",
+        "subscriptionPackages": [],
+        "success": "boolean",
+        "types": []
+      }
+    },
+    "GET /v1/public/restaurant/activeCuisine/": {
+      "status": 200,
+      "json": {
+        "cuisine": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/public/restaurant/activeFacility/": {
+      "status": 200,
+      "json": {
+        "facility": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/public/restaurant/activeType/": {
+      "status": 200,
+      "json": {
+        "restaurantType": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/public/restaurant/call/:restaurant": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/support_team/all_cities": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/support_team/customer_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [
+          {
+            "contactEmail": "string",
+            "contactNumber": "string",
+            "countryCode": "number",
+            "createdAt": "string",
+            "firstName": "string",
+            "id": "string",
+            "image": "string",
+            "lastName": "string",
+            "orderCount": "number",
+            "role": "string",
+            "status": "boolean",
+            "totalGrandTotal": "number"
+          }
+        ],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/support_team/dashboard": {
+      "status": 200,
+      "json": {
+        "allChat": "number",
+        "chats": [],
+        "complaintChat": "number",
+        "diningChat": "number",
+        "inProgressChat": "number",
+        "openChat": "number",
+        "orderChat": "number",
+        "reportChat": "number",
+        "resolvedChat": "number",
+        "restaurantComplaintChats": "number",
+        "success": "boolean",
+        "tiffinSubscriptionChat": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/support_team/deliveryman_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/support_team/order_detail/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/support_team/purchase_detail/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/support_team/restaurant_initial": {
+      "status": 200,
+      "json": {
+        "city": [],
+        "restaurantType": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/support_team/restaurant_list": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/support_team/support_team_chat_list/:id": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/support_team/support_team_header_content/:id": {
+      "status": 200,
+      "json": {
+        "chatList": [],
+        "locales": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/users/account_setting/notification_setting/:id": {
+      "status": 200,
+      "json": {
+        "setting": {
+          "id": "string",
+          "importantUpdate": "boolean",
+          "newsletters": "boolean",
+          "orderEmail": "boolean",
+          "orderNotification": "boolean",
+          "orderWhatsApp": "boolean",
+          "promoEmail": "boolean",
+          "promoNotification": "boolean",
+          "promoWhatsApp": "boolean",
+          "socialEmail": "boolean",
+          "socialNotification": "boolean",
+          "user": "string"
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/users/address/deliveryAddressList/:id": {
+      "status": 200,
+      "json": {
+        "list": [],
+        "total": "number"
+      }
+    },
+    "GET /v1/users/cancellation/user": {
+      "status": 200,
+      "json": {
+        "reasons": []
+      }
+    },
+    "GET /v1/users/chat_room/list/:user": {
+      "status": 200,
+      "json": {
+        "chats": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/users/delete_account_reason_list": {
+      "status": 200,
+      "json": {
+        "result": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/users/dining_booking/cancellation/user": {
+      "status": 200,
+      "json": {
+        "reasons": []
+      }
+    },
+    "GET /v1/users/dining_booking/search/:uid/:query": {
+      "status": 200,
+      "json": {
+        "bookings": [],
+        "success": "boolean",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/users/dining_booking_refund/reasons": {
+      "status": 200,
+      "json": {
+        "reasons": []
+      }
+    },
+    "GET /v1/users/hide_reason/restaurant/": {
+      "status": 200,
+      "json": {
+        "reasons": []
+      }
+    },
+    "GET /v1/users/loyaltyPoints/getMyLoyaltyPoints/:user": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/users/media/photos/:uid": {
+      "status": 200,
+      "json": {
+        "results": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/users/notification/count/:user": {
+      "status": 200,
+      "json": {
+        "count": "number",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/users/notification/readAll/:user": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/users/orders/forComplaint/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/users/orders/getOrderDetailsForReview/:id/:user": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/users/orders/userOrderDetail/:id/:user": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/users/payments/walletList": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/users/profile/getReferralCode/:userId": {
+      "status": 200,
+      "json": {
+        "detail": "null",
+        "referralCode": "null",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/users/profile/user_avatar": {
+      "status": 200,
+      "json": {
+        "avatar": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/users/refund/reasons": {
+      "status": 200,
+      "json": {
+        "reasons": []
+      }
+    },
+    "GET /v1/users/report/reasons": {
+      "status": 200,
+      "json": {
+        "reasons": []
+      }
+    },
+    "GET /v1/users/review/myReviewList/:uid": {
+      "status": 200,
+      "json": {
+        "driverReviews": [],
+        "foodReviews": [],
+        "restaurantReviews": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/users/support_chat_room/list/:user": {
+      "status": 200,
+      "json": {
+        "chats": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/users/tiffin_subscription_cancel_reason/user": {
+      "status": 200,
+      "json": {
+        "reasons": []
+      }
+    },
+    "GET /v1/users/tiffin_subscription_refund/reasons": {
+      "status": 200,
+      "json": {
+        "reasons": []
+      }
+    },
+    "GET /v1/users/wallet/getMyWalletData/:user": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/account_setting/notification_setting/:id": {
+      "status": 200,
+      "json": {
+        "setting": {
+          "id": "string",
+          "importantUpdate": "boolean",
+          "newsletters": "boolean",
+          "orderEmail": "boolean",
+          "orderNotification": "boolean",
+          "orderWhatsApp": "boolean",
+          "promoEmail": "boolean",
+          "promoNotification": "boolean",
+          "promoWhatsApp": "boolean",
+          "socialEmail": "boolean",
+          "socialNotification": "boolean",
+          "user": "string"
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/addons/getMyAddons/:restaurant": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/business/insight/:vendor/": {
+      "status": 200,
+      "json": {
+        "monthChartData": [],
+        "monthTotalSold": {
+          "averageSold": "number",
+          "totalSold": "number"
+        },
+        "monthlyTrendingFoods": [],
+        "success": "boolean",
+        "todayChartData": [],
+        "todayTotalSold": {
+          "averageSold": "number",
+          "totalSold": "number"
+        },
+        "todayTrendingFoods": [],
+        "weekChartData": [],
+        "weekTotalSold": {
+          "averageSold": "number",
+          "totalSold": "number"
+        },
+        "weeklyTrendingFoods": []
+      }
+    },
+    "GET /v1/vendor/cancellation/restaurant": {
+      "status": 200,
+      "json": {
+        "reasons": []
+      }
+    },
+    "GET /v1/vendor/cashInHandHistory/getHistory/:vendor": {
+      "status": 200,
+      "json": {
+        "history": [],
+        "limit": "number",
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/cashInHandHistory/posAndTableOrderCommission/:vendor": {
+      "status": 200,
+      "json": {
+        "history": [],
+        "limit": "number",
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/chat_room/list/:user": {
+      "status": 200,
+      "json": {
+        "chats": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/collectedCashInHandHistory/getHistory/:vendor": {
+      "status": 200,
+      "json": {
+        "collected": [],
+        "limit": "number",
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/customer/call/:userId": {
+      "status": 200,
+      "text": true,
+      "contentType": ""
+    },
+    "GET /v1/vendor/delete_account_reason_list": {
+      "status": 200,
+      "json": {
+        "result": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/dining/getDiningCategories": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/vendor/dining/getSetting": {
+      "status": 200,
+      "text": true,
+      "contentType": ""
+    },
+    "GET /v1/vendor/dining_booking/callCustomer/:bookingId/:vendorId": {
+      "status": 200,
+      "json": {
+        "details": "null",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/dining_booking/cancellation/restaurant": {
+      "status": 200,
+      "json": {
+        "reasons": []
+      }
+    },
+    "GET /v1/vendor/driver/getBasicData/:restaurant": {
+      "status": 200,
+      "json": {
+        "info": "null",
+        "vehicles": []
+      }
+    },
+    "GET /v1/vendor/driver/getMyDriver/:restaurant": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/food_taxation/getAllMyTaxation/:restaurant/": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/vendor/food_taxation/getByRestaurant/:restaurant/": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/foods/getAllMainActiveCategories": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/vendor/foods/getAllMyAddonsList/:restaurant": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/vendor/foods/getBasicData/:restaurant": {
+      "status": 200,
+      "json": {
+        "addons": [],
+        "category": [],
+        "taxation": [],
+        "vendorCategory": []
+      }
+    },
+    "GET /v1/vendor/foods/getFoodInfo/:foodId/:restaurant": {
+      "status": 200,
+      "json": {
+        "addons": [],
+        "category": [],
+        "foodInfo": "null",
+        "taxations": [],
+        "vendorCategory": []
+      }
+    },
+    "GET /v1/vendor/foods/getMyFoodApp/:restaurant": {
+      "status": 200,
+      "json": {
+        "count": [
+          {
+            "all": "number",
+            "hide": "number",
+            "hold": "number",
+            "photoreject": "number",
+            "qualityreject": "number",
+            "reject": "number",
+            "sizereject": "number"
+          }
+        ],
+        "custom": [],
+        "main": []
+      }
+    },
+    "GET /v1/vendor/foods/getMyFoods/:restaurant": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/foods/searchMenu/:vendor/:searchQuery": {
+      "status": 200,
+      "json": {
+        "foods": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/getMySlots/:restaurantId": {
+      "status": 200,
+      "text": true,
+      "contentType": ""
+    },
+    "GET /v1/vendor/kitchen_owner/list/:restaurant": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/localities/getByCityId/:cityId": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/vendor/media/getVendorMedia/:userId": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/orders/forComplaint/:id/:vendor": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/orders/print_invoice/:id/:vendor": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/outlet/getBasicDataForNewOutlet": {
+      "status": 200,
+      "json": {
+        "cities": [],
+        "cuisine": [],
+        "facilities": [],
+        "licenses": [],
+        "types": []
+      }
+    },
+    "GET /v1/vendor/outlet/getBasicDataForNewOutletForApp": {
+      "status": 200,
+      "json": {
+        "cities": [],
+        "licenses": [],
+        "localities": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/outlet/getMyOutlets/:restaurantId": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/payoutMethod/list": {
+      "status": 200,
+      "json": {
+        "methods": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/payoutMethod/myPayoutList/:vendor": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "methods": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/pos/insight/:vendor/": {
+      "status": 200,
+      "json": {
+        "monthChartData": [],
+        "monthTotalSold": {
+          "averageSold": "number",
+          "totalSold": "number"
+        },
+        "monthlyTrendingFoods": [],
+        "success": "boolean",
+        "todayChartData": [],
+        "todayTotalSold": {
+          "averageSold": "number",
+          "totalSold": "number"
+        },
+        "todayTrendingFoods": [],
+        "weekChartData": [],
+        "weekTotalSold": {
+          "averageSold": "number",
+          "totalSold": "number"
+        },
+        "weeklyTrendingFoods": []
+      }
+    },
+    "GET /v1/vendor/read_all_notification/:user": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/regular_chat_messages/:id": {
+      "status": 200,
+      "json": {
+        "chats": [],
+        "limit": "number",
+        "page": "number",
+        "roomId": "string",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/reports/expense": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/reports/expenseInitial": {
+      "status": 200,
+      "json": {
+        "couponExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "diningBookingDiscountExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "diningCouponExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "limit": "number",
+        "orderProductDiscountExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "otherExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "page": "number",
+        "posOrderExtraDiscountExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "posOrderProductDiscountExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "refundOrderExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "results": [],
+        "tableOrderExtraDiscountExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "tableOrderProductDiscountExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "totalExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/restaurant/posData/:vendor": {
+      "status": 200,
+      "json": {
+        "custom": [],
+        "main": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/restaurant/posFoodInitialSearch/:vendor": {
+      "status": 200,
+      "json": {
+        "foods": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/restaurant/posFoodSearch/:vendor/:searchQuery": {
+      "status": 200,
+      "json": {
+        "foods": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/restaurant/posOrderDetail/:id/:vendor/": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/restaurant/posOrderSettings/": {
+      "status": 200,
+      "json": {
+        "business": "null",
+        "packaging": "null"
+      }
+    },
+    "GET /v1/vendor/restaurant/posOrders/:vendor/": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "orders": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/restaurant/pos_invoice_print/:id/:vendor/": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/restaurant/subscription/:vendor": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/restaurant/subscription_status/:vendor": {
+      "status": 200,
+      "json": {
+        "date": "string",
+        "expiring": "boolean",
+        "name": "string",
+        "translations": []
+      }
+    },
+    "GET /v1/vendor/restaurant_extra_detail/getGuestAvailability/:restaurant": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/restaurant_extra_detail/getMyDiningSchedule/:restaurant": {
+      "status": 200,
+      "json": {
+        "slots": [
+          {
+            "day": "number",
+            "times": []
+          }
+        ],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/restaurant_extra_detail/menu/:id": {
+      "status": 200,
+      "json": {
+        "diningPhotos": [],
+        "menuDetail": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/restaurant_table/getList/:restaurant": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/restaurant_table/qr_table_detail/:vendor": {
+      "status": 200,
+      "json": {
+        "business": "null",
+        "detail": "null",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/sub_category/getActive": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/sub_category/getByCategoryId/:category": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/vendor/support_chat_room/list/:user": {
+      "status": 200,
+      "json": {
+        "chats": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/table_order/completedTableOrderList/:vendor/": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "orders": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/table_order/insight/:vendor/": {
+      "status": 200,
+      "json": {
+        "monthChartData": [],
+        "monthTotalSold": {
+          "averageSold": "number",
+          "totalSold": "number"
+        },
+        "monthlyTrendingFoods": [],
+        "success": "boolean",
+        "todayChartData": [],
+        "todayTotalSold": {
+          "averageSold": "number",
+          "totalSold": "number"
+        },
+        "todayTrendingFoods": [],
+        "weekChartData": [],
+        "weekTotalSold": {
+          "averageSold": "number",
+          "totalSold": "number"
+        },
+        "weeklyTrendingFoods": []
+      }
+    },
+    "GET /v1/vendor/table_order/invoice_print/:id/:vendor/": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/table_order/ongoing/:vendor/": {
+      "status": 200,
+      "json": {
+        "success": "boolean",
+        "tables": []
+      }
+    },
+    "GET /v1/vendor/table_order/ongoingOrderDetail/:vendor/:tableId/": {
+      "status": 200,
+      "json": {
+        "business": "null",
+        "items": [],
+        "packaging": "null",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/table_order/tableOrderDetail/:vendor/:id/": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/tiffin_packages/getMyPackages/:restaurant": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/tiffin_packages/get_basic/:restaurant": {
+      "status": 200,
+      "json": {
+        "foods": []
+      }
+    },
+    "GET /v1/vendor/tiffin_packages/userPurchasedTiffinSubscriptionInfo/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/vendor_category/getAllMyCategory/:restaurant": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/vendor/vendor_category/getMyCategories/:restaurant": {
+      "status": 200,
+      "json": {
+        "mainCategory": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "success": "boolean",
+          "totalPages": "number",
+          "totalResults": "number"
+        },
+        "vendorCategory": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "success": "boolean",
+          "totalPages": "number",
+          "totalResults": "number"
+        }
+      }
+    },
+    "GET /v1/vendor/vendor_header_content/:id": {
+      "status": 200,
+      "json": {
+        "chatList": [],
+        "locales": [],
+        "notifications": [],
+        "success": "boolean",
+        "unread": "number"
+      }
+    },
+    "GET /v1/vendor/vendor_sub_category/getActiveByCategoryId/:category/:restaurant": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/vendor/vendor_sub_category/getMyCategories/:restaurant": {
+      "status": 200,
+      "json": {
+        "mainCategory": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "success": "boolean",
+          "totalPages": "number",
+          "totalResults": "number"
+        },
+        "vendorCategory": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "success": "boolean",
+          "totalPages": "number",
+          "totalResults": "number"
+        }
+      }
+    },
+    "GET /v1/vendor/waiter/getMyWaiter/:restaurant": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor/wallet/getWalletTransaction/:user": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor/wallet/withdrawalHistory/:vendor": {
+      "status": 200,
+      "json": {
+        "acceptedRequest": "number",
+        "createdRequest": "number",
+        "limit": "number",
+        "page": "number",
+        "rejectedRequest": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/account_setting/notification_setting/:id": {
+      "status": 200,
+      "json": {
+        "setting": {
+          "id": "string",
+          "importantUpdate": "boolean",
+          "newsletters": "boolean",
+          "orderEmail": "boolean",
+          "orderNotification": "boolean",
+          "orderWhatsApp": "boolean",
+          "promoEmail": "boolean",
+          "promoNotification": "boolean",
+          "promoWhatsApp": "boolean",
+          "socialEmail": "boolean",
+          "socialNotification": "boolean",
+          "user": "string"
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/addons/getMyAddons/:restaurant": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/business/insight/:vendor/": {
+      "status": 200,
+      "json": {
+        "monthChartData": [],
+        "monthTotalSold": {
+          "averageSold": "number",
+          "totalSold": "number"
+        },
+        "monthlyTrendingFoods": [],
+        "success": "boolean",
+        "todayChartData": [],
+        "todayTotalSold": {
+          "averageSold": "number",
+          "totalSold": "number"
+        },
+        "todayTrendingFoods": [],
+        "weekChartData": [],
+        "weekTotalSold": {
+          "averageSold": "number",
+          "totalSold": "number"
+        },
+        "weeklyTrendingFoods": []
+      }
+    },
+    "GET /v1/vendor_web/cancellation/restaurant": {
+      "status": 200,
+      "json": {
+        "reasons": []
+      }
+    },
+    "GET /v1/vendor_web/cashInHandHistory/getHistory/:vendor": {
+      "status": 200,
+      "json": {
+        "history": [],
+        "limit": "number",
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/cashInHandHistory/posAndTableOrderCommission/:vendor": {
+      "status": 200,
+      "json": {
+        "history": [],
+        "limit": "number",
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/chat_room/list/:user": {
+      "status": 200,
+      "json": {
+        "chats": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/collectedCashInHandHistory/getHistory/:vendor": {
+      "status": 200,
+      "json": {
+        "collected": [],
+        "limit": "number",
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/customer/call/:userId": {
+      "status": 200,
+      "text": true,
+      "contentType": ""
+    },
+    "GET /v1/vendor_web/delete_account_reason_list": {
+      "status": 200,
+      "json": {
+        "result": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/dining/getDiningCategories": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/vendor_web/dining/getSetting": {
+      "status": 200,
+      "text": true,
+      "contentType": ""
+    },
+    "GET /v1/vendor_web/dining_booking/callCustomer/:bookingId/:vendorId": {
+      "status": 200,
+      "json": {
+        "details": "null",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/dining_booking/cancellation/restaurant": {
+      "status": 200,
+      "json": {
+        "reasons": []
+      }
+    },
+    "GET /v1/vendor_web/driver/getBasicData/:restaurant": {
+      "status": 200,
+      "json": {
+        "info": "null",
+        "vehicles": []
+      }
+    },
+    "GET /v1/vendor_web/driver/getMyDriver/:restaurant": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/food_taxation/getAllMyTaxation/:restaurant/": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/vendor_web/food_taxation/getByRestaurant/:restaurant/": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/foods/getAllMainActiveCategories": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/vendor_web/foods/getAllMyAddonsList/:restaurant": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/vendor_web/foods/getBasicData/:restaurant": {
+      "status": 200,
+      "json": {
+        "addons": [],
+        "category": [],
+        "taxation": [],
+        "vendorCategory": []
+      }
+    },
+    "GET /v1/vendor_web/foods/getFoodInfo/:foodId/:restaurant": {
+      "status": 200,
+      "json": {
+        "addons": [],
+        "category": [],
+        "foodInfo": "null",
+        "taxations": [],
+        "vendorCategory": []
+      }
+    },
+    "GET /v1/vendor_web/foods/getMyFoodApp/:restaurant": {
+      "status": 200,
+      "json": {
+        "count": [
+          {
+            "all": "number",
+            "hide": "number",
+            "hold": "number",
+            "photoreject": "number",
+            "qualityreject": "number",
+            "reject": "number",
+            "sizereject": "number"
+          }
+        ],
+        "custom": [],
+        "main": []
+      }
+    },
+    "GET /v1/vendor_web/foods/getMyFoods/:restaurant": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/foods/searchMenu/:vendor/:searchQuery": {
+      "status": 200,
+      "json": {
+        "foods": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/getMySlots/:restaurantId": {
+      "status": 200,
+      "text": true,
+      "contentType": ""
+    },
+    "GET /v1/vendor_web/kitchen_owner/list/:restaurant": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/localities/getByCityId/:cityId": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/vendor_web/media/getVendorMedia/:userId": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/orders/countWeb/:vendorId": {
+      "status": 200,
+      "json": {
+        "deliveredOrder": "number",
+        "handOverOrder": "number",
+        "newOrders": "number",
+        "ongoingOrder": "number",
+        "preparingOrders": "number",
+        "readyOrder": "number",
+        "rejectedOrder": "number",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/orders/forComplaint/:id/:vendor": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/orders/print_invoice/:id/:vendor": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/outlet/getBasicDataForNewOutlet": {
+      "status": 200,
+      "json": {
+        "cities": [],
+        "cuisine": [],
+        "facilities": [],
+        "licenses": [],
+        "types": []
+      }
+    },
+    "GET /v1/vendor_web/outlet/getBasicDataForNewOutletForApp": {
+      "status": 200,
+      "json": {
+        "cities": [],
+        "licenses": [],
+        "localities": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/outlet/getMyOutlets/:restaurantId": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/payoutMethod/list": {
+      "status": 200,
+      "json": {
+        "methods": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/payoutMethod/myPayoutList/:vendor": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "methods": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/pos/insight/:vendor/": {
+      "status": 200,
+      "json": {
+        "monthChartData": [],
+        "monthTotalSold": {
+          "averageSold": "number",
+          "totalSold": "number"
+        },
+        "monthlyTrendingFoods": [],
+        "success": "boolean",
+        "todayChartData": [],
+        "todayTotalSold": {
+          "averageSold": "number",
+          "totalSold": "number"
+        },
+        "todayTrendingFoods": [],
+        "weekChartData": [],
+        "weekTotalSold": {
+          "averageSold": "number",
+          "totalSold": "number"
+        },
+        "weeklyTrendingFoods": []
+      }
+    },
+    "GET /v1/vendor_web/read_all_notification/:user": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/regular_chat_messages/:id": {
+      "status": 200,
+      "json": {
+        "chats": [],
+        "limit": "number",
+        "page": "number",
+        "roomId": "string",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/reports/expense": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/reports/expenseInitial": {
+      "status": 200,
+      "json": {
+        "couponExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "diningBookingDiscountExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "diningCouponExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "limit": "number",
+        "orderProductDiscountExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "otherExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "page": "number",
+        "posOrderExtraDiscountExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "posOrderProductDiscountExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "refundOrderExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "results": [],
+        "tableOrderExtraDiscountExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "tableOrderProductDiscountExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "totalExpenseData": {
+          "amount": "number",
+          "count": "number"
+        },
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/restaurant/posData/:vendor": {
+      "status": 200,
+      "json": {
+        "custom": [],
+        "main": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/restaurant/posDataWeb/:vendor": {
+      "status": 200,
+      "json": {
+        "business": "null",
+        "categories": {
+          "category": [],
+          "own": []
+        },
+        "packaging": "null",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/restaurant/posFoodInitialSearch/:vendor": {
+      "status": 200,
+      "json": {
+        "foods": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/restaurant/posFoodSearch/:vendor/:searchQuery": {
+      "status": 200,
+      "json": {
+        "foods": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/restaurant/posOrderDetail/:id/:vendor/": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/restaurant/posOrderSettings/": {
+      "status": 200,
+      "json": {
+        "business": "null",
+        "packaging": "null"
+      }
+    },
+    "GET /v1/vendor_web/restaurant/posOrders/:vendor/": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "orders": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/restaurant/pos_invoice_print/:id/:vendor/": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/restaurant/subscription/:vendor": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/restaurant/subscription_status/:vendor": {
+      "status": 200,
+      "json": {
+        "date": "string",
+        "expiring": "boolean",
+        "name": "string",
+        "translations": []
+      }
+    },
+    "GET /v1/vendor_web/restaurant_extra_detail/getGuestAvailability/:restaurant": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/restaurant_extra_detail/getMyDiningSchedule/:restaurant": {
+      "status": 200,
+      "json": {
+        "slots": [
+          {
+            "day": "number",
+            "times": []
+          }
+        ],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/restaurant_extra_detail/menu/:id": {
+      "status": 200,
+      "json": {
+        "diningPhotos": [],
+        "menuDetail": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/restaurant_table/getList/:restaurant": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/restaurant_table/qr_table_detail/:vendor": {
+      "status": 200,
+      "json": {
+        "business": "null",
+        "detail": "null",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/sub_category/getActive": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/sub_category/getByCategoryId/:category": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/vendor_web/support_chat_room/list/:user": {
+      "status": 200,
+      "json": {
+        "chats": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/table_order/completedTableOrderList/:vendor/": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "orders": [],
+        "page": "number",
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/table_order/insight/:vendor/": {
+      "status": 200,
+      "json": {
+        "monthChartData": [],
+        "monthTotalSold": {
+          "averageSold": "number",
+          "totalSold": "number"
+        },
+        "monthlyTrendingFoods": [],
+        "success": "boolean",
+        "todayChartData": [],
+        "todayTotalSold": {
+          "averageSold": "number",
+          "totalSold": "number"
+        },
+        "todayTrendingFoods": [],
+        "weekChartData": [],
+        "weekTotalSold": {
+          "averageSold": "number",
+          "totalSold": "number"
+        },
+        "weeklyTrendingFoods": []
+      }
+    },
+    "GET /v1/vendor_web/table_order/invoice_print/:id/:vendor/": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/table_order/ongoing/:vendor/": {
+      "status": 200,
+      "json": {
+        "success": "boolean",
+        "tables": []
+      }
+    },
+    "GET /v1/vendor_web/table_order/ongoingOrderDetail/:vendor/:tableId/": {
+      "status": 200,
+      "json": {
+        "business": "null",
+        "items": [],
+        "packaging": "null",
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/table_order/tableOrderDetail/:vendor/:id/": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/tiffin_packages/getMyPackages/:restaurant": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/tiffin_packages/get_basic/:restaurant": {
+      "status": 200,
+      "json": {
+        "foods": []
+      }
+    },
+    "GET /v1/vendor_web/tiffin_packages/userPurchasedTiffinSubscriptionInfo/:id": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/vendor_category/getAllMyCategory/:restaurant": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/vendor_web/vendor_category/getMyCategories/:restaurant": {
+      "status": 200,
+      "json": {
+        "mainCategory": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "success": "boolean",
+          "totalPages": "number",
+          "totalResults": "number"
+        },
+        "vendorCategory": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "success": "boolean",
+          "totalPages": "number",
+          "totalResults": "number"
+        }
+      }
+    },
+    "GET /v1/vendor_web/vendor_header_content/:id": {
+      "status": 200,
+      "json": {
+        "chatList": [],
+        "locales": [],
+        "notifications": [],
+        "success": "boolean",
+        "unread": "number"
+      }
+    },
+    "GET /v1/vendor_web/vendor_sub_category/getActiveByCategoryId/:category/:restaurant": {
+      "status": 200,
+      "text": true,
+      "contentType": "application/json"
+    },
+    "GET /v1/vendor_web/vendor_sub_category/getMyCategories/:restaurant": {
+      "status": 200,
+      "json": {
+        "mainCategory": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "success": "boolean",
+          "totalPages": "number",
+          "totalResults": "number"
+        },
+        "vendorCategory": {
+          "limit": "number",
+          "page": "number",
+          "results": [],
+          "success": "boolean",
+          "totalPages": "number",
+          "totalResults": "number"
+        }
+      }
+    },
+    "GET /v1/vendor_web/waiter/getMyWaiter/:restaurant": {
+      "status": 200,
+      "json": {
+        "limit": "number",
+        "page": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/vendor_web/wallet/getWalletTransaction/:user": {
+      "status": 200,
+      "json": {
+        "success": "boolean"
+      }
+    },
+    "GET /v1/vendor_web/wallet/withdrawalHistory/:vendor": {
+      "status": 200,
+      "json": {
+        "acceptedRequest": "number",
+        "createdRequest": "number",
+        "limit": "number",
+        "page": "number",
+        "rejectedRequest": "number",
+        "results": [],
+        "success": "boolean",
+        "totalPages": "number",
+        "totalResults": "number"
+      }
+    },
+    "GET /v1/waiter/account_setting/notification_setting/:id": {
+      "status": 200,
+      "json": {
+        "setting": {
+          "id": "string",
+          "importantUpdate": "boolean",
+          "newsletters": "boolean",
+          "orderEmail": "boolean",
+          "orderNotification": "boolean",
+          "orderWhatsApp": "boolean",
+          "promoEmail": "boolean",
+          "promoNotification": "boolean",
+          "promoWhatsApp": "boolean",
+          "socialEmail": "boolean",
+          "socialNotification": "boolean",
+          "user": "string"
+        },
+        "success": "boolean"
+      }
+    },
+    "GET /v1/waiter/delete_account_reason_list": {
+      "status": 200,
+      "json": {
+        "result": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/waiter/foodListForOrder/:vendor": {
+      "status": 200,
+      "json": {
+        "custom": [],
+        "main": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/waiter/foods/foodList/:restaurant": {
+      "status": 200,
+      "json": {
+        "custom": [],
+        "main": []
+      }
+    },
+    "GET /v1/waiter/ongoingTableOrder/:vendor/:tableId": {
+      "status": 200,
+      "json": {
+        "items": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/waiter/restaurant/tableList/:vendor": {
+      "status": 200,
+      "json": {
+        "success": "boolean",
+        "tables": []
+      }
+    },
+    "GET /v1/waiter/waiterFoodSearch/:vendor/:searchQuery": {
+      "status": 200,
+      "json": {
+        "foods": [],
+        "success": "boolean"
+      }
+    },
+    "GET /v1/waiter/waiterInitialFoodSearch/:vendor": {
+      "status": 200,
+      "json": {
+        "foods": [],
+        "success": "boolean"
+      }
+    }
+  }
+}

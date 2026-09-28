@@ -1,0 +1,5101 @@
+{
+  "meta": {
+    "generatedAt": "2026-09-28T14:36:31.947Z",
+    "db": "mongodb://127.0.0.1:27017/foodbite_test",
+    "total": 1018,
+    "statusSummary": {
+      "200": 580,
+      "303": 6,
+      "400": 267,
+      "404": 145,
+      "500": 19
+    }
+  },
+  "results": {
+    "GET /v1/accountant/accept_deliveryman_disbursement/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/accept_restaurant_disbursement/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/accountant_header_content": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/accountant_profile/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/cash_collected/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/city_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/collect_cash_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/customer_detail/:user": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/customer_report": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/dashboard": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/deliveryman_cash_in_hand/:deliveryman": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/deliveryman_detail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/deliveryman_disbursement": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/deliveryman_disbursement/export/:type/:status": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/deliveryman_disbursement_detail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/deliveryman_disbursement_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/deliveryman_disbursement_report/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/deliveryman_initial_disbursement": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/deliveryman_report": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/deliveryman_with_city/:city": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/deliveryman_withdrawal_request": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/deliveryman_withdrawal_request/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/dining_booking_detail/:bookingId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/dining_booking_report": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/disbursement/deliveryman_report/export/:id/:type": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/disbursement/restaurant_report/export/:id/:type": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/expense": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/expense/export/:type/:status": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/expense_initial": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/food_report/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/media_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/payment_transaction_report/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/pos_order_detail/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/pos_order_report": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/regular_chat_messages/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/regular_order_detail/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/regular_order_report": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/reject_deliveryman_disbursement/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/reject_restaurant_disbursement/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/reports/customer/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/reports/deliveryman/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/reports/deliveryman_disbursement/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/reports/dining_booking/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/reports/food_report/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/reports/orders/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/reports/payment_transaction/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/reports/pos_orders/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/reports/restaurant/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/reports/restaurant_disbursement/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/reports/table_orders/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/reports/wallet_transaction/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/restaurant_cash_in_hand/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/restaurant_detail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/restaurant_disbursement": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/restaurant_disbursement/export/:type/:status": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/restaurant_disbursement_detail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/restaurant_disbursement_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/restaurant_disbursement_report/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/restaurant_initial_disbursement": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/restaurant_report": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/restaurant_report_initial": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/restaurant_with_city/:cityId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/restaurant_withdrawal_request": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/restaurant_withdrawal_request/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/table_order_detail/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/table_order_report": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/tiffin_packages_purchase_detail/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/user_contact_detail/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/wallet_transaction_report/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/web_guard/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/withdrawal_method/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/withdrawal_method_detail/:methodId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/withdrawal_method_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/accountant/withdrawal_request_detail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/addons/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/addons/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/admin_header_content": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/admin_profile/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/app_pages/get/:slug": {
+      "status": 200,
+      "contentType": "",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/app_web_settings/get": {
+      "status": 200,
+      "contentType": "",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/auth_roles/accountant/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/auth_roles/admin/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/auth_roles/city_master_detail/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/auth_roles/city_master_list": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/auth_roles/cityzen/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/auth_roles/detail/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/auth_roles/role_account_list": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/auth_roles/support_team/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/banners/export/": {
+      "status": 200,
+      "contentType": "text/csv; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/banners/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/business_settings/get": {
+      "status": 200,
+      "contentType": "",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/cashCollection/list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/cash_collected/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/category/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/category/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/category/getCategoryList": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/cities/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/cities/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/cities/listAllCities": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/cities/map_dialog/:city": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/complaints/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/complaints/get": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/complaints_reason/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/complaints_reason/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/country/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/coupon/detail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/coupon/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/coupon/get": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/coupon/getInfo/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/coupon/request": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/cronScheduler/getInfo": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/cronScheduler/start": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/cronScheduler/stop": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/cuisine/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/cuisine/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/cuisine/listAllCuisine": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/customerAllFavourite": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/customerAllRefundRequest": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/customerAllReviews": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/customerBookingRefundList": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/customerComplaintList": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/customerDeliverymanReview": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/customerFavouriteFood": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/customerFavouriteOrders": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/customerFavouriteRestaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/customerFoodReview": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/customerHiddenRestaurants": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/customerMediaFiles": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/customerOrderRefundList": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/customerRestaurantReview": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/customerTiffinRefundList": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/deleted_accounts": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/deleted_accounts/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/deliveryAddressList": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/detail/:user": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/diningBookingList": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/getList": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/loyaltyPointsReport": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/loyalty_points/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/orderList": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/purchasedTiffinPackages": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/walletFundList": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/wallet_fund/export/:type/:query": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/customer/wallet_transactions": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dashboard": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/delete_account_reason_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/delete_account_reason_list/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryShiftSchedule/get": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/delivery_instruction/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/delivery_instruction/get": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman/cashInHand/:deliveryman": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman/deleted_deliveryman": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman/deleted_deliveryman/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman_detail/collected_cash_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman_detail/complaint_orders": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman_detail/complaint_vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman_detail/complaints": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman_detail/disbursement_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman_detail/information/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman_detail/media_files": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman_detail/order_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman_detail/payout_accounts": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman_detail/reviews": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman_detail/wallet_transactions": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman_detail/withdrawal_request_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman_disbursement/export/:type/:status": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman_joining_form": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman_request/detail/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman_request/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman_request/list/:status": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryman_withdrawal_request/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/deliveryshift_schedule/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining/notice/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_booking/bookingInformation/:bookingId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_booking/coupon/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_booking/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_booking/getDiningBookingCount": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_booking/getDiningBookingList": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_booking_refund_request/active": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_booking_refund_request/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_booking_refund_request/info/:requestId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_booking_refund_request_reason/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_booking_refund_request_reason/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_campaign/detail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_campaign/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_campaign/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_campaign/getById/:campaignId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_campaign_request/accept/:campaignId/:restaurantId": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_campaign_request/get/:campaignId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_cancel_reason/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_cancel_reason/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_category/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_category/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_coupon/detail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_coupon/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_coupon/get": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_coupon/getInfo/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_coupon/request": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_notice/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/dining_settings/get": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/disbursement/acceptDeliverymanDisbursement/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/disbursement/acceptRestaurantDisbursement/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/disbursement/deliveryman": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/disbursement/deliverymanDisbursementDetail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/disbursement/deliverymanReport/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/disbursement/deliveryman_report/export/:id/:type": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/disbursement/rejectDeliverymanDisbursement/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/disbursement/rejectRestaurantDisbursement/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/disbursement/restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/disbursement/restaurantDisbursementDetail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/disbursement/restaurantReport/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/disbursement/restaurant_report/export/:id/:type": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/disbursement_settings/get": {
+      "status": 200,
+      "contentType": "",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/download_import_sample/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/driver/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/driver/getAllVendorDeliveryman": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/driver/getBasicData": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/driver/getByCity/:city": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/driver/getById/:driverId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/driver/map_dialog/:city": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/driver/walletFundList": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/driver/wallet_fund/export/:type/:query": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/driver_incentive/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/driver_incentive/get": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/driver_offline_messages/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/driver_offline_messages/get": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/driver_settings/get": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/email_config/get": {
+      "status": 200,
+      "contentType": "",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/email_config/media_list": {
+      "status": 200,
+      "contentType": "",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/email_config/sendDemo/:email": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/email_templates/:slug": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/expense/export/:type/:status": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/feedback/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/feedback/list": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/food/getFoodsByCity/:cityId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/food/getRestaurantByCityId/:cityId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/food_campaign/detail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/food_campaign/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/food_campaign/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/food_campaign/getBasicData": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/food_campaign/getById/:campaignId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/food_campaign/getFoodByRestaurant/:restaurantId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/food_campaign/getRestaurantByCityId/:cityId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/food_campaign_request/accept/:campaignId/:foodId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/food_campaign_request/get/:campaignId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/food_taxation/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/food_taxation/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/foods/detail/:foodId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/foods/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/foods/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/foods/getBasicData/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/foods/getFoodInfo/:foodId": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/gratitude/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/gratitude/get": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/hidden_restaurants/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/hide/restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/hide_reason/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/hide_reason/restaurant/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/invoice/instruction/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/invoice_instruction/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/kitchen/deleted_kitchen_owner": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/kitchen/deleted_kitchen_owner/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/kitchen_owner/info/:kitchenId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/kitchen_owner_setting/get": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/kitchen_owners/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/kitchen_owners/list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/landing_page/get_content": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/language/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/language/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/localities/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/localities/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/localities/getByCityId/:cityId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/media_storage_setting/get": {
+      "status": 200,
+      "contentType": "",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/medias/export/:type": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/medias/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/medias/getMediaList": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/notification_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/order_cancel_reason/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/order_cancel_reason/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/order_notification_translation/getBySlug/:slug": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/order_rating_message/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/order_rating_message/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/order_settings/get": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/orders/coupon/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/orders/detailAdmin/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/orders/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/orders/fetchDriverNearToOrder/:id/:restaurant": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/orders/getOrderCount": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/orders/getOrderList": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/orders/getScheduleOrders": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/orders/getSubscriptionOrders": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/orders/getUnAssignedOrders": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/orders/invoice/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/outlet_all_data/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/payment_config/get/:slug": {
+      "status": 200,
+      "contentType": "",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/pos/categories/:restaurantId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/pos/customer_detail/:user": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/pos/initial": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/pos/restaurants/:cityId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/pos/search/:vendor/:searchQuery": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/posOrders/detail/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/posOrders/invoice/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/posOrders/list": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/pos_orders/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/refund_request/active": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/refund_request/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/refund_request/info/:requestId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/refund_request_reason/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/refund_request_reason/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/regular_chat_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/regular_chat_list/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/regular_chat_message/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/regular_chat_messages/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/report_emergency/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/report_emergency/list": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/report_issue/restaurant/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/report_issue/restaurant/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/report_issue_list/restaurant/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/report_issue_list/restaurant/get": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/customer": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/customer/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/deliveryman": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/deliveryman/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/deliverymanDisbursement": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/deliverymanDisbursementReportInitial": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/deliveryman_disbursement/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/diningBooking": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/dining_booking/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/disbursementReportInitial": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/expense": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/expenseInitial": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/food_report/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/food_report/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/orders": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/orders/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/payment_transaction/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/payment_transaction/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/posOrders": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/pos_orders/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/restaurant/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/restaurantDisbursement": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/restaurantInitial": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/restaurant_disbursement/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/tableOrders": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/table_orders/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/wallet_transaction/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/reports/wallet_transaction/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant/cashInHand/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant/facilities/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant/filter/:kind/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant/filter/export/:type/:kind/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant/filter_data": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant/filter_restaurant/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant/getBasicDataForNewRestaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant/getById/:restaurantId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant/getDiningSupportedRestaurantByCityId/:cityId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant/getOutlets": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant/getRestaurantByCityCollectCash/:cityId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant/getRestaurantByCityId/:cityId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant/getRestaurantByCityIdForTiffinPackages/:cityId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant/getRestaurantByCityIdLimitedData/:cityId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant/map_dialog/:city": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant/notice/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurantType/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_all_data/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_campaign/detail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_campaign/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_campaign/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_campaign/getBasicData": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_campaign/getById/:campaignId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_campaign/getRestaurantByCityId/:cityId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_campaign_request/accept/:campaignId/:restaurantId": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_campaign_request/get/:campaignId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_complaints/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_complaints/get": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_disbursement/export/:type/:status": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_facilities/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_food_license/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_food_license/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_joining_form": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_notice/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_request/detail/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_request/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_request/list/:status": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_settings/get": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_type/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurant_withdrawal_request/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurants/deleted_restaurants": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/restaurants/deleted_restaurants/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/sms_provider/get/:slug": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/social_signin/getList": {
+      "status": 200,
+      "contentType": "",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/subCategory/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/sub_category/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/sub_category/getActive": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/sub_category/getByCategoryId/:category": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/subscriber/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/subscriber/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/subscription/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/subscription/get/:subscriptionId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/subscription/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/subscription_orders/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/support_chat_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/support_chat_list/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/support_chat_message/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/support_chat_messages/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/system_deliveryman/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/tableOrders/detail/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/tableOrders/invoice/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/tableOrders/list": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/table_orders/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/tiffin_packages/details/:id/:restaurant": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/tiffin_packages/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/tiffin_packages/foods/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/tiffin_packages/getList": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/tiffin_packages/getTiffinSubscriptionPurchaseDetail/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/tiffin_packages/purchased/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/tiffin_subscription_cancel_reason/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/tiffin_subscription_cancel_reason/getAll": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/tiffin_subscription_refund_request/active": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/tiffin_subscription_refund_request/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/tiffin_subscription_refund_request/info/:requestId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/tiffin_subscription_refund_request_reason/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/tiffin_subscription_refund_request_reason/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/unassigned_orders/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/user_avatar/export/:type": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/user_avatar/list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/user_contact_detail/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/user_settings/get": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/users/search/:name": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vehicle/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vehicle/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_deliveryman/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/all_refund_request": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/all_reviews": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/booking_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/collected_cash_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/complaint_orders": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/complaint_vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/complaints": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/deliveryman_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/dining_refund_request": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/disbursement_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/food_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/information/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/kitchen_owner_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/media_files": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/orderList": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/order_refund_request": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/outlet_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/payout_accounts": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/pos_order_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/table_order_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/tiffin_package_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/tiffin_subscription_refund_request": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/vendor_food_reviews": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/vendor_reviews": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/waiter_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/wallet_transactions": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_detail/withdrawal_request_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/vendor_sub_category/getActiveByCategoryId/:category/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/waiter/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/waiter/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/waiter/getById/:waiterId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/waiter_settings/get": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/waiters/deleted_waiter": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/waiters/deleted_waiter/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/wallet/bonus/getAll": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/wallet_bonus/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/web_guard/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/withdrawalMethod/detail/:methodId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/withdrawalMethod/list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/withdrawalRequest/deliveryman": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/withdrawalRequest/detail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/withdrawalRequest/restaurant": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/admin/withdrawal_method/export/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/auth/installations": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/auth/register_guest_account/:agent/:locale": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/auth/resendOTP/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/auth/web_verification/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/cityzen/accept_deliveryman_disbursement/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/accept_dining_campaign_request/:campaignId/:restaurantId": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/accept_food_campaign_request/:campaignId/:foodId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/accept_restaurant_campaign_request/:campaignId/:restaurantId": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/accept_restaurant_disbursement/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/addons_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/banners_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/basic_data_for_new_restaurant/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/cash_collection_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/cityzen_order_detail/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/cityzen_order_invoice/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/cityzen_pos_order_detail/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/cityzen_pos_order_invoice/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/cityzen_profile/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/cityzen_table_order_detail/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/cityzen_table_order_invoice/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/cityzen_team_header_content/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/coupon_deep_detail/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/coupon_detail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/coupon_dining_booking/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/coupon_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_all_reviews": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_delivery_address_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_deliveryman_reviews": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_dining_booking_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_dining_refund_request": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_favourite_foods": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_favourite_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_favourite_orders": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_favourite_restaurants": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_food_reviews": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_hidden_restaurants": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_info/:user": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_media_files": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_order_complaint_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_order_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_order_refund_request": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_purchased_tiffin_packages": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_refund_request_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_restaurant_reviews": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_tiffin_refund_request": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_detail_wallet_transactions": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/customer_purchased_tiffin_package_detail/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/dashboard/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/decline_deliveryman_disbursement/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/decline_restaurant_disbursement/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_basic_data/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_cash_in_hand/:deliveryman": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_detail/:driverId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_detail_collected_cash_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_detail_complaint_orders": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_detail_complaint_vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_detail_complaints": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_detail_disbursement_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_detail_info/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_detail_media_files": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_detail_order_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_detail_payout_accounts": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_detail_reviews": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_detail_wallet_transactions": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_detail_withdrawal_request_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_disbursement_detail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_disbursement_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_joining_detail/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_joining_request/:status/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_with_city/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/deliveryman_withdrawal_request/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/dining_booking_count/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/dining_booking_detail/:bookingId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/dining_booking_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/dining_booking_refund_request/info/:requestId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/dining_booking_refund_request_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/dining_campaign_deep_detail/:campaignId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/dining_campaign_detail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/dining_campaign_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/dining_campaign_request_list/:campaignId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/dining_coupon_deep_detail/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/dining_coupon_detail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/dining_coupon_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/fetch_deliveryman_near_order/:id/:restaurant": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/filter_restaurant_data": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/food_campaign_deep_detail/:campaignId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/food_campaign_detail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/food_campaign_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/food_campaign_request_list/:campaignId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/food_deep_detail/:foodId": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/food_detail/:foodId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/food_get_basic_data/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/food_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/food_list_for_campaign/:restaurantId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/food_list_for_tiffin_packages/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/food_list_from_city/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/hidden_restaurant_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/kitchen_owner/info/:kitchenId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/kitchen_owners_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/localities/getAll/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/localities_from_city/:cityId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/media_files/:userId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/media_files_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/media_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/new_coupon_request/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/new_dining_coupon_request/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/notification_list/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/order_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/order_refund_request/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/order_refund_request_detail/:requestId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/orders_complaint_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/orders_count/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/outlet_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/pos_categories/:restaurantId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/pos_customer_detail/:user": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/pos_initial/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/pos_order_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/pos_search/:vendor/:searchQuery": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/redeem_order_list/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/regular_chat_list/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/regular_chat_messages/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_campaign_deep_detail/:campaignId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_campaign_detail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_campaign_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_campaign_request_list/:campaignId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_cash_in_hand/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_cityzen/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_complaints_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_deep_detail/:restaurantId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_all_refund_request": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_all_reviews": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_booking_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_collected_cash_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_complaint_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_deliveryman_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_dining_refund_request": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_disbursement_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_food_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_info/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_media_files": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_order_complaint_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_order_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_order_refund_request": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_outlet_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_own_complaint_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_own_reviews": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_payout_accounts": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_pos_order_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_table_order_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_tiffin_packages_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_tiffin_subscription_refund_request": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_vendor_food_reviews": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_waiter_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_wallet_transactions": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_detail_withdrawal_request_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_disbursement_detail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_disbursement_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_food_taxation_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_register_request_detail/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_register_request_list/:status/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_report_issue_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/restaurant_withdrawal_request/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/search_customer/:name": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/sub_cateories_list/:category": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/support_chat_list/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/support_chat_messages/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/system_deliveryman_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/table_order_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/tiffin_package_details/:id/:restaurant": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/tiffin_packages_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/tiffin_subscription_order_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/tiffin_subscription_refund_request_detail/:requestId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/tiffin_subscription_refund_request_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/un_assinged_order_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/user_contact_detail/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/vendor_deliveyman_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/vendor_detail/kitchen_owner_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/vendor_sub_categories_list/:category/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/waiter_detail/:waiterId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/waiter_list/:master": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/web_guard/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/cityzen/withdrawal_request_detail/:id": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/driver/account_setting/notification_setting/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/cancellation/driver": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/chat_room/list/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/delete_account_reason_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/depositeDetail/:deliveryman": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/driver_offline_messages/getMessagesList": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/drivers/goOffline/:uid/:reasonId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/drivers/goOnline/:uid": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/insight/overall/:uid": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/notification/readAll/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/orders/activeOrder/:driverId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/orders/driverReachRestaurant/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/orders/newOrder/:driverId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/orders/orderDetails/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/payoutMethod/detail/:id/:deliveryman": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/payoutMethod/list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/payoutMethod/myPayoutList/:deliveryman": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/profile/me/:uid": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/support_chat_room/list/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/wallet/getWalletTransaction/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/wallet/withdrawalDetail/:deliveryman": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/driver/wallet/withdrawalHistory/:deliveryman": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/kitchen/account_setting/notification_setting/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/kitchen/delete_account_reason_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/kitchen/food_list/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/kitchen/foods/addon_list/:owner": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/kitchen/foods/kitchen_food_detail/:id/:owner": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/kitchen/notification/readAll/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/kitchen/orders/order_detail/:order/:owner": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/kitchen/profile/me/:uid": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/public/app_pages/content/:slug": {
+      "status": 200,
+      "contentType": "",
+      "auth": "public"
+    },
+    "GET /v1/public/app_pages/getContent/:slug": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/customer_header_content": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/deliveryman_joining/getBasicDataDeliverymanRequest": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/email_config/userEmailVerification/:email/:locale": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/getDriverSettings": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/getKitchenSetting": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/getVendorSettings": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/getWaiterSettings": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/get_web_settings/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/landing_page/get_content": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/localities_from_city/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/otp/failed/:id": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/otp/success/:id": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/otp/verify/:id": {
+      "status": 303,
+      "contentType": "text/plain; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/otp/verify_reset_password_web/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/otp/verify_web/:id": {
+      "status": 303,
+      "contentType": "text/plain; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/payments/makePayment/:id": {
+      "status": 303,
+      "contentType": "text/plain; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/payments/paid_failed/:id": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/payments/paid_success/:id": {
+      "status": 303,
+      "contentType": "text/plain; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/payments/payment_processed/": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/payments/payment_repeated/": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/qr_code_menu/:restaurant/:table": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/register/getBasicDataRestaurantRequest": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/register/restaurant_web_self_register_detail": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/restaurant/activeCuisine/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/restaurant/activeFacility/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/restaurant/activeType/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/restaurant/call/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/sms_provider/demo_firebase/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/sms_provider/demo_msg91/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/tiffin_packages/info/:id/": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/verification/firebase_otp_web_version/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/verification/firebase_reset_password_otp_web_version/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/verification/otp/:locale/:id": {
+      "status": 303,
+      "contentType": "text/plain; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/verification/otp_web_reset_password_version/": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/public/verification/otp_web_version/:id": {
+      "status": 303,
+      "contentType": "text/plain; charset=utf-8",
+      "auth": "public"
+    },
+    "GET /v1/support_team/all_cities": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/support_team/booking_detail/:bookingId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/support_team/customer_detail/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/support_team/customer_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/support_team/dashboard": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/support_team/deliveryman_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/support_team/export_chats/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/support_team/order_detail/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/support_team/purchase_detail/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/support_team/restaurant_detail/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/support_team/restaurant_initial": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/support_team/restaurant_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/support_team/support_team_chat_list/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/support_team/support_team_header_content/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/support_team/support_team_profile/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/support_team/web_guard/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/users/account_setting/notification_setting/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/address/deliveryAddressList/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/cancellation/user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/chat_room/list/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/delete_account_reason_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/dining_booking/cancellation/user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/dining_booking/invoice/:id/:user/:locale": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/dining_booking/search/:uid/:query": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/dining_booking/summary/:id/:user/:locale": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/dining_booking_refund/reasons": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/dining_coupon/redeem/:user/:coupon": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/driver/call/:driver": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/hide_reason/restaurant/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/loyaltyPoints/getMyLoyaltyPoints/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/media/photos/:uid": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/notification/count/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/notification/readAll/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/orders/forComplaint/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/orders/getOrderDetailsForReview/:id/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/orders/invoice/:id/:user/:locale": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/orders/summary/:id/:user/:locale": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/orders/userOrderDetail/:id/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/payments/walletList": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/profile/getReferralCode/:userId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/profile/user/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/profile/user_avatar": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/refund/reasons": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/report/reasons": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/review/myReviewList/:uid": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/review/restaurant/direct/:restaurant": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/support_chat_room/list/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/tiffin_packages/buy/:id/": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/tiffin_packages/invoice/:id/:user/:locale": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/tiffin_packages/summary/:id/:user/:locale": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/tiffin_subscription_cancel_reason/user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/tiffin_subscription_refund/reasons": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/users/wallet/getMyWalletData/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/account_setting/notification_setting/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/addons/getMyAddons/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/business/insight/:vendor/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/cancellation/restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/cashInHandHistory/getHistory/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/cashInHandHistory/posAndTableOrderCommission/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/category/getActive": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/chat_room/list/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/collectedCashInHandHistory/getHistory/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/coupons/get": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/customer/call/:userId": {
+      "status": 200,
+      "contentType": "",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/delete_account_reason_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/dining/getDiningCategories": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/dining/getSetting": {
+      "status": 200,
+      "contentType": "",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/dining/getVendorDiningInformation/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/dining_booking/callCustomer/:bookingId/:vendorId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/dining_booking/cancellation/restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/dining_booking/detail/:bookingId/:vendorId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/dining_campaign/near_me/:restaurantId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/dining_coupon/vendorCoupons": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/driver/getBasicData/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/driver/getById/:driverId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/driver/getMyDriver/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/drivers/activeDriver/:vendorId": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/food_campaign/getDetails/:campaignId/:restaurantId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/food_campaign/near_me/:restaurantId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/food_taxation/getAllMyTaxation/:restaurant/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/food_taxation/getByRestaurant/:restaurant/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/foods/getAllMainActiveCategories": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/foods/getAllMyAddonsList/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/foods/getBasicData/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/foods/getFoodInfo/:foodId/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/foods/getFoodInfoVendorApp/:foodId/:restaurant": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/foods/getMyFoodApp/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/foods/getMyFoods/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/foods/searchMenu/:vendor/:searchQuery": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/getMyProfile/:userId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/getMySlots/:restaurantId": {
+      "status": 200,
+      "contentType": "",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/kitchen_owner/info/:kitchenId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/kitchen_owner/list/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/localities/getByCityId/:cityId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/media/getVendorMedia/:userId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/orders/callCustomer/:id/:vendor": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/orders/callDeliveryman/:id/:vendor": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/orders/fetchDriverNearToOrder/:id/:restaurant": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/orders/forComplaint/:id/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/orders/invoice/:id/:vendor/:locale": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/orders/print_invoice/:id/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/orders/summary/:id/:vendor/:locale": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/orders/vendorOrderDetails/:id/:vendor": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/outlet/getBasicDataForNewOutlet": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/outlet/getBasicDataForNewOutletForApp": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/outlet/getById/:restaurantId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/outlet/getByIdForApp/:id/:vendorId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/outlet/getMyOutlets/:restaurantId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/payoutMethod/detail/:id/:vendor": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/payoutMethod/list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/payoutMethod/myPayoutList/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/pos/insight/:vendor/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/profile/user/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/read_all_notification/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/regular_chat_messages/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/reports/expense": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/reports/expense/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/reports/expenseInitial": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/restaurant/edit_detail/:id/": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/restaurant/posData/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/restaurant/posFoodInitialSearch/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/restaurant/posFoodSearch/:vendor/:searchQuery": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/restaurant/posOrderDetail/:id/:vendor/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/restaurant/posOrderSettings/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/restaurant/posOrders/:vendor/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/restaurant/pos_invoice_print/:id/:vendor/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/restaurant/reOpenTemporary/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/restaurant/subscription/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/restaurant/subscription_status/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/restaurant/temporaryClose/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/restaurant/wallet/:vendor": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/restaurant_campaign/near_me/:restaurantId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/restaurant_extra_detail/getGuestAvailability/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/restaurant_extra_detail/getMyDiningSchedule/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/restaurant_extra_detail/menu/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/restaurant_table/getList/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/restaurant_table/qr_table_detail/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/sub_category/getActive": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/sub_category/getByCategoryId/:category": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/support_chat_room/list/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/table_order/completedTableOrderList/:vendor/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/table_order/insight/:vendor/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/table_order/invoice_print/:id/:vendor/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/table_order/ongoing/:vendor/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/table_order/ongoingOrderDetail/:vendor/:tableId/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/table_order/tableOrderDetail/:vendor/:id/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/tiffin_packages/details/:id/:restaurant": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/tiffin_packages/getMyPackages/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/tiffin_packages/get_basic/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/tiffin_packages/userPurchasedTiffinSubscriptionInfo/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/user_contact_detail/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/vendor_category/getAllMyCategory/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/vendor_category/getMyCategories/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/vendor_header_content/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/vendor_profile/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/vendor_sub_category/getActiveByCategoryId/:category/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/vendor_sub_category/getMyCategories/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/waiter/getById/:waiterId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/waiter/getMyWaiter/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/wallet/getWalletTransaction/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/wallet/withdrawalDetail/:vendor": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor/wallet/withdrawalHistory/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/vendor_web/account_setting/notification_setting/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/addons/getMyAddons/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/business/insight/:vendor/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/business/web_monthly_insight/:vendor/": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/business/web_overall_insight/:vendor/": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/business/web_today_insight/:vendor/": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/business/web_weekly_insight/:vendor/": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/cancellation/restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/cashInHandHistory/getHistory/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/cashInHandHistory/posAndTableOrderCommission/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/category/getActive": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/chat_room/list/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/collectedCashInHandHistory/getHistory/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/coupons/get": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/customer/call/:userId": {
+      "status": 200,
+      "contentType": "",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/delete_account_reason_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/dining/getDiningCategories": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/dining/getSetting": {
+      "status": 200,
+      "contentType": "",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/dining/getVendorDiningInformation/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/dining/getVendorDiningInformationWeb/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/dining_booking/callCustomer/:bookingId/:vendorId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/dining_booking/cancellation/restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/dining_booking/detail/:bookingId/:vendorId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/dining_campaign/near_me/:restaurantId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/dining_coupon/vendorCoupons": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/driver/getBasicData/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/driver/getById/:driverId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/driver/getMyDriver/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/drivers/activeDriver/:vendorId": {
+      "status": 500,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/food_campaign/getDetails/:campaignId/:restaurantId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/food_campaign/near_me/:restaurantId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/food_taxation/getAllMyTaxation/:restaurant/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/food_taxation/getByRestaurant/:restaurant/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/foods/getAllMainActiveCategories": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/foods/getAllMyAddonsList/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/foods/getBasicData/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/foods/getFoodInfo/:foodId/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/foods/getFoodInfoVendorApp/:foodId/:restaurant": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/foods/getMyFoodApp/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/foods/getMyFoods/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/foods/searchMenu/:vendor/:searchQuery": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/getMyProfile/:userId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/getMySlots/:restaurantId": {
+      "status": 200,
+      "contentType": "",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/kitchen_owner/info/:kitchenId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/kitchen_owner/list/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/localities/getByCityId/:cityId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/media/getVendorMedia/:userId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/orders/callCustomer/:id/:vendor": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/orders/callDeliveryman/:id/:vendor": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/orders/countWeb/:vendorId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/orders/fetchDriverNearToOrder/:id/:restaurant": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/orders/forComplaint/:id/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/orders/invoice/:id/:vendor/:locale": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/orders/print_invoice/:id/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/orders/summary/:id/:vendor/:locale": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/orders/vendorOrderDetails/:id/:vendor": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/orders/webList": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/outlet/getBasicDataForNewOutlet": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/outlet/getBasicDataForNewOutletForApp": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/outlet/getById/:restaurantId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/outlet/getByIdForApp/:id/:vendorId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/outlet/getMyOutlets/:restaurantId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/payoutMethod/detail/:id/:vendor": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/payoutMethod/list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/payoutMethod/myPayoutList/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/pos/insight/:vendor/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/profile/user/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/read_all_notification/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/regular_chat_messages/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/reports/expense": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/reports/expense/export": {
+      "status": 400,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/reports/expenseInitial": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant/edit_detail/:id/": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant/getDetailForWebUpdate/:restaurantId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant/posData/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant/posDataWeb/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant/posFoodInitialSearch/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant/posFoodSearch/:vendor/:searchQuery": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant/posOrderDetail/:id/:vendor/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant/posOrderSettings/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant/posOrders/:vendor/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant/pos_invoice_print/:id/:vendor/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant/reOpenTemporary/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant/subscription/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant/subscription_status/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant/temporaryClose/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant/wallet/:vendor": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant_campaign/near_me/:restaurantId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant_extra_detail/getGuestAvailability/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant_extra_detail/getMyDiningSchedule/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant_extra_detail/menu/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant_table/getList/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/restaurant_table/qr_table_detail/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/sub_category/getActive": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/sub_category/getByCategoryId/:category": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/support_chat_room/list/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/table_order/completedTableOrderList/:vendor/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/table_order/insight/:vendor/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/table_order/invoice_print/:id/:vendor/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/table_order/ongoing/:vendor/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/table_order/ongoingOrderDetail/:vendor/:tableId/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/table_order/tableOrderDetail/:vendor/:id/": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/tiffin_packages/details/:id/:restaurant": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/tiffin_packages/getMyPackages/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/tiffin_packages/get_basic/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/tiffin_packages/userPurchasedTiffinSubscriptionInfo/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/user_contact_detail/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/vendor_category/getAllMyCategory/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/vendor_category/getMyCategories/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/vendor_header_content/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/vendor_profile/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/vendor_sub_category/getActiveByCategoryId/:category/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/vendor_sub_category/getMyCategories/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/waiter/getById/:waiterId": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/waiter/getMyWaiter/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/wallet/getWalletTransaction/:user": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/wallet/withdrawalDetail/:vendor": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/vendor_web/wallet/withdrawalHistory/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-web"
+    },
+    "GET /v1/waiter/account_setting/notification_setting/:id": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/waiter/delete_account_reason_list": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/waiter/foodListForOrder/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/waiter/foods/foodList/:restaurant": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/waiter/ongoingTableOrder/:vendor/:tableId": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/waiter/profile/user/:id": {
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/waiter/restaurant/tableList/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/waiter/waiterFoodSearch/:vendor/:searchQuery": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    },
+    "GET /v1/waiter/waiterInitialFoodSearch/:vendor": {
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "auth": "jwt-app"
+    }
+  }
+}
