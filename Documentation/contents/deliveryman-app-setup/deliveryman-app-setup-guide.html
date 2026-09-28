@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Deliveryman App Setup | FoodBite Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../../assets/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+
+<body>
+
+    <header class="docs-header navbar navbar-light bg-white border-bottom">
+        <div class="container-fluid px-4">
+
+            <span class="navbar-brand mb-0 h5">FoodBite Documentation</span>
+
+            <div class="d-flex align-items-center gap-3">
+                <a href="../help/support.html" class="text-decoration-none text-secondary">Support</a>
+                <a href="https://docs-foodbite.elitecanyon.com" target="_blank"
+                    class="text-decoration-none text-primary">
+                    Online Documentation
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <div class="docs-wrapper">
+
+        <aside class="docs-sidebar">
+            <nav class="docs-nav">
+                <a href="../../index.html">Introduction</a>
+                <a href="../extra-pages/prerequisite.html">Prerequisites</a>
+                <a href="../extra-pages/configuration-summary-overview.html">Configuration Summary</a>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#requiredTools" role="button"
+                    aria-expanded="true" aria-controls="requiredTools">
+                    Required Software & Tools
+                </a>
+
+                <div class="collapse" id="requiredTools">
+                    <a href="../required-software-tools/introduction.html">Introduction</a>
+                    <a href="../required-software-tools/nodejs-setup.html">Node.js Setup Guide</a>
+                    <a href="../required-software-tools/mongodb-local.html">MongoDB Local Setup</a>
+                    <a href="../required-software-tools/flutter-setup.html">Flutter Setup Guide</a>
+                    <a href="../required-software-tools/firebase-cli.html">Firebase CLI & FlutterFire Setup</a>
+                    <a href="../required-software-tools/angular-setup.html">Angular Setup Guide</a>
+                    <a href="../required-software-tools/google-maps-keys.html">Google Maps API Key Setup</a>
+                </div>
+
+                <a href="../extra-pages/folder-structure.html">Folder Structure</a>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#nodeApiSetup" role="button"
+                    aria-expanded="false" aria-controls="nodeApiSetup">
+                    Node API Setup
+                </a>
+
+                <div class="collapse" id="nodeApiSetup">
+                    <a href="../node-api-setup/introduction.html">Introduction</a>
+                    <a href="../node-api-setup/local-setup.html">Local Environment</a>
+                    <a href="../node-api-setup/digital-ocean-setup.html">
+                        DigitalOcean Node.js + MongoDB Setup
+                    </a>
+                    <a href="../node-api-setup/aws-ec2-setup.html">
+                        AWS EC2 Node.js + MongoDB Setup
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#mongoDbSetup" role="button"
+                    aria-expanded="false" aria-controls="mongoDbSetup">
+                    MongoDB Setup
+                </a>
+                <div class="collapse" id="mongoDbSetup">
+                    <a href="../mongodb-setup/introduction.html">Introduction</a>
+                    <a href="../mongodb-setup/mongo-atlast.html">
+                        MongoDB Atlas Database Setup
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#adminPanelSetup" role="button"
+                    aria-expanded="false" aria-controls="adminPanelSetup">
+                    Admin Panel Setup
+                </a>
+
+                <div class="collapse" id="adminPanelSetup">
+                    <a href="../admin-panel-setup/introduction.html">Introduction</a>
+                    <a href="../admin-panel-setup/local-testing.html">
+                        Admin Panel Setup (Local API)
+                    </a>
+                    <a href="../admin-panel-setup/production-build.html">
+                        Admin Panel – Production Deployment
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#customerAppSetup"
+                    role="button" aria-expanded="false" aria-controls="customerAppSetup">
+                    Customer App Setup
+                </a>
+
+
+                <div class="collapse" id="customerAppSetup">
+                    <a href="../customer-app-setup/introduction.html">Introduction</a>
+                    <a href="../customer-app-setup/customer-app-setup-guide.html">
+                        Customer App Setup (Flutter)
+                    </a>
+                    <a href="../customer-app-setup/customer-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../customer-app-setup/customer-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#restaurantAppSetup"
+                    role="button" aria-expanded="false" aria-controls="restaurantAppSetup">
+                    Restaurant App Setup
+                </a>
+
+
+                <div class="collapse" id="restaurantAppSetup">
+                    <a href="../restaurant-app-setup/introduction.html">Introduction</a>
+                    <a href="../restaurant-app-setup/restaurant-app-setup-guide.html">
+                        Restaurant App Setup (Flutter)
+                    </a>
+                    <a href="../restaurant-app-setup/restaurant-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../restaurant-app-setup/restaurant-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle" data-bs-toggle="collapse" href="#deliverymanAppSetup" role="button"
+                    aria-expanded="false" aria-controls="deliverymanAppSetup">
+                    Deliveryman App Setup
+                </a>
+
+                <div class="collapse show" id="deliverymanAppSetup">
+                    <a href="../deliveryman-app-setup/introduction.html">Introduction</a>
+                    <a class="active" href="../deliveryman-app-setup/deliveryman-app-setup-guide.html">
+                        Deliveryman App Setup (Flutter)
+                    </a>
+                    <a href="../deliveryman-app-setup/deliveryman-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../deliveryman-app-setup/deliveryman-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#kitchenAppSetup" role="button"
+                    aria-expanded="false" aria-controls="kitchenAppSetup">
+                    Kitchen App Setup
+                </a>
+
+                <div class="collapse" id="kitchenAppSetup">
+                    <a href="../kitchen-app-setup/introduction.html">Introduction</a>
+                    <a href="../kitchen-app-setup/kitchen-app-setup-guide.html">
+                        Kitchen App Setup (Flutter)
+                    </a>
+                    <a href="../kitchen-app-setup/kitchen-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../kitchen-app-setup/kitchen-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#waiterAppSetup" role="button"
+                    aria-expanded="false" aria-controls="waiterAppSetup">
+                    Waiter App Setup
+                </a>
+
+
+                <div class="collapse" id="waiterAppSetup">
+                    <a href="../waiter-app-setup/introduction.html">Introduction</a>
+                    <a href="../waiter-app-setup/waiter-app-setup-guide.html">
+                        Waiter App Setup (Flutter)
+                    </a>
+                    <a href="../waiter-app-setup/waiter-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../waiter-app-setup/waiter-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#customizations" role="button"
+                    aria-expanded="false" aria-controls="customizations">
+                    Customizations
+                </a>
+
+                <div class="collapse" id="customizations">
+                    <a href="../customizations/overview.html">Overview</a>
+                    <a href="../customizations/app-package-bundle-name.html">
+                        App Package / Bundle Name (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-name.html">
+                        Change App Name (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-icon.html">
+                        Change App Icon (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-color.html">
+                        Change App Color (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-change-locale.html">
+                        Add or Update App Languages (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-fonts.html">
+                        Change App Fonts (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-static-images.html">
+                        Change Static Images (Flutter)
+                    </a>
+                    <a href="../customizations/admin-panel-change-locale.html">
+                        Admin Language Translations (Angular)
+                    </a>
+                    <a href="../customizations/admin-panel-static-images.html">
+                        Admin Panel Static Images (Angular)
+                    </a>
+                    <a href="../customizations/admin-panel-color.html">
+                        Admin Panel Theme Colors
+                    </a>
+                    <a href="../customizations/api-server-locale.html">
+                        Server API Translations
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#paymentGateway" role="button"
+                    aria-expanded="false" aria-controls="paymentGateway">
+                    Payment Gateway Setup
+                </a>
+
+                <div class="collapse" id="paymentGateway">
+                    <a href="../payment-gateways/introduction.html">Introduction</a>
+                    <a href="../payment-gateways/stripe.html">Stripe Payment Setup</a>
+                    <a href="../payment-gateways/paypal.html">PayPal Payment Setup</a>
+                    <a href="../payment-gateways/razorpay.html">Razorpay Payment Setup</a>
+                    <a href="../payment-gateways/instamojo.html">Instamojo Payment Setup</a>
+                    <a href="../payment-gateways/paystack.html">Paystack Payment Setup</a>
+                    <a href="../payment-gateways/flutterwave.html">Flutterwave Payment Setup</a>
+                    <a href="../payment-gateways/cashfree.html">Cashfree Payment Setup</a>
+                    <a href="../payment-gateways/xendit.html">Xendit Payment Setup</a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#helpSection" role="button"
+                    aria-expanded="false" aria-controls="helpSection">
+                    Help
+                </a>
+
+                <div class="collapse" id="helpSection">
+                    <a href="../help/error.html">Errors & Troubleshooting</a>
+                    <a href="../help/source-credits.html">Source Credits</a>
+                    <a href="../help/support.html">Support & Contact</a>
+                </div>
+
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+
+
+            <h1 class="mb-4">Deliveryman App Setup (Flutter)</h1>
+            <p>This guide will help you set up and run the <strong>FoodBite Deliveryman Flutter application</strong> on
+                web, emulator, or physical devices.</p>
+
+            <hr>
+
+            <h2>✅ Prerequisites</h2>
+            <p>Before starting, make sure you have:</p>
+            <ul>
+                <li>Flutter SDK installed</li>
+                <li>Android Studio / Xcode (for emulator or simulator)</li>
+                <li>Chrome browser (for web testing)</li>
+                <li>A configured FoodBite Node.js API (local or live)</li>
+            </ul>
+
+            <hr>
+
+            <h2>🧩 Step-by-Step Setup</h2>
+
+            <h3>1️⃣ Open Project in Code Editor</h3>
+            <p>Extract the <strong>FoodBite Deliveryman Flutter</strong> project and open it in your preferred code
+                editor:</p>
+            <ul>
+                <li>VS Code</li>
+                <li>Android Studio</li>
+                <li>IntelliJ IDEA</li>
+            </ul>
+
+            <hr>
+
+            <h3>2️⃣ Install Flutter Dependencies</h3>
+            <pre><code>flutter pub get</code></pre>
+            <p>This will download and install all required Flutter packages.</p>
+
+            <hr>
+
+            <h3>3️⃣ Change App Package / Bundle Name</h3>
+            <p>You must update the <strong>application package name</strong> for both <strong>Android</strong> and
+                <strong>iOS</strong> platforms.
+            </p>
+            <p>👉 Follow the detailed guide here:<br>
+                <a href="../customizations/app-package-bundle-name.html">Change App Package & Bundle Name</a>
+            </p>
+
+            <hr>
+
+            <h3>4️⃣ Change Application Name</h3>
+            <p>Update the <strong>display name</strong> of the app for <strong>Android</strong>, <strong>iOS</strong>,
+                and <strong>Web</strong>.</p>
+            <p>👉 Follow the guide here:<br>
+                <a href="../customizations/flutter-app-name.html">Change Flutter App Name</a>
+            </p>
+
+            <hr>
+
+            <h3>5️⃣ Setup Firebase (Required)</h3>
+            <p>FoodBite uses <strong>Firebase</strong> for services such as <strong>push notifications</strong> and
+                <strong>authentication</strong>.
+            </p>
+            <div class="alert alert-warning" role="alert">
+                ⚠️ <strong>Important (Fresh Firebase Setup)</strong><br>
+                If you are reconfiguring Firebase or using a different Firebase project, <strong>delete any existing
+                    Firebase configuration files first</strong> to avoid conflicts.
+            </div>
+            <p>Delete the following files from your Deliveryman Source Code:</p>
+            <ul>
+                <li>firebase.json</li>
+                <li>lib/firebase_options.dart</li>
+                <li>android/app/google-services.json</li>
+                <li>ios/Runner/GoogleService-Info.plist</li>
+            </ul>
+
+            <p>Steps included in the guide:</p>
+            <ul>
+                <li>Install Firebase CLI</li>
+                <li>Configure Firebase project</li>
+                <li>Connect Flutter app using FlutterFire</li>
+            </ul>
+            <p>👉 Complete guide available here:<br>
+                <a href="../required-software-tools/firebase-cli.html">Firebase Setup using FlutterFire CLI</a>
+            </p>
+
+            <p>Run FlutterFire configuration:</p>
+            <pre><code>flutterfire configure</code></pre>
+            <p>Follow the CLI prompts to:</p>
+            <ul>
+                <li>Select your Firebase project</li>
+                <li>Choose Android & iOS platforms</li>
+                <li>Automatically regenerate Firebase configuration files</li>
+            </ul>
+
+            <hr>
+
+            <h3>6️⃣ Setup Google Maps API Keys</h3>
+            <p>FoodBite requires <strong>Google Maps</strong> for location services, directions, and distance
+                calculations.</p>
+            <p>👉 Follow this guide to configure keys securely for:</p>
+            <ul>
+                <li>Android</li>
+                <li>iOS</li>
+                <li>Web</li>
+            </ul>
+            <p><a href="../required-software-tools/google-maps-keys.html">Google Maps API Keys Setup</a></p>
+
+            <hr>
+
+            <h3>7️⃣ Configure API (Local or Live)</h3>
+            <p>Connect your Flutter app with the <strong>FoodBite Node.js API</strong>.</p>
+            <p>Supported environments:</p>
+            <ul>
+                <li>Local API (for development)</li>
+                <li>Live / Production API (AWS, DigitalOcean, etc.)</li>
+            </ul>
+            <p>👉 Refer to the API setup documentation:<br>
+                <a href="../node-api-setup/introduction.html">Node.js API Setup</a>
+            </p>
+
+            <hr>
+
+            <h3>8️⃣ Additional Customizations</h3>
+            <p>For UI changes, feature toggles, branding, and advanced behavior modifications:</p>
+            <p>👉 Explore all customization options here:<br>
+                <a href="../customizations/overview.html">Customization Guides</a>
+            </p>
+
+            <hr>
+
+            <h2>▶️ Run the Application</h2>
+
+            <h3>9️⃣ Run on Chrome (Web)</h3>
+            <pre><code>flutter run -d chrome</code></pre>
+
+            <hr>
+
+            <h3>🔟 Run on Emulator or Simulator</h3>
+            <p>Make sure an emulator or simulator is running, then execute:</p>
+            <pre><code>flutter run</code></pre>
+
+            <h2>✅ You're All Set!</h2>
+            <p>Your <strong>FoodBite Deliveryman App</strong> should now be running successfully 🎉</p>
+
+            <p>If you face any issues, please check the following:</p>
+            <ul>
+                <li>Recheck <strong>Firebase</strong> & <strong>Google Maps</strong> configuration</li>
+                <li>Ensure the <strong>API base URL</strong> is correct (local or live)</li>
+                <li>Run the following command to validate your Flutter environment:</li>
+            </ul>
+            <pre><code>flutter doctor</code></pre>
+
+            <div class="alert alert-warning" role="alert">
+                <strong>Important Web & Device Testing Notice</strong><br>
+                Google Maps services <strong>will not work correctly on the Chrome browser</strong>.<br>
+                Additionally, many <strong>native Flutter packages</strong> such as:
+                <ul>
+                    <li>Payments & payment gateways</li>
+                    <li>Device-specific services</li>
+                    <li>Background services</li>
+                    <li>Certain Firebase native features</li>
+                </ul>
+                are <strong>not supported on Flutter Web</strong>.<br>
+                👉 For full functionality testing, you <strong>must use</strong>:
+                <ul>
+                    <li>Android Emulator</li>
+                    <li>iOS Simulator</li>
+                    <li>Real Android or iOS device</li>
+                </ul>
+                Web (<code>flutter run -d chrome</code>) should be used <strong>for UI testing only</strong>, not for
+                production-level feature validation.
+            </div>
+
+            <div class="alert alert-info" role="alert">
+                <strong>Recommended:</strong><br>
+                If you prefer visual guidance, we strongly recommend watching the installation video on YouTube.<br>
+                It covers the same steps shown in this guide and can help avoid common setup mistakes.
+            </div>
+
+
+            <div class="video-box">
+                <a href="https://www.youtube.com/watch?v=UL2qSdrgSrs" target="_blank" class="video-link">
+                    <img src="https://img.youtube.com/vi/UL2qSdrgSrs/maxresdefault.jpg" class="video-thumb w-100"
+                        alt="Node.js Installation Guide">
+                    <span class="play-btn">▶</span>
+                </a>
+            </div>
+
+            <div class="docs-nav-footer">
+                <a href="./introduction.html" class="docs-nav-card prev">
+                    <span class="label">Previous</span>
+                    <span class="title">« Introduction</span>
+                </a>
+
+                <a href="./deliveryman-android-prod-build.html" class="docs-nav-card next">
+                    <span class="label">Next</span>
+                    <span class="title">Android Prod Build (Android Studio) »</span>
+                </a>
+            </div>
+
+        </main>
+
+
+    </div>
+
+    <script src="../../assets/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

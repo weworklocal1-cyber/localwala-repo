@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Server API Translations | FoodBite Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../../assets/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+
+<body>
+
+    <header class="docs-header navbar navbar-light bg-white border-bottom">
+        <div class="container-fluid px-4">
+
+            <span class="navbar-brand mb-0 h5">FoodBite Documentation</span>
+
+            <div class="d-flex align-items-center gap-3">
+                <a href="../help/support.html" class="text-decoration-none text-secondary">Support</a>
+                <a href="https://docs-foodbite.elitecanyon.com" target="_blank"
+                    class="text-decoration-none text-primary">
+                    Online Documentation
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <div class="docs-wrapper">
+
+        <aside class="docs-sidebar">
+            <nav class="docs-nav">
+                <a href="../../index.html">Introduction</a>
+                <a href="../extra-pages/prerequisite.html">Prerequisites</a>
+                <a href="../extra-pages/configuration-summary-overview.html">Configuration Summary</a>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#requiredTools" role="button"
+                    aria-expanded="true" aria-controls="requiredTools">
+                    Required Software & Tools
+                </a>
+
+                <div class="collapse" id="requiredTools">
+                    <a href="../required-software-tools/introduction.html">Introduction</a>
+                    <a href="../required-software-tools/nodejs-setup.html">Node.js Setup Guide</a>
+                    <a href="../required-software-tools/mongodb-local.html">MongoDB Local Setup</a>
+                    <a href="../required-software-tools/flutter-setup.html">Flutter Setup Guide</a>
+                    <a href="../required-software-tools/firebase-cli.html">Firebase CLI & FlutterFire Setup</a>
+                    <a href="../required-software-tools/angular-setup.html">Angular Setup Guide</a>
+                    <a href="../required-software-tools/google-maps-keys.html">Google Maps API Key Setup</a>
+                </div>
+
+                <a href="../extra-pages/folder-structure.html">Folder Structure</a>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#nodeApiSetup" role="button"
+                    aria-expanded="false" aria-controls="nodeApiSetup">
+                    Node API Setup
+                </a>
+
+                <div class="collapse" id="nodeApiSetup">
+                    <a href="../node-api-setup/introduction.html">Introduction</a>
+                    <a href="../node-api-setup/local-setup.html">Local Environment</a>
+                    <a href="../node-api-setup/digital-ocean-setup.html">
+                        DigitalOcean Node.js + MongoDB Setup
+                    </a>
+                    <a href="../node-api-setup/aws-ec2-setup.html">
+                        AWS EC2 Node.js + MongoDB Setup
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#mongoDbSetup" role="button"
+                    aria-expanded="false" aria-controls="mongoDbSetup">
+                    MongoDB Setup
+                </a>
+                <div class="collapse" id="mongoDbSetup">
+                    <a href="../mongodb-setup/introduction.html">Introduction</a>
+                    <a href="../mongodb-setup/mongo-atlast.html">
+                        MongoDB Atlas Database Setup
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#adminPanelSetup" role="button"
+                    aria-expanded="false" aria-controls="adminPanelSetup">
+                    Admin Panel Setup
+                </a>
+
+                <div class="collapse" id="adminPanelSetup">
+                    <a href="../admin-panel-setup/introduction.html">Introduction</a>
+                    <a href="../admin-panel-setup/local-testing.html">
+                        Admin Panel Setup (Local API)
+                    </a>
+                    <a href="../admin-panel-setup/production-build.html">
+                        Admin Panel – Production Deployment
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#customerAppSetup"
+                    role="button" aria-expanded="false" aria-controls="customerAppSetup">
+                    Customer App Setup
+                </a>
+
+
+                <div class="collapse" id="customerAppSetup">
+                    <a href="../customer-app-setup/introduction.html">Introduction</a>
+                    <a href="../customer-app-setup/customer-app-setup-guide.html">
+                        Customer App Setup (Flutter)
+                    </a>
+                    <a href="../customer-app-setup/customer-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../customer-app-setup/customer-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#restaurantAppSetup"
+                    role="button" aria-expanded="false" aria-controls="restaurantAppSetup">
+                    Restaurant App Setup
+                </a>
+
+
+                <div class="collapse" id="restaurantAppSetup">
+                    <a href="../restaurant-app-setup/introduction.html">Introduction</a>
+                    <a href="../restaurant-app-setup/restaurant-app-setup-guide.html">
+                        Restaurant App Setup (Flutter)
+                    </a>
+                    <a href="../restaurant-app-setup/restaurant-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../restaurant-app-setup/restaurant-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#deliverymanAppSetup"
+                    role="button" aria-expanded="false" aria-controls="deliverymanAppSetup">
+                    Deliveryman App Setup
+                </a>
+
+                <div class="collapse " id="deliverymanAppSetup">
+                    <a href="../deliveryman-app-setup/introduction.html">Introduction</a>
+                    <a href="../deliveryman-app-setup/deliveryman-app-setup-guide.html">
+                        Deliveryman App Setup (Flutter)
+                    </a>
+                    <a href="../deliveryman-app-setup/deliveryman-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../deliveryman-app-setup/deliveryman-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#kitchenAppSetup" role="button"
+                    aria-expanded="false" aria-controls="kitchenAppSetup">
+                    Kitchen App Setup
+                </a>
+
+                <div class="collapse" id="kitchenAppSetup">
+                    <a href="../kitchen-app-setup/introduction.html">Introduction</a>
+                    <a href="../kitchen-app-setup/kitchen-app-setup-guide.html">
+                        Kitchen App Setup (Flutter)
+                    </a>
+                    <a href="../kitchen-app-setup/kitchen-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../kitchen-app-setup/kitchen-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#waiterAppSetup" role="button"
+                    aria-expanded="false" aria-controls="waiterAppSetup">
+                    Waiter App Setup
+                </a>
+
+
+                <div class="collapse " id="waiterAppSetup">
+                    <a href="../waiter-app-setup/introduction.html">Introduction</a>
+                    <a href="../waiter-app-setup/waiter-app-setup-guide.html">
+                        Waiter App Setup (Flutter)
+                    </a>
+                    <a href="../waiter-app-setup/waiter-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../waiter-app-setup/waiter-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle" data-bs-toggle="collapse" href="#customizations" role="button"
+                    aria-expanded="false" aria-controls="customizations">
+                    Customizations
+                </a>
+
+                <div class="collapse show" id="customizations">
+                    <a href="../customizations/overview.html">Overview</a>
+                    <a href="../customizations/app-package-bundle-name.html">
+                        App Package / Bundle Name (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-name.html">
+                        Change App Name (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-icon.html">
+                        Change App Icon (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-color.html">
+                        Change App Color (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-change-locale.html">
+                        Add or Update App Languages (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-fonts.html">
+                        Change App Fonts (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-static-images.html">
+                        Change Static Images (Flutter)
+                    </a>
+                    <a href="../customizations/admin-panel-change-locale.html">
+                        Admin Language Translations (Angular)
+                    </a>
+                    <a href="../customizations/admin-panel-static-images.html">
+                        Admin Panel Static Images (Angular)
+                    </a>
+                    <a href="../customizations/admin-panel-color.html">
+                        Admin Panel Theme Colors
+                    </a>
+                    <a class="active" href="../customizations/api-server-locale.html">
+                        Server API Translations
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#paymentGateway" role="button"
+                    aria-expanded="false" aria-controls="paymentGateway">
+                    Payment Gateway Setup
+                </a>
+
+                <div class="collapse" id="paymentGateway">
+                    <a href="../payment-gateways/introduction.html">Introduction</a>
+                    <a href="../payment-gateways/stripe.html">Stripe Payment Setup</a>
+                    <a href="../payment-gateways/paypal.html">PayPal Payment Setup</a>
+                    <a href="../payment-gateways/razorpay.html">Razorpay Payment Setup</a>
+                    <a href="../payment-gateways/instamojo.html">Instamojo Payment Setup</a>
+                    <a href="../payment-gateways/paystack.html">Paystack Payment Setup</a>
+                    <a href="../payment-gateways/flutterwave.html">Flutterwave Payment Setup</a>
+                    <a href="../payment-gateways/cashfree.html">Cashfree Payment Setup</a>
+                    <a href="../payment-gateways/xendit.html">Xendit Payment Setup</a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#helpSection" role="button"
+                    aria-expanded="false" aria-controls="helpSection">
+                    Help
+                </a>
+
+                <div class="collapse" id="helpSection">
+                    <a href="../help/error.html">Errors & Troubleshooting</a>
+                    <a href="../help/source-credits.html">Source Credits</a>
+                    <a href="../help/support.html">Support & Contact</a>
+                </div>
+
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+
+            <h1 class="mb-3">Server API Translations</h1>
+            <p>
+                Manage server-side translations for invoices, order summaries, bookings, and tiffin modules in FoodBite
+                APIs
+            </p>
+
+            <p>
+                FoodBite APIs support <strong>server-level translations</strong> for dynamic content such as:
+            </p>
+
+            <ul>
+                <li>Invoices &amp; PDFs</li>
+                <li>Order summaries</li>
+                <li>Booking details</li>
+                <li>Tiffin subscriptions</li>
+                <li>System-generated labels</li>
+            </ul>
+
+            <p>
+                These translations are used when content is <strong>generated on the server</strong>,
+                independent of mobile or admin UI translations.
+            </p>
+
+            <hr />
+
+            <h2 class="mt-4">📁 Translation File Location</h2>
+            <p>All server-side translations are defined in:</p>
+
+            <pre class="bg-light p-3 rounded"><code>API/src/utils/translate.js</code></pre>
+
+            <hr />
+
+            <h2 class="mt-4">🧩 Translation Structure</h2>
+            <p>
+                Translations are organized by <strong>language code</strong>, with nested objects for different modules.
+            </p>
+
+            <h3 class="mt-3">Example Structure</h3>
+
+            <pre class="bg-light p-3 rounded"><code>const apiLocaleTranslations = {
+  en: {
+    direction: "ltr",
+    orderSummary: {
+      orderSummaryKey: "Order Summary",
+      orderIdKey: "Order ID",
+      orderTimeKey: "Order Time",
+      customerNameKey: "Customer Name",
+      deliveryAddressKey: "Delivery Address",
+      restaurantNameKey: "Restaurant Name",
+      restaurantAddressKey: "Restaurant Address",
+      driverNameKey: "Delivery partner's Name",
+      itemKey: "Item",
+      quantityKey: "Quantity",
+      unitPriceKey: "Unit Price",
+      totalPriceKey: "Total Price",
+      itemTotalKey: "Item Total",
+      foodServiceChargeKey: "Food Service Charge",
+      serviceChargeKey: "Service Charge",
+      deliveryChargeKey: "Delivery Charge",
+      deliveryTipKey: "Delivery Tip",
+      packageChargeKey: "Packaging Charge",
+      packageChargeTaxKey: "Packaging Charge Tax",
+      extraChargeKey: "Extra Charge",
+      discountChargeKey: "Discount Amount",
+      walletChargeKey: "Wallet Amount",
+      grandTotalKey: "Grand Total",
+      licenseKey: "Lic. No.",
+      selfPickupKey: "Self Pickup",
+    },
+  },
+};</code></pre>
+
+            <hr />
+
+            <h2 class="mt-4">➕ Add a New Language</h2>
+            <p>To add a new server language (example: <strong>Spanish</strong>):</p>
+
+            <h3 class="mt-3">1️⃣ Duplicate Base Language</h3>
+            <p>Copy the entire <code>en</code> object and add a new language key:</p>
+
+            <pre class="bg-light p-3 rounded"><code>es: {
+  direction: 'ltr',
+  orderSummary: {
+    orderSummaryKey: 'Resumen del pedido',
+    orderIdKey: 'ID del pedido',
+    orderTimeKey: 'Hora del pedido',
+    customerNameKey: 'Nombre del cliente',
+    deliveryAddressKey: 'Dirección de entrega',
+    restaurantNameKey: 'Nombre del restaurante',
+    restaurantAddressKey: 'Dirección del restaurante',
+    driverNameKey: 'Nombre del repartidor',
+    itemKey: 'Artículo',
+    quantityKey: 'Cantidad',
+    unitPriceKey: 'Precio unitario',
+    totalPriceKey: 'Precio total',
+    itemTotalKey: 'Total del artículo',
+    foodServiceChargeKey: 'Cargo por servicio de comida',
+    serviceChargeKey: 'Cargo por servicio',
+    deliveryChargeKey: 'Cargo de entrega',
+    deliveryTipKey: 'Propina de entrega',
+    packageChargeKey: 'Cargo de embalaje',
+    packageChargeTaxKey: 'Impuesto de embalaje',
+    extraChargeKey: 'Cargo extra',
+    discountChargeKey: 'Monto de descuento',
+    walletChargeKey: 'Monto de billetera',
+    grandTotalKey: 'Total general',
+    licenseKey: 'Lic. N.º',
+    selfPickupKey: 'Recogida propia',
+  },
+},</code></pre>
+
+            <hr />
+
+            <h2 class="mt-4">✏️ Update Existing Translations</h2>
+            <ol>
+                <li>Open <code>translate.js</code></li>
+                <li>Navigate to the required language and module</li>
+                <li>Update <strong>only the string value</strong></li>
+                <li>Do <strong>not</strong> change the key names</li>
+            </ol>
+
+            <hr />
+
+            <h2 class="mt-4">⚠️ Direction Handling (RTL / LTR)</h2>
+            <p>Each language must define its text direction:</p>
+
+            <pre class="bg-light p-3 rounded"><code>direction: "ltr"; // Left-to-Right
+direction: "rtl"; // Right-to-Left (Arabic)</code></pre>
+
+            <p>Example for Arabic:</p>
+
+            <pre class="bg-light p-3 rounded"><code>ar: {
+  direction: 'rtl',
+  orderSummary: {
+    orderSummaryKey: 'ملخص الطلب',
+  },
+},</code></pre>
+
+            <p>This direction is used when</p>
+
+            <hr />
+
+            <h2 class="mt-4">⚠️ Important Asset Naming Rule</h2>
+            <ul>
+                <li>❌ Do NOT rename keys</li>
+                <li>❌ Do NOT remove existing keys</li>
+                <li>❌ Do NOT translate object names</li>
+                <li>❌ Do NOT change structure</li>
+            </ul>
+
+            <p><strong>Keys are tightly coupled with:</strong></p>
+            <ul>
+                <li>Invoice templates</li>
+                <li>PDF generators</li>
+                <li>Booking &amp; tiffin services</li>
+            </ul>
+
+            <p>
+                Breaking keys may cause runtime crashes or blank documents.
+            </p>
+
+            <hr />
+
+            <h2 class="mt-4">🔄 Apply Changes</h2>
+            <p>After updating server translations:</p>
+
+            <pre class="bg-light p-3 rounded"><code>pm2 restart all</code></pre>
+
+            <p>or for development:</p>
+
+            <pre class="bg-light p-3 rounded"><code>npm run dev</code></pre>
+
+            <h2 class="mt-4">Verification Checklist</h2>
+            <ul>
+                <li>Correct language text appears in invoices</li>
+                <li>Order summaries render properly</li>
+                <li>Booking and tiffin documents show correct labels</li>
+                <li>RTL languages align correctly</li>
+                <li>No missing or undefined labels</li>
+            </ul>
+
+            <div class="alert alert-warning mt-4">
+                <strong>Common Mistakes to Avoid</strong>
+                <ul class="mb-0 mt-2">
+                    <li>Missing translation keys in new languages</li>
+                    <li>Inconsistent structure between languages</li>
+                    <li>Forgetting to set direction</li>
+                    <li>Restart not performed after changes</li>
+                    <li>Mixing UI and API translation logic</li>
+                </ul>
+            </div>
+
+            <div class="docs-nav-footer">
+                <a href="./admin-panel-color.html" class="docs-nav-card prev">
+                    <span class="label">Previous</span>
+                    <span class="title">« Admin Panel Theme Colors</span>
+                </a>
+
+                <a href="../payment-gateways/introduction.html" class="docs-nav-card next">
+                    <span class="label">Next</span>
+                    <span class="title">Payment Gateway Setup »</span>
+                </a>
+            </div>
+
+        </main>
+
+
+    </div>
+
+    <script src="../../assets/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

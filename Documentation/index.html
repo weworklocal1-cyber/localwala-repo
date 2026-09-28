@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>FoodBite Documentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="assets/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+
+<body>
+
+  <header class="docs-header navbar navbar-light bg-white border-bottom">
+    <div class="container-fluid px-4">
+
+      <span class="navbar-brand mb-0 h5">FoodBite Documentation</span>
+
+      <div class="d-flex align-items-center gap-3">
+        <a href="contents/help/support.html" class="text-decoration-none text-secondary">Support</a>
+        <a href="https://docs-foodbite.elitecanyon.com" target="_blank" class="text-decoration-none text-primary">
+          Online Documentation
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <div class="docs-wrapper">
+
+    <aside class="docs-sidebar">
+      <nav class="docs-nav">
+        <a class="active" href="index.html">Introduction</a>
+        <a href="contents/extra-pages/prerequisite.html">Prerequisites</a>
+        <a href="contents/extra-pages/configuration-summary-overview.html">Configuration Summary</a>
+
+        <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#requiredTools" role="button"
+          aria-expanded="false" aria-controls="requiredTools">
+          Required Software & Tools
+        </a>
+
+        <div class="collapse" id="requiredTools">
+          <a href="contents/required-software-tools/introduction.html">Introduction</a>
+          <a href="contents/required-software-tools/nodejs-setup.html">Node.js Setup Guide</a>
+          <a href="contents/required-software-tools/mongodb-local.html">MongoDB Local Setup</a>
+          <a href="contents/required-software-tools/flutter-setup.html">Flutter Setup Guide</a>
+          <a href="contents/required-software-tools/firebase-cli.html">Firebase CLI & FlutterFire Setup</a>
+          <a href="contents/required-software-tools/angular-setup.html">Angular Setup Guide</a>
+          <a href="contents/required-software-tools/google-maps-keys.html">Google Maps API Key Setup</a>
+        </div>
+
+        <a href="contents/extra-pages/folder-structure.html">Folder Structure</a>
+
+        <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#nodeApiSetup" role="button"
+          aria-expanded="false" aria-controls="nodeApiSetup">
+          Node API Setup
+        </a>
+
+        <div class="collapse" id="nodeApiSetup">
+          <a href="contents/node-api-setup/introduction.html">Introduction</a>
+          <a href="contents/node-api-setup/local-setup.html">Local Environment</a>
+          <a href="contents/node-api-setup/digital-ocean-setup.html">
+            DigitalOcean Node.js + MongoDB Setup
+          </a>
+          <a href="contents/node-api-setup/aws-ec2-setup.html">
+            AWS EC2 Node.js + MongoDB Setup
+          </a>
+        </div>
+
+        <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#mongoDbSetup" role="button"
+          aria-expanded="false" aria-controls="mongoDbSetup">
+          MongoDB Setup
+        </a>
+        <div class="collapse" id="mongoDbSetup">
+          <a href="contents/mongodb-setup/introduction.html">Introduction</a>
+          <a href="contents/mongodb-setup/mongo-atlast.html">
+            MongoDB Atlas Database Setup
+          </a>
+        </div>
+
+        <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#adminPanelSetup" role="button"
+          aria-expanded="false" aria-controls="adminPanelSetup">
+          Admin Panel Setup
+        </a>
+
+        <div class="collapse" id="adminPanelSetup">
+          <a href="contents/admin-panel-setup/introduction.html">Introduction</a>
+          <a href="contents/admin-panel-setup/local-testing.html">
+            Admin Panel Setup (Local API)
+          </a>
+          <a href="contents/admin-panel-setup/production-build.html">
+            Admin Panel – Production Deployment
+          </a>
+        </div>
+
+        <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#customerAppSetup" role="button"
+          aria-expanded="false" aria-controls="customerAppSetup">
+          Customer App Setup
+        </a>
+
+
+        <div class="collapse" id="customerAppSetup">
+          <a href="contents/customer-app-setup/introduction.html">Introduction</a>
+          <a href="contents/customer-app-setup/customer-app-setup-guide.html">
+            Customer App Setup (Flutter)
+          </a>
+          <a href="contents/customer-app-setup/customer-android-prod-build.html">
+            Android Prod Build (Android Studio)
+          </a>
+          <a href="contents/customer-app-setup/customer-ios-prod-build.html">
+            iOS Prod Build (Xcode)
+          </a>
+        </div>
+
+        <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#restaurantAppSetup" role="button"
+          aria-expanded="false" aria-controls="restaurantAppSetup">
+          Restaurant App Setup
+        </a>
+
+
+        <div class="collapse" id="restaurantAppSetup">
+          <a href="contents/restaurant-app-setup/introduction.html">Introduction</a>
+          <a href="contents/restaurant-app-setup/restaurant-app-setup-guide.html">
+            Restaurant App Setup (Flutter)
+          </a>
+          <a href="contents/restaurant-app-setup/restaurant-android-prod-build.html">
+            Android Prod Build (Android Studio)
+          </a>
+          <a href="contents/restaurant-app-setup/restaurant-ios-prod-build.html">
+            iOS Prod Build (Xcode)
+          </a>
+        </div>
+
+        <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#deliverymanAppSetup" role="button"
+          aria-expanded="false" aria-controls="deliverymanAppSetup">
+          Deliveryman App Setup
+        </a>
+
+        <div class="collapse" id="deliverymanAppSetup">
+          <a href="contents/deliveryman-app-setup/introduction.html">Introduction</a>
+          <a href="contents/deliveryman-app-setup/deliveryman-app-setup-guide.html">
+            Deliveryman App Setup (Flutter)
+          </a>
+          <a href="contents/deliveryman-app-setup/deliveryman-android-prod-build.html">
+            Android Prod Build (Android Studio)
+          </a>
+          <a href="contents/deliveryman-app-setup/deliveryman-ios-prod-build.html">
+            iOS Prod Build (Xcode)
+          </a>
+        </div>
+
+        <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#kitchenAppSetup" role="button"
+          aria-expanded="false" aria-controls="kitchenAppSetup">
+          Kitchen App Setup
+        </a>
+
+        <div class="collapse" id="kitchenAppSetup">
+          <a href="contents/kitchen-app-setup/introduction.html">Introduction</a>
+          <a href="contents/kitchen-app-setup/kitchen-app-setup-guide.html">
+            Kitchen App Setup (Flutter)
+          </a>
+          <a href="contents/kitchen-app-setup/kitchen-android-prod-build.html">
+            Android Prod Build (Android Studio)
+          </a>
+          <a href="contents/kitchen-app-setup/kitchen-ios-prod-build.html">
+            iOS Prod Build (Xcode)
+          </a>
+        </div>
+
+        <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#waiterAppSetup" role="button"
+          aria-expanded="false" aria-controls="waiterAppSetup">
+          Waiter App Setup
+        </a>
+
+
+        <div class="collapse" id="waiterAppSetup">
+          <a href="contents/waiter-app-setup/introduction.html">Introduction</a>
+          <a href="contents/waiter-app-setup/waiter-app-setup-guide.html">
+            Waiter App Setup (Flutter)
+          </a>
+          <a href="contents/waiter-app-setup/waiter-android-prod-build.html">
+            Android Prod Build (Android Studio)
+          </a>
+          <a href="contents/waiter-app-setup/waiter-ios-prod-build.html">
+            iOS Prod Build (Xcode)
+          </a>
+        </div>
+
+        <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#customizations" role="button"
+          aria-expanded="false" aria-controls="customizations">
+          Customizations
+        </a>
+
+        <div class="collapse" id="customizations">
+          <a href="contents/customizations/overview.html">Overview</a>
+          <a href="contents/customizations/app-package-bundle-name.html">
+            App Package / Bundle Name (Flutter)
+          </a>
+          <a href="contents/customizations/flutter-app-name.html">
+            Change App Name (Flutter)
+          </a>
+          <a href="contents/customizations/flutter-app-icon.html">
+            Change App Icon (Flutter)
+          </a>
+          <a href="contents/customizations/flutter-app-color.html">
+            Change App Color (Flutter)
+          </a>
+          <a href="contents/customizations/flutter-app-change-locale.html">
+            Add or Update App Languages (Flutter)
+          </a>
+          <a href="contents/customizations/flutter-app-fonts.html">
+            Change App Fonts (Flutter)
+          </a>
+          <a href="contents/customizations/flutter-static-images.html">
+            Change Static Images (Flutter)
+          </a>
+          <a href="contents/customizations/admin-panel-change-locale.html">
+            Admin Language Translations (Angular)
+          </a>
+          <a href="contents/customizations/admin-panel-static-images.html">
+            Admin Panel Static Images (Angular)
+          </a>
+          <a href="contents/customizations/admin-panel-color.html">
+            Admin Panel Theme Colors
+          </a>
+          <a href="contents/customizations/api-server-locale.html">
+            Server API Translations
+          </a>
+        </div>
+
+        <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#paymentGateway" role="button"
+          aria-expanded="false" aria-controls="paymentGateway">
+          Payment Gateway Setup
+        </a>
+
+        <div class="collapse" id="paymentGateway">
+          <a href="contents/payment-gateways/introduction.html">Introduction</a>
+          <a href="contents/payment-gateways/stripe.html">Stripe Payment Setup</a>
+          <a href="contents/payment-gateways/paypal.html">PayPal Payment Setup</a>
+          <a href="contents/payment-gateways/razorpay.html">Razorpay Payment Setup</a>
+          <a href="contents/payment-gateways/instamojo.html">Instamojo Payment Setup</a>
+          <a href="contents/payment-gateways/paystack.html">Paystack Payment Setup</a>
+          <a href="contents/payment-gateways/flutterwave.html">Flutterwave Payment Setup</a>
+          <a href="contents/payment-gateways/cashfree.html">Cashfree Payment Setup</a>
+          <a href="contents/payment-gateways/xendit.html">Xendit Payment Setup</a>
+        </div>
+
+        <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#helpSection" role="button"
+          aria-expanded="false" aria-controls="helpSection">
+          Help
+        </a>
+
+        <div class="collapse" id="helpSection">
+          <a href="contents/help/error.html">Errors & Troubleshooting</a>
+          <a href="contents/help/source-credits.html">Source Credits</a>
+          <a href="contents/help/support.html">Support & Contact</a>
+        </div>
+
+      </nav>
+    </aside>
+
+    <main class="docs-content">
+
+
+      <h1 class="mb-4">Introduction</h1>
+
+      <p>
+        Welcome to <strong>FoodBite</strong>, a complete
+        <strong>multi-restaurant food delivery and management system</strong>
+        built using <strong>Node.js, MongoDB, Angular, and Flutter</strong>.
+      </p>
+
+      <p>
+        FoodBite is designed for startups, restaurants, and enterprises to launch
+        and scale their food ordering business with ease 🚀
+      </p>
+
+      <hr class="my-5">
+
+      <h2 class="mt-4">📌 What is FoodBite?</h2>
+
+      <p>
+        <strong>FoodBite</strong> is an <strong>all-in-one food ordering ecosystem</strong>
+        that connects:
+      </p>
+
+      <ul>
+        <li>👨‍🍳 Restaurants & Cloud Kitchens</li>
+        <li>🧑‍💻 Admins</li>
+        <li>🚴 Delivery Partners</li>
+        <li>🍽️ Kitchen Staff & Waiters</li>
+        <li>📱 Customers</li>
+      </ul>
+
+      <p>
+        The platform supports <strong>food delivery</strong>, <strong>self-pickup</strong>,
+        <strong>dine-in</strong>, <strong>POS orders</strong>,
+        <strong>table orders</strong>, and
+        <strong>tiffin / meal subscriptions</strong>.
+      </p>
+
+      <hr class="my-5">
+
+      <h2>🧱 System Architecture</h2>
+
+      <p>
+        FoodBite follows a <strong>modular, API-first architecture</strong>,
+        ensuring high performance, security, and scalability.
+      </p>
+
+      <h3 class="mt-4">🛠️ Technology Stack</h3>
+
+      <h4 class="mt-3">🔙 Backend</h4>
+      <ul>
+        <li>⚙️ Node.js</li>
+        <li>🚀 Express.js</li>
+        <li>🗄️ MongoDB (Mongoose ODM)</li>
+        <li>🔐 JWT Authentication</li>
+        <li>🔁 RESTful APIs</li>
+      </ul>
+
+      <h4 class="mt-3">🖥️ Admin Panel</h4>
+      <ul>
+        <li>🅰️ Angular</li>
+        <li>🎨 Angular Material</li>
+        <li>🛡️ Role-Based Access Control (RBAC)</li>
+      </ul>
+
+      <h4 class="mt-3">📱 Mobile Apps</h4>
+      <ul>
+        <li>💙 Flutter (Single Codebase)</li>
+        <li>🤖 Android</li>
+        <li>🍎 iOS</li>
+      </ul>
+
+      <hr class="my-5">
+
+      <h2>📱 Applications Overview</h2>
+
+      <h3 class="mt-4">🧑‍🍽️ Customer App</h3>
+      <ul>
+        <li>🏪 Browse restaurants & menus</li>
+        <li>🔍 Search & filter food items</li>
+        <li>🛒 Cart & checkout</li>
+        <li>💳 Multiple payment methods</li>
+        <li>📦 Live order tracking</li>
+        <li>⭐ Ratings & reviews</li>
+        <li>🎁 Wallet & offers</li>
+        <li>🌐 Multi-language & RTL support</li>
+        <li>🌙 Light & Dark mode</li>
+      </ul>
+
+      <h3 class="mt-4">🏪 Restaurant & Vendor Panel</h3>
+      <ul>
+        <li>🏬 Multi-restaurant & multi-branch support</li>
+        <li>📋 Menu, categories, addons & variations</li>
+        <li>📦 Stock & availability control</li>
+        <li>⏱️ Order preparation workflow</li>
+        <li>📣 Promotions & coupons</li>
+        <li>💰 Vendor wallet & payouts</li>
+      </ul>
+
+      <h3 class="mt-4">👨‍🍳 Kitchen App</h3>
+      <ul>
+        <li>📥 Real-time order listing</li>
+        <li>📄 Order details with cooking instructions</li>
+        <li>🍕 Food menu & item management</li>
+        <li>🔄 Update stock & variations</li>
+        <li>✅ Order status updates</li>
+        <li>⚙️ Account settings</li>
+        <li>🌙 Light & Dark mode</li>
+        <li>🌐 Multi-language & RTL support</li>
+      </ul>
+
+      <h3 class="mt-4">🧑‍🍳 Waiter App</h3>
+      <ul>
+        <li>🪑 Table listing & management</li>
+        <li>🧾 Place table & POS orders</li>
+        <li>🛒 Add food items to cart</li>
+        <li>📦 Track table orders</li>
+        <li>👤 Account management</li>
+        <li>🌙 Light & Dark mode</li>
+        <li>🌐 Multi-language & RTL support</li>
+      </ul>
+
+      <h3 class="mt-4">🚴 Delivery Partner App</h3>
+      <ul>
+        <li>📦 Order assignment & acceptance</li>
+        <li>🗺️ Google Maps navigation</li>
+        <li>🛵 Pickup & delivery flow</li>
+        <li>💵 Earnings & payouts</li>
+        <li>📊 Performance analytics</li>
+        <li>⏳ Availability toggle</li>
+      </ul>
+
+      <h3 class="mt-4">🛠️ Admin Panel</h3>
+      <ul>
+        <li>📊 Dashboard & analytics</li>
+        <li>🏪 Restaurant & outlet management</li>
+        <li>👥 User & role management</li>
+        <li>📦 Order & payment management</li>
+        <li>💰 Commission & fee settings</li>
+        <li>🎟️ Coupon & offer management</li>
+        <li>💼 Wallet & payout approvals</li>
+        <li>🌐 Multi-language & RTL support</li>
+        <li>⚙️ System configuration</li>
+      </ul>
+
+      <hr class="my-5">
+
+      <h2>🌟 Advanced Features</h2>
+      <ul>
+        <li>🏬 Multi-vendor & multi-branch system</li>
+        <li>🔐 Secure role permissions</li>
+        <li>🔁 Real-time order updates</li>
+        <li>💰 Wallet system (Customer, Vendor, Delivery)</li>
+        <li>🍱 Tiffin / meal subscriptions</li>
+        <li>🍽️ Table booking & dine-in orders</li>
+        <li>🧾 POS order management</li>
+        <li>📍 Google Maps integration</li>
+        <li>🔔 Push notifications</li>
+        <li>⏰ Cron jobs & background tasks</li>
+      </ul>
+
+      <hr class="my-5">
+
+      <h2>🔐 Security & Scalability</h2>
+      <ul>
+        <li>🔑 JWT-based authentication</li>
+        <li>🛡️ Role-based access control</li>
+        <li>📈 Optimized MongoDB indexing</li>
+        <li>🌍 Environment-based configurations</li>
+        <li>🚀 Scalable server architecture</li>
+      </ul>
+
+      <hr class="my-5">
+
+      <h2>🎯 Who Should Use FoodBite?</h2>
+      <ul>
+        <li>🚀 Food delivery startups</li>
+        <li>🏪 Multi-restaurant marketplaces</li>
+        <li>☁️ Cloud kitchens</li>
+        <li>🍽️ Restaurant chains</li>
+        <li>🧑‍💼 Entrepreneurs & agencies</li>
+        <li>🛒 CodeCanyon buyers looking for a complete solution</li>
+      </ul>
+
+
+      <div class="docs-nav-footer">
+        <div></div>
+
+        <a href="contents/extra-pages/prerequisite.html" class="docs-nav-card next">
+          <span class="label">Next</span>
+          <span class="title">Prerequisites »</span>
+        </a>
+      </div>
+
+    </main>
+
+
+  </div>
+
+  <script src="assets/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

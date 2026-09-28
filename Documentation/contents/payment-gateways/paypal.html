@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PayPal Payment Gateway Setup | FoodBite Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../../assets/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+
+<body>
+
+    <header class="docs-header navbar navbar-light bg-white border-bottom">
+        <div class="container-fluid px-4">
+
+            <span class="navbar-brand mb-0 h5">FoodBite Documentation</span>
+
+            <div class="d-flex align-items-center gap-3">
+                <a href="../help/support.html" class="text-decoration-none text-secondary">Support</a>
+                <a href="https://docs-foodbite.elitecanyon.com" target="_blank"
+                    class="text-decoration-none text-primary">
+                    Online Documentation
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <div class="docs-wrapper">
+
+        <aside class="docs-sidebar">
+            <nav class="docs-nav">
+                <a href="../../index.html">Introduction</a>
+                <a href="../extra-pages/prerequisite.html">Prerequisites</a>
+                <a href="../extra-pages/configuration-summary-overview.html">Configuration Summary</a>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#requiredTools" role="button"
+                    aria-expanded="true" aria-controls="requiredTools">
+                    Required Software & Tools
+                </a>
+
+                <div class="collapse" id="requiredTools">
+                    <a href="../required-software-tools/introduction.html">Introduction</a>
+                    <a href="../required-software-tools/nodejs-setup.html">Node.js Setup Guide</a>
+                    <a href="../required-software-tools/mongodb-local.html">MongoDB Local Setup</a>
+                    <a href="../required-software-tools/flutter-setup.html">Flutter Setup Guide</a>
+                    <a href="../required-software-tools/firebase-cli.html">Firebase CLI & FlutterFire Setup</a>
+                    <a href="../required-software-tools/angular-setup.html">Angular Setup Guide</a>
+                    <a href="../required-software-tools/google-maps-keys.html">Google Maps API Key Setup</a>
+                </div>
+
+                <a href="../extra-pages/folder-structure.html">Folder Structure</a>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#nodeApiSetup" role="button"
+                    aria-expanded="false" aria-controls="nodeApiSetup">
+                    Node API Setup
+                </a>
+
+                <div class="collapse" id="nodeApiSetup">
+                    <a href="../node-api-setup/introduction.html">Introduction</a>
+                    <a href="../node-api-setup/local-setup.html">Local Environment</a>
+                    <a href="../node-api-setup/digital-ocean-setup.html">
+                        DigitalOcean Node.js + MongoDB Setup
+                    </a>
+                    <a href="../node-api-setup/aws-ec2-setup.html">
+                        AWS EC2 Node.js + MongoDB Setup
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#mongoDbSetup" role="button"
+                    aria-expanded="false" aria-controls="mongoDbSetup">
+                    MongoDB Setup
+                </a>
+                <div class="collapse" id="mongoDbSetup">
+                    <a href="../mongodb-setup/introduction.html">Introduction</a>
+                    <a href="../mongodb-setup/mongo-atlast.html">
+                        MongoDB Atlas Database Setup
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#adminPanelSetup" role="button"
+                    aria-expanded="false" aria-controls="adminPanelSetup">
+                    Admin Panel Setup
+                </a>
+
+                <div class="collapse" id="adminPanelSetup">
+                    <a href="../admin-panel-setup/introduction.html">Introduction</a>
+                    <a href="../admin-panel-setup/local-testing.html">
+                        Admin Panel Setup (Local API)
+                    </a>
+                    <a href="../admin-panel-setup/production-build.html">
+                        Admin Panel – Production Deployment
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#customerAppSetup"
+                    role="button" aria-expanded="false" aria-controls="customerAppSetup">
+                    Customer App Setup
+                </a>
+
+
+                <div class="collapse" id="customerAppSetup">
+                    <a href="../customer-app-setup/introduction.html">Introduction</a>
+                    <a href="../customer-app-setup/customer-app-setup-guide.html">
+                        Customer App Setup (Flutter)
+                    </a>
+                    <a href="../customer-app-setup/customer-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../customer-app-setup/customer-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#restaurantAppSetup"
+                    role="button" aria-expanded="false" aria-controls="restaurantAppSetup">
+                    Restaurant App Setup
+                </a>
+
+
+                <div class="collapse" id="restaurantAppSetup">
+                    <a href="../restaurant-app-setup/introduction.html">Introduction</a>
+                    <a href="../restaurant-app-setup/restaurant-app-setup-guide.html">
+                        Restaurant App Setup (Flutter)
+                    </a>
+                    <a href="../restaurant-app-setup/restaurant-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../restaurant-app-setup/restaurant-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#deliverymanAppSetup"
+                    role="button" aria-expanded="false" aria-controls="deliverymanAppSetup">
+                    Deliveryman App Setup
+                </a>
+
+                <div class="collapse " id="deliverymanAppSetup">
+                    <a href="../deliveryman-app-setup/introduction.html">Introduction</a>
+                    <a href="../deliveryman-app-setup/deliveryman-app-setup-guide.html">
+                        Deliveryman App Setup (Flutter)
+                    </a>
+                    <a href="../deliveryman-app-setup/deliveryman-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../deliveryman-app-setup/deliveryman-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#kitchenAppSetup" role="button"
+                    aria-expanded="false" aria-controls="kitchenAppSetup">
+                    Kitchen App Setup
+                </a>
+
+                <div class="collapse" id="kitchenAppSetup">
+                    <a href="../kitchen-app-setup/introduction.html">Introduction</a>
+                    <a href="../kitchen-app-setup/kitchen-app-setup-guide.html">
+                        Kitchen App Setup (Flutter)
+                    </a>
+                    <a href="../kitchen-app-setup/kitchen-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../kitchen-app-setup/kitchen-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#waiterAppSetup" role="button"
+                    aria-expanded="false" aria-controls="waiterAppSetup">
+                    Waiter App Setup
+                </a>
+
+
+                <div class="collapse" id="waiterAppSetup">
+                    <a href="../waiter-app-setup/introduction.html">Introduction</a>
+                    <a href="../waiter-app-setup/waiter-app-setup-guide.html">
+                        Waiter App Setup (Flutter)
+                    </a>
+                    <a href="../waiter-app-setup/waiter-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../waiter-app-setup/waiter-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#customizations" role="button"
+                    aria-expanded="false" aria-controls="customizations">
+                    Customizations
+                </a>
+
+                <div class="collapse " id="customizations">
+                    <a href="../customizations/overview.html">Overview</a>
+                    <a href="../customizations/app-package-bundle-name.html">
+                        App Package / Bundle Name (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-name.html">
+                        Change App Name (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-icon.html">
+                        Change App Icon (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-color.html">
+                        Change App Color (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-change-locale.html">
+                        Add or Update App Languages (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-fonts.html">
+                        Change App Fonts (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-static-images.html">
+                        Change Static Images (Flutter)
+                    </a>
+                    <a href="../customizations/admin-panel-change-locale.html">
+                        Admin Language Translations (Angular)
+                    </a>
+                    <a href="../customizations/admin-panel-static-images.html">
+                        Admin Panel Static Images (Angular)
+                    </a>
+                    <a href="../customizations/admin-panel-color.html">
+                        Admin Panel Theme Colors
+                    </a>
+                    <a href="../customizations/api-server-locale.html">
+                        Server API Translations
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle " data-bs-toggle="collapse" href="#paymentGateway" role="button"
+                    aria-expanded="false" aria-controls="paymentGateway">
+                    Payment Gateway Setup
+                </a>
+
+                <div class="collapse show" id="paymentGateway">
+                    <a href="../payment-gateways/introduction.html">Introduction</a>
+                    <a href="../payment-gateways/stripe.html">Stripe Payment Setup</a>
+                    <a class="active" href="../payment-gateways/paypal.html">PayPal Payment Setup</a>
+                    <a href="../payment-gateways/razorpay.html">Razorpay Payment Setup</a>
+                    <a href="../payment-gateways/instamojo.html">Instamojo Payment Setup</a>
+                    <a href="../payment-gateways/paystack.html">Paystack Payment Setup</a>
+                    <a href="../payment-gateways/flutterwave.html">Flutterwave Payment Setup</a>
+                    <a href="../payment-gateways/cashfree.html">Cashfree Payment Setup</a>
+                    <a href="../payment-gateways/xendit.html">Xendit Payment Setup</a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#helpSection" role="button"
+                    aria-expanded="false" aria-controls="helpSection">
+                    Help
+                </a>
+
+                <div class="collapse" id="helpSection">
+                    <a href="../help/error.html">Errors & Troubleshooting</a>
+                    <a href="../help/source-credits.html">Source Credits</a>
+                    <a href="../help/support.html">Support & Contact</a>
+                </div>
+
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+
+            <h1 class="mb-3">PayPal Payment Gateway Setup</h1>
+
+            <p>
+                PayPal allows customers to pay securely using their PayPal balance, cards, or linked bank accounts.<br>
+                In FoodBite, PayPal integration is <strong>fully managed by the backend</strong> —
+                you only need to add your PayPal credentials from the Admin Panel.
+            </p>
+
+            <hr>
+
+            <h2 class="mt-4">Step 1: Create or Log In to PayPal Account</h2>
+
+            <ol>
+                <li>Visit the PayPal Developer website</li>
+                <li>Log in using your PayPal Business account</li>
+                <li>If you don’t have a business account, upgrade or create one</li>
+            </ol>
+
+            <p>
+                🔗 <strong>PayPal Developer Dashboard:</strong>
+                <a href="https://developer.paypal.com" target="_blank">
+                    https://developer.paypal.com
+                </a>
+            </p>
+
+            <hr>
+
+            <h2 class="mt-4">Step 2: Access PayPal Developer Dashboard</h2>
+
+            <ol>
+                <li>Open the PayPal Developer Dashboard</li>
+                <li>Switch between <strong>Sandbox</strong> and <strong>Live</strong> mode as needed</li>
+            </ol>
+
+            <p>Sandbox mode is recommended for testing payments before going live.</p>
+
+            <hr>
+
+            <h2 class="mt-4">Step 3: Create PayPal App</h2>
+
+            <ol>
+                <li>Go to <strong>My Apps &amp; Credentials</strong></li>
+                <li>Select <strong>Sandbox</strong> or <strong>Live</strong></li>
+                <li>Click <strong>Create App</strong></li>
+                <li>Enter an app name and create the app</li>
+            </ol>
+
+            <p>After creation, PayPal will generate your credentials.</p>
+
+            <hr>
+
+            <h2 class="mt-4">Step 4: Copy Client ID and Secret</h2>
+
+            <p>From the app details page, copy:</p>
+
+            <ul>
+                <li><strong>Client ID</strong></li>
+                <li><strong>Secret Key</strong></li>
+            </ul>
+
+            <div class="alert alert-warning">
+                <strong>⚠️ Important:</strong><br>
+                Keep your Secret Key private and never expose it publicly.
+            </div>
+
+            <p>
+                🔗 <strong>PayPal API Credentials Guide:</strong><br>
+                <a href="https://developer.paypal.com/docs/api-basics/manage-apps/" target="_blank">
+                    https://developer.paypal.com/docs/api-basics/manage-apps/
+                </a>
+            </p>
+
+            <hr>
+
+            <h2 class="mt-4">Step 5: Add PayPal Credentials in FoodBite Admin Panel</h2>
+
+            <ol>
+                <li>Log in to the <strong>FoodBite Admin Panel</strong></li>
+                <li>
+                    Navigate to:<br>
+                    <strong>Business Setup → Payment Settings → PayPal</strong>
+                </li>
+                <li>Paste:
+                    <ul>
+                        <li>PayPal Client ID</li>
+                        <li>PayPal Secret Key</li>
+                    </ul>
+                </li>
+                <li>Select <strong>Sandbox</strong> or <strong>Live</strong> mode</li>
+                <li>Click <strong>Save</strong></li>
+            </ol>
+
+            <p>Once saved, PayPal payments will be enabled automatically.</p>
+
+            <hr>
+
+            <h2 class="mt-4">Step 6: Test PayPal Payment (Sandbox)</h2>
+
+            <ol>
+                <li>Ensure <strong>Sandbox mode</strong> is selected</li>
+                <li>Place a test order from the Customer App or Web App</li>
+                <li>Use PayPal sandbox buyer account to complete payment</li>
+            </ol>
+
+            <p>
+                🔗 <strong>PayPal Sandbox Testing:</strong><br>
+                <a href="https://docs.paypal.ai/developer/how-to/api/get-started/" target="_blank">
+                    https://docs.paypal.ai/developer/how-to/api/get-started/
+                </a>
+            </p>
+
+            <hr>
+
+            <h2 class="mt-4">Switching to Live Mode</h2>
+
+            <ol>
+                <li>Switch to <strong>Live</strong> mode in PayPal Developer Dashboard</li>
+                <li>Copy <strong>Live Client ID</strong> and <strong>Live Secret</strong></li>
+                <li>Update the credentials in the FoodBite Admin Panel</li>
+                <li>Save changes</li>
+            </ol>
+
+            <p>✅ Live PayPal payments are now active.</p>
+
+            <hr>
+
+            <h2 class="mt-4">Notes</h2>
+
+            <ul>
+                <li>Webhooks and payment verification are handled automatically by FoodBite</li>
+                <li>No backend or frontend code changes are required</li>
+                <li>Always test payments in sandbox mode before going live</li>
+            </ul>
+
+            <hr>
+
+            <h2 class="mt-4">Useful Links</h2>
+
+            <ul>
+                <li>🔗 <strong>PayPal Developer Dashboard:</strong> <a href="https://developer.paypal.com"
+                        target="_blank">https://developer.paypal.com</a></li>
+                <li>🔗 <strong>Manage Apps &amp; Credentials:</strong> <a
+                        href="https://developer.paypal.com/developer/applications"
+                        target="_blank">https://developer.paypal.com/developer/applications</a></li>
+                <li>🔗 <strong>PayPal Testing Guide:</strong> <a
+                        href="https://docs.paypal.ai/developer/how-to/api/get-started/"
+                        target="_blank">https://docs.paypal.ai/developer/how-to/api/get-started/</a></li>
+            </ul>
+
+            <div class="alert alert-success mt-4">
+                ✅ PayPal payment gateway is now successfully configured in FoodBite.
+            </div>
+
+            <div class="docs-nav-footer">
+                <a href="./stripe.html" class="docs-nav-card prev">
+                    <span class="label">Previous</span>
+                    <span class="title">« Stripe Payment Setup</span>
+                </a>
+
+                <a href="./razorpay.html" class="docs-nav-card next">
+                    <span class="label">Next</span>
+                    <span class="title">Razorpay Payment Setup »</span>
+                </a>
+            </div>
+
+        </main>
+
+
+    </div>
+
+    <script src="../../assets/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

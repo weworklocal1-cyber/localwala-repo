@@ -1,0 +1,83 @@
+# ============================================================
+# LocalWala – root .gitignore
+# Secrets, build artifacts and dependencies must never be pushed.
+# ============================================================
+
+# --- Dependencies ---
+node_modules/
+.pnp/
+.pnp.js
+
+# --- Environment / secrets ---
+.env
+.env.*
+!.env.example
+!.env*.example
+
+# FCM / Google Cloud service account keys (CRITICAL — never commit)
+**/fcm_keys/
+serviceAccountKey.json
+*-service-account*.json
+
+# Android release signing keys (CRITICAL — never commit)
+*.jks
+*.keystore
+*.p12
+*.pem
+*.p8
+*.mobileprovision
+
+# Firebase config (per-app secrets)
+**/google-services.json
+**/GoogleService-Info.plist
+!**/example/**/google-services.json
+!**/example/**/GoogleService-Info.plist
+
+# --- Flutter / Dart build output ---
+**/build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+ephemeral/
+**/windows/flutter/ephemeral/
+
+# --- IDE / OS junk ---
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+*.swp
+
+# --- Logs / runtime ---
+logs/
+*.log
+npm-debug.log*
+yarn-error.log*
+pm2*.log
+
+# --- Coverage / build dirs ---
+coverage/
+dist/
+.nyc_output/
+
+# --- Static uploads (runtime data, not source) ---
+**/public/
+
+# --- Reference / packaged zips (regenerable) ---
+**/*.zip
+
+# ============================================================
+# Scope: this repo tracks ONLY the backend + documentation.
+# Frontend apps are excluded (Admin_panel, 5 Flutter apps).
+# ============================================================
+Admin_panel/
+Customer_app/
+Deliveryman_app/
+Kitchen_app/
+Restaurant_app/
+Waiter_app/
+reference/
+Resource/

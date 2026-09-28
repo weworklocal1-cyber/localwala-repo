@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Xendit Payment Gateway Setup | FoodBite Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../../assets/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+
+<body>
+
+    <header class="docs-header navbar navbar-light bg-white border-bottom">
+        <div class="container-fluid px-4">
+
+            <span class="navbar-brand mb-0 h5">FoodBite Documentation</span>
+
+            <div class="d-flex align-items-center gap-3">
+                <a href="../help/support.html" class="text-decoration-none text-secondary">Support</a>
+                <a href="https://docs-foodbite.elitecanyon.com" target="_blank"
+                    class="text-decoration-none text-primary">
+                    Online Documentation
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <div class="docs-wrapper">
+
+        <aside class="docs-sidebar">
+            <nav class="docs-nav">
+                <a href="../../index.html">Introduction</a>
+                <a href="../extra-pages/prerequisite.html">Prerequisites</a>
+                <a href="../extra-pages/configuration-summary-overview.html">Configuration Summary</a>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#requiredTools" role="button"
+                    aria-expanded="true" aria-controls="requiredTools">
+                    Required Software & Tools
+                </a>
+
+                <div class="collapse" id="requiredTools">
+                    <a href="../required-software-tools/introduction.html">Introduction</a>
+                    <a href="../required-software-tools/nodejs-setup.html">Node.js Setup Guide</a>
+                    <a href="../required-software-tools/mongodb-local.html">MongoDB Local Setup</a>
+                    <a href="../required-software-tools/flutter-setup.html">Flutter Setup Guide</a>
+                    <a href="../required-software-tools/firebase-cli.html">Firebase CLI & FlutterFire Setup</a>
+                    <a href="../required-software-tools/angular-setup.html">Angular Setup Guide</a>
+                    <a href="../required-software-tools/google-maps-keys.html">Google Maps API Key Setup</a>
+                </div>
+
+                <a href="../extra-pages/folder-structure.html">Folder Structure</a>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#nodeApiSetup" role="button"
+                    aria-expanded="false" aria-controls="nodeApiSetup">
+                    Node API Setup
+                </a>
+
+                <div class="collapse" id="nodeApiSetup">
+                    <a href="../node-api-setup/introduction.html">Introduction</a>
+                    <a href="../node-api-setup/local-setup.html">Local Environment</a>
+                    <a href="../node-api-setup/digital-ocean-setup.html">
+                        DigitalOcean Node.js + MongoDB Setup
+                    </a>
+                    <a href="../node-api-setup/aws-ec2-setup.html">
+                        AWS EC2 Node.js + MongoDB Setup
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#mongoDbSetup" role="button"
+                    aria-expanded="false" aria-controls="mongoDbSetup">
+                    MongoDB Setup
+                </a>
+                <div class="collapse" id="mongoDbSetup">
+                    <a href="../mongodb-setup/introduction.html">Introduction</a>
+                    <a href="../mongodb-setup/mongo-atlast.html">
+                        MongoDB Atlas Database Setup
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#adminPanelSetup" role="button"
+                    aria-expanded="false" aria-controls="adminPanelSetup">
+                    Admin Panel Setup
+                </a>
+
+                <div class="collapse" id="adminPanelSetup">
+                    <a href="../admin-panel-setup/introduction.html">Introduction</a>
+                    <a href="../admin-panel-setup/local-testing.html">
+                        Admin Panel Setup (Local API)
+                    </a>
+                    <a href="../admin-panel-setup/production-build.html">
+                        Admin Panel – Production Deployment
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#customerAppSetup"
+                    role="button" aria-expanded="false" aria-controls="customerAppSetup">
+                    Customer App Setup
+                </a>
+
+
+                <div class="collapse" id="customerAppSetup">
+                    <a href="../customer-app-setup/introduction.html">Introduction</a>
+                    <a href="../customer-app-setup/customer-app-setup-guide.html">
+                        Customer App Setup (Flutter)
+                    </a>
+                    <a href="../customer-app-setup/customer-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../customer-app-setup/customer-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#restaurantAppSetup"
+                    role="button" aria-expanded="false" aria-controls="restaurantAppSetup">
+                    Restaurant App Setup
+                </a>
+
+
+                <div class="collapse" id="restaurantAppSetup">
+                    <a href="../restaurant-app-setup/introduction.html">Introduction</a>
+                    <a href="../restaurant-app-setup/restaurant-app-setup-guide.html">
+                        Restaurant App Setup (Flutter)
+                    </a>
+                    <a href="../restaurant-app-setup/restaurant-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../restaurant-app-setup/restaurant-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#deliverymanAppSetup"
+                    role="button" aria-expanded="false" aria-controls="deliverymanAppSetup">
+                    Deliveryman App Setup
+                </a>
+
+                <div class="collapse " id="deliverymanAppSetup">
+                    <a href="../deliveryman-app-setup/introduction.html">Introduction</a>
+                    <a href="../deliveryman-app-setup/deliveryman-app-setup-guide.html">
+                        Deliveryman App Setup (Flutter)
+                    </a>
+                    <a href="../deliveryman-app-setup/deliveryman-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../deliveryman-app-setup/deliveryman-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#kitchenAppSetup" role="button"
+                    aria-expanded="false" aria-controls="kitchenAppSetup">
+                    Kitchen App Setup
+                </a>
+
+                <div class="collapse" id="kitchenAppSetup">
+                    <a href="../kitchen-app-setup/introduction.html">Introduction</a>
+                    <a href="../kitchen-app-setup/kitchen-app-setup-guide.html">
+                        Kitchen App Setup (Flutter)
+                    </a>
+                    <a href="../kitchen-app-setup/kitchen-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../kitchen-app-setup/kitchen-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#waiterAppSetup" role="button"
+                    aria-expanded="false" aria-controls="waiterAppSetup">
+                    Waiter App Setup
+                </a>
+
+
+                <div class="collapse" id="waiterAppSetup">
+                    <a href="../waiter-app-setup/introduction.html">Introduction</a>
+                    <a href="../waiter-app-setup/waiter-app-setup-guide.html">
+                        Waiter App Setup (Flutter)
+                    </a>
+                    <a href="../waiter-app-setup/waiter-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../waiter-app-setup/waiter-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#customizations" role="button"
+                    aria-expanded="false" aria-controls="customizations">
+                    Customizations
+                </a>
+
+                <div class="collapse " id="customizations">
+                    <a href="../customizations/overview.html">Overview</a>
+                    <a href="../customizations/app-package-bundle-name.html">
+                        App Package / Bundle Name (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-name.html">
+                        Change App Name (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-icon.html">
+                        Change App Icon (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-color.html">
+                        Change App Color (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-change-locale.html">
+                        Add or Update App Languages (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-fonts.html">
+                        Change App Fonts (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-static-images.html">
+                        Change Static Images (Flutter)
+                    </a>
+                    <a href="../customizations/admin-panel-change-locale.html">
+                        Admin Language Translations (Angular)
+                    </a>
+                    <a href="../customizations/admin-panel-static-images.html">
+                        Admin Panel Static Images (Angular)
+                    </a>
+                    <a href="../customizations/admin-panel-color.html">
+                        Admin Panel Theme Colors
+                    </a>
+                    <a href="../customizations/api-server-locale.html">
+                        Server API Translations
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle " data-bs-toggle="collapse" href="#paymentGateway" role="button"
+                    aria-expanded="false" aria-controls="paymentGateway">
+                    Payment Gateway Setup
+                </a>
+
+                <div class="collapse show" id="paymentGateway">
+                    <a href="../payment-gateways/introduction.html">Introduction</a>
+                    <a href="../payment-gateways/stripe.html">Stripe Payment Setup</a>
+                    <a href="../payment-gateways/paypal.html">PayPal Payment Setup</a>
+                    <a href="../payment-gateways/razorpay.html">Razorpay Payment Setup</a>
+                    <a href="../payment-gateways/instamojo.html">Instamojo Payment Setup</a>
+                    <a href="../payment-gateways/paystack.html">Paystack Payment Setup</a>
+                    <a href="../payment-gateways/flutterwave.html">Flutterwave Payment Setup</a>
+                    <a href="../payment-gateways/cashfree.html">Cashfree Payment Setup</a>
+                    <a class="active" href="../payment-gateways/xendit.html">Xendit Payment Setup</a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#helpSection" role="button"
+                    aria-expanded="false" aria-controls="helpSection">
+                    Help
+                </a>
+
+                <div class="collapse" id="helpSection">
+                    <a href="../help/error.html">Errors & Troubleshooting</a>
+                    <a href="../help/source-credits.html">Source Credits</a>
+                    <a href="../help/support.html">Support & Contact</a>
+                </div>
+
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+
+            <h1 class="mb-4">Xendit Payment Gateway Setup</h1>
+
+            <p>
+                Xendit enables secure online payments for cards, e-wallets, QR, and other channels across Southeast
+                Asia.
+                In FoodBite, Xendit integration is <strong>fully handled by the backend</strong> — you only need to add
+                your
+                Xendit API credentials from the Admin Panel.
+            </p>
+
+            <hr class="my-4">
+
+            <h2 class="h4">Step 1: Create or Log In to Xendit Dashboard</h2>
+            <ol>
+                <li>Visit the Xendit Dashboard</li>
+                <li>Log in using your Xendit merchant account or sign up for a new one</li>
+            </ol>
+
+            <p>
+                🔗 <strong>Xendit Dashboard:</strong>
+                <a href="https://dashboard.xendit.co" target="_blank">
+                    https://dashboard.xendit.co
+                </a>
+            </p>
+
+            <hr class="my-4">
+
+            <h2 class="h4">Step 2: Select Environment</h2>
+            <p>
+                At the top of the dashboard, switch between <strong>Test Mode</strong> and <strong>Live Mode</strong>
+                depending on which keys you want to generate.
+            </p>
+
+            <ul>
+                <li><strong>Test Mode</strong> — for testing transactions</li>
+                <li><strong>Live Mode</strong> — for production/live payments</li>
+            </ul>
+
+            <div class="alert alert-info">
+                Make sure you’re in the correct environment before generating keys.
+            </div>
+
+            <hr class="my-4">
+
+            <h2 class="h4">Step 3: Locate API Keys Section</h2>
+            <ol>
+                <li>
+                    In the Xendit Dashboard, go to:<br>
+                    <strong>Settings → API Keys</strong> (under the Developers section)
+                </li>
+                <li>
+                    You will see both:
+                    <ul>
+                        <li><strong>Public Key</strong></li>
+                        <li><strong>Secret API Key</strong></li>
+                    </ul>
+                </li>
+            </ol>
+
+            <p>
+                🔗 <strong>Xendit API Keys Docs:</strong><br>
+                <a href="https://docs.xendit.co/docs/api-keys" target="_blank">
+                    https://docs.xendit.co/docs/api-keys
+                </a>
+            </p>
+
+            <hr class="my-4">
+
+            <h2 class="h4">Step 4: Generate or Copy Your API Keys</h2>
+
+            <h3 class="h6 mt-3">Public API Key</h3>
+            <ul>
+                <li>Public keys begin with <code>xnd_public_…</code></li>
+                <li>Can be used for client SDKs and tokenization</li>
+            </ul>
+
+            <h3 class="h6 mt-3">Secret API Key</h3>
+            <ul>
+                <li>Secret keys begin with <code>xnd_development_…</code> for Test mode</li>
+                <li>Secret keys begin with <code>xnd_production_…</code> for Live mode</li>
+                <li>
+                    Secret API Key can perform any API request on your account and
+                    <strong>must be kept private</strong>
+                </li>
+            </ul>
+
+            <div class="alert alert-warning">
+                ⚠️ <strong>Important:</strong> Xendit only shows the Secret API Key <em>once</em> when generated.
+                Save it securely.
+            </div>
+
+            <hr class="my-4">
+
+            <h2 class="h4">Step 5: Add Xendit Keys in FoodBite Admin Panel</h2>
+            <ol>
+                <li>Log in to the <strong>FoodBite Admin Panel</strong></li>
+                <li>
+                    Navigate to:<br>
+                    <strong>Business Setup → Payment Settings → Xendit</strong>
+                </li>
+                <li>
+                    Enter:
+                    <ul>
+                        <li>Xendit <strong>Public Key</strong></li>
+                        <li>Xendit <strong>Secret API Key</strong></li>
+                    </ul>
+                </li>
+                <li>Select <strong>Test Mode</strong> or <strong>Live Mode</strong></li>
+                <li>Click <strong>Save</strong></li>
+            </ol>
+
+            <p>
+                Once saved, Xendit payments will be enabled automatically.
+            </p>
+
+            <hr class="my-4">
+
+            <h2 class="h4">Step 6: Test Xendit Payments</h2>
+            <ol>
+                <li>Use the <strong>Test Mode</strong> credentials</li>
+                <li>Place a test order from the Customer App or Web App</li>
+                <li>Complete payment using Xendit test methods</li>
+            </ol>
+
+            <p>
+                Test requests simulate real payments but do not involve real funds.
+            </p>
+
+            <hr class="my-4">
+
+            <h2 class="h4">Switching to Live Mode</h2>
+            <ol>
+                <li>Switch to <strong>Live Mode</strong> in the Xendit Dashboard</li>
+                <li>Generate or copy your <strong>Live Public Key</strong> and <strong>Live Secret Key</strong></li>
+                <li>Update them in the FoodBite Admin Panel under Xendit settings</li>
+                <li>Save changes</li>
+            </ol>
+
+            <div class="alert alert-success">
+                ✅ Xendit live payments should now work in FoodBite.
+            </div>
+
+            <hr class="my-4">
+
+            <h2 class="h4">Notes</h2>
+            <ul>
+                <li>The backend handles webhook callbacks and verification automatically</li>
+                <li>Keep your <strong>Secret API Key</strong> private and never expose it publicly</li>
+                <li>If you lose a secret key, delete it and create a new one</li>
+            </ul>
+
+            <hr class="my-4">
+
+            <h2 class="h4">Useful Links</h2>
+            <ul>
+                <li>
+                    🔗 Xendit Dashboard:
+                    <a href="https://dashboard.xendit.co" target="_blank">
+                        https://dashboard.xendit.co
+                    </a>
+                </li>
+                <li>
+                    🔗 Xendit API Keys Docs:
+                    <a href="https://docs.xendit.co/docs/api-keys" target="_blank">
+                        https://docs.xendit.co/docs/api-keys
+                    </a>
+                </li>
+            </ul>
+
+            <div class="alert alert-success mt-4">
+                ✅ Xendit payment gateway is now successfully configured in FoodBite.
+            </div>
+
+            <div class="docs-nav-footer">
+                <a href="./cashfree.html" class="docs-nav-card prev">
+                    <span class="label">Previous</span>
+                    <span class="title">« Cashfree Payment Setup</span>
+                </a>
+
+                <a href="../help/error.html" class="docs-nav-card next">
+                    <span class="label">Next</span>
+                    <span class="title">Help »</span>
+                </a>
+            </div>
+
+        </main>
+
+
+    </div>
+
+    <script src="../../assets/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

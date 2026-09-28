@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DigitalOcean Node.js + MongoDB Setup | FoodBite Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../../assets/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+
+<body>
+
+    <header class="docs-header navbar navbar-light bg-white border-bottom">
+        <div class="container-fluid px-4">
+
+            <span class="navbar-brand mb-0 h5">FoodBite Documentation</span>
+
+            <div class="d-flex align-items-center gap-3">
+                <a href="../help/support.html" class="text-decoration-none text-secondary">Support</a>
+                <a href="https://docs-foodbite.elitecanyon.com" target="_blank"
+                    class="text-decoration-none text-primary">
+                    Online Documentation
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <div class="docs-wrapper">
+
+        <aside class="docs-sidebar">
+            <nav class="docs-nav">
+                <a href="../../index.html">Introduction</a>
+                <a href="../extra-pages/prerequisite.html">Prerequisites</a>
+                <a href="../extra-pages/configuration-summary-overview.html">Configuration Summary</a>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#requiredTools" role="button"
+                    aria-expanded="true" aria-controls="requiredTools">
+                    Required Software & Tools
+                </a>
+
+                <div class="collapse" id="requiredTools">
+                    <a href="../required-software-tools/introduction.html">Introduction</a>
+                    <a href="../required-software-tools/nodejs-setup.html">Node.js Setup Guide</a>
+                    <a href="../required-software-tools/mongodb-local.html">MongoDB Local Setup</a>
+                    <a href="../required-software-tools/flutter-setup.html">Flutter Setup Guide</a>
+                    <a href="../required-software-tools/firebase-cli.html">Firebase CLI & FlutterFire Setup</a>
+                    <a href="../required-software-tools/angular-setup.html">Angular Setup Guide</a>
+                    <a href="../required-software-tools/google-maps-keys.html">Google Maps API Key Setup</a>
+                </div>
+
+                <a href="../extra-pages/folder-structure.html">Folder Structure</a>
+
+                <a class="docs-section-toggle" data-bs-toggle="collapse" href="#nodeApiSetup" role="button"
+                    aria-expanded="false" aria-controls="nodeApiSetup">
+                    Node API Setup
+                </a>
+
+                <div class="collapse show" id="nodeApiSetup">
+                    <a href="../node-api-setup/introduction.html">Introduction</a>
+                    <a href="../node-api-setup/local-setup.html">Local Environment</a>
+                    <a class="active" href="../node-api-setup/digital-ocean-setup.html">
+                        DigitalOcean Node.js + MongoDB Setup
+                    </a>
+                    <a href="../node-api-setup/aws-ec2-setup.html">
+                        AWS EC2 Node.js + MongoDB Setup
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#mongoDbSetup" role="button"
+                    aria-expanded="false" aria-controls="mongoDbSetup">
+                    MongoDB Setup
+                </a>
+                <div class="collapse" id="mongoDbSetup">
+                    <a href="../mongodb-setup/introduction.html">Introduction</a>
+                    <a href="../mongodb-setup/mongo-atlast.html">
+                        MongoDB Atlas Database Setup
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#adminPanelSetup" role="button"
+                    aria-expanded="false" aria-controls="adminPanelSetup">
+                    Admin Panel Setup
+                </a>
+
+                <div class="collapse" id="adminPanelSetup">
+                    <a href="../admin-panel-setup/introduction.html">Introduction</a>
+                    <a href="../admin-panel-setup/local-testing.html">
+                        Admin Panel Setup (Local API)
+                    </a>
+                    <a href="../admin-panel-setup/production-build.html">
+                        Admin Panel – Production Deployment
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#customerAppSetup"
+                    role="button" aria-expanded="false" aria-controls="customerAppSetup">
+                    Customer App Setup
+                </a>
+
+
+                <div class="collapse" id="customerAppSetup">
+                    <a href="../customer-app-setup/introduction.html">Introduction</a>
+                    <a href="../customer-app-setup/customer-app-setup-guide.html">
+                        Customer App Setup (Flutter)
+                    </a>
+                    <a href="../customer-app-setup/customer-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../customer-app-setup/customer-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#restaurantAppSetup"
+                    role="button" aria-expanded="false" aria-controls="restaurantAppSetup">
+                    Restaurant App Setup
+                </a>
+
+
+                <div class="collapse" id="restaurantAppSetup">
+                    <a href="../restaurant-app-setup/introduction.html">Introduction</a>
+                    <a href="../restaurant-app-setup/restaurant-app-setup-guide.html">
+                        Restaurant App Setup (Flutter)
+                    </a>
+                    <a href="../restaurant-app-setup/restaurant-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../restaurant-app-setup/restaurant-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#deliverymanAppSetup"
+                    role="button" aria-expanded="false" aria-controls="deliverymanAppSetup">
+                    Deliveryman App Setup
+                </a>
+
+                <div class="collapse" id="deliverymanAppSetup">
+                    <a href="../deliveryman-app-setup/introduction.html">Introduction</a>
+                    <a href="../deliveryman-app-setup/deliveryman-app-setup-guide.html">
+                        Deliveryman App Setup (Flutter)
+                    </a>
+                    <a href="../deliveryman-app-setup/deliveryman-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../deliveryman-app-setup/deliveryman-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#kitchenAppSetup" role="button"
+                    aria-expanded="false" aria-controls="kitchenAppSetup">
+                    Kitchen App Setup
+                </a>
+
+                <div class="collapse" id="kitchenAppSetup">
+                    <a href="../kitchen-app-setup/introduction.html">Introduction</a>
+                    <a href="../kitchen-app-setup/kitchen-app-setup-guide.html">
+                        Kitchen App Setup (Flutter)
+                    </a>
+                    <a href="../kitchen-app-setup/kitchen-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../kitchen-app-setup/kitchen-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#waiterAppSetup" role="button"
+                    aria-expanded="false" aria-controls="waiterAppSetup">
+                    Waiter App Setup
+                </a>
+
+
+                <div class="collapse" id="waiterAppSetup">
+                    <a href="../waiter-app-setup/introduction.html">Introduction</a>
+                    <a href="../waiter-app-setup/waiter-app-setup-guide.html">
+                        Waiter App Setup (Flutter)
+                    </a>
+                    <a href="../waiter-app-setup/waiter-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../waiter-app-setup/waiter-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#customizations" role="button"
+                    aria-expanded="false" aria-controls="customizations">
+                    Customizations
+                </a>
+
+                <div class="collapse" id="customizations">
+                    <a href="../customizations/overview.html">Overview</a>
+                    <a href="../customizations/app-package-bundle-name.html">
+                        App Package / Bundle Name (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-name.html">
+                        Change App Name (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-icon.html">
+                        Change App Icon (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-color.html">
+                        Change App Color (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-change-locale.html">
+                        Add or Update App Languages (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-fonts.html">
+                        Change App Fonts (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-static-images.html">
+                        Change Static Images (Flutter)
+                    </a>
+                    <a href="../customizations/admin-panel-change-locale.html">
+                        Admin Language Translations (Angular)
+                    </a>
+                    <a href="../customizations/admin-panel-static-images.html">
+                        Admin Panel Static Images (Angular)
+                    </a>
+                    <a href="../customizations/admin-panel-color.html">
+                        Admin Panel Theme Colors
+                    </a>
+                    <a href="../customizations/api-server-locale.html">
+                        Server API Translations
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#paymentGateway" role="button"
+                    aria-expanded="false" aria-controls="paymentGateway">
+                    Payment Gateway Setup
+                </a>
+
+                <div class="collapse" id="paymentGateway">
+                    <a href="../payment-gateways/introduction.html">Introduction</a>
+                    <a href="../payment-gateways/stripe.html">Stripe Payment Setup</a>
+                    <a href="../payment-gateways/paypal.html">PayPal Payment Setup</a>
+                    <a href="../payment-gateways/razorpay.html">Razorpay Payment Setup</a>
+                    <a href="../payment-gateways/instamojo.html">Instamojo Payment Setup</a>
+                    <a href="../payment-gateways/paystack.html">Paystack Payment Setup</a>
+                    <a href="../payment-gateways/flutterwave.html">Flutterwave Payment Setup</a>
+                    <a href="../payment-gateways/cashfree.html">Cashfree Payment Setup</a>
+                    <a href="../payment-gateways/xendit.html">Xendit Payment Setup</a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#helpSection" role="button"
+                    aria-expanded="false" aria-controls="helpSection">
+                    Help
+                </a>
+
+                <div class="collapse" id="helpSection">
+                    <a href="../help/error.html">Errors & Troubleshooting</a>
+                    <a href="../help/source-credits.html">Source Credits</a>
+                    <a href="../help/support.html">Support & Contact</a>
+                </div>
+
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+
+            <h1>DigitalOcean Node.js + MongoDB Setup</h1>
+            <p>
+                Deploy FoodBite Node.js API with self-hosted MongoDB on DigitalOcean
+            </p>
+
+            <p>
+                This guide explains how to deploy the <strong>FoodBite Node.js API</strong> with a
+                <strong>self-hosted MongoDB database</strong> on a <strong>DigitalOcean Droplet</strong>.
+            </p>
+
+            <p>This setup is suitable for:</p>
+            <ul>
+                <li>Testing</li>
+                <li>Demo servers</li>
+                <li>Small to medium production workloads</li>
+            </ul>
+
+            <hr>
+
+            <h2>Architecture Overview</h2>
+
+            <ul>
+                <li><strong>Server:</strong> DigitalOcean Droplet (Ubuntu)</li>
+                <li><strong>Backend:</strong> Node.js + Express</li>
+                <li><strong>Database:</strong> MongoDB (Self-hosted)</li>
+                <li><strong>Process Manager:</strong> PM2</li>
+                <li><strong>Reverse Proxy:</strong> Nginx</li>
+                <li><strong>SSL:</strong> Let’s Encrypt (Recommended)</li>
+            </ul>
+
+            <hr>
+
+            <h2>Step 1: Create a DigitalOcean Droplet</h2>
+
+            <ol>
+                <li>Login to <strong>DigitalOcean Dashboard</strong></li>
+                <li>Click <strong>Create → Droplets</strong></li>
+                <li>Select:
+                    <ul>
+                        <li><strong>Image:</strong> Ubuntu 22.04 LTS</li>
+                        <li><strong>Plan:</strong> Basic</li>
+                        <li><strong>CPU:</strong> Regular</li>
+                        <li><strong>Size:</strong> 1GB RAM (Minimum), 2GB RAM (Recommended)</li>
+                    </ul>
+                </li>
+                <li>Authentication: SSH Key (Recommended) or Password</li>
+                <li>Click <strong>Create Droplet</strong></li>
+            </ol>
+
+            <div class="alert alert-info">
+                Note your <strong>server public IP address</strong>.
+            </div>
+
+            <hr>
+
+            <h2>Step 2: Connect to Server via SSH</h2>
+
+            <pre><code>ssh root@YOUR_SERVER_IP</code></pre>
+
+            <pre><code>apt update && apt upgrade -y</code></pre>
+
+            <hr>
+
+            <h2>Step 3: Install Node.js (LTS)</h2>
+
+            <pre><code>curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+apt install -y nodejs</code></pre>
+
+            <pre><code>node -v
+npm -v</code></pre>
+
+            <h4>Install Yarn (Optional)</h4>
+
+            <pre><code>corepack enable
+corepack prepare yarn@stable --activate
+yarn -v</code></pre>
+
+            <hr>
+
+            <h2>Step 4: Install MongoDB (Self-Hosted)</h2>
+
+            <pre><code>curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
+gpg --dearmor -o /usr/share/keyrings/mongodb-server-7.0.gpg</code></pre>
+
+            <pre><code>echo "deb [signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg] \
+https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" \
+| tee /etc/apt/sources.list.d/mongodb-org-7.0.list</code></pre>
+
+            <pre><code>apt update
+apt install -y mongodb-org</code></pre>
+
+            <pre><code>systemctl start mongod
+systemctl enable mongod</code></pre>
+
+            <pre><code>mongosh</code></pre>
+
+            <hr>
+
+            <h2>Step 5: Secure MongoDB</h2>
+
+            <pre><code>nano /etc/mongod.conf</code></pre>
+
+            <pre><code>bindIp: 127.0.0.1</code></pre>
+
+            <pre><code>systemctl restart mongod</code></pre>
+
+            <h4>Create Admin User</h4>
+
+            <pre><code>mongosh</code></pre>
+
+            <pre><code>use admin
+db.createUser({
+  user: "foodbiteAdmin",
+  pwd: "STRONG_PASSWORD",
+  roles: [{ role: "root", db: "admin" }]
+})</code></pre>
+
+            <div class="alert alert-warning">
+                Avoid special characters in MongoDB passwords:
+                <code>@ : / ? # [ ] % &</code>
+            </div>
+
+            <pre><code>security:
+  authorization: enabled</code></pre>
+
+            <pre><code>systemctl restart mongod</code></pre>
+
+            <hr>
+
+            <h2>Step 6: Upload FoodBite Node.js API (Private GitHub Repository)</h2>
+
+            <p>
+                This step explains how to <strong>push your FoodBite Node.js API to a private GitHub repository</strong>
+                and <strong>clone it securely on your server using a Personal Access Token (PAT)</strong>.
+            </p>
+
+            <hr>
+
+            <h3>6.1 Install Git on Server</h3>
+
+            <pre><code>apt install git -y</code></pre>
+
+            <p>Verify installation:</p>
+
+            <pre><code>git --version</code></pre>
+
+            <hr>
+
+            <h3>6.2 Create a Private Repository on GitHub</h3>
+
+            <ol>
+                <li>Go to <strong>GitHub → New Repository</strong></li>
+                <li>Repository name: <code>foodbite-api</code></li>
+                <li>Visibility: <strong>Private</strong></li>
+                <li>Do <strong>NOT</strong> initialize with README</li>
+                <li>Click <strong>Create Repository</strong></li>
+            </ol>
+
+            <hr>
+
+            <h3>6.3 Generate GitHub Personal Access Token (PAT)</h3>
+
+            <ol>
+                <li>Go to <strong>GitHub → Settings</strong></li>
+                <li>Open <strong>Developer settings</strong></li>
+                <li>Select <strong>Personal access tokens</strong></li>
+                <li><strong>Tokens (classic)</strong> → Generate new token</li>
+            </ol>
+
+            <p>Select scopes:</p>
+
+            <ul>
+                <li>✅ <code>repo</code> (full control of private repositories)</li>
+            </ul>
+
+            <p>Set expiration (recommended):</p>
+
+            <ul>
+                <li>30 / 90 days</li>
+            </ul>
+
+            <p>
+                Click <strong>Generate token</strong><br>
+                ⚠️ <strong>Copy the token immediately</strong> (you won’t see it again)
+            </p>
+
+            <div class="alert alert-warning">
+                Never share your Personal Access Token publicly.
+            </div>
+
+            <hr>
+
+            <h3>6.4 Push Local Code to Private Repository (From Your Local Machine)</h3>
+
+            <p>Inside your FoodBite API project:</p>
+
+            <pre><code>git init
+git add .
+git commit -m "Initial FoodBite API commit"</code></pre>
+
+            <p>Add private repository remote:</p>
+
+            <pre><code>git remote add origin https://github.com/YOUR_USERNAME/foodbite-api.git</code></pre>
+
+            <p>Push using token:</p>
+
+            <pre><code>git push https://YOUR_USERNAME:YOUR_GITHUB_TOKEN@github.com/YOUR_USERNAME/foodbite-api.git main</code></pre>
+
+            <p>📌 Replace:</p>
+
+            <ul>
+                <li><code>YOUR_USERNAME</code></li>
+                <li><code>YOUR_GITHUB_TOKEN</code></li>
+            </ul>
+
+            <hr>
+
+            <h3>6.5 Clone Private Repository on Server (Using PAT)</h3>
+
+            <p>On your <strong>DigitalOcean server</strong>:</p>
+
+            <pre><code>mkdir -p /var/www</code></pre>
+
+            <pre><code>cd /var/www</code></pre>
+
+            <pre><code>git clone https://github.com/YOUR_USERNAME/foodbite-api.git</code></pre>
+
+            <pre><code>cd foodbite-api</code></pre>
+
+            <hr>
+
+            <h3>6.6 Prevent Token from Being Saved in Plain Text (IMPORTANT)</h3>
+
+            <p>After cloning, remove token from remote URL:</p>
+
+            <pre><code>git remote set-url origin https://github.com/YOUR_USERNAME/foodbite-api.git</code></pre>
+
+            <p>Verify:</p>
+
+            <pre><code>git remote -v</code></pre>
+
+            <div class="alert alert-danger">
+                Leaving a token in the Git remote URL is a security risk.
+            </div>
+
+            <hr>
+
+            <h3>6.7 Pull Updates in Future (Private Repo)</h3>
+
+            <p>When updating code on server:</p>
+
+            <pre><code>git pull</code></pre>
+
+            <p>If prompted:</p>
+
+            <ul>
+                <li><strong>Username</strong> → GitHub username</li>
+                <li><strong>Password</strong> → Personal Access Token (NOT GitHub password)</li>
+            </ul>
+
+            <hr>
+
+            <h3>6.8 Cache Credentials Securely on Server (Optional)</h3>
+
+            <pre><code>git config --global credential.helper store</code></pre>
+
+            <div class="alert alert-warning">
+                Use this only on <strong>trusted private servers</strong>.
+            </div>
+
+            <hr>
+
+            <h3>Common Mistakes (Avoid These)</h3>
+
+            <ul>
+                <li>❌ Using GitHub password instead of PAT</li>
+                <li>❌ Forgetting <code>repo</code> permission</li>
+                <li>❌ Committing <code>.env</code> file</li>
+                <li>❌ Leaving token in <code>git remote -v</code></li>
+            </ul>
+
+            <hr>
+
+            <h3>Recommended for Production</h3>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>SSH keys</td>
+                        <td>Best &amp; most secure</td>
+                    </tr>
+                    <tr>
+                        <td>Access Token</td>
+                        <td>Fast setup, private repos</td>
+                    </tr>
+                    <tr>
+                        <td>GitHub Actions</td>
+                        <td>Auto-deploy</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-success">
+                Your <strong>FoodBite API</strong> is now safely stored and deployed from a private GitHub repository
+                🔐🚀
+            </div>
+
+            <hr>
+
+            <h3>Install Dependencies</h3>
+
+            <pre><code>npm install</code></pre>
+
+            <hr>
+
+            <h2>Step 7: Configure Environment Variables</h2>
+
+            <pre><code>cp .env.example .env
+nano .env</code></pre>
+
+            <pre><code>PORT=3000
+NODE_ENV=production
+
+MONGODB_URL=mongodb://foodbiteAdmin:STRONG_PASSWORD@127.0.0.1:27017/foodbite?authSource=admin
+JWT_SECRET=your_secret_key</code></pre>
+
+            <hr>
+
+            <h2>Step 8: Run API with PM2</h2>
+
+            <p>
+                If you plan to use <strong>Push Notifications</strong> or <strong>Firebase-based services</strong>,
+                you must configure the <strong>Firebase Admin SDK</strong>.
+            </p>
+
+            <div class="alert alert-warning">
+                <strong>Important</strong>
+                <ul class="mb-0">
+                    <li>
+                        Place your Firebase service account JSON file inside:
+                        <strong>API/src/fcm_keys/serviceAccountKey.json</strong>
+                    </li>
+                    <li>This file is required for Firebase Admin (push notifications).</li>
+                    <li>You may commit this file <strong>only if your repository is private</strong>.</li>
+                    <li>
+                        If you do not want to configure Firebase now, you can safely
+                        <strong>comment out or skip Firebase Admin initialization</strong> in:
+                        <strong>src/app.js</strong>
+                    </li>
+                    <li>The API will still run normally without Firebase for local testing.</li>
+                </ul>
+            </div>
+
+            <div class="alert alert-info">
+                <strong>Documentation Reference</strong><br>
+                Step-by-step instructions for generating the Firebase service account JSON are available here:
+                <br>
+                <a href="../required-software-tools/firebase-cli.html">
+                    Firebase Service Account JSON Guide
+                </a>
+                <br>
+                Please follow this guide to generate and configure the service account correctly.
+            </div>
+
+            <hr>
+
+            <h3>Install PM2</h3>
+
+            <pre><code>npm install -g pm2</code></pre>
+
+            <hr>
+
+            <h3>Start API</h3>
+
+            <pre><code>yarn start</code></pre>
+
+            <p>or</p>
+
+            <pre><code>npm start</code></pre>
+
+            <hr>
+
+            <h3>Save PM2 Process</h3>
+
+            <pre><code>pm2 save
+pm2 startup</code></pre>
+
+
+            <hr>
+
+            <h2>Step 9: Setup Nginx Reverse Proxy</h2>
+
+            <h3>Install Nginx</h3>
+
+            <pre><code>apt install nginx -y</code></pre>
+
+            <h3>Create Nginx Configuration</h3>
+
+            <pre><code>nano /etc/nginx/sites-available/foodbite</code></pre>
+
+            <pre><code>server {
+    listen 80;
+    server_name YOUR_DOMAIN_OR_IP;
+
+    location /storage/ {
+       alias /your_node_api_absolute_path/public/;
+
+       access_log off;
+       expires 1y;
+
+       # ✅ ADD THIS (CORS FIX)
+       add_header Access-Control-Allow-Origin *;
+       add_header Access-Control-Allow-Methods "GET, OPTIONS";
+       add_header Access-Control-Allow-Headers "*";
+    }
+
+    location / {
+        proxy_pass http://localhost:3000;
+
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        proxy_read_timeout 60s;
+        proxy_send_timeout 60s;
+    }
+}</code></pre>
+
+            <h3>Enable Site</h3>
+
+            <pre><code>ln -s /etc/nginx/sites-available/foodbite /etc/nginx/sites-enabled/</code></pre>
+
+            <pre><code>nginx -t</code></pre>
+
+            <pre><code>systemctl restart nginx</code></pre>
+
+            <h3>Open Required Firewall Ports</h3>
+
+            <pre><code>ufw allow OpenSSH</code></pre>
+
+            <pre><code>ufw allow 'Nginx Full'</code></pre>
+
+            <pre><code>ufw enable</code></pre>
+
+            <p><strong>Test API on Server IP Address</strong></p>
+
+            <hr>
+
+            <p>
+                This guide explains how to <strong>connect your Namecheap domain to DigitalOcean</strong> and
+                <strong>secure your Node.js API with a free Let’s Encrypt SSL certificate</strong>.
+            </p>
+
+            <hr>
+
+            <h2>Step 10: Point Namecheap Domain to DigitalOcean</h2>
+
+            <h3>10.1 Get Your Server IP</h3>
+
+            <p>From your <strong>DigitalOcean Droplet</strong>, note down your public IP:</p>
+
+            <pre><code>YOUR_SERVER_IP</code></pre>
+
+            <h3>10.2 Login to Namecheap</h3>
+
+            <ol>
+                <li>Go to <strong>Namecheap Dashboard</strong></li>
+                <li>Open <strong>Domain List</strong></li>
+                <li>Click <strong>Manage</strong> on <code>YOUR_DOMAIN_NAME.COM</code></li>
+                <li>Navigate to <strong>Advanced DNS</strong></li>
+            </ol>
+
+            <h3>10.3 Add / Update DNS Records</h3>
+
+            <h4>A Record (Root Domain)</h4>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Host</th>
+                        <th>Value</th>
+                        <th>TTL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A</td>
+                        <td>@</td>
+                        <td>YOUR_SERVER_IP</td>
+                        <td>Automatic</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>A Record (WWW)</h4>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Host</th>
+                        <th>Value</th>
+                        <th>TTL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A</td>
+                        <td>www</td>
+                        <td>YOUR_SERVER_IP</td>
+                        <td>Automatic</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="text-danger">
+                ❌ Remove any <strong>parking</strong>, <strong>URL redirect</strong>, or <strong>old A records</strong>
+            </p>
+
+            <h3>10.4 Wait for DNS Propagation</h3>
+
+            <p>DNS usually updates within <strong>1–10 minutes</strong>.</p>
+
+            <pre><code>ping YOUR_DOMAIN_NAME.COM</code></pre>
+
+            <p>If it resolves correctly, continue to the next step.</p>
+
+            <hr>
+
+            <h2>Step 11: Update Nginx Domain Configuration</h2>
+
+            <pre><code>nano /etc/nginx/sites-available/foodbite</code></pre>
+
+            <pre><code>server_name YOUR_DOMAIN_NAME.COM www.YOUR_DOMAIN_NAME.COM;</code></pre>
+
+            <pre><code>nginx -t
+systemctl reload nginx</code></pre>
+
+            <pre><code>http://YOUR_DOMAIN_NAME.COM</code></pre>
+
+            <p>✔ Your API should be accessible</p>
+
+            <hr>
+
+            <h2>Step 12: Install Free SSL (Let’s Encrypt)</h2>
+
+            <h3>12.1 Install Certbot</h3>
+
+            <pre><code>apt update
+apt install certbot python3-certbot-nginx -y</code></pre>
+
+            <h3>12.2 Generate SSL Certificate</h3>
+
+            <pre><code>certbot --nginx -d YOUR_DOMAIN_NAME.COM -d www.YOUR_DOMAIN_NAME.COM</code></pre>
+
+            <ul>
+                <li>Enter your <strong>email</strong></li>
+                <li>Agree to terms → <strong>Y</strong></li>
+                <li>Redirect HTTP to HTTPS → <strong>2 (Recommended)</strong></li>
+            </ul>
+
+            <h3>12.3 Verify Auto-Renewal</h3>
+
+            <pre><code>certbot renew --dry-run</code></pre>
+
+            <p>✔ SSL auto-renews every <strong>90 days</strong></p>
+
+            <hr>
+
+            <h2>Step 13: Final Nginx Configuration (SSL + Socket.IO)</h2>
+
+            <pre><code>server {
+    listen 443 ssl;
+    server_name YOUR_DOMAIN_NAME.COM www.YOUR_DOMAIN_NAME.COM;
+
+    ssl_certificate /etc/letsencrypt/live/YOUR_DOMAIN_NAME.COM/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/YOUR_DOMAIN_NAME.COM/privkey.pem;
+
+    location /storage/ {
+       alias /your_node_api_absolute_path/public/;
+
+       access_log off;
+       expires 1y;
+
+       # ✅ ADD THIS (CORS FIX)
+       add_header Access-Control-Allow-Origin *;
+       add_header Access-Control-Allow-Methods "GET, OPTIONS";
+       add_header Access-Control-Allow-Headers "*";
+    }
+
+    location / {
+        proxy_pass http://localhost:3000;
+
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        proxy_read_timeout 60s;
+        proxy_send_timeout 60s;
+    }
+}
+
+server {
+    listen 80;
+    server_name YOUR_DOMAIN_NAME.COM www.YOUR_DOMAIN_NAME.COM;
+    return 301 https://$host$request_uri;
+}</code></pre>
+
+            <pre><code>systemctl reload nginx</code></pre>
+
+            <hr>
+
+            <h2>Step 14: Open Firewall Port</h2>
+
+            <pre><code>ufw allow 443
+ufw reload</code></pre>
+
+            <hr>
+
+            <h2>Step 15: Final Verification Checklist</h2>
+
+            <ul>
+                <li>✔ https://YOUR_DOMAIN_NAME.COM opens</li>
+                <li>✔ SSL padlock visible 🔒</li>
+                <li>✔ PM2 app running</li>
+                <li>✔ certbot renew works</li>
+            </ul>
+
+            <hr>
+
+            <h2>SSH Key Setup (macOS, Windows, Linux)</h2>
+
+            <p>
+                Below are real, OS-specific, copy-paste ready steps to create and add an SSH key for
+                <strong>macOS, Windows, and Linux</strong>.
+            </p>
+
+            <hr>
+
+            <h2>Configure CLIENT_ORIGINS (CORS Setup)</h2>
+            <p>If your frontend (Angular / Web / Admin Panel) cannot connect to your API or shows CORS errors, you need to properly configure:</p>
+
+            <p><strong>CLIENT_ORIGINS</strong> defines <strong>which domains are allowed to access your API.</strong></p>
+
+            <p>👉 Example:</p>
+
+             <ul>
+                <li>
+                    <p>Frontend (Admin Panel):</p>
+                    <p>https://foodbite.elitecanyon.com</p>
+                </li>
+                <li>
+                    <p>Backend (API):</p>
+                    <p>https://foodbite-api.elitecanyon.com</p>
+                </li>
+            </ul>
+
+            <p>Since these are different domains → <strong>CORS is required</strong></p>
+
+            <h2>❗ Common Error</h2>
+
+            <p>If not configured correctly, you may see:</p>
+
+
+             <ul>
+                <li>❌ <strong>Blocked by CORS policy</strong></li>
+                <li>❌ <strong>No 'Access-Control-Allow-Origin' header</strong></li>
+                <li>❌ API works in Postman but not in browser</li>
+            </ul>
+
+            <h3>⚙️ Step 1: Open <strong>.env</strong> File</h3>
+
+            <p>Go to your project directory:</p>
+
+            <pre><code>pwd</code></pre>
+            <p>Example:</p>
+
+            <pre><code>/home/foodbite-api</code></pre>
+
+            <p>Then open <strong>.env:</strong></p>
+
+            <h3>✏️ Step 2: Set CLIENT_ORIGINS</h3>
+
+            <p>Add your frontend domain:</p>
+
+            <pre><code>CLIENT_ORIGINS=https://foodbite.elitecanyon.com</code></pre>
+
+            <p>If you have multiple frontends (admin, website, etc.), separate them using commas:</p>
+
+            <pre><code>CLIENT_ORIGINS=https://foodbite.elitecanyon.com,https://yourwebsite.com,http://localhost:4200</code></pre>
+
+            <h3>Important Rules</h3>
+            <div class="alert alert-success">
+                <ul>
+                    <li>Do NOT add trailing slash <strong>/</strong></li>
+                    <li>Do NOT add spaces between URLs</li>
+                    <li>Use full protocol <strong>(http:// or https://)</strong></li>
+                </ul>
+            </div>
+
+            <h3>🔄 Step 3: Restart Server</h3>
+
+            <p>After updating <strong>.env</strong>, restart your Node.js app:</p>
+
+            <pre><code>pm2 restart all</code></pre>
+
+            <h3>🧪 Step 4: Test</h3>
+
+            <p>Open your frontend and check API calls.</p>
+            <p>👉 You can also verify using browser DevTools:</p>
+
+            <ul>
+                <li>Network tab</li>
+                <li>Check request headers</li>
+                <li>Confirm <strong>Access-Control-Allow-Origin</strong></li>
+            </ul>
+
+            <hr>
+            
+            <h2>Recommended</h2>
+
+            <div class="alert alert-success">
+                If you prefer visual guidance, we strongly recommend watching the installation video on YouTube.
+                It covers the same steps shown in this guide and can help avoid common setup mistakes.
+            </div>
+
+            <div class="video-box">
+                <a href="https://www.youtube.com/watch?v=hcqI8ARH60A" target="_blank" class="video-link">
+                    <img src="https://img.youtube.com/vi/hcqI8ARH60A/maxresdefault.jpg" class="video-thumb w-100"
+                        alt="Node.js Installation Guide">
+                    <span class="play-btn">▶</span>
+                </a>
+            </div>
+
+            <div class="docs-nav-footer">
+                <a href="./local-setup.html" class="docs-nav-card prev">
+                    <span class="label">Previous</span>
+                    <span class="title">« Local Environment</span>
+                </a>
+
+                <a href="./aws-ec2-setup.html" class="docs-nav-card next">
+                    <span class="label">Next</span>
+                    <span class="title">AWS EC2 Node.js + MongoDB Setup »</span>
+                </a>
+            </div>
+
+        </main>
+
+
+    </div>
+
+    <script src="../../assets/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Angular Admin Panel – Local API Setup | FoodBite Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../../assets/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+
+<body>
+
+    <header class="docs-header navbar navbar-light bg-white border-bottom">
+        <div class="container-fluid px-4">
+
+            <span class="navbar-brand mb-0 h5">FoodBite Documentation</span>
+
+            <div class="d-flex align-items-center gap-3">
+                <a href="../help/support.html" class="text-decoration-none text-secondary">Support</a>
+                <a href="https://docs-foodbite.elitecanyon.com" target="_blank"
+                    class="text-decoration-none text-primary">
+                    Online Documentation
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <div class="docs-wrapper">
+
+        <aside class="docs-sidebar">
+            <nav class="docs-nav">
+                <a href="../../index.html">Introduction</a>
+                <a href="../extra-pages/prerequisite.html">Prerequisites</a>
+                <a href="../extra-pages/configuration-summary-overview.html">Configuration Summary</a>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#requiredTools" role="button"
+                    aria-expanded="true" aria-controls="requiredTools">
+                    Required Software & Tools
+                </a>
+
+                <div class="collapse" id="requiredTools">
+                    <a href="../required-software-tools/introduction.html">Introduction</a>
+                    <a href="../required-software-tools/nodejs-setup.html">Node.js Setup Guide</a>
+                    <a href="../required-software-tools/mongodb-local.html">MongoDB Local Setup</a>
+                    <a href="../required-software-tools/flutter-setup.html">Flutter Setup Guide</a>
+                    <a href="../required-software-tools/firebase-cli.html">Firebase CLI & FlutterFire Setup</a>
+                    <a href="../required-software-tools/angular-setup.html">Angular Setup Guide</a>
+                    <a href="../required-software-tools/google-maps-keys.html">Google Maps API Key Setup</a>
+                </div>
+
+                <a href="../extra-pages/folder-structure.html">Folder Structure</a>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#nodeApiSetup" role="button"
+                    aria-expanded="false" aria-controls="nodeApiSetup">
+                    Node API Setup
+                </a>
+
+                <div class="collapse" id="nodeApiSetup">
+                    <a href="../node-api-setup/introduction.html">Introduction</a>
+                    <a href="../node-api-setup/local-setup.html">Local Environment</a>
+                    <a href="../node-api-setup/digital-ocean-setup.html">
+                        DigitalOcean Node.js + MongoDB Setup
+                    </a>
+                    <a href="../node-api-setup/aws-ec2-setup.html">
+                        AWS EC2 Node.js + MongoDB Setup
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#mongoDbSetup" role="button"
+                    aria-expanded="false" aria-controls="mongoDbSetup">
+                    MongoDB Setup
+                </a>
+                <div class="collapse" id="mongoDbSetup">
+                    <a href="../mongodb-setup/introduction.html">Introduction</a>
+                    <a href="../mongodb-setup/mongo-atlast.html">
+                        MongoDB Atlas Database Setup
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle" data-bs-toggle="collapse" href="#adminPanelSetup" role="button"
+                    aria-expanded="false" aria-controls="adminPanelSetup">
+                    Admin Panel Setup
+                </a>
+
+                <div class="collapse show" id="adminPanelSetup">
+                    <a href="../admin-panel-setup/introduction.html">Introduction</a>
+                    <a class="active" href="../admin-panel-setup/local-testing.html">
+                        Admin Panel Setup (Local API)
+                    </a>
+                    <a href="../admin-panel-setup/production-build.html">
+                        Admin Panel – Production Deployment
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#customerAppSetup"
+                    role="button" aria-expanded="false" aria-controls="customerAppSetup">
+                    Customer App Setup
+                </a>
+
+
+                <div class="collapse" id="customerAppSetup">
+                    <a href="../customer-app-setup/introduction.html">Introduction</a>
+                    <a href="../customer-app-setup/customer-app-setup-guide.html">
+                        Customer App Setup (Flutter)
+                    </a>
+                    <a href="../customer-app-setup/customer-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../customer-app-setup/customer-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#restaurantAppSetup"
+                    role="button" aria-expanded="false" aria-controls="restaurantAppSetup">
+                    Restaurant App Setup
+                </a>
+
+
+                <div class="collapse" id="restaurantAppSetup">
+                    <a href="../restaurant-app-setup/introduction.html">Introduction</a>
+                    <a href="../restaurant-app-setup/restaurant-app-setup-guide.html">
+                        Restaurant App Setup (Flutter)
+                    </a>
+                    <a href="../restaurant-app-setup/restaurant-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../restaurant-app-setup/restaurant-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#deliverymanAppSetup"
+                    role="button" aria-expanded="false" aria-controls="deliverymanAppSetup">
+                    Deliveryman App Setup
+                </a>
+
+                <div class="collapse" id="deliverymanAppSetup">
+                    <a href="../deliveryman-app-setup/introduction.html">Introduction</a>
+                    <a href="../deliveryman-app-setup/deliveryman-app-setup-guide.html">
+                        Deliveryman App Setup (Flutter)
+                    </a>
+                    <a href="../deliveryman-app-setup/deliveryman-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../deliveryman-app-setup/deliveryman-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#kitchenAppSetup" role="button"
+                    aria-expanded="false" aria-controls="kitchenAppSetup">
+                    Kitchen App Setup
+                </a>
+
+                <div class="collapse" id="kitchenAppSetup">
+                    <a href="../kitchen-app-setup/introduction.html">Introduction</a>
+                    <a href="../kitchen-app-setup/kitchen-app-setup-guide.html">
+                        Kitchen App Setup (Flutter)
+                    </a>
+                    <a href="../kitchen-app-setup/kitchen-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../kitchen-app-setup/kitchen-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#waiterAppSetup" role="button"
+                    aria-expanded="false" aria-controls="waiterAppSetup">
+                    Waiter App Setup
+                </a>
+
+
+                <div class="collapse" id="waiterAppSetup">
+                    <a href="../waiter-app-setup/introduction.html">Introduction</a>
+                    <a href="../waiter-app-setup/waiter-app-setup-guide.html">
+                        Waiter App Setup (Flutter)
+                    </a>
+                    <a href="../waiter-app-setup/waiter-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../waiter-app-setup/waiter-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#customizations" role="button"
+                    aria-expanded="false" aria-controls="customizations">
+                    Customizations
+                </a>
+
+                <div class="collapse" id="customizations">
+                    <a href="../customizations/overview.html">Overview</a>
+                    <a href="../customizations/app-package-bundle-name.html">
+                        App Package / Bundle Name (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-name.html">
+                        Change App Name (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-icon.html">
+                        Change App Icon (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-color.html">
+                        Change App Color (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-change-locale.html">
+                        Add or Update App Languages (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-fonts.html">
+                        Change App Fonts (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-static-images.html">
+                        Change Static Images (Flutter)
+                    </a>
+                    <a href="../customizations/admin-panel-change-locale.html">
+                        Admin Language Translations (Angular)
+                    </a>
+                    <a href="../customizations/admin-panel-static-images.html">
+                        Admin Panel Static Images (Angular)
+                    </a>
+                    <a href="../customizations/admin-panel-color.html">
+                        Admin Panel Theme Colors
+                    </a>
+                    <a href="../customizations/api-server-locale.html">
+                        Server API Translations
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#paymentGateway" role="button"
+                    aria-expanded="false" aria-controls="paymentGateway">
+                    Payment Gateway Setup
+                </a>
+
+                <div class="collapse" id="paymentGateway">
+                    <a href="../payment-gateways/introduction.html">Introduction</a>
+                    <a href="../payment-gateways/stripe.html">Stripe Payment Setup</a>
+                    <a href="../payment-gateways/paypal.html">PayPal Payment Setup</a>
+                    <a href="../payment-gateways/razorpay.html">Razorpay Payment Setup</a>
+                    <a href="../payment-gateways/instamojo.html">Instamojo Payment Setup</a>
+                    <a href="../payment-gateways/paystack.html">Paystack Payment Setup</a>
+                    <a href="../payment-gateways/flutterwave.html">Flutterwave Payment Setup</a>
+                    <a href="../payment-gateways/cashfree.html">Cashfree Payment Setup</a>
+                    <a href="../payment-gateways/xendit.html">Xendit Payment Setup</a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#helpSection" role="button"
+                    aria-expanded="false" aria-controls="helpSection">
+                    Help
+                </a>
+
+                <div class="collapse" id="helpSection">
+                    <a href="../help/error.html">Errors & Troubleshooting</a>
+                    <a href="../help/source-credits.html">Source Credits</a>
+                    <a href="../help/support.html">Support & Contact</a>
+                </div>
+
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+
+            <h2>Angular Admin Panel – Local API Setup</h2>
+
+            <p>This guide explains how to set up the <strong>FoodBite Angular Admin Panel</strong> and connect it with
+                the <strong>Node.js API running locally</strong> for development and testing.</p>
+
+            <hr>
+
+            <h3>Step 1: Prerequisites</h3>
+            <p>Ensure the following tools are installed on your system:</p>
+            <ul>
+                <li><strong>Node.js</strong> (v18+ recommended)</li>
+                <li><strong>npm</strong> or <strong>yarn</strong></li>
+                <li><strong>Angular CLI</strong></li>
+                <li><strong>MongoDB</strong> (local or Atlas)</li>
+                <li><strong>Google Maps Keys</strong></li>
+            </ul>
+
+            <p>Verify installations:</p>
+            <pre><code class="language-bash">node -v
+npm -v
+ng version</code></pre>
+
+            <hr>
+
+            <h3>Step 2: Extract CodeCanyon Source Code</h3>
+            <p>After purchasing FoodBite from CodeCanyon, you will receive a ZIP file:</p>
+            <pre><code class="language-bash">AppSourceCode.zip</code></pre>
+
+            <p>Extract the ZIP file:</p>
+            <pre><code class="language-bash">AppSourceCode/
+├── Admin_panel
+├── API
+├── Customer_app
+├── Deliveryman_app
+├── Kitchen_app
+├── Restaurant_app
+├── Resource
+├── Waiter_app
+└── documentation.html</code></pre>
+
+            <p>Navigate to the <strong>Admin_Panel</strong> directory:</p>
+            <pre><code class="language-bash">cd AppSourceCode/Admin_Panel</code></pre>
+
+            <div class="alert alert-warning" role="alert">
+                ⚠️ Do NOT rename folders, as internal paths are already configured.
+            </div>
+
+            <hr>
+
+            <h3>Step 3: Install Admin Panel Dependencies</h3>
+            <p>Inside the Admin_Panel folder, run:</p>
+            <pre><code class="language-bash">npm install</code></pre>
+            <p>This will install all Angular dependencies required for the admin panel.</p>
+
+            <hr>
+
+            <h3>Step 4: Run Node.js API Locally</h3>
+            <p>Before starting the Admin Panel, you must run the FoodBite Node.js API locally.</p>
+            <p>Please follow the dedicated backend setup guide:</p>
+            <p>👉 <a href="../node-api-setup/local-setup.html" target="_blank">Node API Local Setup Guide</a></p>
+
+            <p>This document covers:</p>
+            <ul>
+                <li>Backend dependency installation</li>
+                <li>Environment variable configuration</li>
+                <li>MongoDB connection</li>
+                <li>Running API in development mode</li>
+                <li>Ensure the API is running successfully before continuing</li>
+            </ul>
+
+            <p>Default local API URL:</p>
+            <pre><code class="language-bash">http://localhost:3000</code></pre>
+
+            <hr>
+
+            <h3>Step 5: Configure API Base URL in Angular</h3>
+            <ol>
+                <li>Open the environment file:
+                    <pre><code class="language-bash">src/environments/environment.development.ts</code></pre>
+                </li>
+                <li>Update the <strong>apiUrl</strong>:
+                    <pre><code class="language-ts">export const environment = {
+  production: false,
+  appName: 'FoodBite',
+  apiUrl: 'http://localhost:3000/', // or your current ip address
+  defaultCountryCode: '+61',
+  version: '1.0.0'
+};</code></pre>
+                </li>
+                <li>For <strong>production builds</strong>:
+                    <pre><code class="language-bash">src/environments/environment.ts</code></pre>
+                    <pre><code class="language-ts">export const environment = {
+  production: false,
+  appName: 'FoodBite',
+  apiUrl: 'https://yourapidomain.com/',
+  defaultCountryCode: '+61',
+  version: '1.0.0'
+};</code></pre>
+                </li>
+            </ol>
+
+            <hr>
+
+            <h3>Step 6: Start Angular Admin Panel</h3>
+            <p>Return to the Admin Panel directory and start the server:</p>
+            <pre><code class="language-bash">npm start</code></pre>
+
+            <p>Open your browser:</p>
+            <pre><code class="language-bash">http://localhost:4200</code></pre>
+
+            <hr>
+
+            <h3>Step 7: Verify API Integration</h3>
+            <p>After starting both the <strong>Node.js API</strong> and <strong>Angular Admin Panel</strong>, verify the
+                integration using the following checklist:</p>
+            <ul>
+                <li class="text-success">✅ Admin login works correctly</li>
+                <li class="text-success">✅ Dashboard data loads without errors</li>
+                <li class="text-success">✅ Restaurants, orders, and users are displayed</li>
+                <li class="text-success">✅ No <strong>CORS</strong> or <strong>401 Unauthorized</strong> errors</li>
+            </ul>
+
+            <h4>Check API Requests</h4>
+            <p>Open <strong>Browser DevTools</strong>:</p>
+            <ul>
+                <li>Right-click → <strong>Inspect</strong></li>
+                <li>Go to <strong>Network</strong> tab</li>
+                <li>Monitor API requests and responses</li>
+            </ul>
+            <p>All API calls should return valid responses (<code>200 / 201</code> status).</p>
+
+            <hr>
+
+            <h3>Step 8: Common Issues & Fixes</h3>
+
+            <h4>❌ API Not Connecting</h4>
+            <p><strong>Possible Fixes:</strong></p>
+            <ul>
+                <li>Ensure the Node.js API server is running</li>
+                <li>Verify the API URL in:
+                    <pre><code class="language-ts">src/environments/environment.ts or environment.development.ts</code></pre>
+                </li>
+            </ul>
+
+            <hr>
+
+            <div class="alert alert-success" role="alert">
+                <strong>Recommended:</strong> If you prefer visual guidance, we strongly recommend watching the
+                installation video on YouTube.<br>
+                It covers the same steps shown in this guide and can help avoid common setup mistakes.
+            </div>
+
+
+            <div class="video-box">
+                <a href="https://www.youtube.com/watch?v=6jC4VgojZFg" target="_blank" class="video-link">
+                    <img src="https://img.youtube.com/vi/6jC4VgojZFg/maxresdefault.jpg" class="video-thumb w-100"
+                        alt="Node.js Installation Guide">
+                    <span class="play-btn">▶</span>
+                </a>
+            </div>
+
+            <div class="docs-nav-footer">
+                <a href="./introduction.html" class="docs-nav-card prev">
+                    <span class="label">Previous</span>
+                    <span class="title">« Introduction</span>
+                </a>
+
+                <a href="./production-build.html" class="docs-nav-card next">
+                    <span class="label">Next</span>
+                    <span class="title">Admin Panel Production Deployment »</span>
+                </a>
+            </div>
+
+        </main>
+
+
+    </div>
+
+    <script src="../../assets/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

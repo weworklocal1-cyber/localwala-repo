@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MongoDB Atlas Database Setup | FoodBite Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../../assets/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+
+<body>
+
+    <header class="docs-header navbar navbar-light bg-white border-bottom">
+        <div class="container-fluid px-4">
+
+            <span class="navbar-brand mb-0 h5">FoodBite Documentation</span>
+
+            <div class="d-flex align-items-center gap-3">
+                <a href="../help/support.html" class="text-decoration-none text-secondary">Support</a>
+                <a href="https://docs-foodbite.elitecanyon.com" target="_blank"
+                    class="text-decoration-none text-primary">
+                    Online Documentation
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <div class="docs-wrapper">
+
+        <aside class="docs-sidebar">
+            <nav class="docs-nav">
+                <a href="../../index.html">Introduction</a>
+                <a href="../extra-pages/prerequisite.html">Prerequisites</a>
+                <a href="../extra-pages/configuration-summary-overview.html">Configuration Summary</a>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#requiredTools" role="button"
+                    aria-expanded="true" aria-controls="requiredTools">
+                    Required Software & Tools
+                </a>
+
+                <div class="collapse" id="requiredTools">
+                    <a href="../required-software-tools/introduction.html">Introduction</a>
+                    <a href="../required-software-tools/nodejs-setup.html">Node.js Setup Guide</a>
+                    <a href="../required-software-tools/mongodb-local.html">MongoDB Local Setup</a>
+                    <a href="../required-software-tools/flutter-setup.html">Flutter Setup Guide</a>
+                    <a href="../required-software-tools/firebase-cli.html">Firebase CLI & FlutterFire Setup</a>
+                    <a href="../required-software-tools/angular-setup.html">Angular Setup Guide</a>
+                    <a href="../required-software-tools/google-maps-keys.html">Google Maps API Key Setup</a>
+                </div>
+
+                <a href="../extra-pages/folder-structure.html">Folder Structure</a>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#nodeApiSetup" role="button"
+                    aria-expanded="false" aria-controls="nodeApiSetup">
+                    Node API Setup
+                </a>
+
+                <div class="collapse" id="nodeApiSetup">
+                    <a href="../node-api-setup/introduction.html">Introduction</a>
+                    <a href="../node-api-setup/local-setup.html">Local Environment</a>
+                    <a href="../node-api-setup/digital-ocean-setup.html">
+                        DigitalOcean Node.js + MongoDB Setup
+                    </a>
+                    <a href="../node-api-setup/aws-ec2-setup.html">
+                        AWS EC2 Node.js + MongoDB Setup
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle" data-bs-toggle="collapse" href="#mongoDbSetup" role="button"
+                    aria-expanded="false" aria-controls="mongoDbSetup">
+                    MongoDB Setup
+                </a>
+                <div class="collapse show" id="mongoDbSetup">
+                    <a href="../mongodb-setup/introduction.html">Introduction</a>
+                    <a class="active" href="../mongodb-setup/mongo-atlast.html">
+                        MongoDB Atlas Database Setup
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#adminPanelSetup" role="button"
+                    aria-expanded="false" aria-controls="adminPanelSetup">
+                    Admin Panel Setup
+                </a>
+
+                <div class="collapse" id="adminPanelSetup">
+                    <a href="../admin-panel-setup/introduction.html">Introduction</a>
+                    <a href="../admin-panel-setup/local-testing.html">
+                        Admin Panel Setup (Local API)
+                    </a>
+                    <a href="../admin-panel-setup/production-build.html">
+                        Admin Panel – Production Deployment
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#customerAppSetup"
+                    role="button" aria-expanded="false" aria-controls="customerAppSetup">
+                    Customer App Setup
+                </a>
+
+
+                <div class="collapse" id="customerAppSetup">
+                    <a href="../customer-app-setup/introduction.html">Introduction</a>
+                    <a href="../customer-app-setup/customer-app-setup-guide.html">
+                        Customer App Setup (Flutter)
+                    </a>
+                    <a href="../customer-app-setup/customer-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../customer-app-setup/customer-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#restaurantAppSetup"
+                    role="button" aria-expanded="false" aria-controls="restaurantAppSetup">
+                    Restaurant App Setup
+                </a>
+
+
+                <div class="collapse" id="restaurantAppSetup">
+                    <a href="../restaurant-app-setup/introduction.html">Introduction</a>
+                    <a href="../restaurant-app-setup/restaurant-app-setup-guide.html">
+                        Restaurant App Setup (Flutter)
+                    </a>
+                    <a href="../restaurant-app-setup/restaurant-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../restaurant-app-setup/restaurant-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#deliverymanAppSetup"
+                    role="button" aria-expanded="false" aria-controls="deliverymanAppSetup">
+                    Deliveryman App Setup
+                </a>
+
+                <div class="collapse" id="deliverymanAppSetup">
+                    <a href="../deliveryman-app-setup/introduction.html">Introduction</a>
+                    <a href="../deliveryman-app-setup/deliveryman-app-setup-guide.html">
+                        Deliveryman App Setup (Flutter)
+                    </a>
+                    <a href="../deliveryman-app-setup/deliveryman-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../deliveryman-app-setup/deliveryman-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#kitchenAppSetup" role="button"
+                    aria-expanded="false" aria-controls="kitchenAppSetup">
+                    Kitchen App Setup
+                </a>
+
+                <div class="collapse" id="kitchenAppSetup">
+                    <a href="../kitchen-app-setup/introduction.html">Introduction</a>
+                    <a href="../kitchen-app-setup/kitchen-app-setup-guide.html">
+                        Kitchen App Setup (Flutter)
+                    </a>
+                    <a href="../kitchen-app-setup/kitchen-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../kitchen-app-setup/kitchen-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#waiterAppSetup" role="button"
+                    aria-expanded="false" aria-controls="waiterAppSetup">
+                    Waiter App Setup
+                </a>
+
+
+                <div class="collapse" id="waiterAppSetup">
+                    <a href="../waiter-app-setup/introduction.html">Introduction</a>
+                    <a href="../waiter-app-setup/waiter-app-setup-guide.html">
+                        Waiter App Setup (Flutter)
+                    </a>
+                    <a href="../waiter-app-setup/waiter-android-prod-build.html">
+                        Android Prod Build (Android Studio)
+                    </a>
+                    <a href="../waiter-app-setup/waiter-ios-prod-build.html">
+                        iOS Prod Build (Xcode)
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#customizations" role="button"
+                    aria-expanded="false" aria-controls="customizations">
+                    Customizations
+                </a>
+
+                <div class="collapse" id="customizations">
+                    <a href="../customizations/overview.html">Overview</a>
+                    <a href="../customizations/app-package-bundle-name.html">
+                        App Package / Bundle Name (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-name.html">
+                        Change App Name (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-icon.html">
+                        Change App Icon (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-color.html">
+                        Change App Color (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-change-locale.html">
+                        Add or Update App Languages (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-app-fonts.html">
+                        Change App Fonts (Flutter)
+                    </a>
+                    <a href="../customizations/flutter-static-images.html">
+                        Change Static Images (Flutter)
+                    </a>
+                    <a href="../customizations/admin-panel-change-locale.html">
+                        Admin Language Translations (Angular)
+                    </a>
+                    <a href="../customizations/admin-panel-static-images.html">
+                        Admin Panel Static Images (Angular)
+                    </a>
+                    <a href="../customizations/admin-panel-color.html">
+                        Admin Panel Theme Colors
+                    </a>
+                    <a href="../customizations/api-server-locale.html">
+                        Server API Translations
+                    </a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#paymentGateway" role="button"
+                    aria-expanded="false" aria-controls="paymentGateway">
+                    Payment Gateway Setup
+                </a>
+
+                <div class="collapse" id="paymentGateway">
+                    <a href="../payment-gateways/introduction.html">Introduction</a>
+                    <a href="../payment-gateways/stripe.html">Stripe Payment Setup</a>
+                    <a href="../payment-gateways/paypal.html">PayPal Payment Setup</a>
+                    <a href="../payment-gateways/razorpay.html">Razorpay Payment Setup</a>
+                    <a href="../payment-gateways/instamojo.html">Instamojo Payment Setup</a>
+                    <a href="../payment-gateways/paystack.html">Paystack Payment Setup</a>
+                    <a href="../payment-gateways/flutterwave.html">Flutterwave Payment Setup</a>
+                    <a href="../payment-gateways/cashfree.html">Cashfree Payment Setup</a>
+                    <a href="../payment-gateways/xendit.html">Xendit Payment Setup</a>
+                </div>
+
+                <a class="docs-section-toggle collapsed" data-bs-toggle="collapse" href="#helpSection" role="button"
+                    aria-expanded="false" aria-controls="helpSection">
+                    Help
+                </a>
+
+                <div class="collapse" id="helpSection">
+                    <a href="../help/error.html">Errors & Troubleshooting</a>
+                    <a href="../help/source-credits.html">Source Credits</a>
+                    <a href="../help/support.html">Support & Contact</a>
+                </div>
+
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+
+            <h2>MongoDB Atlas Database Setup</h2>
+
+            <p>MongoDB Atlas is a <strong>fully managed cloud MongoDB service</strong> used for hosting FoodBite
+                databases in testing and production environments.</p>
+
+            <p>This guide explains how to <strong>create a MongoDB Atlas cluster, database, user, and connection
+                    string</strong>.</p>
+
+            <hr>
+
+            <h3>Step 1: Login to MongoDB Atlas</h3>
+            <ol>
+                <li>Visit 👉 <a href="https://www.mongodb.com/atlas" target="_blank">https://www.mongodb.com/atlas</a>
+                </li>
+                <li>Sign in using <strong>Google, GitHub, or Email</strong></li>
+                <li>You will be redirected to the <strong>MongoDB Atlas Dashboard</strong></li>
+            </ol>
+
+            <img src="../../assets/images/mongo-atlas-auth.png" alt="Mongo Atlas Auth" class="img-fluid mb-3">
+
+            <hr>
+
+            <h3>Step 2: Create a Free Cluster</h3>
+            <ol>
+                <li>Click <strong>Create</strong>
+                    <img src="../../assets/images/mongo-atlas-make-cluster.png" alt="Mongo Atlas Create Cluster"
+                        class="img-fluid mb-2">
+                </li>
+                <li>Select <strong>M0 Free Tier</strong></li>
+                <li>Choose:
+                    <ul>
+                        <li><strong>Cloud Provider</strong>: AWS / GCP / Azure</li>
+                        <li><strong>Region</strong>: Choose the nearest region for better performance</li>
+                    </ul>
+                </li>
+                <li>Set a cluster name:
+                    <pre><code>foodbite-cluster</code></pre>
+                </li>
+                <li>Click <strong>Create Cluster</strong>
+                    <img src="../../assets/images/mongo-atlas-setup-cluster.png" alt="Mongo Atlas Select Provider"
+                        class="img-fluid mb-2">
+                    <p>⏳ Cluster provisioning may take <strong>2–5 minutes</strong></p>
+                </li>
+            </ol>
+
+            <hr>
+
+            <h3>Step 3: Create a Database User</h3>
+            <ol>
+                <li>Go to <strong>Database Access</strong></li>
+                <li>Click <strong>Add New Database User</strong></li>
+                <li>Select <strong>Password Authentication</strong></li>
+                <li>Enter:
+                    <pre><code>Username: foodbite_user
+Password: your_secure_password</code></pre>
+                </li>
+                <li>Set privileges:
+                    <ul>
+                        <li class="text-success">✅ Read and write to any database</li>
+                    </ul>
+                </li>
+                <li>Click <strong>Add User</strong>
+                    <img src="../../assets/images/mongo-atlas-create-user.png" alt="Mongo Atlas Create Database User"
+                        class="img-fluid mb-2">
+                </li>
+            </ol>
+
+            <div class="alert alert-warning" role="alert">
+                ⚠️ Save username & password (used in MongoDB URI)
+            </div>
+
+            <hr>
+
+            <h3>Step 4: Allow Network Access (IP Whitelist)</h3>
+            <ol>
+                <li>Go to <strong>Network Access</strong></li>
+                <li>Click <strong>Add IP Address</strong></li>
+                <li>Choose:
+                    <ul>
+                        <li>Select <strong>Allow Access from Anywhere</strong> (for testing)</li>
+                        <pre><code>0.0.0.0/0</code></pre>
+                    </ul>
+                </li>
+                <li>Click <strong>Confirm</strong></li>
+            </ol>
+
+            <div class="alert alert-warning" role="alert">
+                ⚠️ For production, restrict to server IP only.
+            </div>
+
+            <hr>
+
+            <h3>Step 5: Open Cluster & Create Database</h3>
+            <ol>
+                <li>Go to <strong>Clusters</strong></li>
+                <li>Click <strong>Browse Collections</strong></li>
+                <li>Click <strong>Add My Own Data</strong> and fill details:
+                    <pre><code>Database Name: foodbite
+Collection Name: users</code></pre>
+                </li>
+                <li>Click <strong>Create</strong></li>
+            </ol>
+
+            <p class="text-success">✅ Your database is now created!</p>
+
+            <hr>
+
+            <h3>Step 6: Get MongoDB Connection String</h3>
+            <ol>
+                <li>Click <strong>Connect</strong></li>
+                <li>Choose <strong>Connect your application</strong></li>
+                <li>Select:
+                    <ul>
+                        <li>Driver: <strong>Node.js</strong></li>
+                        <li>Version: Latest</li>
+                    </ul>
+                </li>
+                <li>Copy URI:
+                    <pre><code>mongodb+srv://foodbite_user:&lt;password&gt;@foodbite-cluster.xxxxx.mongodb.net/foodbite</code></pre>
+                    Replace:
+                    <ul>
+                        <li>&lt;password&gt; → your database password</li>
+                        <li>foodbite → database name</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <img src="../../assets/images/mongo-atlas-select-driver.png" alt="Mongo Atlas Copy Connection String"
+                class="img-fluid mb-2">
+
+            <hr>
+
+            <h3>Step 7: Use in Node.js (.env)</h3>
+            <p>Add the MongoDB URI to your <strong>.env</strong> file:</p>
+            <pre><code>MONGODB_URI=mongodb+srv://foodbite_user:password@foodbite-cluster.xxxxx.mongodb.net/foodbite</code></pre>
+
+            <img src="../../assets/images/mongo-atlas-save-env.png" alt="Mongo Atlas Save Connection String .env"
+                class="img-fluid mb-2">
+
+            <hr>
+
+            <h3>Final Checklist</h3>
+            <ul>
+                <li class="text-success">✔ Cluster created</li>
+                <li class="text-success">✔ Database user added</li>
+                <li class="text-success">✔ IP whitelisted</li>
+                <li class="text-success">✔ Database & collection created</li>
+                <li class="text-success">✔ Connection string ready</li>
+            </ul>
+
+            <hr>
+
+            <div class="alert alert-success" role="alert">
+                <strong>Recommended:</strong> If you prefer visual guidance, we strongly recommend watching the
+                installation video on YouTube.<br>
+                It covers the same steps shown in this guide and can help avoid common setup mistakes.
+            </div>
+
+            <div class="video-box">
+                <a href="https://www.youtube.com/watch?v=memooHW07TA" target="_blank" class="video-link">
+                    <img src="https://img.youtube.com/vi/memooHW07TA/maxresdefault.jpg" class="video-thumb w-100"
+                        alt="Node.js Installation Guide">
+                    <span class="play-btn">▶</span>
+                </a>
+            </div>
+
+            <div class="docs-nav-footer">
+                <a href="./introduction.html" class="docs-nav-card prev">
+                    <span class="label">Previous</span>
+                    <span class="title">« Introduction</span>
+                </a>
+
+                <a href="../admin-panel-setup/introduction.html" class="docs-nav-card next">
+                    <span class="label">Next</span>
+                    <span class="title">Admin Panel Setup »</span>
+                </a>
+            </div>
+
+        </main>
+
+
+    </div>
+
+    <script src="../../assets/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
