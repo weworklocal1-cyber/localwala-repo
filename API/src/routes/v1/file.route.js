@@ -14,17 +14,27 @@
  *
  * Ownership Fingerprint:
  * LWL|WWL|2026|LOCALWALA|NODE
+ *
+ * Phase 2.9 - converted route file. Declarations are now Fastify's
+ * `route({ method, url, preHandler, handler })`, replayed onto both servers
+ * by src/routes/routeRegistrar.js.
  */
 
-const express = require('express');
 const appAuth = require('../../middlewares/appAuth');
 const webAuth = require('../../middlewares/webAuth');
 const FileController = require('../../controllers/file.controller');
 
-const router = express.Router();
-
-router.post('/uploadImage', appAuth('uploadImage'), FileController.uploadImage);
-router.post('/web_upload_image', webAuth('uploadImage'), FileController.uploadImage);
-
-module.exports = router;
-
+module.exports.register = function register(route) {
+  route({
+    method: 'POST',
+    url: '/uploadImage',
+    preHandler: [appAuth('uploadImage')],
+    handler: FileController.uploadImage,
+  });
+  route({
+    method: 'POST',
+    url: '/web_upload_image',
+    preHandler: [webAuth('uploadImage')],
+    handler: FileController.uploadImage,
+  });
+};

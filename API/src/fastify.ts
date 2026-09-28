@@ -35,7 +35,7 @@ import jwt from '@fastify/jwt';
 import mongoose from 'mongoose';
 import fs from 'node:fs';
 import path from 'node:path';
-import { appAuth, webAuth } from './auth/fastifyAuth';
+import { appAuth, webAuth, createFastifyAuth } from './auth/fastifyAuth';
 import { registerAuthRateLimit, RATE_LIMIT_MESSAGE } from './plugins/authRateLimit';
 import { registerReplyCompat, skipsEtag } from './plugins/replyCompat';
 
@@ -486,6 +486,18 @@ export async function buildFastify(): Promise<FastifyInstance> {
       },
     ];
   });
+
+  // Phase 2.9 - replay the route files that have been converted to
+  // `route({ method, url, preHandler, handler })`. Files that still export an
+  // `express.Router` are skipped by src/routes/v1/index.js, so this grows one
+  // file at a time; `manifest:check` still reads the Express tree, which is
+  // built from the same declarations.
+  //
+  // `createFastifyAuth` is injected rather than required by the registrar:
+  // src/routes/* is plain CommonJS loaded on the Express boot path in
+  // production, where a `.ts` module cannot be resolved.
+  const { registerOnFastify } = require('./routes/v1');
+  registerOnFastify(app, createFastifyAuth);
 
   // GET / - the one route both servers own during the strangler migration.
   app.get('/', async (_request, reply) =>

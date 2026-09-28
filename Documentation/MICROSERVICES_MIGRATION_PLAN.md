@@ -252,7 +252,7 @@
 | 2.15 | `index.js`: `await fastify.ready()` → `socketIo(fastify.server)`; cron → `onReady`/`onClose` hooks |
 | 2.16 | Route-manifest parity diff + full smoke suite |
 
-**Internal order:** 2.1 → 2.2–2.4 → 2.5 spike → 2.6 → 2.7 → 2.8 → 2.9a (reply adapter) → 2.9 (read routes) → 2.10 → 2.11 → 2.12 (hardest: `auth.controller`, `payment.initiation`) → 2.13–2.15 → 2.16.
+**Internal order:** 2.1 → 2.2–2.4 → 2.5 spike → 2.6 → 2.7 → 2.8 → 2.9a (reply adapter) → 2.9b (shared route registrar + first file) → 2.9c (remaining 12 route files) → 2.10 → 2.11 → 2.12 (hardest: `auth.controller`, `payment.initiation`) → 2.13–2.15 → 2.16.
 
 **Exit criteria:** all routes identical, tests green, `express` removed from `package.json`.
 
@@ -321,6 +321,25 @@
 > - **`send(0|false|42)`** needs no shim at all: Express and Fastify already agree (`application/json`, identical length).
 >
 > Five dependencies promoted from transitive to declared (`accepts`, `encodeurl`, `escape-html`, `vary`, `content-type`) - all are already in `node_modules` as Express's own dependencies, so behaviour is shared by construction rather than approximated.
+
+> **2.9b done (`src/routes/routeRegistrar.js` + `src/routes/v1/index.js` + `file.route.js`, 6 assertions).** The coexistence mechanism for 2.9 was not in the plan and had to be decided before the first file could move: `src/index.js` still boots Express and does not switch until 2.15, yet 2.9 rewrites the route files to Fastify's shape. Three options were on the table (shared `route()` registrar / flip the entry now with an Express bridge / literal dual blocks); the shared registrar was chosen, and the other two are recorded here so they are not re-proposed:
+> - **Flip-entry+bridge** would have made production exercise Fastify from step one, but a raw `app(req,res)` bridge has to hand an unconsumed body back to Express, and helmet/cors/compression/sanitizers would have to be prevented from running twice. More machinery than a strangler migration needs.
+> - **Dual blocks** write every route twice. The manifest diff would have caught path drift but not handler drift - exactly the failure mode the gate exists to prevent.
+>
+> How the registrar works:
+> - **A converted file exports `{ register }`** - a function invoked *once per framework*, so declarations are re-evaluated rather than shared. An unconverted file still exports an `express.Router`, and `routes/v1/index.js` mounts both shapes the same way. That is what makes the conversion strictly one file at a time with no flag day.
+> - **Express** gets `router[method](url, ...preHandler, handler)` - the same layers in the same order, so `tools/route-manifest.js` (which reads `handler.isAuth` / `handler.isValidate` off the arguments) reproduces the Phase 0 baseline. `manifest:check` stayed at 0/0/0 across this commit.
+> - **Fastify** gets `app.route({ method, url: '/v1/<mount>' + url, preHandler, handler })`. `src/fastify.ts` calls `registerOnFastify(app, createFastifyAuth)`.
+> - **`createAuth` is injected, not required.** `routeRegistrar.js` is plain CommonJS loaded on the Express boot path in production, where a `.ts` module cannot be resolved - so `src/auth/fastifyAuth.ts` must never be reachable from `routes/v1`.
+>
+> Three facts found while building it, each of which shaped the code:
+> - **Fastify rejects `async` hooks of arity 3 at boot** (`FST_ERR_HOOK_INVALID_ASYNC_HANDLER`, `fastify/lib/route.js:318`). Express's `appAuth` is `async (req, res, next) => ...`, so it cannot be passed through - it is rebuilt via `createFastifyAuth(strategy)(...requiredRights)`. Conversion is deliberately **idempotent**, because the Fastify handler carries the same `isAuth`/`authStrategy`/`requiredRights` tags and re-running it produces the same handler rather than a passport closure inside a Fastify hook. `validate` is *sync* arity 3, so Fastify treats it as `(request, reply, done)` and it passes through untouched - the Phase 2.5 spike result.
+> - **Route order is preserved by array order.** Fastify runs `preHandler` entries in sequence, so `appAuth` still precedes `validate` exactly as Express ran them. (Putting `validate` in `preValidation`, as 2.5 originally specced, would have inverted that and turned a 401 into a 400.)
+> - **Controllers can be handed to Fastify untouched: none of them call `next`** (0 occurrences across `src/controllers/*.js`), and Fastify always invokes handlers as `handler(request, reply)` (`handle-request.js:203`). Combined with `catchAsync` being identity since 2.1, that is what makes the pass-through safe.
+>
+> Also worth recording: the whole route surface uses exactly **three middlewares** - `appAuth`, `webAuth`, `validate` - and **no multer at route level** (uploads live inside the controllers), so `file.route.js` did not need 2.10 first. And the repo's line-ending convention is per-file: the license header is CRLF, the body is LF; `git diff --check` fails if an edit rewrites header lines as LF or body lines as CRLF.
+>
+> Next: the remaining 12 files in plan order (`waiter` → `support.team` → `kitchen` → `auth` → …), then the Fastify-mode manifest (`--out tools/route-manifest.fastify.json`) as the global gate.
 
 ---
 

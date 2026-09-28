@@ -183,7 +183,9 @@ function buildManifest(prefix) {
   const expressModule = require('express');
   const originalRouter = patchExpress(expressModule);
 
-  const routeIndex = require(path.join(__dirname, '..', 'src', 'routes', 'v1'));
+  // Phase 2.9: src/routes/v1 exports `{ router, registerOnFastify }`; the
+  // Express tree is still the one the baseline was captured from.
+  const { router: routeIndex } = require(path.join(__dirname, '..', 'src', 'routes', 'v1'));
 
   const routes = [];
   flatten(routeIndex, prefix, routes);

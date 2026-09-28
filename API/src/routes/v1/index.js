@@ -17,6 +17,7 @@
  */
 
 const express = require('express');
+const { expressRegistrar, fastifyRegistrar } = require('../routeRegistrar');
 const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const adminRoute = require('./admin.route');
@@ -88,9 +89,39 @@ const defaultRoutes = [
   },
 ];
 
-defaultRoutes.forEach((route) => {
-  router.use(route.path, route.route);
+/**
+ * A converted route module exports `{ register }` (Phase 2.9); one that has
+ * not been converted yet still exports an `express.Router`. Both are mounted
+ * the same way, so a single file can move across without the rest moving.
+ */
+function isConverted(routeModule) {
+  return Boolean(routeModule) && typeof routeModule.register === 'function';
+}
+
+defaultRoutes.forEach((entry) => {
+  if (isConverted(entry.route)) {
+    const subRouter = express.Router();
+    entry.route.register(expressRegistrar(subRouter));
+    router.use(entry.path, subRouter);
+    return;
+  }
+  router.use(entry.path, entry.route);
 });
 
-module.exports = router;
+/**
+ * Phase 2.9 - replay the converted declarations onto Fastify, with the mount
+ * baked into the URL (`/file` -> `/v1/file/uploadImage`). Unconverted files
+ * are skipped: they are only reachable through Express until their own step.
+ *
+ * `createAuth` is injected from src/auth/fastifyAuth.ts rather than required
+ * here, because this file is CommonJS and is loaded on the Express boot path
+ * in production, where a `.ts` module cannot be resolved.
+ */
+function registerOnFastify(app, createAuth) {
+  defaultRoutes.forEach((entry) => {
+    if (!isConverted(entry.route)) return;
+    entry.route.register(fastifyRegistrar(app, `/v1${entry.path}`, createAuth));
+  });
+}
 
+module.exports = { router, registerOnFastify };
