@@ -44,11 +44,34 @@ const logger = require('./config/logger');
 const httpStatus = require('http-status').status;
 const etag = require('etag');
 const fp = require('fastify-plugin');
+const qs = require('qs');
 const compressible = require('compressible') as (contentType: string) => boolean;
+const { xss } = require('express-xss-sanitizer');
+const mongoSanitize = require('express-mongo-sanitize');
 const { buildHealthPage } = require('./utils/healthPage');
 
 /** Verbatim copy of compression/index.js:43. */
 const cacheControlNoTransformRegExp = /(?:^|,)\s*?no-transform\s*?(?:,|$)/;
+
+/** app.js:178-191 - raw-HTML routes that must not be run through sanitize-html. */
+const XSS_TRUSTED_ROUTES = ['/v1/admin/app_pages', '/v1/admin/email_templates'];
+
+/**
+ * `express.urlencoded({ extended: true })` parses with `qs`, but
+ * `@fastify/formbody@9` defaults to `fast-querystring`, which leaves `a[b]=1`
+ * as a flat `'a[b]'` key instead of nesting it. These options are the ones
+ * body-parser passes for `extended: true` (body-parser/lib/types/urlencoded.js:103);
+ * `arrayLimit` there is `Math.max(100, paramCount)` and the constant covers
+ * every body under 100 parameters.
+ */
+const parseUrlencoded = (body: string): Record<string, unknown> =>
+  qs.parse(body, {
+    allowPrototypes: true,
+    arrayLimit: 100,
+    depth: 32,
+    parameterLimit: 1000,
+    strictDepth: true,
+  }) as Record<string, unknown>;
 
 /**
  * Reproduce `compression`'s `vary(res, 'Accept-Encoding')` decision, then
@@ -242,6 +265,55 @@ export async function buildFastify(): Promise<FastifyInstance> {
   app.decorate('appAuth', appAuth);
   app.decorate('webAuth', webAuth);
 
+  // app.js:174-196, in order: urlencoded body -> cookie -> xss -> mongo-sanitize.
+  // Fastify has no cookie analogue of Express's (cookie-parser runs before the
+  // sanitizers but only reads `Cookie`), so the two sanitizers are registered
+  // here as instance `preValidation` hooks - after body parsing, before any
+  // route-level hook.
+  //
+  // Instance hooks are concatenated ahead of route-level ones
+  // (node_modules/fastify/lib/route.js:391-394), which is what puts them before
+  // `validate()` and before the rate limiter's route hook, matching Express's
+  // global-middleware-then-router layout. Both are callback-shaped on purpose:
+  // that is the shape Express uses, and it keeps `done(err)` propagation.
+  //
+  // `params` is deliberately NOT sanitized, even though app.js passes it to
+  // both helpers. Express runs `app.use(...)` before the router, so
+  // `req.params` is still `{}` at that point and both calls are no-ops - the
+  // real params reach `validate()` raw. Fastify has already routed by
+  // `preValidation`, so params are blanked around the middleware to reproduce
+  // exactly what Express hands it. Sanitizing them would make Fastify stricter
+  // than Express, which is a real behaviour change (a param that Express
+  // rejects with 400 would become a 200). Closing that gap is a security
+  // decision for Phase 9, taken against both sides at once - not silently on
+  // one.
+  app.addHook('preValidation', function (request, reply, done) {
+    // req.originalUrl in Express includes the query string; request.raw.url is
+    // Fastify's byte-for-byte equivalent.
+    const url = request.raw.url ?? '';
+    if (XSS_TRUSTED_ROUTES.some((route) => url.startsWith(route))) return done();
+
+    const params = request.params;
+    const restore = (): void => {
+      (request as { params: unknown }).params = params;
+    };
+    (request as { params: unknown }).params = {};
+    try {
+      xss({ sanitizeQuery: true, sanitizeBody: true })(request, reply, () => {
+        restore();
+        done();
+      });
+    } catch (err) {
+      restore();
+      done(err as Error);
+    }
+  });
+
+  app.addHook('preValidation', function (request, _reply, done) {
+    if (request.body) mongoSanitize.sanitize(request.body);
+    done();
+  });
+
   // Production-only, `/v1/auth` only - guarded inside to mirror `if
   // (config.env === 'production') { app.use('/v1/auth', authLimiter) }`.
   await registerAuthRateLimit(app);
@@ -324,7 +396,7 @@ export async function buildFastify(): Promise<FastifyInstance> {
   });
 
   // express.json({ limit: '5mb' }) + express.urlencoded({ extended: true })
-  await app.register(formbody, { bodyLimit: BODY_LIMIT });
+  await app.register(formbody, { bodyLimit: BODY_LIMIT, parser: parseUrlencoded });
 
   await app.register(cookie, {});
 
