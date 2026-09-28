@@ -31,8 +31,8 @@ const passport = require('passport');
 const { status: httpStatus } = require('http-status');
 const config = require('./config/config');
 const morgan = require('./config/morgan');
-const mongoConnectionStatus = require('./config/mongoConnectionStatus');
 const { jwtWebStrategy, jwtAppStrategy } = require('./config/passport');
+const { buildHealthPage } = require('./utils/healthPage');
 const routes = require('./routes/v1');
 const { authLimiter } = require('./middlewares/rateLimiter');
 const { errorConverter, errorHandler } = require('./middlewares/error');
@@ -207,66 +207,7 @@ if (config.env === 'production') {
 }
 
 app.get('/', (req, res) => {
-  const isConnected = mongoConnectionStatus.status;
-  const message = isConnected ? 'API is Working Fine!' : 'API is Down!';
-  const subMessage = isConnected
-    ? 'All systems are operational and your API is responding correctly.'
-    : `Error: ${mongoConnectionStatus.error || 'API cannot connect to the database.'}`;
-  const bgColor = isConnected ? '#e6ffed' : '#ffe6e6';
-  const textColor = isConnected ? '#2e7d32' : '#c62828';
-
-  res.send(`
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>LocalWala API</title>
-      <style>
-        body {
-          margin: 0;
-          font-family: Arial, sans-serif;
-          background-color: ${bgColor};
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-          text-align: center;
-        }
-        .card {
-          background: white;
-          padding: 30px;
-          border-radius: 12px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-          max-width: 500px;
-          width: 90%;
-        }
-        h1 {
-          color: ${textColor};
-          margin-bottom: 10px;
-        }
-        p {
-          color: #555;
-          font-size: 16px;
-        }
-        .footer {
-          margin-top: 20px;
-          font-size: 12px;
-          color: #777;
-        }
-      </style>
-    </head>
-    <body>
-      <div class="card">
-        <h1>${message}</h1>
-        <p>${subMessage}</p>
-        <div class="footer">
-          Server Time: ${new Date().toLocaleString()}
-        </div>
-      </div>
-    </body>
-    </html>
-  `);
+  res.send(buildHealthPage());
 });
 
 app.use('/v1', routes);

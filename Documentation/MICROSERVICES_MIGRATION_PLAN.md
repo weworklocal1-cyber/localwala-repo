@@ -261,6 +261,13 @@
 > - Duplicate `GET /v1/cityzen/search_customer/:name` deleted from `cityzen.route.js`. **Route count is now 1,925** (was 1,926); `manifest.meta.duplicates` must stay `[]`.
 > - Gate result after both changes: route-manifest parity 0/0/0, offline smoke, DB probe and contract suite all green with **zero status or body-shape diffs**.
 
+> **2.2-2.4 done (`src/fastify.ts` + `tests/fastify.parity.test.js`, 7 assertions).** The Fastify shell exists but serves no `/v1` traffic yet; `src/app.js` is still the entry. Corrections to the plan discovered while building it:
+> - Package name is **`@fastify/compress`**, not `@fastify/compression` (the latter 404s).
+> - **Express 5's default query parser is `simple`** (Node `querystring`), *not* `extended`/`qs` as Express 4 was. Fastify's default already matches - the `qs` override originally specced here would have been a regression.
+> - Express parity requires four options beyond the specced list: `caseSensitive: false` and `ignoreTrailingSlash: true` (both now under `routerOptions` in Fastify 5.12), plus explicit `charset=utf-8` on the HTML route and a weak ETag from the same `etag` package Express uses.
+> - `@fastify/compress` sets `Vary` from a **route-level** hook injected via `onRoute`, which runs after every instance-level `onSend`; the casing normalisation therefore had to be a route hook appended after it.
+> - **Known benign diff:** Express pipes compressed output (chunked, no `content-length`), Fastify buffers it (has `content-length`). Fastify recomputes that header after hooks, so it cannot be normalised from application code - excluded in the parity test with a comment.
+
 ---
 
 ### Phase 3 — Modularize the monolith *(still 1 process)*
