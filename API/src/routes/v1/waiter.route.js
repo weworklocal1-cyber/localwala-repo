@@ -16,7 +16,6 @@
  * LWL|WWL|2026|LOCALWALA|NODE
  */
 
-const express = require('express');
 const appAuth = require('../../middlewares/appAuth');
 const validate = require('../../middlewares/validate');
 
@@ -36,130 +35,185 @@ const UserNotificationSettingController = require('../../controllers/user.notifi
 const UserController = require('../../controllers/user.controller');
 const UserDeleteAccountReasonController = require('../../controllers/user.delete.account.reason.controller');
 
-const router = express.Router();
+module.exports.register = function register(route) {
+  route({
+    method: 'GET',
+    url: '/profile/user/:id',
+    preHandler: [
+      appAuth('waiter_profile'),
+      validate(AuthValidation.profileValidation),
+    ],
+    handler: AuthController.getMyProfile,
+  });
+  route({
+    method: 'PATCH',
+    url: '/profile/update/:id',
+    preHandler: [
+      appAuth('update_waiter_profile'),
+      validate(AuthValidation.updateProfileValidation),
+    ],
+    handler: AuthController.updateMyProfile,
+  });
+  route({
+    method: 'GET',
+    url: '/foods/foodList/:restaurant',
+    preHandler: [
+      appAuth('foodList'),
+      validate(WaiterValidation.foodListValidation),
+    ],
+    handler: FoodController.getRestaurantFoodFromWaiter,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant/tableList/:vendor',
+    preHandler: [
+      appAuth('restaurantTableList'),
+      validate(RestaurantTableValidation.waiterTableListValidation),
+    ],
+    handler: RestaurantTableController.waiterTableList,
+  });
+  route({
+    method: 'GET',
+    url: '/foodListForOrder/:vendor',
+    preHandler: [
+      appAuth('waiterFoodListForOrders'),
+      validate(WaiterValidation.foodListForOrderValidation),
+    ],
+    handler: WaiterController.waiterFoodList,
+  });
+  route({
+    method: 'GET',
+    url: '/waiterInitialFoodSearch/:vendor',
+    preHandler: [
+      appAuth('waiterInitialFoodSearch'),
+      validate(WaiterValidation.waiterInitialFoodValidation),
+    ],
+    handler: WaiterController.waiterFoodSearchInitialData,
+  });
+  route({
+    method: 'GET',
+    url: '/waiterFoodSearch/:vendor/:searchQuery',
+    preHandler: [
+      appAuth('waiterFoodSearch'),
+      validate(WaiterValidation.waiterFoodSearchValidation),
+    ],
+    handler: WaiterController.waiterFoodSearch,
+  });
+  route({
+    method: 'POST',
+    url: '/addItemToCart/',
+    preHandler: [
+      appAuth('addItemToCart'),
+      validate(TableOrderCartItemValidation.addItemToCartValidation),
+    ],
+    handler: TableOrderCartItemController.addItemToCart,
+  });
+  route({
+    method: 'GET',
+    url: '/ongoingTableOrder/:vendor/:tableId',
+    preHandler: [
+      appAuth('ongoingTableOrder'),
+      validate(TableOrderCartItemValidation.ongoingTableItemValidation),
+    ],
+    handler: TableOrderCartItemController.ongoingTableItems,
+  });
 
-router.get(
-  '/profile/user/:id',
-  appAuth('waiter_profile'),
-  validate(AuthValidation.profileValidation),
-  AuthController.getMyProfile
-);
-router.patch(
-  '/profile/update/:id',
-  appAuth('update_waiter_profile'),
-  validate(AuthValidation.updateProfileValidation),
-  AuthController.updateMyProfile
-);
-router.get(
-  '/foods/foodList/:restaurant',
-  appAuth('foodList'),
-  validate(WaiterValidation.foodListValidation),
-  FoodController.getRestaurantFoodFromWaiter
-);
-router.get(
-  '/restaurant/tableList/:vendor',
-  appAuth('restaurantTableList'),
-  validate(RestaurantTableValidation.waiterTableListValidation),
-  RestaurantTableController.waiterTableList
-);
-router.get(
-  '/foodListForOrder/:vendor',
-  appAuth('waiterFoodListForOrders'),
-  validate(WaiterValidation.foodListForOrderValidation),
-  WaiterController.waiterFoodList
-);
-router.get(
-  '/waiterInitialFoodSearch/:vendor',
-  appAuth('waiterInitialFoodSearch'),
-  validate(WaiterValidation.waiterInitialFoodValidation),
-  WaiterController.waiterFoodSearchInitialData
-);
-router.get(
-  '/waiterFoodSearch/:vendor/:searchQuery',
-  appAuth('waiterFoodSearch'),
-  validate(WaiterValidation.waiterFoodSearchValidation),
-  WaiterController.waiterFoodSearch
-);
-router.post(
-  '/addItemToCart/',
-  appAuth('addItemToCart'),
-  validate(TableOrderCartItemValidation.addItemToCartValidation),
-  TableOrderCartItemController.addItemToCart
-);
-router.get(
-  '/ongoingTableOrder/:vendor/:tableId',
-  appAuth('ongoingTableOrder'),
-  validate(TableOrderCartItemValidation.ongoingTableItemValidation),
-  TableOrderCartItemController.ongoingTableItems
-);
-
-// Account Settings Routes//
-router.patch(
-  '/account_setting/update_password/:id',
-  appAuth('update_password'),
-  validate(UserValidation.updatePasswordValidation),
-  UserController.updatePassword
-);
-router.patch(
-  '/account_setting/update_email/:id',
-  appAuth('update_email'),
-  validate(UserValidation.updateEmailValidation),
-  UserController.updateEmail
-);
-router.patch(
-  '/account_setting/update_email_after_verification/:id',
-  appAuth('update_email'),
-  validate(UserValidation.updateEmailAfterVerificationValidation),
-  UserController.updateEmailAfterVerification
-);
-router.patch(
-  '/account_setting/update_mobile_number/:id',
-  appAuth('update_mobile_number'),
-  validate(UserValidation.updateMobileValidation),
-  UserController.updateMobileNumber
-);
-router.patch(
-  '/account_setting/update_mobile_number_after_verification/:id',
-  appAuth('update_mobile_number'),
-  validate(UserValidation.updateMobileAfterVerificationValidation),
-  UserController.updateMobileAfterVerification
-);
-router.patch(
-  '/account_setting/update_mobile_number_after_firebase_verification/:id',
-  appAuth('update_mobile_number'),
-  validate(UserValidation.updateMobileAfterFirebaseVerificationValidation),
-  UserController.updateMobileAfterFirebaseVerification
-);
-router.get(
-  '/account_setting/notification_setting/:id',
-  appAuth('notification_setting'),
-  validate(UserNotificationSettingValidation.idValidation),
-  UserNotificationSettingController.getNotificationSettings
-);
-router.patch(
-  '/account_setting/notification_setting/:id',
-  appAuth('notification_setting'),
-  validate(UserNotificationSettingValidation.updateSettingValidation),
-  UserNotificationSettingController.updateNotificationSetting
-);
-router.get(
-  '/delete_account_reason_list',
-  appAuth('delete_account_reason_list'),
-  UserDeleteAccountReasonController.geWaiterActiveReason
-);
-router.post(
-  '/account_setting/delete_account',
-  appAuth('delete_account'),
-  validate(UserValidation.deleteUserAccountValidation),
-  UserController.waiterDeleteAccount
-);
-router.patch(
-  '/account_setting/update_locale/',
-  appAuth('update_locale'),
-  validate(UserValidation.updateLocaleValidation),
-  UserController.updateUserLocale
-);
-// Account Settings Routes//
-
-module.exports = router;
-
+  // Account Settings Routes//
+  route({
+    method: 'PATCH',
+    url: '/account_setting/update_password/:id',
+    preHandler: [
+      appAuth('update_password'),
+      validate(UserValidation.updatePasswordValidation),
+    ],
+    handler: UserController.updatePassword,
+  });
+  route({
+    method: 'PATCH',
+    url: '/account_setting/update_email/:id',
+    preHandler: [
+      appAuth('update_email'),
+      validate(UserValidation.updateEmailValidation),
+    ],
+    handler: UserController.updateEmail,
+  });
+  route({
+    method: 'PATCH',
+    url: '/account_setting/update_email_after_verification/:id',
+    preHandler: [
+      appAuth('update_email'),
+      validate(UserValidation.updateEmailAfterVerificationValidation),
+    ],
+    handler: UserController.updateEmailAfterVerification,
+  });
+  route({
+    method: 'PATCH',
+    url: '/account_setting/update_mobile_number/:id',
+    preHandler: [
+      appAuth('update_mobile_number'),
+      validate(UserValidation.updateMobileValidation),
+    ],
+    handler: UserController.updateMobileNumber,
+  });
+  route({
+    method: 'PATCH',
+    url: '/account_setting/update_mobile_number_after_verification/:id',
+    preHandler: [
+      appAuth('update_mobile_number'),
+      validate(UserValidation.updateMobileAfterVerificationValidation),
+    ],
+    handler: UserController.updateMobileAfterVerification,
+  });
+  route({
+    method: 'PATCH',
+    url: '/account_setting/update_mobile_number_after_firebase_verification/:id',
+    preHandler: [
+      appAuth('update_mobile_number'),
+      validate(UserValidation.updateMobileAfterFirebaseVerificationValidation),
+    ],
+    handler: UserController.updateMobileAfterFirebaseVerification,
+  });
+  route({
+    method: 'GET',
+    url: '/account_setting/notification_setting/:id',
+    preHandler: [
+      appAuth('notification_setting'),
+      validate(UserNotificationSettingValidation.idValidation),
+    ],
+    handler: UserNotificationSettingController.getNotificationSettings,
+  });
+  route({
+    method: 'PATCH',
+    url: '/account_setting/notification_setting/:id',
+    preHandler: [
+      appAuth('notification_setting'),
+      validate(UserNotificationSettingValidation.updateSettingValidation),
+    ],
+    handler: UserNotificationSettingController.updateNotificationSetting,
+  });
+  route({
+    method: 'GET',
+    url: '/delete_account_reason_list',
+    preHandler: [appAuth('delete_account_reason_list')],
+    handler: UserDeleteAccountReasonController.geWaiterActiveReason,
+  });
+  route({
+    method: 'POST',
+    url: '/account_setting/delete_account',
+    preHandler: [
+      appAuth('delete_account'),
+      validate(UserValidation.deleteUserAccountValidation),
+    ],
+    handler: UserController.waiterDeleteAccount,
+  });
+  route({
+    method: 'PATCH',
+    url: '/account_setting/update_locale/',
+    preHandler: [
+      appAuth('update_locale'),
+      validate(UserValidation.updateLocaleValidation),
+    ],
+    handler: UserController.updateUserLocale,
+  });
+  // Account Settings Routes//
+};

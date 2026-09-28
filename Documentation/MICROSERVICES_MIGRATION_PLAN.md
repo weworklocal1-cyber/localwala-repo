@@ -341,6 +341,13 @@
 >
 > Next: the remaining 12 files in plan order (`waiter` → `support.team` → `kitchen` → `auth` → …), then the Fastify-mode manifest (`--out tools/route-manifest.fastify.json`) as the global gate.
 
+> **2.9c (1/12) done - `waiter.route.js`, 20 routes, via codemod.** The rewrite is fully mechanical (`router.get('/path', appAuth('x'), validate(S.y), C.f)` → `route({ method, url, preHandler, handler })`), and it has to run 1,907 more times, so it lives at `tools/codemod-route.js` (`npm run codemod:route -- src/routes/v1/<file>.route.js`, `--dry` prints instead of writing) rather than in a session script:
+> - **A paren-matching scanner, not a regex.** `admin.route.js` is 154KB; a non-greedy regex stops at the first nested call followed by `);` and silently drops the rest of the file.
+> - **Per-line endings are preserved.** This repo keeps each file's licence header in CRLF and its body in LF; a naive normalize flags 16 whitespace-only header lines in `git diff --check`.
+> - It drops `const express = require('express')` only when `express` is used for nothing else, and re-emits the whole registration block indented two for the `register()` wrapper.
+>
+> The gate that matters here is **`manifest:check` staying 0/0/0**, not just "tests pass": the manifest records `auth` strategy, `rights`, `validated`, *and* the ordered `middleware` label list for every route, so a dropped, reordered or mis-wrapped `validate(...)` shows up as `changed` rather than passing silently. Combined with `tests/routeconv.parity.test.js` (now 9 assertions) that diffs behaviour on both servers, 98 tests are green.
+
 ---
 
 ### Phase 3 — Modularize the monolith *(still 1 process)*

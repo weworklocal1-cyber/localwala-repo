@@ -17,7 +17,8 @@
     "start:node": "node src/index.js",
     "manifest": "node tools/route-manifest.js",
     "manifest:save": "node tools/route-manifest.js --out tools/route-manifest.baseline.json",
-    "manifest:check": "node tools/route-manifest.js --diff tools/route-manifest.baseline.json"
+    "manifest:check": "node tools/route-manifest.js --diff tools/route-manifest.baseline.json",
+    "codemod:route": "node tools/codemod-route.js"
   },
   "author": "Elitecanyon InfoTech <elitecanyoninfotech@gmail.com>",
   "license": "MIT",

@@ -1,9 +1,9 @@
 /**
- * Phase 2.9b gate: a converted route file serves both servers.
+ * Phase 2.9b/2.9c gate: a converted route file serves both servers.
  *
- * `src/routes/v1/file.route.js` is the first file to move to Fastify's
- * `route({ method, url, preHandler, handler })` shape. Its declarations are
- * replayed by `src/routes/routeRegistrar.js`:
+ * `src/routes/v1/file.route.js` (2.9b) and `waiter.route.js` (2.9c) have been
+ * moved to Fastify's `route({ method, url, preHandler, handler })` shape. Their
+ * declarations are replayed by `src/routes/routeRegistrar.js`:
  *
  *   - Express gets the same `router.post(url, ...preHandler, handler)` layers
  *     it always got, which is why `manifest:check` is still 0/0/0.
@@ -35,7 +35,7 @@ const { buildFastify } = await import('../src/fastify');
 
 const JSON_BODY = { 'content-type': 'application/json', accept: 'application/json' };
 
-describe('Phase 2.9b - file.route.js converted to the shared route registrar', () => {
+describe('Phase 2.9 - converted route files registered on both servers', () => {
   let fastify;
 
   beforeAll(async () => {
@@ -61,13 +61,43 @@ describe('Phase 2.9b - file.route.js converted to the shared route registrar', (
     };
   }
 
-  it('registers both converted routes on Fastify', () => {
+  it('registers every converted route on Fastify', () => {
     expect(fastify.hasRoute({ method: 'POST', url: '/v1/file/uploadImage' })).toBe(true);
     expect(fastify.hasRoute({ method: 'POST', url: '/v1/file/web_upload_image' })).toBe(true);
+    expect(fastify.hasRoute({ method: 'GET', url: '/v1/waiter/profile/user/:id' })).toBe(true);
+    expect(fastify.hasRoute({ method: 'GET', url: '/v1/waiter/delete_account_reason_list' })).toBe(
+      true
+    );
   });
 
   it('leaves unconverted files on Express only', () => {
-    expect(fastify.hasRoute({ method: 'GET', url: '/v1/waiter/profile/user/:id' })).toBe(false);
+    expect(fastify.hasRoute({ method: 'GET', url: '/v1/kitchen/profile/me/:uid' })).toBe(false);
+    expect(fastify.hasRoute({ method: 'GET', url: '/v1/public/getVendorSettings' })).toBe(false);
+  });
+
+  it('waiter.route.js - converted route answers 401 identically without a token', async () => {
+    const r = await compare('GET', '/v1/waiter/profile/user/654321098765432109876543', {
+      accept: 'application/json',
+    });
+    expect(r.fastify.status).toBe(r.express.status);
+    expect(r.fastify.text).toBe(r.express.text);
+    expect(r.express.status).toBe(401);
+  });
+
+  it('waiter.route.js - a route with no validate() stage also matches', async () => {
+    const r = await compare('GET', '/v1/waiter/delete_account_reason_list', {
+      accept: 'application/json',
+    });
+    expect(r.fastify.status).toBe(r.express.status);
+    expect(r.fastify.text).toBe(r.express.text);
+    expect(r.express.status).toBe(401);
+  });
+
+  it('waiter.route.js - an unknown path under the mount is 404 on both', async () => {
+    const r = await compare('GET', '/v1/waiter/does-not-exist', { accept: 'application/json' });
+    expect(r.fastify.status).toBe(r.express.status);
+    expect(r.fastify.text).toBe(r.express.text);
+    expect(r.express.status).toBe(404);
   });
 
   it('POST /v1/file/uploadImage without a token is 401 on both', async () => {
