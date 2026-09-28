@@ -273,6 +273,13 @@
 > - **Signature already matches.** Fastify invokes callback-style hooks as `(request, reply, done)`, so Express's `(req, res, next)` maps 1:1 positionally - and `done(new ApiError(400, msg))` yields a byte-identical 400 body to Express's `next(...)`.
 > Consequence: all 118 Joi schemas are reused untouched, mounted as `preValidation` per route. Note the spike pins Fastify's behaviour - if an upgrade ever reintroduces a lazy query getter this test fails loudly.
 
+> **2.6 done (`src/auth/fastifyAuth.ts` + `tests/auth.parity.test.js`, 18 assertions).** A deviation was considered and deliberately *not* taken - recorded here so nobody re-litigates it:
+> - **The spike found Passport already works unchanged inside Fastify** (13/13 parity: both strategies, self-escape, 401/403). So the cheaper option was available.
+> - **We followed the plan anyway.** Passport is an Express-shaped dependency (its `authenticate` middleware is written against `req`/`res`, `config/passport.js` exists only to feed it, and `app.js` needs `passport.initialize()`). Leaving it in means Phase 9 removes a legacy layer *and* a runtime swap at the same time, which is the worse sequencing. The plan's intent - a Fastify-native auth stack - stands.
+> - **What is live now:** `@fastify/jwt` registered with `config.jwt.secret`; token *extraction* stays in `src/auth/fastifyAuth.ts` and reproduces passport-jwt's bundled `lib/auth_header.js` regex `(\S+)\s+(\S+)` **verbatim**, so `Bearer <jwt> trailing-junk` extracts the same credential both sides do. `appAuth`/`webAuth` are also exposed as Fastify decorators.
+> - **Temporary duplication, knowingly accepted:** Express routes still run `passport`, Fastify routes run `@fastify/jwt`. Both are held byte-identical by `tests/auth.parity.test.js`, which fires every request at both servers and diffs status + body (missing/malformed/expired/forged/HS512/refresh/orphan tokens, `bearer` casing, `Basic` scheme, strategy mismatch, Forbidden, self-escape, and a double-execution guard). **Nothing may change on one side without that test changing in the same commit.**
+> - **Delete when Phase 2.9 moves the last route:** `src/middlewares/auth.factory.js`, `src/config/passport.js`, and the `passport` / `passport-jwt` dependencies. The parity test then collapses to a single-server auth suite.
+
 ---
 
 ### Phase 3 — Modularize the monolith *(still 1 process)*

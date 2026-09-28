@@ -31,9 +31,11 @@ import cookie from '@fastify/cookie';
 import formbody from '@fastify/formbody';
 import compress from '@fastify/compress';
 import fastifyStatic from '@fastify/static';
+import jwt from '@fastify/jwt';
 import mongoose from 'mongoose';
 import fs from 'node:fs';
 import path from 'node:path';
+import { appAuth, webAuth } from './auth/fastifyAuth';
 
 const config = require('./config/config');
 const ApiError = require('./utils/ApiError');
@@ -177,6 +179,13 @@ export async function buildFastify(): Promise<FastifyInstance> {
     bodyLimit: BODY_LIMIT,
   });
 
+  // Mirrors src/middlewares/appAuth.js and webAuth.js so a route converted in
+  // Phase 2.9 can use `fastify.appAuth('read')` or the imported `appAuth('read')`
+  // interchangeably - the metadata (isAuth/authStrategy/requiredRights) that
+  // the route manifest reads is attached identically by both.
+  app.decorate('appAuth', appAuth);
+  app.decorate('webAuth', webAuth);
+
   await app.register(helmet, {
     frameguard: { action: 'deny' },
     noSniff: true,
@@ -258,6 +267,13 @@ export async function buildFastify(): Promise<FastifyInstance> {
   await app.register(formbody, { bodyLimit: BODY_LIMIT });
 
   await app.register(cookie, {});
+
+  // Phase 2.6: @fastify/jwt is the Fastify-side replacement for passport-jwt.
+  // Only the secret is configured here; token *extraction* deliberately lives
+  // in src/auth/fastifyAuth.ts, because the two strategies read from
+  // different places (Authorization: Bearer vs the access_token cookie) and
+  // have to reproduce passport-jwt's extractors byte for byte.
+  await app.register(jwt, { secret: config.jwt.secret });
 
   // Express sets a weak ETag on every res.send (and on error bodies) via the
   // `etag` package, so the value is `W/"<length-hex>-<sha1>"`. Hashing here
