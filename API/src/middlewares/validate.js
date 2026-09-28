@@ -46,5 +46,13 @@ const validate = (schema) => (req, res, next) => {
   return next();
 };
 
-module.exports = validate;
+// Metadata tag for tooling (route manifest, Fastify preValidation mapping).
+// Does not affect runtime behaviour.
+const validateTagged = (schema) => {
+  const middleware = validate(schema);
+  middleware.isValidate = true;
+  return middleware;
+};
+
+module.exports = validateTagged;
 

@@ -11,7 +11,10 @@
     "lint:fix": "eslint \"src/**/*.js\" --fix",
     "format": "prettier --write \"**/*.{js,json,md,scss}\"",
     "format:check": "prettier --check \"**/*.{js,json,md,scss}\"",
-    "start:node": "node src/index.js"
+    "start:node": "node src/index.js",
+    "manifest": "node tools/route-manifest.js",
+    "manifest:save": "node tools/route-manifest.js --out tools/route-manifest.baseline.json",
+    "manifest:check": "node tools/route-manifest.js --diff tools/route-manifest.baseline.json"
   },
   "author": "Elitecanyon InfoTech <elitecanyoninfotech@gmail.com>",
   "license": "MIT",

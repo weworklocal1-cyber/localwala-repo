@@ -42,7 +42,7 @@ const verifyCallback = (req, resolve, reject, requiredRights) => async (err, use
 
 const createAuthMiddleware = (strategyName) => {
   return (...requiredRights) => {
-    return async (req, res, next) => {
+    const middleware = async (req, res, next) => {
       return new Promise((resolve, reject) => {
         passport.authenticate(
           strategyName,
@@ -53,6 +53,14 @@ const createAuthMiddleware = (strategyName) => {
         .then(() => next())
         .catch((err) => next(err));
     };
+
+    // Metadata for tooling (route manifest, Fastify preHandler mapping).
+    // Does not affect runtime behaviour.
+    middleware.isAuth = true;
+    middleware.authStrategy = strategyName;
+    middleware.requiredRights = requiredRights;
+
+    return middleware;
   };
 };
 
