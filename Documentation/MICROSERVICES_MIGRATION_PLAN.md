@@ -224,6 +224,11 @@
 
 **Decisions locked:** CommonJS (no ESM switch), `strict: true` for new files only, **keep the 118 Joi schemas** (do not rewrite as Fastify JSON schemas).
 
+> **Done (commits `0b779d4`, `168afa7`, `1e16dd1`).** Deviations worth recording:
+> - **1.2 is only half-actionable now.** The entry point is still `src/index.js`, so switching `npm run dev` / `npm start` onto a `dist/` or `tsx` entry would be a behaviour change with nothing to gain. `tsx` is installed and proven working; the runner switch happens with the entry-point move in **2.15**. `npm run build` was added.
+> - **TypeScript pinned to 5.9.3, not 7.x.** npm resolves `typescript@7.0.2` (native port), but `typescript-eslint@8` peers on `>=4.8.4 <6.1.0`. 5.9 keeps both the typecheck gate and linting on new TS files.
+> - **Credential cleanup:** `.env.example` shipped a real Mongo password; sanitised in `168afa7`. It remains in history from the initial commit and should be rotated.
+
 ---
 
 ### Phase 2 — Express → Fastify *(still 1 process)*
