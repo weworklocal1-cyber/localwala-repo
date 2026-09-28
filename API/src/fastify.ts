@@ -37,6 +37,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { appAuth, webAuth } from './auth/fastifyAuth';
 import { registerAuthRateLimit, RATE_LIMIT_MESSAGE } from './plugins/authRateLimit';
+import { registerReplyCompat, skipsEtag } from './plugins/replyCompat';
 
 const config = require('./config/config');
 const ApiError = require('./utils/ApiError');
@@ -265,6 +266,13 @@ export async function buildFastify(): Promise<FastifyInstance> {
   app.decorate('appAuth', appAuth);
   app.decorate('webAuth', webAuth);
 
+  // Phase 2.9a - `res.json` / `res.setHeader` / `res.redirect(303, url)` /
+  // `res.cookie` / `req.get` / `req.connection`, so the controllers Phase 2.9
+  // moves across keep their Express calls verbatim. Registered before every
+  // plugin below, which also puts its `onRequest` hook first in the chain -
+  // that is where it patches `cookie`/`clearCookie` off @fastify/cookie.
+  registerReplyCompat(app);
+
   // app.js:174-196, in order: urlencoded body -> cookie -> xss -> mongo-sanitize.
   // Fastify has no cookie analogue of Express's (cookie-parser runs before the
   // sanitizers but only reads `Cookie`), so the two sanitizers are registered
@@ -423,6 +431,7 @@ export async function buildFastify(): Promise<FastifyInstance> {
         'onSend',
         async (_request: FastifyRequest, reply: FastifyReply, payload: unknown) => {
           if (payload === null || payload === undefined) return payload;
+          if (skipsEtag(reply)) return payload;
           if (reply.getHeader('etag')) return payload;
           if (typeof payload !== 'string' && !Buffer.isBuffer(payload)) return payload;
           reply.header('etag', etag(payload, { weak: true }));

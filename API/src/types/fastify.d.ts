@@ -29,4 +29,20 @@ declare module 'fastify' {
     appAuth: (...requiredRights: string[]) => FastifyAuthHandler;
     webAuth: (...requiredRights: string[]) => FastifyAuthHandler;
   }
+
+  interface FastifyReply {
+    /** Phase 2.9a - src/plugins/replyCompat.ts, mirroring `res.json`. */
+    json(payload: unknown): FastifyReply;
+    /** Phase 2.9a - Node's `res.setHeader`, which Express inherits. */
+    setHeader(name: string, value: number | string | readonly string[]): FastifyReply;
+    /** Phase 2.9a - Express's argument order; Fastify's own is `(url, code)`. */
+    redirect(statusCode: number, url: string): FastifyReply;
+  }
+
+  interface FastifyRequest {
+    /** Phase 2.9a - `express/lib/request.js` `req.get`/`req.header`. */
+    get(name: string): string | string[] | undefined;
+    /** Phase 2.9a - Node's alias for `req.socket`, not the proxy-aware `req.ip`. */
+    readonly connection: import('node:net').Socket;
+  }
 }

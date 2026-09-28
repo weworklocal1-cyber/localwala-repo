@@ -252,7 +252,7 @@
 | 2.15 | `index.js`: `await fastify.ready()` → `socketIo(fastify.server)`; cron → `onReady`/`onClose` hooks |
 | 2.16 | Route-manifest parity diff + full smoke suite |
 
-**Internal order:** 2.1 → 2.2–2.4 → 2.5 spike → 2.6 → 2.7 → 2.8 → 2.9 (read routes) → 2.10 → 2.11 → 2.12 (hardest: `auth.controller`, `payment.initiation`) → 2.13–2.15 → 2.16.
+**Internal order:** 2.1 → 2.2–2.4 → 2.5 spike → 2.6 → 2.7 → 2.8 → 2.9a (reply adapter) → 2.9 (read routes) → 2.10 → 2.11 → 2.12 (hardest: `auth.controller`, `payment.initiation`) → 2.13–2.15 → 2.16.
 
 **Exit criteria:** all routes identical, tests green, `express` removed from `package.json`.
 
@@ -305,6 +305,22 @@
 > Two bugs found while gating:
 > - **`express.urlencoded({ extended: true })` was never reproduced.** Express parses form bodies with `qs` (`body-parser/lib/types/urlencoded.js:103`, `allowPrototypes: true`, `depth: 32`, `arrayLimit: Math.max(100, paramCount)`, `parameterLimit: 1000`), but `@fastify/formbody@9` defaults to `fast-querystring`, which leaves `a[b]=1` as a flat `'a[b]'` key instead of nesting it. `qs` is now a declared dependency and `parseUrlencoded()` in `src/fastify.ts` mirrors body-parser's options (the constant `100` stands in for `Math.max(100, paramCount)` below 100 parameters).
 > - **`__proto__` in JSON bodies diverges, deliberately left alone.** body-parser parses with plain `JSON.parse` (`body-parser/lib/types/json.js:72`) and `express-mongo-sanitize`'s regex `/^\$|\./` does not match `__proto__`, so **Express returns 200** with an own `__proto__` property. Fastify parses through `secure-json-parse` and **returns 400**, normalised to `Body is not valid JSON but content-type is set to 'application/json'`. Fastify is the stricter of the two; making Express match would be a behaviour change to a live server, so it is asserted as-is in the test. Same story for `constructor`.
+
+> **2.9a done (`src/plugins/replyCompat.ts` + `tests/replycompat.parity.test.js`, 16 assertions).** 2.9 is route conversion, but the controllers that the converted routes call are still Express-shaped, so the adapter had to land first. Reconfirmed the coexistence decision: the shim is what lets each route file be converted **and behaviourally verified immediately**, rather than after a separate 2.12 controller rewrite. It is deleted in Phase 9.
+>
+> What the adapter installs, and why each one is non-trivial:
+> - **`send`** — three separate rules, all read off the response rather than a flag because that is exactly Express's predicate. `string` with no `Content-Type` → `text/html; charset=utf-8` (Fastify would say `text/plain`); `string` with one → run it through `setCharset`, so `res.setHeader('Content-Type','text/csv')` + `res.send(...)` comes back as `text/csv; charset=utf-8` (`express/lib/utils.js:225`, copied verbatim); `null` → `''` with **no** `Content-Type` and a pre-computed weak ETag over `''`, because Fastify would otherwise answer the JSON literal `null`.
+> - **`redirect`** — `res.format` via `accepts(...).types(['text','html'])`: browser `Accept` gets `text/html; charset=utf-8` + an escaped HTML body, `application/json` gets **no content-type and an empty body**, anything else gets `text/plain; charset=utf-8`. Always `vary.append(…, 'Accept')`, always `encodeUrl`, never an ETag (Express finishes redirects with `res.end`). Status-first argument order `(303, url)`; Fastify's own is `(url, code)`.
+> - **`cookie`/`clearCookie`** — these two **cannot be decorated**: `@fastify/cookie` already owns those names, so `decorateReply` throws `FST_ERR_DEC_ALREADY_PRESENT`. They are patched onto `Reply.prototype` from a one-shot `onRequest` hook guarded by a `WeakSet`. Both are line-for-line Express ports because `@fastify/cookie` is wrong twice: `maxAge` is passed through as **milliseconds** (a 1-second cookie would live 1000 seconds) and `Path` defaults to `/` only in Express. `sameSite` is forwarded as an explicit `undefined` when the caller passed none, which is what defeats `Object.assign({ sameSite: 'lax' }, options)` inside the plugin.
+> - **`json`, `setHeader`, `get`, `connection`** — `json` is Express's (`stringify` first, so `res.json('hi')` stays quoted); `setHeader` is Node's and Fastify's `reply.header` is the same operation; `get` is `req.header` with the `referer`/`referrer` alias and its two `TypeError`s; `connection` is a getter returning `raw.socket` — **`request.originalUrl` already exists in Fastify**, so it is *not* decorated (that was a probe mistake worth recording).
+> - **Not ported, and why:** `download`/`end` (2.11), `render` (2.11), `format`/`attachment` (0 call sites), signed cookies (0 call sites, and the formats differ anyway).
+>
+> Accepted deviations, documented rather than papered over:
+> - **`send()` with no argument** omits `content-length` (Express omits it too, Fastify sends `0`) — excluded from the diff like the compression `content-length` diff in 2.2-2.4.
+> - **`set-cookie` shape** differs between supertest (array) and `fastify.inject` (string) — normalised in the diff, bytes are identical.
+> - **`send(0|false|42)`** needs no shim at all: Express and Fastify already agree (`application/json`, identical length).
+>
+> Five dependencies promoted from transitive to declared (`accepts`, `encodeurl`, `escape-html`, `vary`, `content-type`) - all are already in `node_modules` as Express's own dependencies, so behaviour is shared by construction rather than approximated.
 
 ---
 
