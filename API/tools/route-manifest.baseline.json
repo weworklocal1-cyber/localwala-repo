@@ -1,19 +1,17 @@
 {
   "meta": {
-    "generatedAt": "2026-09-28T13:49:11.178Z",
+    "generatedAt": "2026-09-28T15:01:54.279Z",
     "prefix": "/v1",
     "expressVersion": "5.2.1",
-    "totalRoutes": 1926,
-    "duplicates": [
-      "GET /v1/cityzen/search_customer/:name"
-    ],
+    "totalRoutes": 1925,
+    "duplicates": [],
     "authBreakdown": {
-      "jwt-web": 1348,
+      "jwt-web": 1347,
       "public": 159,
       "jwt-app": 419
     },
     "methodBreakdown": {
-      "GET": 1018,
+      "GET": 1017,
       "POST": 546,
       "DELETE": 104,
       "PATCH": 258
@@ -15325,20 +15323,6 @@
       "validated": true,
       "middleware": [
         "auth:jwt-web(restaurant_withdrawal_request)",
-        "validate",
-        "anonymous"
-      ]
-    },
-    {
-      "method": "GET",
-      "path": "/v1/cityzen/search_customer/:name",
-      "auth": "jwt-web",
-      "rights": [
-        "search_customer"
-      ],
-      "validated": true,
-      "middleware": [
-        "auth:jwt-web(search_customer)",
         "validate",
         "anonymous"
       ]

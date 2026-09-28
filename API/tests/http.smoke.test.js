@@ -42,8 +42,9 @@ function keyOf(route) {
 }
 
 /**
- * The manifest contains one known duplicate (GET /v1/cityzen/search_customer/:name),
- * so 1926 declared routes collapse to 1925 distinct keys.
+ * Keys are `METHOD /path`. The manifest had one duplicate until Phase 2.1
+ * removed it; the Set stays as a guard against a duplicate ever coming back,
+ * because Fastify refuses to boot on one.
  */
 const uniqueKeys = new Set(manifest.routes.map(keyOf));
 
@@ -95,8 +96,9 @@ describe('HTTP smoke: all registered endpoints', () => {
   }, 300000);
 
   it('exercises every route in the manifest', () => {
-    expect(manifest.routes).toHaveLength(1926);
-    // 1926 declared routes, 1925 distinct (one known duplicate).
+    // 1,925 declared routes and 1,925 distinct - the duplicate
+    // `GET /v1/cityzen/search_customer/:name` was removed in Phase 2.1.
+    expect(manifest.routes).toHaveLength(1925);
     expect(Object.keys(results)).toHaveLength(uniqueKeys.size);
     expect(uniqueKeys.size).toBe(1925);
   });

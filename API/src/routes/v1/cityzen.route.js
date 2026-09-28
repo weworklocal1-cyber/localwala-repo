@@ -1089,12 +1089,6 @@ router.get(
   OrdersController.couponOrders
 );
 
-router.get(
-  '/search_customer/:name',
-  webAuth('search_customer'),
-  validate(UserValidation.searchUser),
-  UserController.findUserWithName
-);
 router.post(
   '/create_coupon/:master',
   webAuth('create_coupon'),

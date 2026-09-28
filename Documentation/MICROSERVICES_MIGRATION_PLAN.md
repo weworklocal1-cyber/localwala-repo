@@ -254,7 +254,12 @@
 
 **Internal order:** 2.1 → 2.2–2.4 → 2.5 spike → 2.6 → 2.9 (read routes) → 2.10 → 2.11 → 2.12 (hardest: `auth.controller`, `payment.initiation`) → 2.13–2.15 → 2.16.
 
-**Exit criteria:** all 1,926 routes identical, tests green, `express` removed from `package.json`.
+**Exit criteria:** all routes identical, tests green, `express` removed from `package.json`.
+
+> **2.1 done (commit on `main`).** Outcomes worth carrying forward:
+> - `catchAsync` is now **identity** (`(fn) => fn`). Spiked first in `tests/express.promise.test.js`: Express 5 already forwards a rejected returned promise to the error middleware, and no unhandled rejection escapes, so the `Promise.resolve(...).catch(next)` shim was redundant. All ~1,477 wrapped handlers are already `(request, reply) => Promise` shaped for Fastify.
+> - Duplicate `GET /v1/cityzen/search_customer/:name` deleted from `cityzen.route.js`. **Route count is now 1,925** (was 1,926); `manifest.meta.duplicates` must stay `[]`.
+> - Gate result after both changes: route-manifest parity 0/0/0, offline smoke, DB probe and contract suite all green with **zero status or body-shape diffs**.
 
 ---
 

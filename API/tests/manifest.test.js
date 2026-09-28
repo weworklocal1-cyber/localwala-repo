@@ -31,20 +31,23 @@ describe('route manifest', () => {
       runManifest(['--out', tmp, '--quiet']);
       const manifest = JSON.parse(fs.readFileSync(tmp, 'utf8'));
 
-      expect(manifest.meta.totalRoutes).toBe(1926);
+      // 1,926 before Phase 2.1 removed the duplicated
+      // `GET /v1/cityzen/search_customer/:name` (Fastify refuses to boot on a
+      // duplicate route, so it had to go before the port).
+      expect(manifest.meta.totalRoutes).toBe(1925);
       expect(manifest.meta.methodBreakdown).toEqual({
-        GET: 1018,
+        GET: 1017,
         POST: 546,
         PATCH: 258,
         DELETE: 104,
       });
       expect(manifest.meta.authBreakdown).toEqual({
-        'jwt-web': 1348,
+        'jwt-web': 1347,
         'jwt-app': 419,
         public: 159,
       });
-      // Known defect: duplicated route that will abort Fastify boot in Phase 2.
-      expect(manifest.meta.duplicates).toEqual(['GET /v1/cityzen/search_customer/:name']);
+      // The Phase 0 defect register: must stay empty from here on.
+      expect(manifest.meta.duplicates).toEqual([]);
     } finally {
       fs.rmSync(tmp, { force: true });
     }
@@ -52,7 +55,7 @@ describe('route manifest', () => {
 
   it('baseline on disk is in sync with the committed source', () => {
     const baseline = JSON.parse(fs.readFileSync(baselinePath, 'utf8'));
-    expect(baseline.meta.totalRoutes).toBe(1926);
-    expect(baseline.routes).toHaveLength(1926);
+    expect(baseline.meta.totalRoutes).toBe(1925);
+    expect(baseline.routes).toHaveLength(1925);
   });
 });

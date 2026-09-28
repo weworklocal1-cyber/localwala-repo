@@ -82,9 +82,9 @@ describe('DB probe: GET endpoints against a live test database', () => {
   });
 
   it('probed every GET endpoint', () => {
-    // 1018 declared GET routes collapse to 1017 distinct keys (one known
-    // duplicate: GET /v1/cityzen/search_customer/:name).
-    expect(getRoutes.length).toBe(1018);
+    // 1,017 declared GET routes, all distinct - the duplicate
+    // `GET /v1/cityzen/search_customer/:name` was removed in Phase 2.1.
+    expect(getRoutes.length).toBe(1017);
     expect(Object.keys(results)).toHaveLength(1017);
   });
 
