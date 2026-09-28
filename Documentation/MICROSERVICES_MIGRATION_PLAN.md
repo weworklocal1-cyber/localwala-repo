@@ -268,6 +268,11 @@
 > - `@fastify/compress` sets `Vary` from a **route-level** hook injected via `onRoute`, which runs after every instance-level `onSend`; the casing normalisation therefore had to be a route hook appended after it.
 > - **Known benign diff:** Express pipes compressed output (chunked, no `content-length`), Fastify buffers it (has `content-length`). Fastify recomputes that header after hooks, so it cannot be normalised from application code - excluded in the parity test with a comment.
 
+> **2.5 done - spike result: `validate.js` needs no changes at all** (`tests/validate.spike.test.js`, 4 assertions). The plan hedged on two risks and both are non-issues:
+> - **Mutation works.** `request.query` is not a lazy getter - Fastify's `Request` constructor assigns `this.query = query` as a plain instance property, so `Object.assign(req.query, value.query)` mutates it in place and coerced types/defaults reach the controller. Same for `params` and `body`.
+> - **Signature already matches.** Fastify invokes callback-style hooks as `(request, reply, done)`, so Express's `(req, res, next)` maps 1:1 positionally - and `done(new ApiError(400, msg))` yields a byte-identical 400 body to Express's `next(...)`.
+> Consequence: all 118 Joi schemas are reused untouched, mounted as `preValidation` per route. Note the spike pins Fastify's behaviour - if an upgrade ever reintroduces a lazy query getter this test fails loudly.
+
 ---
 
 ### Phase 3 — Modularize the monolith *(still 1 process)*
