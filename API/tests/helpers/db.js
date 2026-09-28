@@ -12,7 +12,7 @@ function testUrl() {
 
   const base =
     process.env.MONGODB_URL ||
-    'mongodb://localwalaAdmin:Localwala2025DB@127.0.0.1:27017/foodbite?authSource=admin';
+    'mongodb://localhost:27017/foodbite';
 
   // Swap only the database name, keep credentials + query string intact.
   const match = base.match(/^(.*\/)([^/?]+)(\?.*)?$/);
