@@ -17,9 +17,9 @@
  */
 
 const { status: httpStatus } = require('http-status');
-const { Subscriptions } = require('../models');
-const ApiError = require('../utils/ApiError');
-const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
+const { Subscriptions } = require('../../models');
+const ApiError = require('../../utils/ApiError');
+const checkArrayNotEmpty = require('../../utils/arrayNotEmpty');
 
 const createSubscriptions = async (param) => {
   if (await Subscriptions.isNameTaken(param.name)) {

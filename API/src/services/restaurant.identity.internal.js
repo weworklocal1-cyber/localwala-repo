@@ -30,8 +30,8 @@ const {
   RestaurantExtraDetail,
 } = require('../models');
 const ApiError = require('../utils/ApiError');
-const subscriberService = require('./subscriber.service');
-const subscriptionService = require('./subscription.service');
+const subscriberService = require('../shared/subscription/subscriber.service');
+const subscriptionService = require('../shared/subscription/subscription.service');
 const emailConfigService = require('../shared/notifications/email.config.service');
 const { updateUserCityLocation } = require('./restaurant.shared.internal.js');
 

@@ -19,9 +19,9 @@
 const mongoose = require('mongoose');
 const { status: httpStatus } = require('http-status');
 const { DateTime } = require('luxon');
-const { Subscriber } = require('../models');
-const ApiError = require('../utils/ApiError');
-const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
+const { Subscriber } = require('../../models');
+const ApiError = require('../../utils/ApiError');
+const checkArrayNotEmpty = require('../../utils/arrayNotEmpty');
 
 const createSubscriber = async (subscriberBody) => {
   return Subscriber.create(subscriberBody);
