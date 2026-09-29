@@ -468,6 +468,17 @@ export async function buildFastify(): Promise<FastifyInstance> {
   await app.register(compress, {
     global: true,
     threshold: 1024,
+    // Phase 2.13 - @fastify/compress@9.2.0's *async* compression path answers
+    // an empty body under gzip headers for every payload above its computed
+    // syncThreshold (~4KB on this host, CPU-dependent; boundary bisected at
+    // exactly 4096/4097 bytes). Proven on vanilla Fastify with no app code
+    // involved, so this is upstream's bug, not ours - and 9.2.0 is the latest
+    // release, so there is nothing to upgrade to. Forcing the synchronous
+    // path for anything this API can produce (JSON exports and downloads;
+    // xlsx never compresses - it is not in the compressible database on
+    // either server). Sync gzip costs ~10ms/MB and only runs on compressible
+    // responses over the 1KB threshold.
+    syncThreshold: 64 * 1024 * 1024,
   });
 
   // Express's compression middleware emits `Vary: Accept-Encoding` in title

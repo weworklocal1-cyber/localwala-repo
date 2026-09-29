@@ -47,6 +47,7 @@ const handleUpload = require('../utils/handleUpload');
 const config = require('../config/config');
 const { paymentTransactionSchemaKeys } = require('../utils/importCollectionSchema');
 const { sendFileDownload, sendXlsx } = require('../utils/download');
+const renderView = require('../utils/renderView');
 
 const create = catchAsync(async (req, res) => {
   const result = await paymentInitiationService.initiatePayment(req.body);
@@ -2102,15 +2103,15 @@ const successPayment = catchAsync(async (req, res) => {
 });
 
 const failedPayment = catchAsync(async (req, res) => {
-  res.render('payments/failed');
+  await renderView(req, res, 'payments/failed');
 });
 
 const paymentProcessed = catchAsync(async (req, res) => {
-  res.render('payments/success');
+  await renderView(req, res, 'payments/success');
 });
 
 const repeatedPayment = catchAsync(async (req, res) => {
-  res.render('payments/repeated');
+  await renderView(req, res, 'payments/repeated');
 });
 
 const getUserOrderTransaction = catchAsync(async (req, res) => {

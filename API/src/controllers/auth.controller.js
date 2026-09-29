@@ -49,6 +49,7 @@ const { Wallet, ReferralCode } = require('../models');
 const pick = require('../utils/pick');
 const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
 const { sendFileDownload, sendXlsx } = require('../utils/download');
+const renderView = require('../utils/renderView');
 
 const getClientIp = (req) => {
   const forwarded = req.headers['x-forwarded-for'];
@@ -2064,7 +2065,7 @@ const verifyWebSMSOTP = catchAsync(async (req, res) => {
           smsProvider.credentials.widgetId !== ''
         ) {
           const creds = smsProvider.credentials;
-          res.render('other/msg91', {
+          await renderView(req, res, 'other/msg91', {
             locals: {
               widgetId: creds.widgetId,
               tokenAuth: creds.tokenAuth,
@@ -2110,7 +2111,7 @@ const verifyWebVersionSMSOTP = catchAsync(async (req, res) => {
           smsProvider.credentials.widgetId !== ''
         ) {
           const creds = smsProvider.credentials;
-          res.render('other/msg91', {
+          await renderView(req, res, 'other/msg91', {
             locals: {
               widgetId: creds.widgetId,
               tokenAuth: creds.tokenAuth,
@@ -2136,7 +2137,7 @@ const verifyWebVersionSMSOTP = catchAsync(async (req, res) => {
           smsProvider.credentials.apiKey !== ''
         ) {
           const creds = smsProvider.credentials;
-          res.render('other/firebase', {
+          await renderView(req, res, 'other/firebase', {
             locals: {
               apiKey: creds.apiKey,
               authDomain: creds.authDomain,
@@ -2185,7 +2186,7 @@ const verifyWebVersionResetPasswordSMSOTP = catchAsync(async (req, res) => {
         smsProvider.credentials.widgetId !== ''
       ) {
         const creds = smsProvider.credentials;
-        res.render('other/msg91', {
+        await renderView(req, res, 'other/msg91', {
           locals: {
             widgetId: creds.widgetId,
             tokenAuth: creds.tokenAuth,
@@ -2219,7 +2220,7 @@ const verifyFirebaseWebVersionSMSOTP = catchAsync(async (req, res) => {
     smsProvider.credentials.apiKey !== ''
   ) {
     const creds = smsProvider.credentials;
-    res.render('other/firebase', {
+    await renderView(req, res, 'other/firebase', {
       locals: {
         apiKey: creds.apiKey,
         authDomain: creds.authDomain,
@@ -2255,7 +2256,7 @@ const verifyFirebaseWebVersionResetPasswordSMSOTP = catchAsync(async (req, res) 
     smsProvider.credentials.apiKey !== ''
   ) {
     const creds = smsProvider.credentials;
-    res.render('other/firebase', {
+    await renderView(req, res, 'other/firebase', {
       locals: {
         apiKey: creds.apiKey,
         authDomain: creds.authDomain,
@@ -2494,11 +2495,11 @@ const smsVerification = catchAsync(async (req, res) => {
 });
 
 const smsVerificationSuccess = catchAsync(async (req, res) => {
-  res.render('other/success');
+  await renderView(req, res, 'other/success');
 });
 
 const smsVerificationFailed = catchAsync(async (req, res) => {
-  res.render('other/failed');
+  await renderView(req, res, 'other/failed');
 });
 
 const getMyProfile = catchAsync(async (req, res) => {
@@ -3192,7 +3193,7 @@ const adminDemoFirebaseSMS = catchAsync(async (req, res) => {
     smsProvider.credentials.apiKey !== ''
   ) {
     const creds = smsProvider.credentials;
-    res.render('other/firebase_test', {
+    await renderView(req, res, 'other/firebase_test', {
       locals: {
         apiKey: creds.apiKey,
         authDomain: creds.authDomain,
@@ -3222,7 +3223,7 @@ const adminDemoMSG91SMS = catchAsync(async (req, res) => {
     smsProvider.credentials.widgetId !== ''
   ) {
     const creds = smsProvider.credentials;
-    res.render('other/msg91', {
+    await renderView(req, res, 'other/msg91', {
       locals: {
         widgetId: creds.widgetId,
         tokenAuth: creds.tokenAuth,

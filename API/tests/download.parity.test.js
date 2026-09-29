@@ -38,8 +38,9 @@ morgan.errorHandler = (_req, _res, next) => next();
 
 const { sendFileDownload, sendXlsx } = require_('../src/utils/download');
 const fs = require_('node:fs');
-const path = require_('node:path');
 const http = require_('node:http');
+const zlib = require_('node:zlib');
+const path = require_('node:path');
 const ExcelJS = require_('exceljs');
 
 const expressApp = (await import('../src/app')).default;
@@ -47,9 +48,18 @@ const { buildFastify } = await import('../src/fastify');
 
 const TMP_DIR = 'C:\\Users\\WEWORK~1\\AppData\\Local\\Temp\\opencode';
 const TMP_JSON = `${TMP_DIR}\\dl-parity.json`;
+const TMP_BIG = `${TMP_DIR}\\dl-parity-big.json`;
 
 /** Transport headers that legitimately differ; everything else is compared. */
-const IGNORED_HEADERS = new Set(['date', 'connection', 'keep-alive']);
+const IGNORED_HEADERS = new Set([
+  'date',
+  'connection',
+  'keep-alive',
+  // Express pipes compressed output (chunked, no length) while Fastify
+  // buffers it (length, no chunks) - the accepted 2.2-2.4 difference.
+  'content-length',
+  'transfer-encoding',
+]);
 
 function headerDiff(expressHeaders, fastifyHeaders) {
   const diffs = [];
@@ -94,6 +104,12 @@ describe('Phase 2.11 - download and export parity', () => {
 
   beforeAll(async () => {
     fs.writeFileSync(TMP_JSON, JSON.stringify({ hello: 'world', n: 42 }, null, 2));
+    // 8KB of stable JSON: exercises the post-threshold compression path that
+    // caught the @fastify/compress async bug (gzip would come back empty).
+    fs.writeFileSync(
+      TMP_BIG,
+      JSON.stringify({ rows: Array.from({ length: 200 }, (_, i) => ({ id: i, name: `item-${i}` })) })
+    );
 
     // Express probes use the ORIGINAL calls; Fastify probes use the helpers.
     // That asymmetry is the point: the helpers must reproduce res.download.
@@ -112,6 +128,11 @@ describe('Phase 2.11 - download and export parity', () => {
     });
     expressApp.get('/v1/__dl_bare', (req, res) => {
       res.download(TMP_JSON, (err) => {
+        if (err) res.status(500).end();
+      });
+    });
+    expressApp.get('/v1/__dl_big', (req, res) => {
+      res.download(TMP_BIG, 'big.json', (err) => {
         if (err) res.status(500).end();
       });
     });
@@ -142,6 +163,11 @@ describe('Phase 2.11 - download and export parity', () => {
     });
     fastify.get('/v1/__dl_bare', async (_req, reply) => {
       await sendFileDownload(_req, reply, TMP_JSON, (err) => {
+        if (err) reply.status(500).send('');
+      });
+    });
+    fastify.get('/v1/__dl_big', async (_req, reply) => {
+      await sendFileDownload(_req, reply, TMP_BIG, 'big.json', (err) => {
         if (err) reply.status(500).send('');
       });
     });
@@ -224,7 +250,7 @@ describe('Phase 2.11 - download and export parity', () => {
 
     const eSrv = expressApp.listen(0);
     await new Promise((resolve) => eSrv.on('listening', resolve));
-    await fastify.listen({ port: 0 });
+    if (!fastify.server.listening) await fastify.listen({ port: 0 });
     try {
       const eX = await getBytes(eSrv.address().port, '/v1/__dl_xlsx');
       const fX = await getBytes(fastify.server.address().port, '/v1/__dl_xlsx');
@@ -244,6 +270,52 @@ describe('Phase 2.11 - download and export parity', () => {
       ]);
     } finally {
       eSrv.close();
+    }
+  });
+
+  it('large download gzips identically (async-compress regression net)', async () => {
+    async function getBytes(port, urlPath) {
+      return new Promise((resolve, reject) => {
+        const req = http.get(
+          { port, path: urlPath, headers: { 'accept-encoding': 'gzip, deflate' }, agent: false },
+          (res) => {
+            const chunks = [];
+            res.on('data', (c) => chunks.push(c));
+            res.on('end', () => {
+              const raw = Buffer.concat(chunks);
+              try {
+                const text =
+                  res.headers['content-encoding'] === 'gzip'
+                    ? zlib.gunzipSync(raw).toString('utf8')
+                    : raw.toString('utf8');
+                resolve({ status: res.statusCode, headers: res.headers, text });
+              } catch (err) {
+                reject(new Error(`gunzip failed: ${err.message}`));
+              }
+            });
+            res.on('error', reject);
+          }
+        );
+        req.on('error', reject);
+      });
+    }
+
+    const eSrv = expressApp.listen(0);
+    await new Promise((resolve) => eSrv.on('listening', resolve));
+    if (!fastify.server.listening) await fastify.listen({ port: 0 });
+    try {
+      const [eRes, fRes] = await Promise.all([
+        getBytes(eSrv.address().port, '/v1/__dl_big'),
+        getBytes(fastify.server.address().port, '/v1/__dl_big'),
+      ]);
+      expect(fRes.status).toBe(eRes.status);
+      const diffs = headerDiff(eRes.headers, fRes.headers);
+      expect(diffs, `big download header differences:\n${diffs.join('\n')}`).toEqual([]);
+      expect(fRes.text).toBe(eRes.text);
+      expect(eRes.headers['content-encoding']).toBe('gzip');
+    } finally {
+      eSrv.closeAllConnections();
+      await new Promise((resolve) => eSrv.close(resolve));
     }
   });
 });

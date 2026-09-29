@@ -252,7 +252,7 @@
 | 2.15 | `index.js`: `await fastify.ready()` → `socketIo(fastify.server)`; cron → `onReady`/`onClose` hooks |
 | 2.16 | Route-manifest parity diff + full smoke suite |
 
-**Internal order:** 2.1 → 2.2–2.4 → 2.5 spike → 2.6 → 2.7 → 2.8 → 2.9a (reply adapter) → 2.9b (shared route registrar + first file) → 2.9c ✅ (all 13 route files dual-registered) → 2.10 ✅ (uploads) → 2.11 ✅ (exports) → 2.12 ✅ (controllers) → 2.13–2.15 → 2.16.
+**Internal order:** 2.1 → 2.2–2.4 → 2.5 spike → 2.6 → 2.7 → 2.8 → 2.9a (reply adapter) → 2.9b (shared route registrar + first file) → 2.9c ✅ (all 13 route files dual-registered) → 2.10 ✅ (uploads) → 2.11 ✅ (exports) → 2.12 ✅ (controllers) → 2.13 ✅ (views) → 2.14–2.15 → 2.16.
 
 **Exit criteria:** all routes identical, tests green, `express` removed from `package.json`.
 
@@ -370,6 +370,12 @@
 > - **No timers, no `new Promise`, no `sendMail`, no `req.files` in any controller; services touch neither `req` nor `res`; `res.locals` only flows through `middlewares/error.js` → `morgan` (2.14's problem).**
 > - **Exactly one fire-and-forget response in the whole codebase**: the GCS `blobStream` `finish`/`error` handlers in `file.controller.js` (Azure uses awaited `uploadData`, S3 uses awaited `s3.send`). Flattened to `await new Promise` over the stream events with byte-identical success/failure bodies; the 109 other download sites and all 78 upload callbacks already answer inside awaited flow.
 > - **The "hardest" controllers verified, not just eyeballed**: `getClientIp` / `isSecureRequest` / the 7 `` `${req.protocol}://${req.get('host')}` `` link builders (auth + payment.initiation) are evaluated verbatim in probes, proxied (fully deterministic, including the subtle `secure: true` + `protocol: 'http'` split the helpers really produce untrusted) and direct. 121 tests green, manifest 0/0/0, lint 0 errors, `tsc` clean.
+
+> **2.13 done (`src/utils/renderView.js` + `tests/view.parity.test.js`, 4 assertions).** All 13 `res.render` calls live in two controllers (auth 10, payment.initiation 3): `other/msg91`/`firebase`/`firebase_test` with `{ locals }`, the rest static. Deliberately NOT `@fastify/view` - a second substitution implementation to hold byte-identical against the first. Both servers run the *same* `es6Renderer` function instead (Express through `res.render`, untouched; Fastify by calling it directly), so output matches by construction and the 13 sites changed one token each (`tools/codemod-render.js`). Two engine quirks read off its source: without a callback it *crashes* on missing files instead of erroring (Express always passes one, so the helper does too), and with a callback it also rejects its returned promise (swallowed, or every missing template logs an unhandled rejection). The helper additionally replicates Express's view-lookup failure verbatim (`Failed to lookup view "…" in views directory "…"` with app.js's exact mixed-slash spelling), which the engine alone would report as bare ENOENT.
+>
+> The step also caught a live production bug outside views: **`@fastify/compress@9.2.0`'s async path answers empty bodies under gzip headers past ~4KB** (boundary bisected at exactly 4096/4097 bytes; proven on vanilla Fastify, 9.2.0 is latest). Any gzipped JSON/HTML response over that size - admin listings, exports - would have been empty in production. Fixed with `syncThreshold: 64MB` in `src/fastify.ts` (sync gzip only runs on compressible bodies over 1KB; xlsx never compresses on either server). Regression net: an 8KB download fetched gzipped in `tests/download.parity.test.js`.
+>
+> Test-harness lessons worth keeping: `inject` utf8-mangles binary (xlsx and gzip bodies must go over real `listen` + `http.get`), `accept-encoding` must be set explicitly on inject (supertest always sends gzip/deflate), and keep-alive sockets hang `server.close()` (`agent: false` + `closeAllConnections`). 126 tests green, manifest 0/0/0, lint 0 errors, `tsc` clean.
 
 ---
 
