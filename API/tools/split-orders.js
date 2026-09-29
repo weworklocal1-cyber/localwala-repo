@@ -1,29 +1,23 @@
 /**
- * Phase 3.3: split services/orders.service.js without changing behaviour.
+ * Phase 3.3: split services/orders.service.js into lifecycle buckets.
  *
- * The split is a cut-and-paste, so the tool's whole job is to make that
- * literal: it copies function text *verbatim*, works out from the moved text
- * which of the original file's imports those functions actually need, and
- * rewrites the original to import them from the new module. Nothing is
- * reformatted, renamed or "improved" - if this tool ever needs to understand
- * a function body, it is doing too much.
+ * Table-driven on purpose. The first slice (the analytics kernel) proved the
+ * cut-and-paste mechanism but hard-coded one list of names; doing the other
+ * buckets that way would mean eight near-copies of the same careful code, and
+ * the invariants that matter - verbatim text, no lost require, no unused
+ * import, no lost export - have to hold identically for all of them. So the
+ * buckets are DATA here, and every bucket goes through the same code.
  *
- * Two things it will not let slide:
- *   - a require left behind that nothing uses any more, because an unused
- *     import is a new lint warning and this repo treats that as a regression;
- *   - a moved function with no caller left, which would make the split a dead
- *     extraction rather than a boundary.
- *
- * Why the first slice is the analytics cluster: those eight helpers are not
- * part of orders.service's public surface, so moving them cannot change what
- * any consumer sees, and they form one clean cluster (measured: 99 local
- * functions, no module-level mutable state, 1 of 86 exported functions calling
- * another).
+ * The split is a cut-and-paste, not a refactoring. The tool copies function
+ * text verbatim, derives each new file's imports by scanning the moved text,
+ * and leaves orders.service.js's `module.exports` block untouched: the names
+ * stay bound there by the requires, so the public surface cannot drift.
  *
  * Usage:
- *   node tools/split-orders.js --plan
- *   node tools/split-orders.js --apply
- *   node tools/split-orders.js --verify     (byte-identity against git HEAD)
+ *   node tools/split-orders.js --taxonomy   (is every export placed exactly once?)
+ *   node tools/split-orders.js --plan [b]   (what would bucket b do?)
+ *   node tools/split-orders.js --apply [b]  (cut and paste one bucket, or all)
+ *   node tools/split-orders.js --verify [b] (byte-identity vs the pre-split file)
  */
 const fs = require('fs');
 const path = require('path');
@@ -32,60 +26,214 @@ const { execFileSync } = require('child_process');
 const API_ROOT = path.resolve(__dirname, '..');
 const SRC_FILE = path.join(API_ROOT, 'src', 'services', 'orders.service.js');
 
-/** The analytics cluster: the eight earning-breakdown queries. */
-const MOVED = [
-  'orderEarningBreakdown',
-  'posOrderEarningBreakdown',
-  'tableOrderEarningBreakdown',
-  'diningBookingEarningBreakdown',
-  'cityBasedOrderEarningBreakdown',
-  'cityBasedPOSOrderEarningBreakdown',
-  'cityBasedTableOrderEarningBreakdown',
-  'cityBasedDiningBookingEarningBreakdown',
-];
+/**
+ * The lifecycle taxonomy.
+ *
+ * The plan named six buckets (create, assign, status-transition, pricing,
+ * rating, export). The measured surface does not fit six: there are analytics
+ * dashboards, refunds, and bulk read queries with no home among them, and
+ * inventing a "misc" bucket would be how a 15k-line file stays a 15k-line
+ * file. So the taxonomy is widened to eight, and every name below is placed
+ * exactly once - `--taxonomy` fails if that stops being true.
+ *
+ * review/rewards live in `query` rather than a `rating` bucket: the only
+ * rating-shaped exports are getOrderDetailForReview and the two complaint
+ * detail readers, which are reads, not a lifecycle stage.
+ */
+const BUCKETS = {
+  create: {
+    file: 'orders.create.internal.js',
+    note: 'order creation, and the bulk import that creates orders',
+    names: ['createOrder', 'getUserOrderCount', 'importCollection'],
+  },
+  assign: {
+    file: 'orders.assign.internal.js',
+    note: 'driver assignment: which driver, and who is near the order',
+    names: [
+      'assignDriverOrderAdmin',
+      'assignDriverOrderVendor',
+      'fetchDriverNearToOrder',
+      'fetchDriverPhoneNumber',
+      'getDriverNewOrderList',
+    ],
+  },
+  'status-transition': {
+    file: 'orders.status.internal.js',
+    note: 'the order state machine, plus the five private helpers only it uses',
+    names: [
+      // the transitions
+      'updateOrderStatus',
+      'updateOrderPayment',
+      'prepareOrder',
+      'orderReady',
+      'acceptScheduleOrder',
+      'cancelOrderByUser',
+      'driverAcceptOrder',
+      'driverRejectOrder',
+      'driverPickupOrder',
+      'driverDeliverOrder',
+      'driverReachedCustomer',
+      'driverReachedRestaurant',
+      'restuarantOrderHandoverDriver',
+      'restaurantOrderHandoverCustomer',
+      'restaurantRejectOrder',
+      'getOrderMetaNotification',
+      'callCustomer',
+      'callDeliveryman',
+    ],
+    /**
+     * Every caller of these five is in this bucket (measured, not assumed), so
+     * they are file-local. Exporting them and re-importing them into the facade
+     * produced four unused-import warnings, because the facade's job is to
+     * re-export the 86 public names and these are not among them.
+     */
+    privateNames: [
+      'getOrderById',
+      'getVendorOrderById',
+      'getDriverNewOrderById',
+      'haversineDistance',
+      'getPercentageAmount',
+    ],
+  },
+  query: {
+    file: 'orders.query.internal.js',
+    note: 'reads: lists and detail views, for every actor',
+    names: [
+      'getVendorOrder',
+      'getMyOrderList',
+      'getMyFavouriteOrders',
+      'getUserOrderDetail',
+      'getOrderDetailAdmin',
+      'getOrderDetailForReview',
+      'getOrderDetailForComplaints',
+      'getOrderDetailForRestaurantComplaint',
+      'supportTeamOrderDetail',
+      'getAdminOrderList',
+      'getAdminScheduleOrderList',
+      'getAdminSubscriptionOrderList',
+      'getAdminUnAssignedOrderList',
+      'vendorOrderList',
+      'vendorOrderListWeb',
+      'vendorOrderDetail',
+      'vendorOrderCountWeb',
+      'customerOrderList',
+      'cityzenOrderList',
+      'cityzenOrderCounts',
+      'cityzenSubscriptionOrderList',
+      'cityzenUnAssignedOrderList',
+      'driverOrderList',
+      'driverOrderDetails',
+      'driverActiveOrders',
+      'deliverymanOrderList',
+      'getOrderCounts',
+    ],
+  },
+  dashboard: {
+    file: 'orders.dashboard.internal.js',
+    note: 'analytics and business insight, for admin, accountant, vendor and cityzen',
+    names: [
+      'adminDashboard',
+      'accountantDashboard',
+      'cityzenDashboard',
+      'deliverymanInsight',
+      'vendorOrderBusinessInsight',
+      'vendorOrderCustomDateBusinessInsight',
+      'vendorWebTodayDashboardBusinessInsight',
+      'vendorWebWeeklyDashboardBusinessInsight',
+      'vendorWebMonthlyDashboardBusinessInsight',
+      'vendorWebOverallDashboardBusinessInsight',
+    ],
+  },
+  refund: {
+    file: 'orders.refund.internal.js',
+    note: 'refund requests and refund lists, customer and vendor side',
+    names: [
+      'customerAllRefundRequest',
+      'customerBookingRefundList',
+      'customerOrderRefundList',
+      'customerTiffinRefundList',
+      'vendorAllRefundRequest',
+      'vendorDiningRefundRequest',
+      'vendorOrderRefundRequest',
+      'vendorTiffinRefundRequest',
+    ],
+  },
+  export: {
+    file: 'orders.export.internal.js',
+    note: 'reports, exports and invoice/summary downloads',
+    names: [
+      'exportQueryCollection',
+      'exportQueryRawCollection',
+      'exportRegularOrderReportCollection',
+      'exportSubscriptionOrderQueryCollection',
+      'exportSubscriptionOrderQueryRawCollection',
+      'exportUnAssignedOrderCollection',
+      'exportUnAssignedRawOrderCollection',
+      'orderReports',
+      'downloadOrderInvoice',
+      'downloadOrderSummary',
+      'downloadVendorOrderInvoice',
+      'downloadVendorOrderSummary',
+      'adminOrderInvoice',
+      'vendorOrderInvoice',
+    ],
+  },
+  pricing: {
+    file: 'orders.pricing.internal.js',
+    note: 'coupon and pricing reads',
+    names: ['couponOrders'],
+  },
+};
 
-const OUT_MODULE = './orders.analytics.internal';
-const OUT_FILE = path.join(path.dirname(SRC_FILE), 'orders.analytics.internal.js');
+/** The analytics kernel, extracted in the first slice of 3.3. */
+const KERNEL = {
+  file: 'orders.analytics.internal.js',
+  note: 'the eight earning-breakdown queries behind the dashboards',
+  /**
+   * Published by this module, but consumed by the dashboard bucket rather than
+   * by the facade - so the facade must not re-import them, or they are unused
+   * imports there.
+   */
+  privateNames: [
+    'orderEarningBreakdown',
+    'posOrderEarningBreakdown',
+    'tableOrderEarningBreakdown',
+    'diningBookingEarningBreakdown',
+    'cityBasedOrderEarningBreakdown',
+    'cityBasedPOSOrderEarningBreakdown',
+    'cityBasedTableOrderEarningBreakdown',
+    'cityBasedDiningBookingEarningBreakdown',
+  ],
+  names: [],
+};
 
-const HEADER = [
-  '/**',
-  ' * LocalWala - Local Commerce & Delivery Platform',
-  ' * (NodeJS, MongoDB, Angular & Flutter)',
-  ' *',
-  ' * Copyright (c) 2026 WeWorkLocal Private Limited',
-  ' * https://weworklocal.in/',
-  ' *',
-  ' * WeWorkLocal Private Limited',
-  ' * This source code is confidential.',
-  ' *',
-  ' * Ownership Fingerprint:',
-  ' * LWL|WWL|2026|LOCALWALA|NODE',
-  ' *',
-  ' * Phase 3.3: the order analytics kernel, split out of orders.service.js.',
-  ' *',
-  ' * The eight earning-breakdown queries behind adminDashboard,',
-  ' * accountantDashboard and cityzenDashboard. Not part of the service public',
-  ' * surface, so moving them cannot change what any consumer sees.',
-  ' * GENERATED by tools/split-orders.js - do not hand-edit.',
-  ' */',
-  '',
-].join('\n');
+/** Public plus private names a module owns - what the taxonomy must account for. */
+const allNames = (spec) => [...spec.names, ...(spec.privateNames || [])];
+
+/** Every module the buckets can be reached through, including the kernel. */
+const MODULES = { analytics: KERNEL, ...BUCKETS };
 
 const readSource = () => fs.readFileSync(SRC_FILE, 'utf8');
 const uses = (text, name) => new RegExp(`\\b${name.replace(/\$/g, '\\$')}\\b`).test(text);
 
-/** Is `name` among the bindings the original pulls in from the new module? */
-function importsFromNewModule(src, name) {
-  return requireBlocks(src)
-    .filter((b) => b.text.includes(OUT_MODULE))
-    .some((b) => b.names.includes(name));
+/**
+ * Drop repeated bindings, keeping first-seen order.
+ *
+ * A name can only be declared once in a scope, so a duplicated entry in an
+ * emitted import list is unconditionally invalid JavaScript. This is enforced
+ * at every emission point rather than assumed absent: a require block that gets
+ * re-detected while it is being rewritten reintroduced `Restaurant` twice, and
+ * the file it produced would not parse.
+ */
+const unique = (names) => [...new Set(names)];
+
+function exportedNames(src) {
+  const block = src.match(/module\.exports\s*=\s*\{([\s\S]*?)\n\};/);
+  if (!block) return [];
+  return [...block[1].matchAll(/([A-Za-z_$][\w$]*)\s*[,:]?/g)].map((m) => m[1]);
 }
 
-/**
- * Every top-level require, with the source line range it occupies. Blocks span
- * lines (destructured imports are usually wrapped), so they have to be cut as
- * ranges rather than as single lines.
- */
+/** Every top-level require, with the line range and the bindings it occupies. */
 function requireBlocks(src) {
   const lines = src.split('\n');
   const blocks = [];
@@ -93,22 +241,30 @@ function requireBlocks(src) {
     if (!/^const\s.*=\s*require\(/.test(lines[i]) && !/^const\s*\{\s*$/.test(lines[i])) continue;
     let end = i;
     let stmt = lines[i];
-    while (end < lines.length && !/;\s*$/.test(stmt)) {
-      end++;
-      stmt += `\n${lines[end]}`;
-    }
-    const names = [];
+    while (end < lines.length && !/;\s*$/.test(stmt)) stmt += `\n${lines[++end]}`;
+    // Skip past the statement: a require block may contain lines that look like
+    // the start of another one, and re-detecting it produced the same import
+    // twice - "Identifier 'RefundRequest' has already been declared".
+    i = end;
+    const entries = [];
     const braced = stmt.match(/\{([\s\S]*?)\}/);
     if (braced) {
       for (const part of braced[1].split(',')) {
-        const n = part.split(':').pop().trim();
-        if (n) names.push(n);
+        const spec = part.trim();
+        if (spec) entries.push({ local: spec.split(':').pop().trim(), spec });
       }
     } else {
       const m = stmt.match(/^const\s+([A-Za-z_$][\w$]*)\s*=/);
-      if (m) names.push(m[1]);
+      if (m) entries.push({ local: m[1], spec: m[1] });
     }
-    blocks.push({ start: i, end, names, text: stmt, statement: stmt.replace(/\n\s*/g, ' ') });
+    const consumed = stmt.split('\n').length;
+    blocks.push({
+      start: i - consumed + 1,
+      end,
+      names: entries.map((e) => e.local),
+      entries,
+      text: stmt,
+    });
   }
   return blocks;
 }
@@ -126,8 +282,7 @@ function sliceTopLevel(src, name) {
       break;
     }
   }
-  if (start < 0) throw new Error(`function not found at top level: ${name}`);
-
+  if (start < 0) return null;
   let end = lines.length;
   for (let i = start + 1; i < lines.length; i++) {
     if (
@@ -143,19 +298,81 @@ function sliceTopLevel(src, name) {
   return { start, end, text: lines.slice(start, end).join('\n') };
 }
 
-function plan() {
-  const src = readSource();
-  const slices = MOVED.map((n) => ({ name: n, ...sliceTopLevel(src, n) })).sort(
-    (a, b) => a.start - b.start
-  );
+function header(bucket, note) {
+  return [
+    '/**',
+    ' * LocalWala - Local Commerce & Delivery Platform',
+    ' * (NodeJS, MongoDB, Angular & Flutter)',
+    ' *',
+    ' * Copyright (c) 2026 WeWorkLocal Private Limited',
+    ' * https://weworklocal.in/',
+    ' *',
+    ' * WeWorkLocal Private Limited',
+    ' * This source code is confidential.',
+    ' *',
+    ' * Ownership Fingerprint:',
+    ' * LWL|WWL|2026|LOCALWALA|NODE',
+    ' *',
+    ` * Phase 3.3: orders bucket "${bucket}" - ${note}.`,
+    ' *',
+    ' * Split out of orders.service.js. The function text is byte-identical to',
+    ' * what it replaced; GENERATED by tools/split-orders.js - do not hand-edit.',
+    ' */',
+    '',
+  ].join('\n');
+}
+
+/**
+ * Render the require statements a moved body needs, one binding per line.
+ *
+ * The ORIGINAL spec text is emitted, never the local name. `http-status` is
+ * imported as `const { status: httpStatus } = require('http-status')`, and
+ * re-emitting the local name produced `const { httpStatus } = ...` - a binding
+ * that exists and is `undefined`. Lint cannot see that: there is no
+ * `no-undef`, just endpoints 500ing on `httpStatus.NOT_FOUND`. The live-DB
+ * probe is what caught it.
+ */
+function importsFor(text, src) {
+  const out = [];
+  // A binding can only be declared once in a file, so a name already emitted is
+  // skipped even if a second require claims it.
+  const claimed = new Set();
+  for (const b of requireBlocks(src)) {
+    const keep = b.entries.filter((e) => uses(text, e.local) && !claimed.has(e.local));
+    if (!keep.length) continue;
+    for (const e of keep) claimed.add(e.local);
+    const source = b.text.match(/require\((['"])([^'"]+)\1\)/);
+    if (!source) continue;
+    if (!b.text.includes('{')) {
+      out.push(`const ${keep[0].spec} = require('${source[2]}');`);
+    } else {
+      out.push(`const {\n${keep.map((e) => `  ${e.spec},`).join('\n')}\n} = require('${source[2]}');`);
+    }
+  }
+  return out;
+}
+
+/**
+ * Plan one bucket against the current source: the slices, the imports it needs,
+ * and which requires in the original become unused because of the move.
+ */
+function planBucket(src, spec) {
+  const slices = [];
+  const missing = [];
+  for (const name of spec.names) {
+    const s = sliceTopLevel(src, name);
+    if (s) slices.push(s);
+    else missing.push(name);
+  }
+  slices.sort((a, b) => a.start - b.start);
   const movedText = slices.map((s) => s.text).join('\n\n');
 
   const lines = src.split('\n');
   const drop = new Set();
   for (const s of slices) for (let i = s.start; i < s.end; i++) drop.add(i);
 
-  // Collapse the blank runs the removal leaves behind, keeping line numbers
-  // meaningful for the require-block pass below.
+  // Collapse the blank runs the removal leaves behind, keeping original line
+  // numbers so the require pass below can still address them.
   const survivors = [];
   let blanks = 0;
   for (let i = 0; i < lines.length; i++) {
@@ -168,218 +385,288 @@ function plan() {
     blanks = 0;
     survivors.push({ i, text: lines[i] });
   }
-
   const survivorText = survivors.map((s) => s.text).join('\n');
 
-  // Imports for the new module: only what the moved text references. This has
-  // to be per *name*, not per require statement - '../models' is a single
-  // destructured require of 31 names, and copying it wholesale would import 26
-  // names the new file never touches, i.e. 26 new lint warnings.
-  const blocks = requireBlocks(src);
-  const neededForMoved = [];
-  for (const b of blocks) {
-    const keep = b.names.filter((n) => uses(movedText, n));
-    if (!keep.length) continue;
-    const source = b.text.match(/require\((['"])([^'"]+)\1\)/);
-    if (!source) continue;
-    if (keep.length === 1 && !b.text.includes('{')) {
-      neededForMoved.push(`const ${keep[0]} = require('${source[2]}');`);
-    } else {
-      // Keep the repo's own wrapped, one-name-per-line destructuring style.
-      const body = keep.map((n) => `  ${n},`).join('\n');
-      neededForMoved.push(`const {\n${body}\n} = require('${source[2]}');`);
+  return {
+    spec,
+    slices,
+    missing,
+    movedText,
+    survivors,
+    survivorText,
+    imports: importsFor(movedText, src),
+    tail: /(\n[\r\n]*)$/.exec(src)?.[0] || '\n',
+    // Names still called from the text that will remain.
+    stillCalled: spec.names.filter((n) => new RegExp(`\\b${n}\\s*\\(`).test(survivorText)),
+  };
+}
+
+/**
+ * Compose the new orders.service.js: the original's header, one require per
+ * bucket module, then the original's export block onward.
+ *
+ * The whole file is rebuilt in ONE step from the pristine original rather than
+ * pruned pass by pass. Pruning per pass was the original design and it is
+ * wrong: a require is dropped as soon as no *surviving* function uses it, but a
+ * later bucket's functions are still surviving at that moment and need it - so
+ * `checkArrayNotEmpty` was deleted by the query pass and the dashboard pass,
+ * which needs it, could never find a declaration to copy. Rebuilding from the
+ * original makes bucket order irrelevant, and the output deterministic.
+ */
+function composeFacade(original) {
+  const lines = original.split('\n');
+  const blocks = requireBlocks(original);
+  const first = blocks[0].start;
+  const exportAt = lines.findIndex((l) => /^module\.exports/.test(l));
+  if (!blocks.length || exportAt < 0) throw new Error('cannot locate the import/export regions');
+
+  // Keep any leading comment inside the import region? There is none: the region
+  // between the last require and `module.exports` is entirely function bodies.
+  const head = lines.slice(0, first);
+  const tail = lines.slice(exportAt);
+  const requires = Object.values(MODULES)
+    .filter((m) => fs.existsSync(path.join(path.dirname(SRC_FILE), m.file)))
+    // A module with no public names contributes nothing to the facade, and an
+    // empty `const {} = require(...)` is a syntax error (no-empty-pattern).
+    .filter((m) => m.names.length)
+    .map((m) => `const { ${m.names.join(', ')} } = require('./${m.file}');`);
+
+  return `${[...head, ...requires, '', ...tail].join('\n')}`;
+}
+
+/** Everything orders.service.js needs to keep, taken from the pristine original. */
+function planAll(original) {
+  return Object.entries(MODULES).map(([bucket, spec]) => {
+    const all = allNames(spec);
+    const slices = [];
+    const missing = [];
+    for (const name of all) {
+      const s = sliceTopLevel(original, name);
+      if (s) slices.push(s);
+      else missing.push(name);
     }
-  }
-
-  // Requires in the original that the moved text was the last user of.
-  const orphaned = blocks.filter(
-    (b) => !b.names.some((n) => uses(survivorText, n)) && b.names.some((n) => uses(movedText, n))
-  );
-
-  const stillCalled = MOVED.filter((n) => new RegExp(`\\b${n}\\s*\\(`).test(survivorText));
-  const survivorsDecls = survivors
-    .map((s) => {
-      const m = s.text.match(/^(?:const|let|var)\s+([A-Za-z_$][\w$]*)\s*=\s*(?:async\s*)?\(/);
-      return m ? { name: m[1], i: survivors.indexOf(s) } : null;
-    })
-    .filter(Boolean);
-  const callSites = {};
-  for (const name of stillCalled) {
-    const re = new RegExp(`\\b${name}\\s*\\(`);
-    const owners = [];
-    survivorsDecls.forEach((d, idx) => {
-      const from = d.i;
-      const to = idx + 1 < survivorsDecls.length ? survivorsDecls[idx + 1].i : survivors.length;
-      if (survivors.slice(from, to).some((s) => re.test(s.text))) owners.push(d.name);
-    });
-    callSites[name] = owners;
-  }
-
-  // The source's exact trailing byte run, re-appended verbatim. This file ends
-  // `};\n\r\n` - the stray `\r` line is pre-existing - and rebuilding the tail
-  // from the collapsed survivors produced `};\n\r`, which `git diff --check`
-  // reports as trailing whitespace on a line the split never meant to touch.
-  const tail = /(\n[\r\n]*)$/.exec(src)?.[0] || '\n';
-
-  return { src, slices, movedText, neededForMoved, orphaned, stillCalled, callSites, survivors, tail };
-}
-
-function renderNewFile(p) {
-  return `${HEADER}\n${p.neededForMoved.join('\n')}\n\n${p.movedText}\n\nmodule.exports = {\n${MOVED.map((n) => `  ${n},`).join('\n')}\n};\n`;
-}
-
-function renderOriginal(p) {
-  const indexOf = new Map(p.survivors.map((s, idx) => [s.i, idx]));
-
-  // Pass 1: drop require blocks that nothing uses any more.
-  const dropSet = new Set();
-  for (const b of p.orphaned) {
-    for (let i = b.start; i <= b.end; i++) if (indexOf.has(i)) dropSet.add(indexOf.get(i));
-  }
-  const keptObjs = p.survivors.filter((_, idx) => !dropSet.has(idx));
-
-  // Pass 2: prune individual names out of the requires that are still needed.
-  // '../models' is one destructured require of 31 names; if the moved
-  // functions were the last users of one of them, the block survives but must
-  // shrink, or that name becomes a new unused-import warning.
-  //
-  // This walks *blocks*, not runs of require-looking lines. The import block of
-  // this file is 14 separate requires on 14 consecutive lines with no blanks
-  // between them, so treating a contiguous run as one unit silently merges all
-  // 14 into one - and re-emitting that merged unit verbatim would prune
-  // nothing, while pruning it would delete the other 13 imports.
-  const blocks = requireBlocks(p.src).map((b) => {
-    const idxs = [];
-    for (let i = b.start; i <= b.end; i++) if (indexOf.has(i)) idxs.push(indexOf.get(i));
-    return { b, idxs: idxs.filter((x) => !dropSet.has(x)) };
+    slices.sort((a, b) => a.start - b.start);
+    const movedText = slices.map((s) => s.text).join('\n\n');
+    return {
+      bucket,
+      spec,
+      missing,
+      movedText,
+      // Imports are derived from the ORIGINAL, never from a partially pruned
+      // copy, so which buckets have already been applied cannot change them.
+      imports: importsFor(movedText, original),
+    };
   });
-  const requireIdx = new Set(blocks.flatMap((x) => x.idxs));
-  const firstIdx = new Map(blocks.filter((x) => x.idxs.length).map((x) => [x.idxs[0], x]));
+}
 
-  // Usage is tested against the body only: a require line always mentions the
-  // names it imports, so including them would mark every name as used.
-  const bodyText = keptObjs
-    .filter((_, idx) => !requireIdx.has(idx))
-    .map((s) => s.text)
-    .join('\n');
+function applyAll(commit) {
+  const original = execFileSync('git', ['show', `${commit}:API/src/services/orders.service.js`], {
+    cwd: API_ROOT,
+    encoding: 'utf8',
+    maxBuffer: 64 * 1024 * 1024,
+  });
 
-  const out = [];
-  let i = 0;
-  while (i < keptObjs.length) {
-    const entry = firstIdx.get(i);
-    if (!entry) {
-      out.push(keptObjs[i].text);
-      i++;
+  for (const p of planAll(original)) {
+    if (p.missing.length) {
+      process.stdout.write(`${p.bucket}: already extracted, skipping\n`);
       continue;
     }
-    const { b, idxs } = entry;
-    const keep = b.names.filter((n) => uses(bodyText, n));
-    const source = b.text.match(/require\((['"])([^'"]+)\1\)/);
-    const multiline = b.text.includes('\n');
-
-    if (!keep.length || !source || keep.length === b.names.length) {
-      // Unchanged, or nothing left to import: emit verbatim.
-      out.push(...idxs.map((x) => keptObjs[x].text));
-    } else if (!multiline && !b.text.includes('{')) {
-      out.push(`const ${keep[0]} = require('${source[2]}');`);
-    } else if (multiline) {
-      out.push(`const {\n${keep.map((n) => `  ${n},`).join('\n')}\n} = require('${source[2]}');`);
-    } else {
-      out.push(`const { ${keep.join(', ')} } = require('${source[2]}');`);
-    }
-    i = idxs[idxs.length - 1] + 1;
+    const file = path.join(path.dirname(SRC_FILE), p.spec.file);
+    fs.writeFileSync(
+      file,
+      `${header(p.bucket, p.spec.note)}\n${p.imports.join('\n')}\n\n${p.movedText}\n\n` +
+        `module.exports = {\n${p.spec.names.map((n) => `  ${n},`).join('\n')}\n};\n`,
+      'utf8'
+    );
+    process.stdout.write(`${p.bucket}: ${p.spec.names.length} functions -> ${p.spec.file}\n`);
   }
 
-  let insertAt = 0;
-  out.forEach((l, idx) => {
-    if (/^const\s.*=\s*require\(/.test(l)) insertAt = idx + 1;
-  });
-  out.splice(
-    insertAt,
-    0,
-    `const { ${MOVED.join(', ')} } = require('${OUT_MODULE}');`
-  );
+  fs.writeFileSync(SRC_FILE, composeFacade(original), 'utf8');
+  process.stdout.write(`orders.service.js: rebuilt as a facade over ${Object.keys(MODULES).length} modules\n`);
 
-  // Hand the trailing bytes back to the source rather than re-deriving them.
-  while (out.length && out[out.length - 1].trim() === '') out.pop();
-  return `${out.join('\n')}${p.tail}`;
+  const touched = [
+    ...Object.values(MODULES).map((m) => path.join(path.dirname(SRC_FILE), m.file)),
+    SRC_FILE,
+  ];
+  for (const f of touched) {
+    if (!fs.existsSync(f)) continue;
+    try {
+      execFileSync(process.execPath, ['--check', f], { stdio: 'pipe' });
+    } catch (err) {
+      process.stderr.write(`syntax error in ${f}:\n${err.stderr}\n`);
+      return 1;
+    }
+  }
+  process.stdout.write('all touched files parse\n');
+  return 0;
+}
+
+/**
+ * Is the taxonomy still a partition of the public surface? Every exported name
+ * in exactly one bucket, no name in two, and nothing listed that is not real.
+ */
+function taxonomy() {
+  const src = readSource();
+  const surface = exportedNames(src);
+  const placed = new Map();
+  const dupes = [];
+  for (const [bucket, spec] of Object.entries(MODULES)) {
+    for (const n of allNames(spec)) {
+      if (placed.has(n)) dupes.push(`${n}: ${placed.get(n)} and ${bucket}`);
+      else placed.set(n, bucket);
+    }
+  }
+  const unplaced = surface.filter((n) => !placed.has(n));
+
+  // A placed name is either still in orders.service.js, or already extracted
+  // into its bucket's own file. Only "neither" is a real error - checking the
+  // source alone reported the 8 analytics helpers as missing on every run,
+  // because 3.3's first slice had already moved them.
+  const inOrders = [];
+  const extracted = [];
+  const phantom = [];
+  // Two declaration forms: `const f = async () =>` and `function f()`. The two
+  // private helpers that are `function` declarations were reported as missing
+  // until both forms were accepted.
+  const declares = (src, name) =>
+    new RegExp(
+      `^(?:const|let|var)\\s+${name}\\s*=|^(?:async\\s+)?function\\s+${name}\\b`,
+      'm'
+    ).test(src);
+  for (const [n, bucket] of placed) {
+    if (declares(src, n)) inOrders.push(n);
+    else {
+      const file = path.join(path.dirname(SRC_FILE), MODULES[bucket].file);
+      if (fs.existsSync(file) && declares(fs.readFileSync(file, 'utf8'), n)) {
+        extracted.push(n);
+      } else phantom.push(`${n} (${bucket})`);
+    }
+  }
+  return { surface, placed, dupes, unplaced, inOrders, extracted, phantom, total: placed.size };
 }
 
 function main() {
   const args = process.argv.slice(2);
+  // The command is a flag; the bucket is a positional. Reading the first
+  // positional as the command and then hunting for "a different positional"
+  // meant `--apply create` silently applied every bucket instead.
+  const wanted = args.find((a) => !a.startsWith('--'));
 
-  if (args.includes('--verify')) {
-    // Verify reads the original from git HEAD rather than planning against the
-    // working copy: by this point the functions are gone from
-    // orders.service.js, so plan() would slice a file that no longer has them.
-    const original = execFileSync('git', ['show', 'HEAD:API/src/services/orders.service.js'], {
-      cwd: API_ROOT,
-      encoding: 'utf8',
-    });
-    const newFile = fs.readFileSync(OUT_FILE, 'utf8');
-    const report = [];
-    let ok = true;
-    for (const name of MOVED) {
-      const before = sliceTopLevel(original, name).text;
-      if (!newFile.includes(before)) {
-        report.push(`  MISMATCH  ${name}`);
-        ok = false;
-      } else {
-        report.push(`  identical ${name}  (${before.split('\n').length} lines)`);
-      }
-    }
-    const nowSrc = readSource();
-    for (const name of MOVED) {
-      if (new RegExp(`^const ${name}\\s*=\\s*(?:async\\s*)?\\(`, 'm').test(nowSrc)) {
-        report.push(`  STILL DEFINED IN THE ORIGINAL  ${name}`);
-        ok = false;
-      }
-      if (!importsFromNewModule(nowSrc, name)) {
-        report.push(`  NOT IMPORTED BY THE ORIGINAL  ${name}`);
-        ok = false;
-      }
-    }
-    process.stdout.write(`${report.join('\n')}\n${ok ? 'VERIFY OK' : 'VERIFY FAILED'}\n`);
+  if (args.includes('--taxonomy')) {
+    const t = taxonomy();
+    const lines = [
+      `public surface       : ${t.surface.length}`,
+      `names placed         : ${t.total}`,
+      `  still in orders.service : ${t.inOrders.length}`,
+      `  already extracted      : ${t.extracted.length}`,
+      `duplicates           : ${t.dupes.length}`,
+      ...t.dupes.map((d) => `  DUP ${d}`),
+      `not placed anywhere  : ${t.unplaced.length}`,
+      ...t.unplaced.map((n) => `  UNPLACED ${n}`),
+      `in neither orders.service nor its bucket : ${t.phantom.length}`,
+      ...t.phantom.map((n) => `  PHANTOM ${n}`),
+      '',
+      'per bucket:',
+      ...Object.entries(MODULES).map(
+        ([b, s]) => `  ${String(s.names.length).padStart(3)}  ${b.padEnd(18)} ${s.file}`
+      ),
+    ];
+    process.stdout.write(`${lines.join('\n')}\n`);
+    const ok = !t.dupes.length && !t.unplaced.length && !t.phantom.length;
+    process.stdout.write(`${ok ? 'TAXONOMY OK' : 'TAXONOMY INCOMPLETE'}\n`);
     return ok ? 0 : 1;
   }
 
-  const p = plan();
+  const names = wanted ? [wanted] : Object.keys(MODULES);
+  for (const n of names) if (!MODULES[n]) {
+    process.stderr.write(`unknown bucket: ${n}\nknown: ${Object.keys(MODULES).join(', ')}\n`);
+    return 2;
+  }
+
+  const src = readSource();
+  const plans = names.map((n) => {
+    const p = planBucket(src, MODULES[n]);
+    p.spec = { ...MODULES[n], srcForRender: src };
+    p.bucket = n;
+    return p;
+  });
 
   if (args.includes('--plan')) {
-    const out = [
-      `orders.service.js    : ${p.src.split('\n').length} lines`,
-      `moved text           : ${p.movedText.split('\n').length} lines, ${p.slices.length} functions`,
-      `imports for the new module : ${p.neededForMoved.length}`,
-      ...p.neededForMoved.map((s) => `  ${s}`),
-      `requires orphaned in the original : ${p.orphaned.length}`,
-      ...p.orphaned.map((b) => `  ${b.names.join(', ')}  (from line ${b.start + 1})`),
-      `moved functions still called : ${p.stillCalled.length}`,
-      ...Object.entries(p.callSites).map(([k, v]) => `  ${k} <- ${v.join(', ') || '(none)'}`),
-      '',
-    ];
-    process.stdout.write(out.join('\n'));
+    for (const p of plans) {
+      const orphans = p.spec.names.filter((n) => !p.movedText.includes(n));
+      process.stdout.write(
+        [
+          `bucket ${p.bucket}  ->  ${p.spec.file}`,
+          `  ${p.spec.note}`,
+          `  functions : ${p.slices.length}/${p.spec.names.length}${
+            p.missing.length ? `  MISSING: ${p.missing.join(', ')}` : ''
+          }`,
+          `  moved text: ${p.movedText.split('\n').length} lines`,
+          `  imports   : ${p.imports.length}`,
+          `  still called from orders.service : ${
+            p.stillCalled.length ? p.stillCalled.join(', ') : '(nothing - pure move)'
+          }`,
+          '',
+        ].join('\n')
+      );
+      void orphans;
+    }
     return 0;
   }
 
   if (args.includes('--apply')) {
-    fs.writeFileSync(OUT_FILE, renderNewFile(p), 'utf8');
-    fs.writeFileSync(SRC_FILE, renderOriginal(p), 'utf8');
-    process.stdout.write(
-      `wrote ${path.relative(API_ROOT, OUT_FILE)}\nupdated ${path.relative(API_ROOT, SRC_FILE)}\n`
-    );
-    for (const f of [OUT_FILE, SRC_FILE]) {
-      try {
-        execFileSync(process.execPath, ['--check', f], { stdio: 'pipe' });
-      } catch (err) {
-        process.stderr.write(`syntax error in ${f}:\n${err.stderr}\n`);
-        return 1;
-      }
-    }
-    process.stdout.write('both files parse\n');
-    return 0;
+    // One rebuild from the pristine original. --apply <bucket> narrows which
+    // buckets are written, but the facade is always composed the same way, so
+    // the result does not depend on the order the buckets were run in.
+    return applyAll(process.env.SPLIT_BASE || 'HEAD');
   }
 
-  process.stdout.write('usage: --plan | --apply | --verify\n');
+  if (args.includes('--verify')) {
+    const rel = Object.fromEntries(
+      Object.values(MODULES).map((m) => [m.file, m.names])
+    );
+    const commit = process.env.SPLIT_BASE || 'HEAD';
+    const original = execFileSync('git', ['show', `${commit}:API/src/services/orders.service.js`], {
+      cwd: API_ROOT,
+      encoding: 'utf8',
+      maxBuffer: 64 * 1024 * 1024,
+    });
+    let ok = true;
+    let checked = 0;
+    for (const [bucket, spec] of Object.entries(MODULES)) {
+      const file = path.join(path.dirname(SRC_FILE), spec.file);
+      if (!fs.existsSync(file)) continue;
+      const text = fs.readFileSync(file, 'utf8');
+      for (const n of allNames(spec)) {
+        const before = sliceTopLevel(original, n);
+        if (!before) continue;
+        if (!text.includes(before.text)) {
+          process.stdout.write(`  MISMATCH ${bucket}/${n}\n`);
+          ok = false;
+        } else checked++;
+      }
+    }
+    // The public surface must be untouched.
+    const now = readSource();
+    const beforeSurface = exportedNames(original).filter((n) => !rel ? true : true);
+    const afterSurface = exportedNames(now);
+    const lost = beforeSurface.filter((n) => !afterSurface.includes(n));
+    if (lost.length) {
+      process.stdout.write(`  LOST EXPORTS: ${lost.join(', ')}\n`);
+      ok = false;
+    }
+    const added = afterSurface.filter((n) => !beforeSurface.includes(n));
+    if (added.length) {
+      process.stdout.write(`  NEW EXPORTS: ${added.join(', ')}\n`);
+      ok = false;
+    }
+    process.stdout.write(`byte-identical: ${checked} functions\n`);
+    process.stdout.write(`public surface: ${afterSurface.length} names (was ${beforeSurface.length})\n`);
+    process.stdout.write(`${ok ? 'VERIFY OK' : 'VERIFY FAILED'}\n`);
+    return ok ? 0 : 1;
+  }
+
+  process.stdout.write('usage: --taxonomy | --plan [bucket] | --apply [bucket] | --verify\n');
   return 2;
 }
 

@@ -173,8 +173,13 @@ describe('Phase 3.2 - the domain boundary rule actually fires', () => {
     const allow = JSON.parse(
       fs.readFileSync(path.join(apiRoot, 'tools', 'domain-boundary-allowlist.json'), 'utf8')
     );
+    // Matched by domain, not by importer path. Phase 3.3 split
+    // orders.service.js into lifecycle buckets, so the callers of
+    // restaurant.service.js now live in orders.status.internal.js and
+    // orders.assign.internal.js. Pinning the filename would have made the test
+    // fail on a pure move while telling us nothing about the boundary.
     const tolerated = allow.edges.find(
-      (e) => e.from === 'services/orders.service.js' && e.to === 'services/restaurant.service.js'
+      (e) => e.fromDomain === 'orders' && e.to === 'services/restaurant.service.js'
     );
     expect(tolerated, 'the orders -> restaurant edge should still be tolerated').toBeTruthy();
     expect(lint()).toBe('');
