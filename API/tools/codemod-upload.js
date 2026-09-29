@@ -53,9 +53,11 @@ function main() {
         throw new Error(`${file}:${i + 1}: upload.single with no preceding const upload`);
       }
       const expr = preceding[preceding.length - 1].expr;
+      // Awaited: on Fastify an async handler that returns before the upload
+      // callback settles makes Fastify answer an empty 200 first.
       const replaced = stripped.replace(
         /upload\.single\('([^']+)'\)\(req, res,/,
-        `handleUpload(req, res, '$1', ${expr},`
+        `await handleUpload(req, res, '$1', ${expr},`
       );
       out.push(line.endsWith('\r') ? `${replaced}\r` : replaced);
       sites++;

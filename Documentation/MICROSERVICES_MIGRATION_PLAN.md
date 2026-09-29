@@ -252,7 +252,7 @@
 | 2.15 | `index.js`: `await fastify.ready()` → `socketIo(fastify.server)`; cron → `onReady`/`onClose` hooks |
 | 2.16 | Route-manifest parity diff + full smoke suite |
 
-**Internal order:** 2.1 → 2.2–2.4 → 2.5 spike → 2.6 → 2.7 → 2.8 → 2.9a (reply adapter) → 2.9b (shared route registrar + first file) → 2.9c ✅ (all 13 route files dual-registered) → 2.10 ✅ (uploads) → 2.11 → 2.12 (hardest: `auth.controller`, `payment.initiation`) → 2.13–2.15 → 2.16.
+**Internal order:** 2.1 → 2.2–2.4 → 2.5 spike → 2.6 → 2.7 → 2.8 → 2.9a (reply adapter) → 2.9b (shared route registrar + first file) → 2.9c ✅ (all 13 route files dual-registered) → 2.10 ✅ (uploads) → 2.11 ✅ (exports) → 2.12 (hardest: `auth.controller`, `payment.initiation`) → 2.13–2.15 → 2.16.
 
 **Exit criteria:** all routes identical, tests green, `express` removed from `package.json`.
 
@@ -356,6 +356,13 @@
 > - **Multipart parser yields `undefined`, not `{}`.** Probed Express first: `express.json()` skips multipart and leaves `req.body` undefined, and `pick()` drops undefined values, so Joi never sees a body. The parser (`/^multipart\/.*/` as a **RegExp** - Fastify only honours `'*'` or RegExp for wildcards, a string silently 415s) buffers with `parseAs: 'buffer'`, stashes on `request.raw`, returns `undefined`. `bodyLimit` stays 5MB so multer's own `LIMIT_FILE_SIZE` always fires first; past 5MB Fastify 413s where Express 400s (accepted, pathological input).
 >
 > Parity is byte equality, not echoes: good upload (file shape + buffer + fields), fileFilter rejection message, missing file, oversize `MulterError`, disk-storage shape minus the random filename (written files unlinked), plus `POST /v1/file/uploadImage` multipart proving Fastify no longer 415s and still 401s first. 113 tests green, manifest 0/0/0, lint 0 errors, `tsc` clean.
+
+> **2.11 done (`src/utils/download.js` + `tests/download.parity.test.js`, 4 assertions).** Recon: three export shapes - CSV via `res.setHeader` + `res.send` (needs nothing; the 2.9a adapter already makes it identical, ETag included, pinned by test), `res.download` ×110 (101 with filename+callback, 8 callback-only, 1 bare; all callbacks identical `if (!err)` unlink), and `await workbook.xlsx.write(res); res.end();` ×110 (all paired, all pre-setting both headers, workbook variable always `workbook`). Two helpers, one codemod (`tools/codemod-download.js`), zero leftovers:
+> - **`sendFileDownload` mirrors `send`'s header rules line for line** (`send/index.js` `setHeader`): Content-Disposition *always* comes from the filename argument - `res.download` passes it through send's options, overwriting pre-set (probed: pre-set `filename=export.json` goes out as `filename="cities.json"`) - while Content-Type/Accept-Ranges/Cache-Control/Last-Modified/ETag respect pre-set and fall back to `mime.contentType(ext)`, `bytes`, `public, max-age=0`, `stat.mtime`, `etag(stat)`. Both servers read the *same* file, so even the stat-etag matches - the whole header block is compared. `content-disposition` + `mime-types` promoted from transitive to declared.
+> - **`sendXlsx` streams through a `PassThrough` handed to `reply.send`**, never hijacking: every `onSend` hook (helmet, cors, vary) still runs, and `xlsx` is not in the compressible database on either side (same `compressible` module), so both stream chunked. xlsx embeds timestamps, so bodies compare by length plus parsed sheet values - fetched over real HTTP, because `inject` utf8-mangles binary bodies (a test-harness loss, not a server difference).
+> - **Both helpers return promises that settle after their callbacks, and every site awaits.** Found the hard way: a fire-and-forget `res.send` from an async Fastify handler loses the race - Fastify answers an empty 200 first (proven with a `setTimeout` probe). The same race made the first upload/download parity runs pass by timing luck; the awaits make them deterministic. `node --check` over every touched file proves each site sits in an async function.
+>
+> Staging honesty for 2.12: all 110 download sites sit directly in handler flow, so they work on Fastify today. Upload callbacks that answer from *event-deferred* handlers (GCS/Azure/S3 `finish` events in `file.controller.js`) still need the 2.12 controller flattening - awaiting covers everything the callback itself awaits. 117 tests green, manifest 0/0/0, lint 0 errors, `tsc` clean.
 
 ---
 

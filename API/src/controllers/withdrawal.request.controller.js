@@ -24,6 +24,7 @@ const { DateTime } = require('luxon');
 const catchAsync = require('../utils/catchAsync');
 const pick = require('../utils/pick');
 const { withdrawalRequestService } = require('../services');
+const { sendFileDownload, sendXlsx } = require('../utils/download');
 
 const createRestaurantWithdrawalRequest = catchAsync(async (req, res) => {
   const result = await withdrawalRequestService.createRestaurantWithdrawalRequest(req.body);
@@ -253,8 +254,7 @@ const exportRestaurantRequestCollection = catchAsync(async (req, res) => {
       );
       res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-      await workbook.xlsx.write(res);
-      res.end();
+      await sendXlsx(workbook, req, res);
     } else {
       const fieldItems = result.map((detail, index) => ({
         'S. No.': index + 1,
@@ -328,7 +328,7 @@ const exportRestaurantRequestCollection = catchAsync(async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=export.json');
     res.setHeader('Content-Type', 'application/json');
     if (fs.existsSync(downloadPath)) {
-      res.download(downloadPath, 'restaurantwithdrawalrequest.json', (err) => {
+      await sendFileDownload(req, res, downloadPath, 'restaurantwithdrawalrequest.json', (err) => {
         if (!err) {
           fs.unlink(downloadPath, () => {});
         }
@@ -496,8 +496,7 @@ const exportDeliverymanRequestCollection = catchAsync(async (req, res) => {
       );
       res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-      await workbook.xlsx.write(res);
-      res.end();
+      await sendXlsx(workbook, req, res);
     } else {
       const fieldItems = result.map((detail, index) => ({
         'S. No.': index + 1,
@@ -579,7 +578,7 @@ const exportDeliverymanRequestCollection = catchAsync(async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=export.json');
     res.setHeader('Content-Type', 'application/json');
     if (fs.existsSync(downloadPath)) {
-      res.download(downloadPath, 'deliverymanwithdrawalrequest.json', (err) => {
+      await sendFileDownload(req, res, downloadPath, 'deliverymanwithdrawalrequest.json', (err) => {
         if (!err) {
           fs.unlink(downloadPath, () => {});
         }

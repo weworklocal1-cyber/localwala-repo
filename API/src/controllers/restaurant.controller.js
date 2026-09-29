@@ -47,6 +47,7 @@ const {
 const { Wallet } = require('../models');
 const handleUpload = require('../utils/handleUpload');
 const config = require('../config/config');
+const { sendFileDownload, sendXlsx } = require('../utils/download');
 const {
   restaurantSchemaKeys,
   restaurantOutletSchemaKeys,
@@ -1270,8 +1271,7 @@ const exportCollectionRestaurantAllData = catchAsync(async (req, res) => {
       );
       res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-      await workbook.xlsx.write(res);
-      res.end();
+      await sendXlsx(workbook, req, res);
     } else {
       const fieldItems = result.map((detail, index) => ({
         'S. No.': index + 1,
@@ -1409,7 +1409,7 @@ const exportCollectionRestaurantAllData = catchAsync(async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=export.json');
     res.setHeader('Content-Type', 'application/json');
     if (fs.existsSync(downloadPath)) {
-      res.download(downloadPath, 'restaurants.json', (err) => {
+      await sendFileDownload(req, res, downloadPath, 'restaurants.json', (err) => {
         if (!err) {
           fs.unlink(downloadPath, () => {});
         }
@@ -1675,8 +1675,7 @@ const exportCollectionOutletAllData = catchAsync(async (req, res) => {
       );
       res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-      await workbook.xlsx.write(res);
-      res.end();
+      await sendXlsx(workbook, req, res);
     } else {
       const fieldItems = result.map((detail, index) => ({
         'S. No.': index + 1,
@@ -1830,7 +1829,7 @@ const exportCollectionOutletAllData = catchAsync(async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=export.json');
     res.setHeader('Content-Type', 'application/json');
     if (fs.existsSync(downloadPath)) {
-      res.download(downloadPath, 'outlets.json', (err) => {
+      await sendFileDownload(req, res, downloadPath, 'outlets.json', (err) => {
         if (!err) {
           fs.unlink(downloadPath, () => {});
         }
@@ -2078,8 +2077,7 @@ const exportRestaurantFilterTypeCollection = catchAsync(async (req, res) => {
       );
       res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-      await workbook.xlsx.write(res);
-      res.end();
+      await sendXlsx(workbook, req, res);
     } else {
       const fieldItems = result.map((detail, index) => ({
         'S. No.': index + 1,
@@ -2217,7 +2215,7 @@ const exportRestaurantFilterTypeCollection = catchAsync(async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=export.json');
     res.setHeader('Content-Type', 'application/json');
     if (fs.existsSync(downloadPath)) {
-      res.download(downloadPath, 'restaurants.json', (err) => {
+      await sendFileDownload(req, res, downloadPath, 'restaurants.json', (err) => {
         if (!err) {
           fs.unlink(downloadPath, () => {});
         }
@@ -2471,8 +2469,7 @@ const exportRestaurantFilterQueryCollection = catchAsync(async (req, res) => {
       );
       res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-      await workbook.xlsx.write(res);
-      res.end();
+      await sendXlsx(workbook, req, res);
     } else {
       const fieldItems = result.map((detail, index) => ({
         'S. No.': index + 1,
@@ -2616,7 +2613,7 @@ const exportRestaurantFilterQueryCollection = catchAsync(async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=export.json');
     res.setHeader('Content-Type', 'application/json');
     if (fs.existsSync(downloadPath)) {
-      res.download(downloadPath, 'restaurants.json', (err) => {
+      await sendFileDownload(req, res, downloadPath, 'restaurants.json', (err) => {
         if (!err) {
           fs.unlink(downloadPath, () => {});
         }
@@ -2799,8 +2796,7 @@ const exportRestaurantReportCollection = catchAsync(async (req, res) => {
     );
     res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-    await workbook.xlsx.write(res);
-    res.end();
+    await sendXlsx(workbook, req, res);
   } else {
     const fieldItems = result.map((detail, index) => ({
       'S. No.': index + 1,
@@ -2891,7 +2887,7 @@ const exportRestaurantReportCollection = catchAsync(async (req, res) => {
 
 const importRestaurantCollection = catchAsync(async (req, res) => {
   try {
-    handleUpload(req, res, 'file', 'local', async (err) => {
+    await handleUpload(req, res, 'file', 'local', async (err) => {
       if (!err) {
         if (req.file) {
           const ext = path.extname(req.file.originalname).toLowerCase();
@@ -2986,7 +2982,7 @@ const importRestaurantCollection = catchAsync(async (req, res) => {
 
 const importRestaurantOutletCollection = catchAsync(async (req, res) => {
   try {
-    handleUpload(req, res, 'file', 'local', async (err) => {
+    await handleUpload(req, res, 'file', 'local', async (err) => {
       if (!err) {
         if (req.file) {
           const ext = path.extname(req.file.originalname).toLowerCase();

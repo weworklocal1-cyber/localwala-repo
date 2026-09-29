@@ -110,13 +110,13 @@ describe('Phase 2.10 - handleUpload parity', () => {
     const insertAt = stack.length - 3;
     const appendedAt = stack.length;
 
-    expressApp.post('/v1/__up_probe', (req, res) => {
-      handleUpload(req, res, 'file', 'probe-memory', (err) => {
+    expressApp.post('/v1/__up_probe', async (req, res) => {
+      await handleUpload(req, res, 'file', 'probe-memory', (err) => {
         res.json(echoOf(err, req.file, req.body));
       });
     });
-    expressApp.post('/v1/__up_disk', (req, res) => {
-      handleUpload(req, res, 'file', 'local', (err) => {
+    expressApp.post('/v1/__up_disk', async (req, res) => {
+      await handleUpload(req, res, 'file', 'local', (err) => {
         res.json(echoOf(err, req.file, req.body));
       });
     });
@@ -125,13 +125,13 @@ describe('Phase 2.10 - handleUpload parity', () => {
 
     fastify = await buildFastify();
 
-    fastify.post('/v1/__up_probe', (request, reply) => {
-      handleUpload(request, reply, 'file', 'probe-memory', (err) => {
+    fastify.post('/v1/__up_probe', async (request, reply) => {
+      await handleUpload(request, reply, 'file', 'probe-memory', (err) => {
         reply.json(echoOf(err, request.file, request.body));
       });
     });
-    fastify.post('/v1/__up_disk', (request, reply) => {
-      handleUpload(request, reply, 'file', 'local', (err) => {
+    fastify.post('/v1/__up_disk', async (request, reply) => {
+      await handleUpload(request, reply, 'file', 'local', (err) => {
         reply.json(echoOf(err, request.file, request.body));
       });
     });

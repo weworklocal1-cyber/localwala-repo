@@ -82,7 +82,7 @@ const uploadImage = catchAsync(async (req, res) => {
       awsBucketNameCreds = awsBucketName;
     }
 
-    handleUpload(req, res, 'fileName', storageType, async (err) => {
+    await handleUpload(req, res, 'fileName', storageType, async (err) => {
       try {
         if (err instanceof multer.MulterError) {
           if (err.code === 'LIMIT_FILE_SIZE') {

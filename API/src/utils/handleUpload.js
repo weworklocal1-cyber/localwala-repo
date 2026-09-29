@@ -51,18 +51,31 @@ const uploadMiddleware = require('../middlewares/upload');
 /**
  * Run multer's `.single(field)` for either framework.
  *
+ * Always await the return value. The upload callback usually answers the
+ * request itself, and on Fastify an async handler that returns first makes
+ * Fastify answer an empty 200 - the await keeps the handler alive until the
+ * callback (which may itself be async) settles. Event-deferred responses
+ * inside callbacks (GCS/Azure/S3 stream `finish` handlers) still need the
+ * Phase 2.12 controller flattening; everything awaited in the callback is
+ * covered here.
+ *
  * @param {object} req Express req or Fastify request
  * @param {object} res Express res or Fastify reply (only read on Express)
  * @param {string} field form field name (`file` or `fileName`)
  * @param {string} storageType `'local'` for disk, anything else for memory
- * @param {(err: Error | null) => void} callback invoked exactly as multer would
+ * @param {(err: Error | null) => unknown} callback invoked exactly as multer would
+ * @returns {Promise<void>} settles after the callback settles
  */
 function handleUpload(req, res, field, storageType, callback) {
   const upload = uploadMiddleware(storageType);
 
   if (!req.raw) {
     // Express: the call the 78 sites have always made, untouched.
-    return upload.single(field)(req, res, callback);
+    return new Promise((resolve, reject) => {
+      upload.single(field)(req, res, (err) => {
+        Promise.resolve(callback(err)).then(resolve, reject);
+      });
+    });
   }
 
   // Fastify: multer skips non-multipart requests without touching anything
@@ -70,15 +83,17 @@ function handleUpload(req, res, field, storageType, callback) {
   // a JSON/form post to an upload route keeps its parsed body here too.
   const contentType = req.headers && req.headers['content-type'];
   if (typeof contentType !== 'string' || !contentType.startsWith('multipart/')) {
-    return callback(null);
+    return Promise.resolve().then(() => callback(null));
   }
 
   const replay = Readable.from([req.raw.stashedMultipart || Buffer.alloc(0)]);
   replay.headers = req.headers;
-  return upload.single(field)(replay, {}, (err) => {
-    req.file = replay.file;
-    req.body = replay.body;
-    callback(err);
+  return new Promise((resolve, reject) => {
+    upload.single(field)(replay, {}, (err) => {
+      req.file = replay.file;
+      req.body = replay.body;
+      Promise.resolve(callback(err)).then(resolve, reject);
+    });
   });
 }
 

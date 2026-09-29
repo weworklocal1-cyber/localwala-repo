@@ -52,6 +52,7 @@ const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
 const handleUpload = require('../utils/handleUpload');
 const config = require('../config/config');
 const { regularOrderSchemakeys } = require('../utils/importCollectionSchema');
+const { sendFileDownload, sendXlsx } = require('../utils/download');
 
 function haversineDistance(coords1, coords2) {
   const [lon1, lat1] = coords1;
@@ -3829,7 +3830,7 @@ const downloadOrderSummary = catchAsync(async (req, res) => {
       });
       await browser.close();
       if (fs.existsSync(downloadPath)) {
-        res.download(downloadPath, (err) => {
+        await sendFileDownload(req, res, downloadPath, (err) => {
           if (!err) {
             fs.unlink(downloadPath, () => {});
           }
@@ -4299,7 +4300,7 @@ const downloadVendorOrderSummary = catchAsync(async (req, res) => {
       });
       await browser.close();
       if (fs.existsSync(downloadPath)) {
-        res.download(downloadPath, (err) => {
+        await sendFileDownload(req, res, downloadPath, (err) => {
           if (!err) {
             fs.unlink(downloadPath, () => {});
           }
@@ -4936,7 +4937,7 @@ const downloadOrderInvoice = catchAsync(async (req, res) => {
       });
       await browser.close();
       if (fs.existsSync(downloadPath)) {
-        res.download(downloadPath, (err) => {
+        await sendFileDownload(req, res, downloadPath, (err) => {
           if (!err) {
             fs.unlink(downloadPath, () => {});
           }
@@ -5574,7 +5575,7 @@ const downloadVendorOrderInvoice = catchAsync(async (req, res) => {
       });
       await browser.close();
       if (fs.existsSync(downloadPath)) {
-        res.download(downloadPath, (err) => {
+        await sendFileDownload(req, res, downloadPath, (err) => {
           if (!err) {
             fs.unlink(downloadPath, () => {});
           }
@@ -5907,8 +5908,7 @@ const exportQueryCollection = catchAsync(async (req, res) => {
       );
       res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-      await workbook.xlsx.write(res);
-      res.end();
+      await sendXlsx(workbook, req, res);
     } else {
       const fieldItems = result.map((detail, index) => ({
         'S. No.': index + 1,
@@ -6019,7 +6019,7 @@ const exportQueryCollection = catchAsync(async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=export.json');
     res.setHeader('Content-Type', 'application/json');
     if (fs.existsSync(downloadPath)) {
-      res.download(downloadPath, 'orders.json', (err) => {
+      await sendFileDownload(req, res, downloadPath, 'orders.json', (err) => {
         if (!err) {
           fs.unlink(downloadPath, () => {});
         }
@@ -6225,8 +6225,7 @@ const exportUnAssignedOrderCollection = catchAsync(async (req, res) => {
       );
       res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-      await workbook.xlsx.write(res);
-      res.end();
+      await sendXlsx(workbook, req, res);
     } else {
       const fieldItems = result.map((detail, index) => ({
         'S. No.': index + 1,
@@ -6337,7 +6336,7 @@ const exportUnAssignedOrderCollection = catchAsync(async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=export.json');
     res.setHeader('Content-Type', 'application/json');
     if (fs.existsSync(downloadPath)) {
-      res.download(downloadPath, 'orders.json', (err) => {
+      await sendFileDownload(req, res, downloadPath, 'orders.json', (err) => {
         if (!err) {
           fs.unlink(downloadPath, () => {});
         }
@@ -6543,8 +6542,7 @@ const exportSubscriptionOrderCollection = catchAsync(async (req, res) => {
       );
       res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-      await workbook.xlsx.write(res);
-      res.end();
+      await sendXlsx(workbook, req, res);
     } else {
       const fieldItems = result.map((detail, index) => ({
         'S. No.': index + 1,
@@ -6655,7 +6653,7 @@ const exportSubscriptionOrderCollection = catchAsync(async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=export.json');
     res.setHeader('Content-Type', 'application/json');
     if (fs.existsSync(downloadPath)) {
-      res.download(downloadPath, 'orders.json', (err) => {
+      await sendFileDownload(req, res, downloadPath, 'orders.json', (err) => {
         if (!err) {
           fs.unlink(downloadPath, () => {});
         }
@@ -6880,8 +6878,7 @@ const exportRegularOrderReportCollection = catchAsync(async (req, res) => {
     );
     res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-    await workbook.xlsx.write(res);
-    res.end();
+    await sendXlsx(workbook, req, res);
   } else {
     const fieldItems = result.map((detail, index) => ({
       'S. No.': index + 1,
@@ -6999,7 +6996,7 @@ const exportRegularOrderReportCollection = catchAsync(async (req, res) => {
 
 const importCollection = catchAsync(async (req, res) => {
   try {
-    handleUpload(req, res, 'file', 'local', async (err) => {
+    await handleUpload(req, res, 'file', 'local', async (err) => {
       if (!err) {
         if (req.file) {
           const ext = path.extname(req.file.originalname).toLowerCase();

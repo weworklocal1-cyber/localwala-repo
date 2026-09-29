@@ -34,6 +34,7 @@ const {
   driverService,
 } = require('../services');
 const { Wallet } = require('../models');
+const { sendFileDownload, sendXlsx } = require('../utils/download');
 
 const createRequest = catchAsync(async (req, res) => {
   const auth = await userService.checkUserRegisterStatus(req.body);
@@ -307,8 +308,7 @@ const exportCollection = catchAsync(async (req, res) => {
       );
       res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-      await workbook.xlsx.write(res);
-      res.end();
+      await sendXlsx(workbook, req, res);
     } else {
       const fieldItems = result.map((detail, index) => ({
         'S. No.': index + 1,
@@ -394,7 +394,7 @@ const exportCollection = catchAsync(async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=export.json');
     res.setHeader('Content-Type', 'application/json');
     if (fs.existsSync(downloadPath)) {
-      res.download(downloadPath, 'deliverymanjoiningrequests.json', (err) => {
+      await sendFileDownload(req, res, downloadPath, 'deliverymanjoiningrequests.json', (err) => {
         if (!err) {
           fs.unlink(downloadPath, () => {});
         }

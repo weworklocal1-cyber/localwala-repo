@@ -28,6 +28,7 @@ const pick = require('../utils/pick');
 const { chatRoomService, chatConversionService } = require('../services');
 const handleUpload = require('../utils/handleUpload');
 const config = require('../config/config');
+const { sendFileDownload, sendXlsx } = require('../utils/download');
 const {
   regularChatListSchemaKeys,
   regularChatMessageSchemaKeys,
@@ -220,8 +221,7 @@ const exportChatListCollection = catchAsync(async (req, res) => {
       );
       res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-      await workbook.xlsx.write(res);
-      res.end();
+      await sendXlsx(workbook, req, res);
     } else {
       const fieldItems = result.map((detail, index) => ({
         'S. No.': index + 1,
@@ -275,7 +275,7 @@ const exportChatListCollection = catchAsync(async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=export.json');
     res.setHeader('Content-Type', 'application/json');
     if (fs.existsSync(downloadPath)) {
-      res.download(downloadPath, 'regular_chat_list.json', (err) => {
+      await sendFileDownload(req, res, downloadPath, 'regular_chat_list.json', (err) => {
         if (!err) {
           fs.unlink(downloadPath, () => {});
         }
@@ -406,8 +406,7 @@ const exportChatMessageCollection = catchAsync(async (req, res) => {
       );
       res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-      await workbook.xlsx.write(res);
-      res.end();
+      await sendXlsx(workbook, req, res);
     } else {
       const fieldItems = result.map((detail, index) => ({
         'S. No.': index + 1,
@@ -453,7 +452,7 @@ const exportChatMessageCollection = catchAsync(async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=export.json');
     res.setHeader('Content-Type', 'application/json');
     if (fs.existsSync(downloadPath)) {
-      res.download(downloadPath, 'regular_chat_messages.json', (err) => {
+      await sendFileDownload(req, res, downloadPath, 'regular_chat_messages.json', (err) => {
         if (!err) {
           fs.unlink(downloadPath, () => {});
         }
@@ -466,7 +465,7 @@ const exportChatMessageCollection = catchAsync(async (req, res) => {
 
 const importChatListCollection = catchAsync(async (req, res) => {
   try {
-    handleUpload(req, res, 'file', 'local', async (err) => {
+    await handleUpload(req, res, 'file', 'local', async (err) => {
       if (!err) {
         if (req.file) {
           const ext = path.extname(req.file.originalname).toLowerCase();
@@ -561,7 +560,7 @@ const importChatListCollection = catchAsync(async (req, res) => {
 
 const importChatMessagesCollection = catchAsync(async (req, res) => {
   try {
-    handleUpload(req, res, 'file', 'local', async (err) => {
+    await handleUpload(req, res, 'file', 'local', async (err) => {
       if (!err) {
         if (req.file) {
           const ext = path.extname(req.file.originalname).toLowerCase();

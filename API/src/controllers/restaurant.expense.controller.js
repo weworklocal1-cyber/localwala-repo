@@ -22,6 +22,7 @@ const { DateTime } = require('luxon');
 const catchAsync = require('../utils/catchAsync');
 const pick = require('../utils/pick');
 const { restaurantExpenseService } = require('../services');
+const { sendXlsx } = require('../utils/download');
 
 const create = catchAsync(async (req, res) => {
   const result = await restaurantExpenseService.saveExpense(req.body);
@@ -258,8 +259,7 @@ const exportCollection = catchAsync(async (req, res) => {
     );
     res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-    await workbook.xlsx.write(res);
-    res.end();
+    await sendXlsx(workbook, req, res);
   } else {
     const fieldItems = result.map((detail, index) => ({
       'S. No.': index + 1,

@@ -37,6 +37,7 @@ const config = require('../config/config');
 const { diningBookingSchemaKeys } = require('../utils/importCollectionSchema');
 const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
 const apiLocaleTranslations = require('../utils/translate');
+const { sendFileDownload, sendXlsx } = require('../utils/download');
 
 const createBooking = catchAsync(async (req, res) => {
   const result = await diningBookingService.createBooking(req.body);
@@ -504,8 +505,7 @@ const exportCollection = catchAsync(async (req, res) => {
       );
       res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-      await workbook.xlsx.write(res);
-      res.end();
+      await sendXlsx(workbook, req, res);
     } else {
       const fieldItems = result.map((detail, index) => ({
         'S. No.': index + 1,
@@ -636,7 +636,7 @@ const exportCollection = catchAsync(async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=export.json');
     res.setHeader('Content-Type', 'application/json');
     if (fs.existsSync(downloadPath)) {
-      res.download(downloadPath, 'diningbookings.json', (err) => {
+      await sendFileDownload(req, res, downloadPath, 'diningbookings.json', (err) => {
         if (!err) {
           fs.unlink(downloadPath, () => {});
         }
@@ -841,8 +841,7 @@ const exportReportCollection = catchAsync(async (req, res) => {
     );
     res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-    await workbook.xlsx.write(res);
-    res.end();
+    await sendXlsx(workbook, req, res);
   } else {
     const fieldItems = result.map((detail, index) => ({
       'S. No.': index + 1,
@@ -950,7 +949,7 @@ const exportReportCollection = catchAsync(async (req, res) => {
 
 const importCollection = catchAsync(async (req, res) => {
   try {
-    handleUpload(req, res, 'file', 'local', async (err) => {
+    await handleUpload(req, res, 'file', 'local', async (err) => {
       if (!err) {
         if (req.file) {
           const ext = path.extname(req.file.originalname).toLowerCase();
@@ -1217,7 +1216,7 @@ const downloadBookingSummary = catchAsync(async (req, res) => {
       });
       await browser.close();
       if (fs.existsSync(downloadPath)) {
-        res.download(downloadPath, (err) => {
+        await sendFileDownload(req, res, downloadPath, (err) => {
           if (!err) {
             fs.unlink(downloadPath, () => {});
           }
@@ -1578,7 +1577,7 @@ const downloadBookingInvoice = catchAsync(async (req, res) => {
       });
       await browser.close();
       if (fs.existsSync(downloadPath)) {
-        res.download(downloadPath, (err) => {
+        await sendFileDownload(req, res, downloadPath, (err) => {
           if (!err) {
             fs.unlink(downloadPath, () => {});
           }

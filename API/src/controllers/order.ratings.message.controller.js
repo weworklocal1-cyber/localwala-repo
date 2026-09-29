@@ -28,6 +28,7 @@ const { orderRatingsMessageService } = require('../services');
 const handleUpload = require('../utils/handleUpload');
 const config = require('../config/config');
 const { orderRatingMessageSchemaKeys } = require('../utils/importCollectionSchema');
+const { sendFileDownload, sendXlsx } = require('../utils/download');
 
 const create = catchAsync(async (req, res) => {
   const result = await orderRatingsMessageService.createMessage(req.body);
@@ -143,8 +144,7 @@ const exportCollection = catchAsync(async (req, res) => {
       );
       res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-      await workbook.xlsx.write(res);
-      res.end();
+      await sendXlsx(workbook, req, res);
     } else {
       const fieldItems = result.map((detail, index) => ({
         'S. No.': index + 1,
@@ -166,7 +166,7 @@ const exportCollection = catchAsync(async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=export.json');
     res.setHeader('Content-Type', 'application/json');
     if (fs.existsSync(downloadPath)) {
-      res.download(downloadPath, 'orderratingmessages.json', (err) => {
+      await sendFileDownload(req, res, downloadPath, 'orderratingmessages.json', (err) => {
         if (!err) {
           fs.unlink(downloadPath, () => {});
         }
@@ -179,7 +179,7 @@ const exportCollection = catchAsync(async (req, res) => {
 
 const importCollection = catchAsync(async (req, res) => {
   try {
-    handleUpload(req, res, 'file', 'local', async (err) => {
+    await handleUpload(req, res, 'file', 'local', async (err) => {
       if (!err) {
         if (req.file) {
           const ext = path.extname(req.file.originalname).toLowerCase();

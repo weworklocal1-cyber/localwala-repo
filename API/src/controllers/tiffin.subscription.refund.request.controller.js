@@ -33,6 +33,7 @@ const {
 const handleUpload = require('../utils/handleUpload');
 const config = require('../config/config');
 const { tiffinRefundSchemaKeys } = require('../utils/importCollectionSchema');
+const { sendFileDownload, sendXlsx } = require('../utils/download');
 
 const saveRefundRequest = catchAsync(async (req, res) => {
   const result = await tiffinSubscriptionRefundRequestService.saveRefundRequest(req.body);
@@ -334,8 +335,7 @@ const exportQueryCollection = catchAsync(async (req, res) => {
       );
       res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-      await workbook.xlsx.write(res);
-      res.end();
+      await sendXlsx(workbook, req, res);
     } else {
       const fieldItems = result.map((detail, index) => ({
         'S. No.': index + 1,
@@ -467,7 +467,7 @@ const exportQueryCollection = catchAsync(async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=export.json');
     res.setHeader('Content-Type', 'application/json');
     if (fs.existsSync(downloadPath)) {
-      res.download(downloadPath, 'tiffinsubscriptionrefundrequests.json', (err) => {
+      await sendFileDownload(req, res, downloadPath, 'tiffinsubscriptionrefundrequests.json', (err) => {
         if (!err) {
           fs.unlink(downloadPath, () => {});
         }
@@ -480,7 +480,7 @@ const exportQueryCollection = catchAsync(async (req, res) => {
 
 const importCollection = catchAsync(async (req, res) => {
   try {
-    handleUpload(req, res, 'file', 'local', async (err) => {
+    await handleUpload(req, res, 'file', 'local', async (err) => {
       if (!err) {
         if (req.file) {
           const ext = path.extname(req.file.originalname).toLowerCase();

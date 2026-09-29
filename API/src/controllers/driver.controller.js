@@ -39,6 +39,7 @@ const {
 const { Wallet } = require('../models');
 const handleUpload = require('../utils/handleUpload');
 const config = require('../config/config');
+const { sendFileDownload, sendXlsx } = require('../utils/download');
 const {
   systemDeliverymanSchemaKeys,
   vendorDeliverymanSchemaKeys,
@@ -483,8 +484,7 @@ const exportSystemDeliverymanCollection = catchAsync(async (req, res) => {
       );
       res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-      await workbook.xlsx.write(res);
-      res.end();
+      await sendXlsx(workbook, req, res);
     } else {
       const fieldItems = result.map((detail, index) => ({
         'S. No.': index + 1,
@@ -616,7 +616,7 @@ const exportSystemDeliverymanCollection = catchAsync(async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=export.json');
     res.setHeader('Content-Type', 'application/json');
     if (fs.existsSync(downloadPath)) {
-      res.download(downloadPath, 'systemdeliverymans.json', (err) => {
+      await sendFileDownload(req, res, downloadPath, 'systemdeliverymans.json', (err) => {
         if (!err) {
           fs.unlink(downloadPath, () => {});
         }
@@ -866,8 +866,7 @@ const exportVendorDeliverymanCollection = catchAsync(async (req, res) => {
       );
       res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-      await workbook.xlsx.write(res);
-      res.end();
+      await sendXlsx(workbook, req, res);
     } else {
       const fieldItems = result.map((detail, index) => ({
         'S. No.': index + 1,
@@ -1015,7 +1014,7 @@ const exportVendorDeliverymanCollection = catchAsync(async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=export.json');
     res.setHeader('Content-Type', 'application/json');
     if (fs.existsSync(downloadPath)) {
-      res.download(downloadPath, 'vendordeliverymans.json', (err) => {
+      await sendFileDownload(req, res, downloadPath, 'vendordeliverymans.json', (err) => {
         if (!err) {
           fs.unlink(downloadPath, () => {});
         }
@@ -1148,8 +1147,7 @@ const exportDeliverymanFundCollection = catchAsync(async (req, res) => {
       );
       res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-      await workbook.xlsx.write(res);
-      res.end();
+      await sendXlsx(workbook, req, res);
     } else {
       const fieldItems = result.map((detail, index) => ({
         'S. No.': index + 1,
@@ -1198,7 +1196,7 @@ const exportDeliverymanFundCollection = catchAsync(async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=export.json');
     res.setHeader('Content-Type', 'application/json');
     if (fs.existsSync(downloadPath)) {
-      res.download(downloadPath, 'deliverymanfunds.json', (err) => {
+      await sendFileDownload(req, res, downloadPath, 'deliverymanfunds.json', (err) => {
         if (!err) {
           fs.unlink(downloadPath, () => {});
         }
@@ -1400,8 +1398,7 @@ const exportDeliverymanReportCollection = catchAsync(async (req, res) => {
     );
     res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
 
-    await workbook.xlsx.write(res);
-    res.end();
+    await sendXlsx(workbook, req, res);
   } else {
     const fieldItems = result.map((detail, index) => ({
       'S. No.': index + 1,
@@ -1508,7 +1505,7 @@ const exportDeliverymanReportCollection = catchAsync(async (req, res) => {
 
 const importSystemDeliverymanCollection = catchAsync(async (req, res) => {
   try {
-    handleUpload(req, res, 'file', 'local', async (err) => {
+    await handleUpload(req, res, 'file', 'local', async (err) => {
       if (!err) {
         if (req.file) {
           const ext = path.extname(req.file.originalname).toLowerCase();
@@ -1603,7 +1600,7 @@ const importSystemDeliverymanCollection = catchAsync(async (req, res) => {
 
 const importVendorDeliverymanCollection = catchAsync(async (req, res) => {
   try {
-    handleUpload(req, res, 'file', 'local', async (err) => {
+    await handleUpload(req, res, 'file', 'local', async (err) => {
       if (!err) {
         if (req.file) {
           const ext = path.extname(req.file.originalname).toLowerCase();
