@@ -23,13 +23,13 @@
  */
 
 import * as collectCashService from '../../services/collect.cash.service';
-import * as deliverymanCashInHandService from '../../services/deliveryman.cash.in.hand.service';
 import * as loyaltyPointsService from '../../services/loyalty.points.service';
 import * as referralService from '../../services/referral.service';
-import * as restaurantCashInHandService from '../../services/restaurant.cash.in.hand.service';
 import * as transactionService from '../../services/transaction.service';
 import * as walletBonusService from '../../services/wallet.bonus.service';
 import * as walletService from '../../services/wallet.service';
+import * as deliverymanCashInHandService from '../../shared/wallet/deliveryman.cash.in.hand.service';
+import * as restaurantCashInHandService from '../../shared/wallet/restaurant.cash.in.hand.service';
 import CollectCash from '../../models/collect.cash.model';
 import DeliverymanCashInHand from '../../models/deliveryman.cash.in.hand.model';
 import LoyaltyPoints from '../../models/loyalty.points.model';
@@ -41,13 +41,13 @@ import WalletBonus from '../../models/wallet.bonus.model';
 import Wallet from '../../models/wallet.model';
 
 export { collectCashService };
-export { deliverymanCashInHandService };
 export { loyaltyPointsService };
 export { referralService };
-export { restaurantCashInHandService };
 export { transactionService };
 export { walletBonusService };
 export { walletService };
+export { deliverymanCashInHandService };
+export { restaurantCashInHandService };
 export { CollectCash };
 export { DeliverymanCashInHand };
 export { LoyaltyPoints };

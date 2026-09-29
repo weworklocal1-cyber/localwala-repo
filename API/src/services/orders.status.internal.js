@@ -40,8 +40,8 @@ const {
   RestaurantExpense,
   KitchenOrder,
 } = require('../models');
-const restaurantCashInHandService = require('./restaurant.cash.in.hand.service');
-const deliverymanCashInHandService = require('./deliveryman.cash.in.hand.service');
+const restaurantCashInHandService = require('../shared/wallet/restaurant.cash.in.hand.service');
+const deliverymanCashInHandService = require('../shared/wallet/deliveryman.cash.in.hand.service');
 const restaurantService = require('./restaurant.service');
 const driverService = require('./driver.service');
 const fcmNotificationService = require('../shared/notifications/fcm.notification.service');

@@ -1,0 +1,10 @@
+{
+  "kernel": "subscription",
+  "home": "orders",
+  "note": "a subscription ledger bought by restaurants - nothing to do with the order lifecycle",
+  "done": true,
+  "members": [
+    "src/services/subscriber.service.js",
+    "src/services/subscription.service.js"
+  ]
+}

@@ -17,9 +17,9 @@
  */
 
 const mongoose = require('mongoose');
-const { DeliverymanCashInHand, DriverSettings, User, Driver, CollectCash } = require('../models');
+const { DeliverymanCashInHand, DriverSettings, User, Driver, CollectCash } = require('../../models');
 
-const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
+const checkArrayNotEmpty = require('../../utils/arrayNotEmpty');
 
 const saveCashInHand = async (param) => {
   const deliverymanCashInHandData = new DeliverymanCashInHand({

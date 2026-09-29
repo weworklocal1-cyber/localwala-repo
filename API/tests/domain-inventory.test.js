@@ -303,6 +303,65 @@ describe('Phase 3.6 - shared kernels', () => {
   });
 });
 
+/**
+ * A kernel publishes its members as MODULE bindings, the same shape
+ * services/index.js uses. That is not cosmetic: restaurant.cash.in.hand and
+ * deliveryman.cash.in.hand both export `saveCashInHand` and `clearCashInHand`,
+ * so a flattened spread published the deliveryman functions under the
+ * restaurant's names and reported nothing at all.
+ */
+describe('Phase 3.6 - kernel entry points match the barrel shape', () => {
+  const kernelsDir = path.join(apiRoot, 'tools', 'kernels');
+  const specs = fs
+    .readdirSync(kernelsDir)
+    .filter((f) => f.endsWith('.json'))
+    .map((f) => JSON.parse(fs.readFileSync(path.join(kernelsDir, f), 'utf8')));
+
+  it('declares a spec for every extracted kernel', () => {
+    const declared = specs.map((s) => s.kernel).sort();
+    const onDisk = fs
+      .readdirSync(path.join(apiRoot, 'src', 'shared'), { withFileTypes: true })
+      .filter((d) => d.isDirectory())
+      .map((d) => d.name)
+      .sort();
+    expect(onDisk).toEqual(declared);
+  });
+
+  it.each(specs)('$kernel publishes module bindings, not a flattened spread', (spec) => {
+    const index = path.join(apiRoot, 'src', 'shared', spec.kernel, 'index.js');
+    if (!fs.existsSync(index)) return; // not extracted yet
+    const src = fs.readFileSync(index, 'utf8');
+    expect(src, `${spec.kernel} flattens its members' functions`).not.toMatch(/^\s*\.\.\./m);
+
+    // Every member is bound, and the published names are the module names.
+    const bound = [...src.matchAll(/^const (\w+) = require\('\.\//gm)].map((m) => m[1]);
+    expect(bound).toHaveLength(spec.members.length);
+    const published = (src.match(/module\.exports = \{([\s\S]*?)\};/)[1].match(/(\w+),/g) || []).map(
+      (s) => s.replace(/[,\s]/g, '')
+    );
+    expect(published.sort()).toEqual(bound.sort());
+  });
+
+  it.each(specs)('$kernel has no member left at its old path', (spec) => {
+    for (const member of spec.members) {
+      expect(
+        fs.existsSync(path.join(apiRoot, member)),
+        `${member} still exists alongside the kernel`
+      ).toBe(false);
+    }
+  });
+
+  it.each(specs)('$kernel keeps its declared home domain', (spec) => {
+    if (!spec.home) return;
+    const dir = path.join(apiRoot, 'src', 'shared', spec.kernel);
+    if (!fs.existsSync(dir)) return;
+    for (const member of fs.readdirSync(dir).filter((f) => f !== 'index.js')) {
+      const rel = `shared/${spec.kernel}/${member}`;
+      expect(inventory.domainOf(rel), `${rel} is not classified as ${spec.home}`).toBe(spec.home);
+    }
+  });
+});
+
 describe('Phase 3.2 - the allowlist cannot drift', () => {
   it('has no edges that no longer exist, and no missing ones', () => {
     // Exits non-zero only when a *new* cross-domain edge appeared; stale

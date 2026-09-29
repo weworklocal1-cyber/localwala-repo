@@ -1,0 +1,10 @@
+{
+  "kernel": "notifications",
+  "home": "notifications",
+  "note": "push and transactional email, called by settings, restaurant and orders alike",
+  "done": true,
+  "members": [
+    "src/services/fcm.notification.service.js",
+    "src/services/email.config.service.js"
+  ]
+}

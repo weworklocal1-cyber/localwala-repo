@@ -25,10 +25,10 @@ const {
   Transactions,
   CollectCash,
   RestaurantPosTableOrderCommission,
-} = require('../models');
+} = require('../../models');
 
-const restaurantService = require('./restaurant.service');
-const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
+const restaurantService = require('../../services/restaurant.service');
+const checkArrayNotEmpty = require('../../utils/arrayNotEmpty');
 
 const saveCashInHand = async (param) => {
   const restaurantInfo = await Restaurant.findById(param.restaurant);

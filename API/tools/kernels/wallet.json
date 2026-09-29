@@ -1,0 +1,9 @@
+{
+  "kernel": "wallet",
+  "home": "wallet",
+  "note": "cash-in-hand ledgers for restaurants and deliverymen, credited on delivery",
+  "members": [
+    "src/services/restaurant.cash.in.hand.service.js",
+    "src/services/deliveryman.cash.in.hand.service.js"
+  ]
+}
