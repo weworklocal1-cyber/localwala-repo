@@ -112,28 +112,36 @@ const uploadImage = catchAsync(async (req, res) => {
             resumable: false,
             contentType: file.mimetype,
           });
-          blobStream.on('error', (error) => {
-            res
+          // Phase 2.12 - the response used to live in `finish`/`error` event
+          // handlers, which fire outside any awaited flow: on Express the
+          // stream owns the socket, but on Fastify the handler returning
+          // first means an empty 200. Awaiting the stream keeps the handler
+          // alive on both servers; success and failure bodies are unchanged.
+          try {
+            await new Promise((resolve, reject) => {
+              blobStream.on('error', reject);
+              blobStream.on('finish', resolve);
+              blobStream.end(file.buffer);
+            });
+          } catch (error) {
+            return res
               .status(500)
               .send({ code: 500, message: 'Error uploading file to GCS', extra: error.message });
-          });
-          blobStream.on('finish', async () => {
-            try {
-              uploadedPath = `${blob.name}`;
-              await mediaService.createMedia({
-                path: uploadedPath,
-                uid: req && req.body && req.body.uid && req.body.uid !== null ? req.body.uid : null,
-              });
-              res.status(200).send({ path: uploadedPath });
-            } catch (dbErr) {
-              res.status(500).send({
-                code: 500,
-                message: 'File uploaded but DB save failed',
-                extra: dbErr.message,
-              });
-            }
-          });
-          blobStream.end(file.buffer);
+          }
+          try {
+            uploadedPath = `${blob.name}`;
+            await mediaService.createMedia({
+              path: uploadedPath,
+              uid: req && req.body && req.body.uid && req.body.uid !== null ? req.body.uid : null,
+            });
+            res.status(200).send({ path: uploadedPath });
+          } catch (dbErr) {
+            res.status(500).send({
+              code: 500,
+              message: 'File uploaded but DB save failed',
+              extra: dbErr.message,
+            });
+          }
         } else if (storageType === 'azure') {
           const { file } = req;
           const ext = getExtensionFromMime(file.mimetype);
@@ -229,4 +237,3 @@ const uploadImage = catchAsync(async (req, res) => {
 module.exports = {
   uploadImage,
 };
-

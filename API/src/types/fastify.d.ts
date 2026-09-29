@@ -44,5 +44,7 @@ declare module 'fastify' {
     get(name: string): string | string[] | undefined;
     /** Phase 2.9a - Node's alias for `req.socket`, not the proxy-aware `req.ip`. */
     readonly connection: import('node:net').Socket;
+    /** Phase 2.12 - Express's `this.protocol === 'https'`. */
+    readonly secure: boolean;
   }
 }

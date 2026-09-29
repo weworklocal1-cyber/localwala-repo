@@ -358,6 +358,16 @@ export function registerReplyCompat(app: FastifyInstance): void {
     },
   });
 
+  // express/lib/request.js: `req.secure` is just `this.protocol === 'https'`.
+  // `protocol` itself needs no shim - Fastify implements it natively with the
+  // same trust-proxy semantics (request.js honours `x-forwarded-proto` from
+  // trusted hops, configured identically in src/fastify.ts and src/app.js).
+  app.decorateRequest('secure', {
+    getter(this: FastifyRequest): boolean {
+      return this.protocol === 'https';
+    },
+  });
+
   const patched = new WeakSet<object>();
   app.addHook('onRequest', async (_request, reply) => {
     const proto = Object.getPrototypeOf(reply);

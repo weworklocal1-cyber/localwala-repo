@@ -252,7 +252,7 @@
 | 2.15 | `index.js`: `await fastify.ready()` → `socketIo(fastify.server)`; cron → `onReady`/`onClose` hooks |
 | 2.16 | Route-manifest parity diff + full smoke suite |
 
-**Internal order:** 2.1 → 2.2–2.4 → 2.5 spike → 2.6 → 2.7 → 2.8 → 2.9a (reply adapter) → 2.9b (shared route registrar + first file) → 2.9c ✅ (all 13 route files dual-registered) → 2.10 ✅ (uploads) → 2.11 ✅ (exports) → 2.12 (hardest: `auth.controller`, `payment.initiation`) → 2.13–2.15 → 2.16.
+**Internal order:** 2.1 → 2.2–2.4 → 2.5 spike → 2.6 → 2.7 → 2.8 → 2.9a (reply adapter) → 2.9b (shared route registrar + first file) → 2.9c ✅ (all 13 route files dual-registered) → 2.10 ✅ (uploads) → 2.11 ✅ (exports) → 2.12 ✅ (controllers) → 2.13–2.15 → 2.16.
 
 **Exit criteria:** all routes identical, tests green, `express` removed from `package.json`.
 
@@ -363,6 +363,13 @@
 > - **Both helpers return promises that settle after their callbacks, and every site awaits.** Found the hard way: a fire-and-forget `res.send` from an async Fastify handler loses the race - Fastify answers an empty 200 first (proven with a `setTimeout` probe). The same race made the first upload/download parity runs pass by timing luck; the awaits make them deterministic. `node --check` over every touched file proves each site sits in an async function.
 >
 > Staging honesty for 2.12: all 110 download sites sit directly in handler flow, so they work on Fastify today. Upload callbacks that answer from *event-deferred* handlers (GCS/Azure/S3 `finish` events in `file.controller.js`) still need the 2.12 controller flattening - awaiting covers everything the callback itself awaits. 117 tests green, manifest 0/0/0, lint 0 errors, `tsc` clean.
+
+> **2.12 done (adapter `secure` + GCS flatten + `tests/controller.parity.test.js`, 4 assertions).** Reframing first: the rewrites this step originally listed (`res.status().json` → `reply.code().send`, redirect arg order, `req.connection` → `request.ip`, `req.get` → headers) are **moot - the 2.9a adapter already covers every one**, so no controller is rewritten for syntax. What 2.12 actually is: a complete audit of the controller request surface plus the one async flow that was genuinely broken. Audit results, all verified against `node_modules` source rather than assumed:
+> - **`res.*` (controllers): 7 methods total.** `send`/`setHeader`/`status`/`cookie`/`clearCookie`/`redirect` via the adapter; `download`/`end` via 2.11 helpers (0 bare remnants); `render` ×13 belongs to 2.13.
+> - **`req.*`: everything covered.** `protocol`/`ip`/`socket` exist natively on FastifyRequest *with the same trust-proxy semantics* (forwarded headers honoured from trusted hops only; `trustProxy` configured identically in `src/fastify.ts:244` and `src/app.js:205`), `get`/`connection` via the adapter, and `secure` - the single missing getter (`this.protocol === 'https'`, verbatim from Express) - added this step with its `fastify.d.ts` declaration.
+> - **No timers, no `new Promise`, no `sendMail`, no `req.files` in any controller; services touch neither `req` nor `res`; `res.locals` only flows through `middlewares/error.js` → `morgan` (2.14's problem).**
+> - **Exactly one fire-and-forget response in the whole codebase**: the GCS `blobStream` `finish`/`error` handlers in `file.controller.js` (Azure uses awaited `uploadData`, S3 uses awaited `s3.send`). Flattened to `await new Promise` over the stream events with byte-identical success/failure bodies; the 109 other download sites and all 78 upload callbacks already answer inside awaited flow.
+> - **The "hardest" controllers verified, not just eyeballed**: `getClientIp` / `isSecureRequest` / the 7 `` `${req.protocol}://${req.get('host')}` `` link builders (auth + payment.initiation) are evaluated verbatim in probes, proxied (fully deterministic, including the subtle `secure: true` + `protocol: 'http'` split the helpers really produce untrusted) and direct. 121 tests green, manifest 0/0/0, lint 0 errors, `tsc` clean.
 
 ---
 
