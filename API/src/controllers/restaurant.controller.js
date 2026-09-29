@@ -45,7 +45,7 @@ const {
   paymentInitiationService,
 } = require('../services');
 const { Wallet } = require('../models');
-const uploadMiddleware = require('../middlewares/upload');
+const handleUpload = require('../utils/handleUpload');
 const config = require('../config/config');
 const {
   restaurantSchemaKeys,
@@ -2891,8 +2891,7 @@ const exportRestaurantReportCollection = catchAsync(async (req, res) => {
 
 const importRestaurantCollection = catchAsync(async (req, res) => {
   try {
-    const upload = uploadMiddleware('local');
-    upload.single('file')(req, res, async (err) => {
+    handleUpload(req, res, 'file', 'local', async (err) => {
       if (!err) {
         if (req.file) {
           const ext = path.extname(req.file.originalname).toLowerCase();
@@ -2987,8 +2986,7 @@ const importRestaurantCollection = catchAsync(async (req, res) => {
 
 const importRestaurantOutletCollection = catchAsync(async (req, res) => {
   try {
-    const upload = uploadMiddleware('local');
-    upload.single('file')(req, res, async (err) => {
+    handleUpload(req, res, 'file', 'local', async (err) => {
       if (!err) {
         if (req.file) {
           const ext = path.extname(req.file.originalname).toLowerCase();

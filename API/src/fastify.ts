@@ -35,6 +35,7 @@ import jwt from '@fastify/jwt';
 import mongoose from 'mongoose';
 import fs from 'node:fs';
 import path from 'node:path';
+import type { IncomingMessage } from 'node:http';
 import { appAuth, webAuth, createFastifyAuth } from './auth/fastifyAuth';
 import { registerAuthRateLimit, RATE_LIMIT_MESSAGE } from './plugins/authRateLimit';
 import { registerReplyCompat, skipsEtag } from './plugins/replyCompat';
@@ -405,6 +406,29 @@ export async function buildFastify(): Promise<FastifyInstance> {
 
   // express.json({ limit: '5mb' }) + express.urlencoded({ extended: true })
   await app.register(formbody, { bodyLimit: BODY_LIMIT, parser: parseUrlencoded });
+
+  // Phase 2.10 - multipart bodies are buffered here and replayed through the
+  // same multer instance the Express controllers use (src/utils/handleUpload.js
+  // replays the stashed bytes), so file shapes, limits and fileFilter errors
+  // are identical on both servers. The parser yields `undefined` because that
+  // is what Express hands `validate()`: `express.json()` skips multipart and
+  // leaves `req.body` undefined, and `pick()` drops undefined values, so the
+  // Joi schemas never see a body on either server.
+  //
+  // `multipart/*` cannot be a string here - Fastify only honours `'*'` or a
+  // RegExp for wildcards (content-type-parser.js `getParser`), and a string
+  // silently 415s. `bodyLimit` stays BODY_LIMIT so multer's own
+  // `LIMIT_FILE_SIZE` always fires first; past 5MB Fastify answers 413 where
+  // Express answers 400 (accepted - pathological input, and 5MB matches the
+  // server's existing JSON posture).
+  app.addContentTypeParser(
+    /^multipart\/.*/,
+    { parseAs: 'buffer', bodyLimit: BODY_LIMIT },
+    (request: FastifyRequest, payload: unknown, done: (err: Error | null, body?: unknown) => void) => {
+      (request.raw as IncomingMessage & { stashedMultipart?: unknown }).stashedMultipart = payload;
+      done(null, undefined);
+    }
+  );
 
   await app.register(cookie, {});
 

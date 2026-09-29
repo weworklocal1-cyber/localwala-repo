@@ -26,7 +26,7 @@ const config = require('../config/config');
 const { mediaService, mediaStorageSettingService } = require('../services');
 const catchAsync = require('../utils/catchAsync');
 const ApiError = require('../utils/ApiError');
-const uploadMiddleware = require('../middlewares/upload');
+const handleUpload = require('../utils/handleUpload');
 
 function randomUUID() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -81,9 +81,8 @@ const uploadImage = catchAsync(async (req, res) => {
       awsSecretKeyCreds = awsSecretKey;
       awsBucketNameCreds = awsBucketName;
     }
-    const upload = uploadMiddleware(storageType);
 
-    upload.single('fileName')(req, res, async (err) => {
+    handleUpload(req, res, 'fileName', storageType, async (err) => {
       try {
         if (err instanceof multer.MulterError) {
           if (err.code === 'LIMIT_FILE_SIZE') {

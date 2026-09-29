@@ -252,7 +252,7 @@
 | 2.15 | `index.js`: `await fastify.ready()` → `socketIo(fastify.server)`; cron → `onReady`/`onClose` hooks |
 | 2.16 | Route-manifest parity diff + full smoke suite |
 
-**Internal order:** 2.1 → 2.2–2.4 → 2.5 spike → 2.6 → 2.7 → 2.8 → 2.9a (reply adapter) → 2.9b (shared route registrar + first file) → 2.9c ✅ (all 13 route files dual-registered) → 2.10 → 2.11 → 2.12 (hardest: `auth.controller`, `payment.initiation`) → 2.13–2.15 → 2.16.
+**Internal order:** 2.1 → 2.2–2.4 → 2.5 spike → 2.6 → 2.7 → 2.8 → 2.9a (reply adapter) → 2.9b (shared route registrar + first file) → 2.9c ✅ (all 13 route files dual-registered) → 2.10 ✅ (uploads) → 2.11 → 2.12 (hardest: `auth.controller`, `payment.initiation`) → 2.13–2.15 → 2.16.
 
 **Exit criteria:** all routes identical, tests green, `express` removed from `package.json`.
 
@@ -349,6 +349,13 @@
 > The gate that matters here is **`manifest:check` staying 0/0/0**, not just "tests pass": the manifest records `auth` strategy, `rights`, `validated`, *and* the ordered `middleware` label list for every route, so a dropped, reordered or mis-wrapped `validate(...)` shows up as `changed` rather than passing silently. Combined with `tests/routeconv.parity.test.js` (now 9 assertions) that diffs behaviour on both servers, 98 tests are green.
 
 > **2.9c complete (12/12) - all 1,925 routes now register on both servers.** The remaining files fell in plan order, each gated by `manifest:check` staying 0/0/0 and a behaviour assertion in `tests/routeconv.parity.test.js` (now 19 assertions, 107 tests total): `support.team` (22, first `webAuth` cookie case), `kitchen` (24), `auth` (80, first `validate`-only rejection without DB), `driver` (54), `public` (79, first single-line-per-line batch), `accountant` (87), `user` (103), `cityzen` (264), `vendor` (217) + `vendor_web` (230, same sub-path `/getMyProfile/:userId` under different strategies - the strongest mount-separation proof), `admin` (743). Tallies sum to exactly 1,925, and Fastify boots all of them with no duplicate-route or trailing-slash collisions. `routes/v1/index.js` no longer mounts a single `express.Router` - every file goes through the registrar; unconverted shape handling stays in place for safety but matches nothing.
+
+> **2.10 done (`src/utils/handleUpload.js` + multipart parser in `src/fastify.ts` + `tests/upload.parity.test.js`, 6 assertions).** Recon first: one shared factory (`middlewares/upload.js`), 78 call sites all shaped `upload.single('file'|'fileName')(req, res, cb)` *inside* controllers, no `req.files`, no other upload libraries. Three deviations from the plan, each evidence-driven:
+> - **No `@fastify/multer` - it does not exist.** The plan's package name 404s (same lesson as `@fastify/compression` in 2.2); the community `fastify-multer` is 4-years-abandoned, Fastify 3 era, and reimplements multer with its own error class, which would break every controller's `err instanceof multer.MulterError` check (including the `LIMIT_FILE_SIZE` wording). Instead the *same* multer instance runs on both servers: Express over the live request (today's call, untouched), Fastify over a replay of the stashed bytes through a `Readable` wearing the real headers.
+> - **Callback signature kept, not promisified.** The 78 callbacks map errors differently per site (`LIMIT_FILE_SIZE` wording vs `if (!err)` shapes); flattening them is the 2.12 controller rewrite's job. Each site changed exactly one line (`tools/codemod-upload.js`), verified with zero leftovers of `uploadMiddleware`/`upload.single(`.
+> - **Multipart parser yields `undefined`, not `{}`.** Probed Express first: `express.json()` skips multipart and leaves `req.body` undefined, and `pick()` drops undefined values, so Joi never sees a body. The parser (`/^multipart\/.*/` as a **RegExp** - Fastify only honours `'*'` or RegExp for wildcards, a string silently 415s) buffers with `parseAs: 'buffer'`, stashes on `request.raw`, returns `undefined`. `bodyLimit` stays 5MB so multer's own `LIMIT_FILE_SIZE` always fires first; past 5MB Fastify 413s where Express 400s (accepted, pathological input).
+>
+> Parity is byte equality, not echoes: good upload (file shape + buffer + fields), fileFilter rejection message, missing file, oversize `MulterError`, disk-storage shape minus the random filename (written files unlinked), plus `POST /v1/file/uploadImage` multipart proving Fastify no longer 415s and still 401s first. 113 tests green, manifest 0/0/0, lint 0 errors, `tsc` clean.
 
 ---
 

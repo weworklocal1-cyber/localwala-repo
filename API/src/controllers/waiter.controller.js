@@ -25,7 +25,7 @@ const path = require('path');
 const catchAsync = require('../utils/catchAsync');
 const pick = require('../utils/pick');
 const { userService, walletService, waiterService, restaurantService } = require('../services');
-const uploadMiddleware = require('../middlewares/upload');
+const handleUpload = require('../utils/handleUpload');
 const config = require('../config/config');
 const { Wallet } = require('../models');
 const { restaurantWaiterSchemaKeys } = require('../utils/importCollectionSchema');
@@ -379,8 +379,7 @@ const exportCollection = catchAsync(async (req, res) => {
 
 const importCollection = catchAsync(async (req, res) => {
   try {
-    const upload = uploadMiddleware('local');
-    upload.single('file')(req, res, async (err) => {
+    handleUpload(req, res, 'file', 'local', async (err) => {
       if (!err) {
         if (req.file) {
           const ext = path.extname(req.file.originalname).toLowerCase();

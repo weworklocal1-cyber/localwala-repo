@@ -49,7 +49,7 @@ const {
 } = require('../services');
 const apiLocaleTranslations = require('../utils/translate');
 const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
-const uploadMiddleware = require('../middlewares/upload');
+const handleUpload = require('../utils/handleUpload');
 const config = require('../config/config');
 const { regularOrderSchemakeys } = require('../utils/importCollectionSchema');
 
@@ -6999,8 +6999,7 @@ const exportRegularOrderReportCollection = catchAsync(async (req, res) => {
 
 const importCollection = catchAsync(async (req, res) => {
   try {
-    const upload = uploadMiddleware('local');
-    upload.single('file')(req, res, async (err) => {
+    handleUpload(req, res, 'file', 'local', async (err) => {
       if (!err) {
         if (req.file) {
           const ext = path.extname(req.file.originalname).toLowerCase();

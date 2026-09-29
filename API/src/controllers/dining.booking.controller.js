@@ -32,7 +32,7 @@ const {
   paymentInitiationService,
   fcmNotificationService,
 } = require('../services');
-const uploadMiddleware = require('../middlewares/upload');
+const handleUpload = require('../utils/handleUpload');
 const config = require('../config/config');
 const { diningBookingSchemaKeys } = require('../utils/importCollectionSchema');
 const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
@@ -950,8 +950,7 @@ const exportReportCollection = catchAsync(async (req, res) => {
 
 const importCollection = catchAsync(async (req, res) => {
   try {
-    const upload = uploadMiddleware('local');
-    upload.single('file')(req, res, async (err) => {
+    handleUpload(req, res, 'file', 'local', async (err) => {
       if (!err) {
         if (req.file) {
           const ext = path.extname(req.file.originalname).toLowerCase();
