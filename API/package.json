@@ -26,7 +26,8 @@
     "domain:write": "node tools/domain-inventory.js --write-domains",
     "domain:check": "node tools/domain-inventory.js --check-domains",
     "domain:allowlist": "node tools/domain-inventory.js --write-allowlist",
-    "domain:allowlist:check": "node tools/domain-inventory.js --check-allowlist"
+    "domain:allowlist:check": "node tools/domain-inventory.js --check-allowlist",
+    "gateway:start": "tsx apps/gateway/src/entry.ts"
   },
   "author": "Elitecanyon InfoTech <elitecanyoninfotech@gmail.com>",
   "license": "MIT",

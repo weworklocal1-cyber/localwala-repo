@@ -1,0 +1,68 @@
+# LocalWala - Phase 4.2 local stack.
+#
+# Three services, not the four the plan listed: **there is no redis.** Measured -
+# `redis` and `ioredis` appear nowhere in package.json and nothing in src/ requires
+# them. A compose file that starts a container the application never talks to is
+# a service that can fail, fill a disk, and be mistaken for a dependency, so it
+# is left out and this note records why. If caching or queues are added later,
+# the service belongs in this file at that point - not before.
+#
+# The gateway is the only thing published to the host. The monolith is reachable
+# only on the internal network, which is the entire point of putting a gateway
+# in front: once traffic arrives through one port, the monolith's port does not
+# need to be exposed, and a caller cannot bypass the routing rules to reach a
+# service that has been extracted.
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: localwala
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ['CMD', 'mongosh', '--quiet', '--eval', "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    # Not published. Nothing outside the compose network needs it.
+
+  monolith:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: '3000'
+      HOST: 0.0.0.0
+      MONGODB_URL: mongodb://mongo:27017/localwala
+      SERVER_TIMEZONE: Asia/Kolkata
+    # Deliberately not published - see the note at the top of this file.
+
+  gateway:
+    build:
+      context: .
+      dockerfile: apps/gateway/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - monolith
+    environment:
+      NODE_ENV: production
+      PORT: '3100'
+      HOST: 0.0.0.0
+      MONOLITH_URL: http://monolith:3000
+    ports:
+      - '3100:3100'
+    # The build context is the repository root because the lockfile and the
+    # installed dependency tree live there; the Dockerfile copies only the
+    # gateway's own sources. The gateway has no package.json of its own yet -
+    # it shares the repository's dependency tree, which is what makes it a
+    # separate *deployable* before it is a separate *repository*.
+
+volumes:
+  mongo-data:

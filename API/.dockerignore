@@ -1,0 +1,16 @@
+node_modules
+npm-debug.log*
+.env
+.env.*
+.git
+.gitignore
+dist
+coverage
+tests
+tools
+*.md
+docs
+# The probe recordings and manifests are host-side tooling, not runtime.
+tools/http.db.probe.json
+apps/gateway/node_modules
+apps/gateway/dist
