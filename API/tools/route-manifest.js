@@ -30,14 +30,18 @@ const VERBS = ['get', 'post', 'put', 'patch', 'delete', 'head', 'options', 'all'
 // CLI parsing
 // ---------------------------------------------------------------------------
 function parseArgs(argv) {
-  const args = { out: null, diff: null, prefix: '/v1', quiet: false };
+  const args = { out: null, diff: null, prefix: '/v1', quiet: false, engine: 'express' };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--out') args.out = argv[++i];
     else if (a === '--diff') args.diff = argv[++i];
     else if (a === '--prefix') args.prefix = argv[++i];
+    else if (a === '--engine') args.engine = argv[++i];
     else if (a === '--quiet') args.quiet = true;
     else if (a === '--help' || a === '-h') args.help = true;
+  }
+  if (args.engine !== 'express' && args.engine !== 'fastify') {
+    throw new Error(`unknown --engine: ${args.engine} (expected express|fastify)`);
   }
   return args;
 }
@@ -214,6 +218,7 @@ function buildManifest(prefix) {
     meta: {
       generatedAt: new Date().toISOString(),
       prefix,
+      engine: 'express',
       expressVersion,
       totalRoutes: sorted.length,
       duplicates,
@@ -229,6 +234,159 @@ function buildManifest(prefix) {
     },
     routes: sorted,
   };
+}
+
+// ---------------------------------------------------------------------------
+// Build - Fastify (Phase 2.16)
+// ---------------------------------------------------------------------------
+/**
+ * The Fastify counterpart of buildManifest(), producing entries in the exact
+ * same shape so diffManifests() can compare the two servers directly.
+ *
+ * Deliberately does NOT call buildFastify(): that registers every plugin
+ * (helmet, cors, compression, static, jwt) and would make a route inventory
+ * depend on unrelated infrastructure. A bare instance plus
+ * `registerOnFastify` is the honest equivalent of what the Express side does -
+ * it instruments route *registration* and nothing else.
+ *
+ * `onRoute` is the Fastify analogue of the express.Router instrumentation
+ * above: it fires at registration time with the fully-resolved URL, so the
+ * `/v1/<mount>` prefix the registrar bakes in is already present and no
+ * joining is needed. `app.ready()` is awaited so Fastify itself validates
+ * every route (duplicate detection, param syntax) - a route that Fastify
+ * would refuse to boot is a manifest failure, not a silent omission.
+ *
+ * The auth handlers registered here are the real ones from
+ * src/auth/fastifyAuth.ts, and they carry the same `isAuth`/`authStrategy`/
+ * `requiredRights` tags auth.factory.js stamps on the Express side, so
+ * describeHandler() works unchanged. That requires the `tsx` runtime, which is
+ * why --engine fastify is exposed through the `manifest:fastify` npm script
+ * rather than plain `node`.
+ */
+async function buildFastifyManifest(prefix) {
+  const Fastify = require('fastify');
+  const { createFastifyAuth } = require('../src/auth/fastifyAuth');
+  const { registerOnFastify } = require('../src/routes/v1');
+
+  const app = Fastify({ logger: false });
+  const recorded = [];
+
+  app.addHook('onRoute', (routeOptions) => {
+    const hooks = routeOptions.preHandler
+      ? Array.isArray(routeOptions.preHandler)
+        ? routeOptions.preHandler
+        : [routeOptions.preHandler]
+      : [];
+
+    recorded.push({
+      // Uppercase to match the Express baseline, whose methods come from the
+      // instrumented verb list uppercased by the router instrumentation.
+      // keyOf() is `${method} ${path}`, so casing is part of the comparison.
+      method: String(routeOptions.method).toUpperCase(),
+      // The registrar already includes the mount; keep `prefix` only as a
+      // safety net so a mis-mounted route is visible rather than mislabelled.
+      path: routeOptions.url.startsWith(prefix) ? routeOptions.url : joinPath(prefix, routeOptions.url),
+      preHandler: hooks,
+      handler: routeOptions.handler,
+      // Fastify auto-creates a HEAD route for every GET (`exposeHeadRoutes`,
+      // default true). Express serves HEAD through its GET routes without
+      // adding a table entry, so these are bookkeeping, not new endpoints -
+      // verified equivalent on the wire (both answer HEAD /v1/public/
+      // get_web_settings with the identical 400 and headers).
+      //
+      // `routeOptions.exposeHeadRoute` is NOT usable to spot them: Fastify
+      // only puts that flag in the internal route context, not in the
+      // onRoute options (checked empirically - it is absent there). Method is
+      // enough, because the route surface declares no HEAD verb of its own
+      // (only get/post/put/patch/delete), and the autoHead === get assertion
+      // below fails loudly if that ever stops being true.
+      autoHead: String(routeOptions.method).toUpperCase() === 'HEAD',
+    });
+  });
+
+  registerOnFastify(app, createFastifyAuth);
+  await app.ready();
+
+  const routes = recorded
+    .filter((entry) => !entry.autoHead)
+    .map((entry) => {
+      const described = [...entry.preHandler, entry.handler].map(describeHandler);
+      const authEntries = described.filter((d) => d.kind === 'auth');
+      const rights = [];
+      for (const a of authEntries) {
+        for (const r of a.rights) if (!rights.includes(r)) rights.push(r);
+      }
+      return {
+        method: entry.method,
+        path: entry.path,
+        auth: authEntries.length ? authEntries[0].strategy : null,
+        rights,
+        validated: described.some((d) => d.kind === 'validate'),
+        middleware: described.map((d) =>
+          d.kind === 'auth'
+            ? `auth:${d.strategy}${d.rights.length ? `(${d.rights.join('|')})` : ''}`
+            : d.kind === 'validate'
+              ? 'validate'
+              : d.name
+        ),
+      };
+    });
+
+  const autoHeadRoutes = recorded.filter((e) => e.autoHead).length;
+  const getRoutes = recorded.filter((e) => e.method === 'GET').length;
+
+  const sorted = sortRoutes(routes);
+
+  const seen = new Map();
+  const duplicates = [];
+  for (const r of sorted) {
+    const k = keyOf(r);
+    if (seen.has(k)) duplicates.push(k);
+    else seen.set(k, true);
+  }
+
+  let fastifyVersion = 'unknown';
+  try {
+    fastifyVersion = require('fastify/package.json').version;
+  } catch (_) {
+    /* ignore */
+  }
+
+  const manifest = {
+    meta: {
+      generatedAt: new Date().toISOString(),
+      prefix,
+      engine: 'fastify',
+      fastifyVersion,
+      totalRoutes: sorted.length,
+      // One auto-HEAD per GET; asserted rather than assumed (see the throw
+      // below), because a mismatch would mean Fastify stopped serving HEAD
+      // somewhere Express still does.
+      autoHeadRoutes,
+      duplicates,
+      authBreakdown: sorted.reduce((acc, r) => {
+        const k = r.auth || 'public';
+        acc[k] = (acc[k] || 0) + 1;
+        return acc;
+      }, {}),
+      methodBreakdown: sorted.reduce((acc, r) => {
+        acc[r.method] = (acc[r.method] || 0) + 1;
+        return acc;
+      }, {}),
+    },
+    routes: sorted,
+  };
+
+  await app.close();
+
+  if (autoHeadRoutes !== getRoutes) {
+    throw new Error(
+      `Fastify exposed ${autoHeadRoutes} auto-HEAD routes for ${getRoutes} GET routes; ` +
+        'HEAD parity with Express (which serves HEAD through its GET routes) is no longer exact.'
+    );
+  }
+
+  return manifest;
 }
 
 // ---------------------------------------------------------------------------
@@ -262,17 +420,19 @@ function diffManifests(baseline, current) {
 // ---------------------------------------------------------------------------
 // main
 // ---------------------------------------------------------------------------
-function main() {
+async function main() {
   const args = parseArgs(process.argv.slice(2));
 
   if (args.help) {
     process.stdout.write(
       [
         'Usage: node tools/route-manifest.js [options]',
+        '       tsx tools/route-manifest.js --engine fastify [options]',
         '',
         '  --out <file>      write manifest to <file>',
         '  --diff <file>     compare against baseline <file>',
         '  --prefix <p>      API mount prefix (default /v1)',
+        '  --engine <e>      express (default) or fastify',
         '  --quiet           suppress summary output',
         '',
       ].join('\n')
@@ -280,7 +440,8 @@ function main() {
     return 0;
   }
 
-  const manifest = buildManifest(args.prefix);
+  const manifest =
+    args.engine === 'fastify' ? await buildFastifyManifest(args.prefix) : buildManifest(args.prefix);
 
   if (args.out) {
     const target = path.resolve(args.out);
@@ -299,16 +460,21 @@ function main() {
     const result = diffManifests(baseline, manifest);
 
     if (!args.quiet) {
-      process.stdout.write(
-        [
-          `baseline : ${baseline.routes.length} routes (${baseline.meta.generatedAt})`,
-          `current  : ${manifest.routes.length} routes`,
-          `added    : ${result.added.length}`,
-          `removed  : ${result.removed.length}`,
-          `changed  : ${result.changed.length}`,
-          '',
-        ].join('\n')
-      );
+      const lines = [
+        `baseline : ${baseline.routes.length} routes (${baseline.meta.generatedAt})`,
+        `current  : ${manifest.routes.length} routes`,
+        `added    : ${result.added.length}`,
+        `removed  : ${result.removed.length}`,
+        `changed  : ${result.changed.length}`,
+      ];
+      if (manifest.meta.autoHeadRoutes) {
+        lines.push(
+          `note     : ${manifest.meta.autoHeadRoutes} Fastify auto-HEAD routes excluded ` +
+            '(exposeHeadRoutes; Express serves HEAD via its GET routes - verified identical on the wire)'
+        );
+      }
+      lines.push('');
+      process.stdout.write(`${lines.join('\n')}\n`);
       for (const r of result.added) process.stdout.write(`  + ${r}\n`);
       for (const r of result.removed) process.stdout.write(`  - ${r}\n`);
       for (const c of result.changed) {
@@ -331,4 +497,9 @@ function main() {
   return 0;
 }
 
-process.exit(main());
+// Not a top-level await: that makes Node treat this CJS file as an ES module,
+// and requiring an ESM file from the CJS graph (which --engine fastify does,
+// for src/auth/fastify.ts) fails with ERR_REQUIRE_CYCLE_MODULE.
+main().then((code) => {
+  process.exit(code);
+});

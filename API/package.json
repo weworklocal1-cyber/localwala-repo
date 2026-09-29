@@ -16,6 +16,9 @@
     "format:check": "prettier --check \"**/*.{js,json,md,scss}\"",
     "start:node": "tsx src/index.js",
     "manifest": "node tools/route-manifest.js",
+    "manifest:fastify": "tsx tools/route-manifest.js --engine fastify",
+    "manifest:fastify:save": "tsx tools/route-manifest.js --engine fastify --out tools/route-manifest.fastify.json",
+    "manifest:fastify:check": "tsx tools/route-manifest.js --engine fastify --diff tools/route-manifest.baseline.json",
     "manifest:save": "node tools/route-manifest.js --out tools/route-manifest.baseline.json",
     "manifest:check": "node tools/route-manifest.js --diff tools/route-manifest.baseline.json",
     "codemod:route": "node tools/codemod-route.js"

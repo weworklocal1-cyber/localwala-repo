@@ -16,7 +16,6 @@
  * LWL|WWL|2026|LOCALWALA|NODE
  */
 
-const express = require('express');
 const { expressRegistrar, fastifyRegistrar } = require('../routeRegistrar');
 const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
@@ -32,7 +31,9 @@ const supportTeamRoute = require('./support.team.route');
 const cityZenRoute = require('./cityzen.route');
 const kitchenRoute = require('./kitchen.route');
 
-const router = express.Router();
+// Phase 2.16: `express` is required lazily inside getExpressRouter() below, so
+// a production boot (which only calls registerOnFastify) never loads it.
+
 
 const defaultRoutes = [
   {
@@ -98,15 +99,40 @@ function isConverted(routeModule) {
   return Boolean(routeModule) && typeof routeModule.register === 'function';
 }
 
-defaultRoutes.forEach((entry) => {
-  if (isConverted(entry.route)) {
-    const subRouter = express.Router();
-    entry.route.register(expressRegistrar(subRouter));
-    router.use(entry.path, subRouter);
-    return;
-  }
-  router.use(entry.path, entry.route);
-});
+/**
+ * Phase 2.16: built on first access rather than at require time.
+ *
+ * The Express tree is the *parity baseline* - production (src/index.js ->
+ * src/fastify.ts) only ever calls `registerOnFastify`, so building it here
+ * meant loading `express` on every production boot for nothing. Making it lazy
+ * means `require('express')` only happens when someone actually destructures
+ * `router`, i.e. from src/app.js (the Express app) and
+ * tools/route-manifest.js (the Express manifest).
+ *
+ * Verified by tests/production-graph.test.js, which walks the real require
+ * graph from src/index.js and asserts express is unreachable.
+ */
+let cachedExpressRouter = null;
+
+function getExpressRouter() {
+  if (cachedExpressRouter) return cachedExpressRouter;
+
+  const express = require('express');
+  const built = express.Router();
+
+  defaultRoutes.forEach((entry) => {
+    if (isConverted(entry.route)) {
+      const subRouter = express.Router();
+      entry.route.register(expressRegistrar(subRouter));
+      built.use(entry.path, subRouter);
+      return;
+    }
+    built.use(entry.path, entry.route);
+  });
+
+  cachedExpressRouter = built;
+  return built;
+}
 
 /**
  * Phase 2.9 - replay the converted declarations onto Fastify, with the mount
@@ -124,4 +150,11 @@ function registerOnFastify(app, createAuth) {
   });
 }
 
-module.exports = { router, registerOnFastify };
+module.exports = {
+  // Getter, not a value: builds the Express tree (and requires express) on
+  // first access only. See getExpressRouter().
+  get router() {
+    return getExpressRouter();
+  },
+  registerOnFastify,
+};
