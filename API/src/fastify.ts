@@ -24,6 +24,7 @@ import Fastify, {
   type FastifyReply,
   type FastifyRequest,
   type RouteOptions,
+  LogController,
 } from 'fastify';
 import helmet from '@fastify/helmet';
 import cors from '@fastify/cors';
@@ -39,6 +40,7 @@ import type { IncomingMessage } from 'node:http';
 import { appAuth, webAuth, createFastifyAuth } from './auth/fastifyAuth';
 import { registerAuthRateLimit, RATE_LIMIT_MESSAGE } from './plugins/authRateLimit';
 import { registerReplyCompat, skipsEtag } from './plugins/replyCompat';
+import { registerRequestLog, setRequestErrorMessage } from './plugins/requestLog';
 
 const config = require('./config/config');
 const ApiError = require('./utils/ApiError');
@@ -203,6 +205,11 @@ function renderError(err: AppErrorShape, request: FastifyRequest, reply: Fastify
     extra = extra || '';
   }
 
+  // Phase 2.14 - the `res.locals.errorMessage` morgan reads. Stashed for the
+  // onResponse hook in plugins/requestLog.ts; deliberately absent on the 429
+  // early-return above, where Express also leaves it unset.
+  setRequestErrorMessage(request, message);
+
   const body: Record<string, unknown> = {
     success: false,
     code: statusCode,
@@ -240,6 +247,15 @@ export async function buildFastify(): Promise<FastifyInstance> {
             transport: undefined,
           },
 
+    // Phase 2.14 - Fastify's `incoming request` / `request completed` pino
+    // lines serve the same purpose as morgan in a different format to a
+    // different sink, so they are off: plugins/requestLog.ts writes the
+    // morgan shape into the shared winston pipeline instead. `request.log`
+    // itself keeps working (renderError still logs through it). (Top-level
+    // `disableRequestLogging` warns FSTDEP023 since 5.12; the LogController
+    // form is the supported one.)
+    logController: new LogController({ disableRequestLogging: true }),
+
     // Express's `app.set('trust proxy', [...])` is only applied in production.
     trustProxy: config.env === 'production' ? ['loopback', 'linklocal', 'uniquelocal'] : false,
 
@@ -273,6 +289,10 @@ export async function buildFastify(): Promise<FastifyInstance> {
   // plugin below, which also puts its `onRequest` hook first in the chain -
   // that is where it patches `cookie`/`clearCookie` off @fastify/cookie.
   registerReplyCompat(app);
+
+  // Phase 2.14 - morgan-shaped access logs into winston. Registered before
+  // any route so the instance hook covers them all.
+  registerRequestLog(app);
 
   // app.js:174-196, in order: urlencoded body -> cookie -> xss -> mongo-sanitize.
   // Fastify has no cookie analogue of Express's (cookie-parser runs before the

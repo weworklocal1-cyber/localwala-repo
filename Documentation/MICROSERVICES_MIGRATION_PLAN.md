@@ -252,7 +252,7 @@
 | 2.15 | `index.js`: `await fastify.ready()` → `socketIo(fastify.server)`; cron → `onReady`/`onClose` hooks |
 | 2.16 | Route-manifest parity diff + full smoke suite |
 
-**Internal order:** 2.1 → 2.2–2.4 → 2.5 spike → 2.6 → 2.7 → 2.8 → 2.9a (reply adapter) → 2.9b (shared route registrar + first file) → 2.9c ✅ (all 13 route files dual-registered) → 2.10 ✅ (uploads) → 2.11 ✅ (exports) → 2.12 ✅ (controllers) → 2.13 ✅ (views) → 2.14–2.15 → 2.16.
+**Internal order:** 2.1 → 2.2–2.4 → 2.5 spike → 2.6 → 2.7 → 2.8 → 2.9a (reply adapter) → 2.9b (shared route registrar + first file) → 2.9c ✅ (all 13 route files dual-registered) → 2.10 ✅ (uploads) → 2.11 ✅ (exports) → 2.12 ✅ (controllers) → 2.13 ✅ (views) → 2.14 ✅ (logging) → 2.15 → 2.16.
 
 **Exit criteria:** all routes identical, tests green, `express` removed from `package.json`.
 
@@ -376,6 +376,10 @@
 > The step also caught a live production bug outside views: **`@fastify/compress@9.2.0`'s async path answers empty bodies under gzip headers past ~4KB** (boundary bisected at exactly 4096/4097 bytes; proven on vanilla Fastify, 9.2.0 is latest). Any gzipped JSON/HTML response over that size - admin listings, exports - would have been empty in production. Fixed with `syncThreshold: 64MB` in `src/fastify.ts` (sync gzip only runs on compressible bodies over 1KB; xlsx never compresses on either server). Regression net: an 8KB download fetched gzipped in `tests/download.parity.test.js`.
 >
 > Test-harness lessons worth keeping: `inject` utf8-mangles binary (xlsx and gzip bodies must go over real `listen` + `http.get`), `accept-encoding` must be set explicitly on inject (supertest always sends gzip/deflate), and keep-alive sockets hang `server.close()` (`agent: false` + `closeAllConnections`). 126 tests green, manifest 0/0/0, lint 0 errors, `tsc` clean.
+
+> **2.14 done (`src/plugins/requestLog.ts` + `tests/logging.parity.test.js`, 4 assertions).** Winston stays the request-log sink: an `onResponse` hook writes morgan's exact shape (`:method :url :status - :response-time ms`, production `:remote-addr` prefix, `- message: …` suffix on errors) into the same logger, and Fastify's own `incoming request` / `request completed` pino lines are off (different format, different sink - keeping both would double-log every request). `renderError` stashes the final message on the request for the hook - the `res.locals.errorMessage` move, on the main error path only, matching Express where the 429 branch leaves it unset. Two API notes: top-level `disableRequestLogging` warns FSTDEP023 since 5.12, so the supported `logController: new LogController({ disableRequestLogging: true })` form is used (`request.log` itself keeps working); `reply.elapsedTime` feeds `:response-time` with morgan's 3 decimals.
+>
+> Test mechanics worth recording: the main app disables morgan in test env, so the Express baseline is a mini-app mounting the *real* morgan handlers and the *real* error pipeline; winston is stubbed at the method level, which works because the TS side shares this file's module instance (proven by experiment after a detour through stream capture - winston writes via `console._stdout`, not `process.stdout.write`, so that approach can never see it); and both morgan (finish listener) and the hook can fire after the client resolves, so assertions poll. 130 tests green, manifest 0/0/0, lint 0 errors, `tsc` clean.
 
 ---
 
