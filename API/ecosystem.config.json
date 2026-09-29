@@ -2,6 +2,7 @@
   "apps": [
     {
       "name": "foodbite_api",
+      "interpreter": "node_modules/.bin/tsx",
       "script": "src/index.js",
       "instances": 1,
       "autorestart": true,

@@ -16,15 +16,37 @@
  * LWL|WWL|2026|LOCALWALA|NODE
  */
 
-const http = require('http');
+/**
+ * Phase 2.15: the entry point now boots Fastify instead of Express.
+ *
+ * `src/app.js` is no longer required here: every route file registers through
+ * `registerOnFastify` (Phase 2.9b) and the whole reply surface runs on the
+ * Fastify side (Phase 2.9a-2.14). What changed structurally, and why:
+ *
+ *   - `app.listen` instead of `http.createServer(app)`. The host is passed
+ *     explicitly as '0.0.0.0' because Node's bare `server.listen(port)` binds
+ *     every interface while Fastify's default is 'localhost' - omitting it
+ *     would make the API unreachable from outside the box.
+ *   - socket.io attaches to `fastify.server` (the same http.Server Fastify
+ *     already owns), so it is not a second listener on the port.
+ *   - The cron scheduler moved out of `src/app.js`, where it ran on `require`
+ *     (so also during tests and the manifest tool) and could never be
+ *     stopped. It now starts after `listen` and stops on `onClose` - via
+ *     `stopCronJobsOnly()`, because the pre-existing `stopCronJob()` is the
+ *     failure-recovery path and deliberately deletes the scheduler collection.
+ *
+ * This file stays CommonJS. Loading `src/fastify.ts` needs the `tsx` runtime,
+ * which is why it is a real dependency and pm2 launches through
+ * `node_modules/.bin/tsx` (see ecosystem.config.json).
+ */
 const mongoose = require('mongoose');
 const socketIo = require('socket.io');
-const app = require('./app');
 const config = require('./config/config');
 const logger = require('./config/logger');
 const mongoConnectionStatus = require('./config/mongoConnectionStatus');
+const CronJobSchedulerService = require('./services/cron.job.scheduler.service');
 
-let server = http.createServer(app);
+let app;
 let io;
 
 // Manual random string generator (replaces crypto)
@@ -39,13 +61,29 @@ const generateRandomId = (length = 16) => {
 
 mongoose
   .connect(config.mongoose.url, config.mongoose.options)
-  .then(() => {
+  .then(async () => {
     mongoConnectionStatus.status = true;
     mongoConnectionStatus.error = null;
     logger.info('Connected to MongoDB');
 
-    // Initialize Socket.io
-    io = socketIo(server, {
+    // Boot Fastify. Required lazily so that a Mongo failure exits before any
+    // plugin registers (matching the previous connect-then-listen order).
+    const { buildFastify } = require('./fastify');
+    app = await buildFastify();
+
+    // Phase 2.15 - cron starts once the server is actually accepting traffic,
+    // and is stopped again on close. See the note in src/services/
+    // cron.job.scheduler.service.js for why the non-destructive stop is used.
+    app.addHook('onClose', async () => {
+      CronJobSchedulerService.stopAllCronJobsScheduler.stopCronJobsOnly();
+    });
+
+    await app.listen({ port: config.port, host: '0.0.0.0' });
+    await CronJobSchedulerService.startCronJobScheduler.startCronJob();
+    logger.info('Listening to port ' + config.port);
+
+    // Initialize Socket.io on the server Fastify already owns.
+    io = socketIo(app.server, {
       cors: {
         origin: config.cors.origins,
         methods: ['GET', 'POST'],
@@ -96,10 +134,6 @@ mongoose
         logger.info(`Socket Disconnected: ${socket.id}`);
       });
     });
-
-    server.listen(config.port, () => {
-      logger.info(`Listening to port ${config.port}`);
-    });
   })
   .catch((error) => {
     mongoConnectionStatus.status = false;
@@ -120,12 +154,22 @@ mongoose.connection.on('error', (error) => {
 });
 
 // Graceful Shutdown
+//
+// `app.close()` replaces `server.close()`: it drains in-flight requests, runs
+// the onClose hook (which stops the cron scheduler) and then closes the http
+// server. The rejection arm matters - a close that fails must still exit,
+// otherwise pm2 would leave a half-dead process behind.
 const exitHandler = () => {
-  if (server) {
-    server.close(() => {
-      logger.info('Server closed');
-      process.exit(1);
-    });
+  if (app) {
+    app.close().then(
+      () => {
+        logger.info('Server closed');
+        process.exit(1);
+      },
+      () => {
+        process.exit(1);
+      }
+    );
   } else {
     process.exit(1);
   }
@@ -143,8 +187,7 @@ process.on('unhandledRejection', (error) => {
 
 process.on('SIGTERM', () => {
   logger.info('SIGTERM received');
-  if (server) {
-    server.close();
+  if (app) {
+    app.close();
   }
 });
-

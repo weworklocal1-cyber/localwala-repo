@@ -817,11 +817,25 @@ const startCronJobScheduler = {
 
 const stopAllCronJobsScheduler = {
   stopCronJob() {
+    this.stopCronJobsOnly();
+    this.deleteCollection();
+  },
+
+  /**
+   * Phase 2.15: stop the timers without touching stored data.
+   *
+   * `stopCronJob()` is the failure-recovery path - it wipes the
+   * CronJobScheduler collection on purpose, so calling it on shutdown would
+   * delete the scheduler history on every restart. Process exit already tears
+   * the timers down, but Fastify's `onClose` hook needs an explicit, non
+   * destructive stop so a clean shutdown (and the test suite) leaves nothing
+   * scheduled.
+   */
+  stopCronJobsOnly() {
     scheduledTasks.forEach((job) => {
       job.stop(); // Stop the cron job
     });
     scheduledTasks.length = 0; // Clear the array
-    this.deleteCollection();
   },
 
   async deleteCollection() {
@@ -877,4 +891,3 @@ module.exports = {
   getSchedulerInfo,
   generateDisbursement,
 };
-

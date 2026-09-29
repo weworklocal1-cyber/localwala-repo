@@ -37,7 +37,6 @@ const { router: routes } = require('./routes/v1');
 const { authLimiter } = require('./middlewares/rateLimiter');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
-const CronJobSchedulerService = require('./services/cron.job.scheduler.service');
 
 const app = express();
 const publicFolderPath = path.resolve(process.cwd(), config.folder.public);
@@ -222,9 +221,10 @@ app.use((req, res, next) => {
   next(new ApiError(httpStatus.NOT_FOUND, 'Not found'));
 });
 
-// Start Cron Job Scheduler Service //
-CronJobSchedulerService.startCronJobScheduler.startCronJob();
-// Start Cron Job Scheduler Service //
+// Phase 2.15: the cron scheduler used to start here, on `require` - which
+// meant it ran whenever the app module was loaded (including inside tests and
+// the route-manifest tool) and had no matching shutdown. It is now started
+// from src/index.js after `app.listen`, and stopped on close.
 
 // convert error to ApiError, if needed
 app.use(errorConverter);
@@ -233,4 +233,3 @@ app.use(errorConverter);
 app.use(errorHandler);
 
 module.exports = app;
-
