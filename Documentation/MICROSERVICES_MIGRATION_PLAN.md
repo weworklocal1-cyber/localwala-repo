@@ -475,6 +475,28 @@
 >
 > `tests/service-split.test.js` replaces the orders-only test and is now **driven by the taxonomy modules**, so it covers every service that has one - 20 assertions across orders and restaurant. It pins what outlives the split: surface matches the taxonomy, each name defined once, private names out of the facade and published only when called, aliases spelled with their alias, no unused import anywhere, cross-bucket calls always imported. Five mutations turn it red, including the alias and a removed cross-bucket require. It deliberately does **not** assert byte-identity: that needs the pre-split file, so it stays in `--verify`, which is only meaningful before the commit. **178 tests / 23 files**, both manifests PARITY OK, `domain:check` in sync, allowlist 25 edges, lint 0 errors / 6 warnings, `tsc` clean, `git diff --check` clean.
 
+> **Before starting 3.5/3.6: the exit criterion is not reachable as written, and 3.6 is mostly not boundary work.** Two facts, both measured rather than reasoned:
+>
+> - **Routing an edge through a domain facade does not remove it.** The 3.2 rule resolves `src/domains/<d>/index.ts` and treats a facade-to-facade import as **another cross-domain edge** - there is a test asserting exactly that. So "route it through a facade in src/domains/<d>", which is what the rule's own error message tells you to do, would not make `grep` show zero. The only way an edge reaches zero is for the shared code to **leave the domain graph entirely** by moving to `src/shared/*`, which is outside the inventory's governed set. That is what 3.6 is for, which makes 3.6 - not 3.5 - the step that moves the exit metric.
+> - **All 146 "barrel" edges are to `models/index.js`; there are zero service-barrel imports left.** 3.1a reported 131 and called them "load-time coupling with no domain meaning", which is still true, but the number has grown with the splits and none of them is a domain boundary. They are a legitimate cleanup - a service loading all 142 models to use one - and a poor use of the remaining Phase 3 effort, because draining them cannot move the exit criterion. They stay deferred, exactly as 3.2 deferred them.
+>
+> Grouping the 25 cross-domain edges **by target**, because a shared kernel is defined by what it absorbs:
+>
+> | target | edges | modules reached | kernel that would absorb it |
+> |---|---|---|---|
+> | notifications | **7** | `fcm.notification.service` (6), `email.config.service` (1) | `shared/notifications` - **in 3.6** |
+> | orders | 6 | `subscriber.service` (2), `subscription.service` (2), `cart.item.service`, `orders.service` | **`shared/subscription` - not in 3.6** |
+> | restaurant | 6 | `restaurant.service` (5), `restaurant.order.review.service` (1) | 5 are the facade itself; **no kernel** |
+> | identity | 3 | `driver.service`, `otp.verification.service`, `otp.web.verification.model` | `shared/auth` covers 2 of 3 - **in 3.6** |
+> | wallet | 2 | `restaurant.cash.in.hand.service`, `deliveryman.cash.in.hand.service` | `shared/wallet` - **in 3.6** |
+> | catalog | 1 | `food.order.review.service` | **`shared/review` - not in 3.6** |
+>
+> So of 3.6's six named kernels, **`payments`, `storage` and `settings` absorb zero cross-domain edges** - they are domain-internal refactors that cannot move the exit criterion - while the two kernels that would finish the job, `subscription`/billing for 4 edges and `review` for 2, are **not in the plan at all**. Corrected 3.6: **`shared/notifications` (7), `shared/subscription` (4), `shared/auth` (2), `shared/review` (2), `shared/wallet` (2)** - 17 of 25. The remaining 8 are genuine couplings to keep in the allowlist: 5 into the `restaurant` facade, `orders -> driver.service`, `identity -> cart.item.service`, and 2 into the `orders` facade.
+>
+> I also checked whether some of the 25 are **misclassification** rather than real violations, since that would be far cheaper than extracting anything. `subscriber.service` and `subscription.service` are filed under `orders` by an **explicit prefix in `DOMAINS`**, not by accident, and they sit alongside `user.purchased.tiffin.subscription` - so the grouping is defensible. Reclassifying them to make the count look better would be exactly the flattering metric this work has avoided, so they stay as they are.
+>
+> **Recommended order: `shared/notifications` first** - 7 of 25 edges from a single file, already named in the plan, and a genuinely shared concern, since push notifications are called by settings, restaurant and orders alike. Then `shared/subscription` and `shared/review`, which the plan is missing. 3.5 and 3.7 are worth doing, but neither moves the exit criterion, so they follow rather than lead.
+
 ---
 
 ### Phase 4 — Gateway + first extraction: **notifications**
