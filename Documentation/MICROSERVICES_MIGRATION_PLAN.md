@@ -534,6 +534,35 @@
 >
 > **183 tests / 23 files**, both manifests PARITY OK, `domain:check` in sync, allowlist **18 edges**, lint 0 errors / 6 warnings, `tsc` clean, `git diff --check` clean.
 
+### Phase 3 exit: complete, with two deliberate deferrals
+
+**The exit criterion as originally written is not achievable, and should be restated.** It read "`grep` shows zero cross-domain imports". Measured: 25 direct cross-domain edges existed when the phase began, and **8 remain** - and every one is a real dependency on real data:
+
+| edge | why it is real |
+|---|---|
+| `orders -> restaurant` x3 (`order.settings`, `orders.assign`, `orders.status`) | order creation needs restaurant and slot data |
+| `settings -> restaurant`, `settings -> orders` (`cron.job.scheduler`) | the hourly job reads subscriptions, restaurants and orders |
+| `orders -> identity` (`driver.service`) | assignment resolves a driver |
+| `identity -> orders` (`coupon.service` -> `cart.item.service`) | a coupon is applied to a cart |
+| `wallet -> restaurant` (`shared/wallet/restaurant.cash.in.hand`) | the ledger credits the restaurant wallet, so it needs `restaurant.service` |
+
+**The criterion is therefore: every cross-domain import is either gone, or allowlisted with a stated reason - and the lint rule enforces exactly that.** That is achievable, verified on every run, and what `domain:allowlist:check` plus `local/domain-boundary` now guarantee. "Zero" was never available without pretending these dependencies do not exist.
+
+**Where the 25 went:** 17 removed by extracting five shared kernels (`notifications` 7, `subscription` 4, `wallet` 2, `review` 2, `auth` 2); 8 remain as above. The number went down, and it went down honestly - no module was reclassified to flatter it. `subscriber`/`subscription` were deliberately left filed under `orders` even though moving them would have removed 4 more, because the filing is defensible and the alternative was a nicer number rather than a truer one.
+
+**Also still deferred, as recorded in 3.2:** 146 `models/index.js` barrel edges. Real load-time coupling with no domain meaning (one import hands a service all 142 models) and a legitimate cleanup, but **not one of them is a domain boundary**, so draining them cannot move this criterion.
+
+**3.5 and 3.7 are deferred deliberately, not forgotten.** Both are real work, and the deadline for both is **Phase 6**, not now:
+
+- **3.5 - the delete-account saga.** `user.service.js` holds `userDeleteAccount` (~490 lines), `restaurantDeleteAccount` (~1,420), `deliverymanDeleteAccount` (~450), `waiterDeleteAccount` (~93) and `kitchenDeleteAccount` (~74). Deferred because it moves no metric; because it is the first change in this phase the gates **cannot** verify as behaviour-preserving - the live-DB probe exercises GET endpoints and there is no coverage of the deletion paths; and because `user.service.js` is the file Phase 2 deliberately left untouched as the Express/Fastify parity reference. It becomes required when a domain is extracted with its own database, because `user.service.js` can then no longer reach into that domain's collections - which is easier to do deliberately as part of an extraction than in advance.
+- **3.7 - cron ownership.** `cron.job.scheduler.service.js` is 894 lines with a single `HourlyTask`, and its two cross-domain edges come from three call sites that sit inside **one pipeline, not a set of independent jobs**: a shared timezone computation feeds a `subscriptions` aggregate, an `expiredPackages` aggregate, an `expiringSoon` aggregate and three `Promise.all` maps. Turning that into a registry means restructuring the data flow, not moving blocks. Self-registering domains would drop the *reported* edges from 8 to 6 while leaving the coupling identical, because the inventory measures only static `require`s - so doing it would have made the number stop reflecting reality. It becomes required when `orders` is a separate service, because `generateDisbursement` calls `ordersService.createOrder`.
+
+**Known limitation of the tooling, recorded so nobody is caught by it:** `tools/domain-inventory.js` measures **static** `require` edges only. Any refactor that makes a dependency dynamic - a registry, an event bus, a factory - becomes invisible to it, and the allowlist will then report a count lower than the truth. **Before any such refactor, the inventory must be extended to see it.** This is the one place where a green number could quietly become wrong without anything failing, so it is written down rather than left to be discovered.
+
+**Phase 3 result:** 25 -> 8 cross-domain edges; 5 shared kernels extracted; 2 mega-services (30,808 lines) split into 16 bucket modules; `orders.service.js` 15,796 -> 129 lines and `restaurant.service.js` 15,215 -> 133, both barrels' full public surface preserved; **199 tests / 23 files**, both route manifests `PARITY OK`, lint 0 errors / 6 warnings, `tsc` clean, `git diff --check` clean.
+
+---
+
 ---
 
 ### Phase 4 — Gateway + first extraction: **notifications**
