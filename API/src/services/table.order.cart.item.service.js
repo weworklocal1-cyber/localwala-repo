@@ -29,7 +29,7 @@ const {
   KitchenOrder,
 } = require('../models');
 const orderSettingService = require('./order.settings.service');
-const fcmNotificationService = require('./fcm.notification.service');
+const fcmNotificationService = require('../shared/notifications/fcm.notification.service');
 const ApiError = require('../utils/ApiError');
 const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
 

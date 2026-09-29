@@ -32,7 +32,7 @@ const {
 } = require('../models');
 const config = require('../config/config');
 const ordersService = require('./orders.service');
-const fcmNotificationService = require('./fcm.notification.service');
+const fcmNotificationService = require('../shared/notifications/fcm.notification.service');
 const restaurantService = require('./restaurant.service');
 const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
 const logger = require('../config/logger');

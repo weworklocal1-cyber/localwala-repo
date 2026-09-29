@@ -19,7 +19,7 @@
 const mongoose = require('mongoose');
 const { status: httpStatus } = require('http-status');
 const { KitchenOwner, User, KitchenOrder, Restaurant, Wallet } = require('../models');
-const fcmNotificationService = require('./fcm.notification.service');
+const fcmNotificationService = require('../shared/notifications/fcm.notification.service');
 const ApiError = require('../utils/ApiError');
 const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
 

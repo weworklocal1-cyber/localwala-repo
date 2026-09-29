@@ -24,13 +24,13 @@
 
 import * as chatConversionService from '../../services/chat.conversion.service';
 import * as chatRoomService from '../../services/chat.room.service';
-import * as emailConfigService from '../../services/email.config.service';
 import * as emailTemplatesService from '../../services/email.templates.service';
-import * as fcmNotificationService from '../../services/fcm.notification.service';
 import * as notificationListService from '../../services/notification.list.service';
 import * as pushNotificationTokenService from '../../services/push.notification.token.service';
 import * as supportChatConversionService from '../../services/support.chat.conversion.service';
 import * as supportChatRoomService from '../../services/support.chat.room.service';
+import * as emailConfigService from '../../shared/notifications/email.config.service';
+import * as fcmNotificationService from '../../shared/notifications/fcm.notification.service';
 import ChatConversion from '../../models/chat.conversion.model';
 import ChatRoom from '../../models/chat.room.model';
 import EmailConfig from '../../models/email.config.model';
@@ -42,13 +42,13 @@ import SupportChatRoom from '../../models/support.chat.room.model';
 
 export { chatConversionService };
 export { chatRoomService };
-export { emailConfigService };
 export { emailTemplatesService };
-export { fcmNotificationService };
 export { notificationListService };
 export { pushNotificationTokenService };
 export { supportChatConversionService };
 export { supportChatRoomService };
+export { emailConfigService };
+export { fcmNotificationService };
 export { ChatConversion };
 export { ChatRoom };
 export { EmailConfig };

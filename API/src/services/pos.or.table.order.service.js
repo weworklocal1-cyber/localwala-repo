@@ -21,7 +21,7 @@ const mongoose = require('mongoose');
 const { DateTime } = require('luxon');
 const ApiError = require('../utils/ApiError');
 const { PosOrTableOrder, BusinessSettings, User, Restaurant, KitchenOrder } = require('../models');
-const fcmNotificationService = require('./fcm.notification.service');
+const fcmNotificationService = require('../shared/notifications/fcm.notification.service');
 const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
 
 const createOrder = async (param) => {

@@ -41,7 +41,12 @@ module.exports = [
     },
   },
   {
-    files: ['src/services/**/*.js'],
+    // `src/shared/` is included from Phase 3.6a because a shared kernel starts
+    // life as a *verbatim move* of a legacy service. Without this the two moved
+    // files surfaced 81 pre-existing `no-useless-assignment` errors the moment
+    // they changed directory - not one of them caused by the move. The
+    // exemption follows the code, it is not a blanket waiver for new code.
+    files: ['src/services/**/*.js', 'src/shared/**/*.js'],
     rules: {
       'no-useless-assignment': 'off',
     },
@@ -50,7 +55,15 @@ module.exports = [
   // `no-restricted-imports` because the rule needs to know which domain the
   // file being linted belongs to - see tools/eslint-rules/domain-boundary.cjs.
   {
-    files: ['src/services/**/*.js', 'src/models/**/*.js', 'src/domains/**/*.ts'],
+    // Shared kernels are governed too, and deliberately: a kernel is exempt as
+    // an import *target*, but it must not itself reach sideways into a
+    // business domain. That is the direction a shared kernel can rot in.
+    files: [
+      'src/services/**/*.js',
+      'src/models/**/*.js',
+      'src/domains/**/*.ts',
+      'src/shared/**/*.js',
+    ],
     plugins: {
       local: { rules: { 'domain-boundary': require('./tools/eslint-rules/domain-boundary.cjs') } },
     },

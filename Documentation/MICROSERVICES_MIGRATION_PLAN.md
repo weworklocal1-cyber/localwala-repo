@@ -497,6 +497,24 @@
 >
 > **Recommended order: `shared/notifications` first** - 7 of 25 edges from a single file, already named in the plan, and a genuinely shared concern, since push notifications are called by settings, restaurant and orders alike. Then `shared/subscription` and `shared/review`, which the plan is missing. 3.5 and 3.7 are worth doing, but neither moves the exit criterion, so they follow rather than lead.
 
+> **3.6a done - `shared/notifications` extracted. Cross-domain edges 25 -> 18, from two files.** `fcm.notification.service.js` (4,184 lines) and `email.config.service.js` (1,694 lines) moved to `src/shared/notifications/`, with a kernel `index.js` re-exporting all 55 names. Seven importers rewired - one line each, and `services/index.js` still publishes both names, so no consumer of the barrel changes.
+>
+> **A shared kernel needs two things, and getting only one is silently useless:**
+> - **A home domain, so the barrel-to-facade mapping still lines up.** A kernel is still classified, into the domain its directory is named for. Without that, `unclassified` would grow and the generated facades would silently stop exporting `fcmNotificationService` and `emailConfigService` - the test caught exactly that.
+> - **An import exemption, or the move changes nothing.** The kernel keeps `notifications` as its domain, so without an exemption the edges would simply be re-measured as `orders -> notifications`. A shared kernel is cross-cutting *by construction* - that is why it was pulled out - so `orders -> shared/notifications` is the intended shape. The exemption lives in `build()` and, mirrored, in the lint rule, so the measurement and the enforcement cannot drift.
+>
+> The exemption is **one-directional**: a kernel may be imported by anyone, but it may not itself reach into a business domain - the direction a shared kernel rots in. Both directions have a probe test, and I confirmed removing any one of the three exemptions (lint rule, inventory, home-domain classification) turns the suite red. An exemption nothing tests is an exemption that quietly stops applying.
+>
+> **Two bugs the move exposed, both in code that had been correct for three steps:**
+> - **`readBarrelExports` only matched `require('./x')`** and rebuilt the key as `services/x.js`. The barrel wrote `require("../shared/notifications/...")`, which the pattern did not match at all, so the two names vanished from every facade. It now resolves the specifier against the barrel's own directory and keys by the SRC-relative path, which is how `nodes` is keyed.
+> - **`renderFacade` grouped members as services vs models**, and a `shared/` member fell into neither, so it was dropped silently. The grouping is now "namespace import" vs "default import" - a kernel is a service, so it takes the namespace form. Three groupings were never the distinction; the import shape was.
+>
+> **Moving legacy code changed its lint config bucket.** `src/services/**` carries `'no-useless-assignment': 'off'`, a pre-existing accommodation for the service layer. The moment the two files changed directory they surfaced **81** errors, none of them caused by the move. The exemption now covers `src/shared/**` too, with the reasoning recorded in the config: the exemption follows the code, and it is not a blanket waiver for new shared code. Shared files also joined the boundary rule, which is why the one-directional check above is enforceable.
+>
+> Line endings needed care: the moved files must be **pure LF** (`git diff --check` reads a CR as trailing whitespace on an added line) while the eight rewired files must **keep whatever HEAD had** - CRLF headers on the legacy services, LF on the buckets generated in 3.4. Matching each file to its committed form keeps the diff at one line per file. A whole-file rewrite through PowerShell also silently took an unrelated trailing blank line with it, so the rewiring is a substring replace with a per-file byte delta.
+>
+> **183 tests / 23 files**, both manifests PARITY OK, `domain:check` in sync, allowlist **18 edges**, lint 0 errors / 6 warnings, `tsc` clean, `git diff --check` clean.
+
 ---
 
 ### Phase 4 — Gateway + first extraction: **notifications**

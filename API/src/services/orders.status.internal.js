@@ -44,7 +44,7 @@ const restaurantCashInHandService = require('./restaurant.cash.in.hand.service')
 const deliverymanCashInHandService = require('./deliveryman.cash.in.hand.service');
 const restaurantService = require('./restaurant.service');
 const driverService = require('./driver.service');
-const fcmNotificationService = require('./fcm.notification.service');
+const fcmNotificationService = require('../shared/notifications/fcm.notification.service');
 const config = require('../config/config');
 const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
 

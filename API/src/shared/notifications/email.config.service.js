@@ -1,8 +1,8 @@
 /**
- * LocalWala – Local Commerce & Delivery Platform
+ * LocalWala â€“ Local Commerce & Delivery Platform
  * (NodeJS, MongoDB, Angular & Flutter)
  *
- * Copyright © 2026 WeWorkLocal Private Limited
+ * Copyright Â© 2026 WeWorkLocal Private Limited
  * https://weworklocal.in/
  *
  * WeWorkLocal Private Limited
@@ -33,9 +33,9 @@ const {
   BusinessSettings,
   SupportChatRoom,
   SupportChatConversion,
-} = require('../models');
-const ApiError = require('../utils/ApiError');
-const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
+} = require('../../models');
+const ApiError = require('../../utils/ApiError');
+const checkArrayNotEmpty = require('../../utils/arrayNotEmpty');
 
 function formatRoleName(str) {
   return str.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/^./, (char) => char.toUpperCase());
@@ -112,8 +112,8 @@ const sendVerificationEmail = async (toEmail, otp, locale) => {
   let emailTitle = 'Email Verification';
   let emailContent =
     'Hi, Thank you for choosing FoodBite PVT LTD. Use the following OTP to complete your Sign-up procedures. OTP is valid for 5 minutes';
-  let emailFooter = 'Please contact us for any queries; we’re always happy to help.';
-  let emailCopyRight = `© ${currentYear} FoodBite. All rights reserved.`;
+  let emailFooter = 'Please contact us for any queries; weâ€™re always happy to help.';
+  let emailCopyRight = `Â© ${currentYear} FoodBite. All rights reserved.`;
   let emailHtmlContent = `<p>{{EMAIL_TITLE}}</p>
   <p>{{EMAIL_MESSAGE}}</p>
   <p>{{EMAIL_DYNAMIC_CONTENT}}</p>
@@ -175,8 +175,8 @@ const sendUserLoginEmail = async (toEmail, otp, locale) => {
   let emailTitle = 'Email Verification';
   let emailContent =
     'Hi, Thank you for choosing FoodBite PVT LTD. Use the following OTP to complete your Sign-up procedures. OTP is valid for 5 minutes';
-  let emailFooter = 'Please contact us for any queries; we’re always happy to help.';
-  let emailCopyRight = `© ${currentYear} FoodBite. All rights reserved.`;
+  let emailFooter = 'Please contact us for any queries; weâ€™re always happy to help.';
+  let emailCopyRight = `Â© ${currentYear} FoodBite. All rights reserved.`;
   let emailHtmlContent = `<p>{{EMAIL_TITLE}}</p>
   <p>{{EMAIL_MESSAGE}}</p>
   <p>{{EMAIL_DYNAMIC_CONTENT}}</p>
@@ -255,8 +255,8 @@ const sendRefundRequestToAdmin = async (orderId, reasonId, refundId) => {
   const currentYear = DateTime.now().year;
   let emailContent =
     'Please review the request at your earliest convenience. You can approve or deny the request and contact the customer for more information.';
-  let emailFooter = 'Please contact us for any queries; we’re always happy to help.';
-  let emailCopyRight = `© ${currentYear} FoodBite. All rights reserved.`;
+  let emailFooter = 'Please contact us for any queries; weâ€™re always happy to help.';
+  let emailCopyRight = `Â© ${currentYear} FoodBite. All rights reserved.`;
   let emailHtmlContent = `<p>{{EMAIL_TITLE}}</p>
   <p>{{EMAIL_MESSAGE}}</p>
   <p>{{EMAIL_DYNAMIC_CONTENT}}</p>
@@ -337,8 +337,8 @@ const sendTiffinSubscriptionRefundRequestToAdmin = async (purchaseId, reasonId, 
   const currentYear = DateTime.now().year;
   let emailContent =
     'Please review the request at your earliest convenience. You can approve or deny the request and contact the customer for more information.';
-  let emailFooter = 'Please contact us for any queries; we’re always happy to help.';
-  let emailCopyRight = `© ${currentYear} FoodBite. All rights reserved.`;
+  let emailFooter = 'Please contact us for any queries; weâ€™re always happy to help.';
+  let emailCopyRight = `Â© ${currentYear} FoodBite. All rights reserved.`;
   let emailHtmlContent = `<p>{{EMAIL_TITLE}}</p>
   <p>{{EMAIL_MESSAGE}}</p>
   <p>{{EMAIL_DYNAMIC_CONTENT}}</p>
@@ -419,8 +419,8 @@ const sendDiningBookingRefundRequestToAdmin = async (bookingId, reasonId, refund
   const currentYear = DateTime.now().year;
   let emailContent =
     'Please review the request at your earliest convenience. You can approve or deny the request and contact the customer for more information.';
-  let emailFooter = 'Please contact us for any queries; we’re always happy to help.';
-  let emailCopyRight = `© ${currentYear} FoodBite. All rights reserved.`;
+  let emailFooter = 'Please contact us for any queries; weâ€™re always happy to help.';
+  let emailCopyRight = `Â© ${currentYear} FoodBite. All rights reserved.`;
   let emailHtmlContent = `<p>{{EMAIL_TITLE}}</p>
   <p>{{EMAIL_MESSAGE}}</p>
   <p>{{EMAIL_DYNAMIC_CONTENT}}</p>
@@ -483,8 +483,8 @@ const sendThankYouReplayForFeedback = async (email, text) => {
   const template = await EmailTemplate.findOne({ slug: 'feedback-thank-you' });
   let emailTitle = 'Thank You for Your Valuable Suggestions!';
   let emailContent = 'Your feedback helps us improve and shape the future of our project.';
-  let emailFooter = 'Please contact us for any queries; we’re always happy to help.';
-  let emailCopyRight = `© ${currentYear} FoodBite. All rights reserved.`;
+  let emailFooter = 'Please contact us for any queries; weâ€™re always happy to help.';
+  let emailCopyRight = `Â© ${currentYear} FoodBite. All rights reserved.`;
   let emailHtmlContent = `<p>{{EMAIL_TITLE}}</p>
   <p>{{EMAIL_MESSAGE}}</p>
   <p>{{EMAIL_DYNAMIC_CONTENT}}</p>
@@ -546,8 +546,8 @@ const sendThankYouReplayForReportEmergency = async (email, text) => {
   let emailTitle = 'Thank You for Reporting the Incident';
   let emailContent =
     'Your prompt action helps us ensure a safer and more secure environment. We will address your report as quickly as possible.';
-  let emailFooter = 'Please contact us for any queries; we’re always happy to help.';
-  let emailCopyRight = `© ${currentYear} FoodBite. All rights reserved.`;
+  let emailFooter = 'Please contact us for any queries; weâ€™re always happy to help.';
+  let emailCopyRight = `Â© ${currentYear} FoodBite. All rights reserved.`;
   let emailHtmlContent = `<p>{{EMAIL_TITLE}}</p>
   <p>{{EMAIL_MESSAGE}}</p>
   <p>{{EMAIL_DYNAMIC_CONTENT}}</p>
@@ -609,8 +609,8 @@ const sendRestaurantRegisterRequestRejectionEmail = async (email, locale, reason
   let emailTitle = 'Registration Rejected';
   let emailContent =
     'We regret to inform you that your registration request has been rejected. If you believe this was an error or need assistance, please contact our support team for further clarification.';
-  let emailFooter = 'Please contact us for any queries; we’re always happy to help.';
-  let emailCopyRight = `© ${currentYear} FoodBite. All rights reserved.`;
+  let emailFooter = 'Please contact us for any queries; weâ€™re always happy to help.';
+  let emailCopyRight = `Â© ${currentYear} FoodBite. All rights reserved.`;
   let emailHtmlContent = `<p>{{EMAIL_TITLE}}</p>
   <p>{{EMAIL_MESSAGE}}</p>
   <p>{{EMAIL_DYNAMIC_CONTENT}}</p>
@@ -672,8 +672,8 @@ const sendRestaurantRegisterRequestApprovedEmail = async (email, locale) => {
   let emailTitle = 'Registration Approved';
   let emailContent =
     'Congratulations! Your registration request has been approved. You can now access all features of our food delivery app, manage your profile, and start enjoying seamless food ordering and delivery. Welcome aboard!';
-  let emailFooter = 'Please contact us for any queries; we’re always happy to help.';
-  let emailCopyRight = `© ${currentYear} FoodBite. All rights reserved.`;
+  let emailFooter = 'Please contact us for any queries; weâ€™re always happy to help.';
+  let emailCopyRight = `Â© ${currentYear} FoodBite. All rights reserved.`;
   let emailHtmlContent = `<p>{{EMAIL_TITLE}}</p>
   <p>{{EMAIL_MESSAGE}}</p>
   <p>{{EMAIL_DYNAMIC_CONTENT}}</p>
@@ -734,8 +734,8 @@ const sendDeliverymanRegisterRequestRejectionEmail = async (email, locale, reaso
   let emailTitle = 'Registration Rejected';
   let emailContent =
     'We regret to inform you that your registration request has been rejected. If you believe this was an error or need assistance, please contact our support team for further clarification.';
-  let emailFooter = 'Please contact us for any queries; we’re always happy to help.';
-  let emailCopyRight = `© ${currentYear} FoodBite. All rights reserved.`;
+  let emailFooter = 'Please contact us for any queries; weâ€™re always happy to help.';
+  let emailCopyRight = `Â© ${currentYear} FoodBite. All rights reserved.`;
   let emailHtmlContent = `<p>{{EMAIL_TITLE}}</p>
   <p>{{EMAIL_MESSAGE}}</p>
   <p>{{EMAIL_DYNAMIC_CONTENT}}</p>
@@ -797,8 +797,8 @@ const sendDeliverymanRegisterRequestApprovedEmail = async (email, locale) => {
   let emailTitle = 'Registration Approved';
   let emailContent =
     'Congratulations! Your request to join our food delivery platform as a deliveryman has been approved. Get ready to start delivering delicious meals to our customers. Log in to your account for more details and begin your journey with us!';
-  let emailFooter = 'Please contact us for any queries; we’re always happy to help.';
-  let emailCopyRight = `© ${currentYear} FoodBite. All rights reserved.`;
+  let emailFooter = 'Please contact us for any queries; weâ€™re always happy to help.';
+  let emailCopyRight = `Â© ${currentYear} FoodBite. All rights reserved.`;
   let emailHtmlContent = `<p>{{EMAIL_TITLE}}</p>
   <p>{{EMAIL_MESSAGE}}</p>
   <p>{{EMAIL_DYNAMIC_CONTENT}}</p>
@@ -859,8 +859,8 @@ const sendAccountBlockedEmail = async (email, locale) => {
   let emailTitle = 'Important: Your Account Has Been Blocked';
   let emailContent =
     'Access to your account has been temporarily restricted. Please review the details below and take the necessary action.';
-  let emailFooter = 'Please contact us for any queries; we’re always happy to help.';
-  let emailCopyRight = `© ${currentYear} FoodBite. All rights reserved.`;
+  let emailFooter = 'Please contact us for any queries; weâ€™re always happy to help.';
+  let emailCopyRight = `Â© ${currentYear} FoodBite. All rights reserved.`;
   let emailHtmlContent = `<p>{{EMAIL_TITLE}}</p>
   <p>{{EMAIL_MESSAGE}}</p>
   <p>{{EMAIL_DYNAMIC_CONTENT}}</p>
@@ -920,11 +920,11 @@ const sendExpiredPackageBlockedEmail = async (emails) => {
   const template = await EmailTemplate.findOne({
     slug: 'restaurant-package-expired-account-blocked-email',
   });
-  let emailTitle = 'Your Subscription Has Expired – Account Access Blocked';
+  let emailTitle = 'Your Subscription Has Expired â€“ Account Access Blocked';
   let emailContent =
     'Your subscription package has expired, and your account access is temporarily restricted. Renew now to resume your services.';
-  let emailFooter = 'Please contact us for any queries; we’re always happy to help.';
-  let emailCopyRight = `© ${currentYear} FoodBite. All rights reserved.`;
+  let emailFooter = 'Please contact us for any queries; weâ€™re always happy to help.';
+  let emailCopyRight = `Â© ${currentYear} FoodBite. All rights reserved.`;
   let emailHtmlContent = `<p>{{EMAIL_TITLE}}</p>
   <p>{{EMAIL_MESSAGE}}</p>
   <p>{{EMAIL_DYNAMIC_CONTENT}}</p>
@@ -975,9 +975,9 @@ const sendSubscriptionExpiringSoonEmail = async (emails) => {
   const template = await EmailTemplate.findOne({ slug: 'restaurant-package-expire-soon-email' });
   let emailTitle = 'Renew Your Subscription Package Before It Expires!';
   let emailContent =
-    'Your subscription is nearing its expiration date, and we don’t want you to lose access to the benefits you enjoy. Renew now to continue showcasing your restaurant, attracting customers, and staying ahead in the competition. Don’t let your subscription lapse—act today!';
-  let emailFooter = 'Please contact us for any queries; we’re always happy to help.';
-  let emailCopyRight = `© ${currentYear} FoodBite. All rights reserved.`;
+    'Your subscription is nearing its expiration date, and we donâ€™t want you to lose access to the benefits you enjoy. Renew now to continue showcasing your restaurant, attracting customers, and staying ahead in the competition. Donâ€™t let your subscription lapseâ€”act today!';
+  let emailFooter = 'Please contact us for any queries; weâ€™re always happy to help.';
+  let emailCopyRight = `Â© ${currentYear} FoodBite. All rights reserved.`;
   let emailHtmlContent = `<p>{{EMAIL_TITLE}}</p>
   <p>{{EMAIL_MESSAGE}}</p>
   <p>{{EMAIL_DYNAMIC_CONTENT}}</p>
@@ -1395,9 +1395,9 @@ const orderSummaryEmail = async (id) => {
       if (sendEmail !== '') {
         let emailTitle = 'Order Summary';
         let emailContent =
-          'Thank you for ordering with FoodBite! We’ve received your order and are preparing it with love. Here’s a summary of your order:';
-        let emailFooter = 'Please contact us for any queries; we’re always happy to help.';
-        let emailCopyRight = `© ${currentYear} FoodBite. All rights reserved.`;
+          'Thank you for ordering with FoodBite! Weâ€™ve received your order and are preparing it with love. Hereâ€™s a summary of your order:';
+        let emailFooter = 'Please contact us for any queries; weâ€™re always happy to help.';
+        let emailCopyRight = `Â© ${currentYear} FoodBite. All rights reserved.`;
         let emailHtmlContent = `<p>{{EMAIL_TITLE}}</p>
           <p>{{EMAIL_MESSAGE}}</p>
           <p>{{EMAIL_DYNAMIC_CONTENT}}</p>
@@ -1584,8 +1584,8 @@ const exportSupportChat = async (id) => {
         const currentYear = DateTime.now().year;
         let emailTitle = 'Your Support Chat';
         let emailContent = 'We have received your support request regarding the issue';
-        let emailFooter = 'Please contact us for any queries; we’re always happy to help.';
-        let emailCopyRight = `© ${currentYear} FoodBite. All rights reserved.`;
+        let emailFooter = 'Please contact us for any queries; weâ€™re always happy to help.';
+        let emailCopyRight = `Â© ${currentYear} FoodBite. All rights reserved.`;
         let emailHtmlContent = `<p>{{EMAIL_TITLE}}</p>
           <p>{{EMAIL_MESSAGE}}</p>
           <p>{{EMAIL_DYNAMIC_CONTENT}}</p>

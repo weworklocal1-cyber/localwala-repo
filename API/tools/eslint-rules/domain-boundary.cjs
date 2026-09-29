@@ -123,6 +123,12 @@ module.exports = {
 
       const toRel = relFromSrc(target);
       if (isBarrel(toRel)) return; // tracked separately; see the header comment
+      // A shared kernel is exempt as an import target, for the same reason the
+      // inventory exempts it: it was extracted out of a domain precisely
+      // because it is cross-cutting, so `orders -> shared/notifications` is the
+      // intended shape. Mirrored here rather than only in the inventory so the
+      // rule and the measurement cannot disagree.
+      if (/^shared\/[^/]+\//.test(toRel)) return;
       if (!governed(toRel)) return;
 
       const toDomain = domainOf(toRel);

@@ -32,7 +32,7 @@ const {
 const ApiError = require('../utils/ApiError');
 const subscriberService = require('./subscriber.service');
 const subscriptionService = require('./subscription.service');
-const emailConfigService = require('./email.config.service');
+const emailConfigService = require('../shared/notifications/email.config.service');
 const { updateUserCityLocation } = require('./restaurant.shared.internal.js');
 
 const createRestaurant = async (param) => {

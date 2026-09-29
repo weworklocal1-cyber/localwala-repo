@@ -249,22 +249,39 @@ function readBarrelExports(relPath) {
   if (!fs.existsSync(file)) return new Map();
   const source = fs.readFileSync(file, 'utf8');
   const map = new Map();
-  const re = /module\.exports\.([A-Za-z_$][\w$]*)\s*=\s*require\(\s*['"]\.\/([^'"]+)['"]\s*\)/g;
+  const re =
+    /module\.exports\.([A-Za-z_$][\w$]*)\s*=\s*require\(\s*['"](\.[^'"]*)['"]\s*\)/g;
   let m;
   while ((m = re.exec(source))) {
-    // The barrels write `require('./orders.service')` while the inventory
-    // keys on the real file path `services/orders.service.js`; normalise so the
-    // two line up. A facade that guesses the export name instead of reading
-    // it would silently rename every consumer's import.
-    const target = `${relPath.split('/')[0]}/${m[2]}`.replace(/\.js$/, '');
-    map.set(`${target}.js`, m[1]);
+    // Resolve the specifier against the barrel's own directory and key by the
+    // SRC-relative path, so the key lines up with how `nodes` is keyed.
+    //
+    // This used to assume every spec was `./x` and rebuild the key as
+    // `services/x.js`. That was fine until Phase 3.6a moved a kernel out of
+    // services/, so the barrel wrote `require("../shared/notifications/...")` -
+    // which the old pattern did not match at all, and the two names silently
+    // vanished from every domain facade.
+    const abs = path.resolve(path.dirname(file), m[2]);
+    for (const ext of ['.js', '.ts']) {
+      if (fs.existsSync(abs + ext)) {
+        map.set(path.relative(SRC, abs + ext).replace(/\\/g, '/'), m[1]);
+        break;
+      }
+    }
   }
   return map;
 }
-
 function renderFacade(domain, members, def) {
-  const services = members.filter((m) => m.path.startsWith('services/')).sort((a, b) => a.path.localeCompare(b.path));
-  const models = members.filter((m) => m.path.startsWith('models/')).sort((a, b) => a.path.localeCompare(b.path));
+  // Two import shapes, not three. Model modules do `module.exports = Model`, so
+  // they need a default import. Everything else - services, and the shared
+  // kernels that 3.6 moves out of them - exports a plain object of functions,
+  // which a namespace import captures correctly.
+  const namespaces = members
+    .filter((m) => !m.path.startsWith('models/'))
+    .sort((a, b) => a.path.localeCompare(b.path));
+  const models = members.filter((m) => m.path.startsWith('models/')).sort((a, b) =>
+    a.path.localeCompare(b.path)
+  );
 
   const header = [
     '/**',
@@ -297,17 +314,14 @@ function renderFacade(domain, members, def) {
   // Extensionless specifiers, matching every other import in the repo (they
   // are CommonJS, and Node resolves them the same way).
   const spec = (p) => `../../${p.replace(/\.js$/, '')}`;
-  for (const m of services) {
+  for (const m of namespaces) {
     body.push(`import * as ${m.name} from '${spec(m.path)}';`);
   }
   for (const m of models) {
-    // Model modules do `module.exports = Model`, so they need a default import;
-    // services export a plain object of functions, which a namespace import
-    // captures correctly.
     body.push(`import ${m.name} from '${spec(m.path)}';`);
   }
   if (body.length) body.push('');
-  for (const m of services) body.push(`export { ${m.name} };`);
+  for (const m of namespaces) body.push(`export { ${m.name} };`);
   for (const m of models) body.push(`export { ${m.name} };`);
 
   return `${header.join('\n')}\n${body.join('\n')}\n`;
@@ -392,21 +406,45 @@ function localRequires(source) {
 
 /** The set of module paths the inventory governs: services + models. */
 function governed(relPath) {
-  if (!/^(services|models)\//.test(relPath)) return false;
-  // Barrels are the thing being replaced, not a member of any domain.
+  // `shared/` is governed too, and for a specific reason. A shared kernel is
+  // extracted out of a business domain but stays reachable from that domain's
+  // facade, because the barrel still re-exports its names and the facades are
+  // only "drop-in" while the union of their exports equals the union of the
+  // barrel's. So a shared module is classified into its home domain - see
+  // domainOf - and is exempt only as an import *target*, via isSharedKernel.
+  if (!/^(services|models|shared)\//.test(relPath)) return false;
+  // Barrels are the thing being replaced, not a member of any domain. A shared
+  // kernel's own index.js is a barrel in exactly that sense.
   if (relPath.endsWith('/index.js')) return false;
   // Mongoose plugins are infrastructure, not domain data.
   if (relPath.includes('/plugins/')) return false;
   return true;
 }
 
-/** True for the four barrel modules that hand out every module at once. */
+/** True for a shared kernel's entry point (`src/shared/<kernel>/index.js`). */
+function isSharedKernel(relPath) {
+  return /^shared\/[^/]+\//.test(relPath);
+}
+
+/** True for the four barrels that hand out every module at once, plus kernel entry points. */
 function isBarrel(relPath) {
-  return /^(services|models|controllers|validations)\/index\.js$/.test(relPath);
+  return (
+    /^(services|models|controllers|validations)\/index\.js$/.test(relPath) ||
+    /^shared\/[^/]+\/index\.js$/.test(relPath)
+  );
 }
 
 function domainOf(relPath) {
   if (OVERRIDES[relPath]) return OVERRIDES[relPath];
+
+  // A shared kernel lives under src/shared/<kernel>/, so the usual
+  // services/models prefixes cannot classify it. Its *home* domain is the
+  // kernel's directory name, which keeps the barrel-to-facade mapping intact
+  // while the import exemption lives in build(). If the kernel name is not a
+  // known domain, fall through and classify by filename as before rather than
+  // returning something invented.
+  const shared = relPath.match(/^shared\/([^/]+)\//);
+  if (shared && DOMAINS[shared[1]]) return shared[1];
 
   const base = path.basename(relPath).replace(/\.(service|model)\.js$/, '');
   for (const [domain, def] of Object.entries(DOMAINS)) {
@@ -468,6 +506,16 @@ function build() {
       if (nodes.has(a)) barrelEdges.push({ from: a, to: b });
       continue;
     }
+    // Importing a shared kernel is not a boundary violation. A kernel is
+    // cross-cutting by construction - that is the whole reason it was pulled
+    // out of a domain in Phase 3.6 - so `orders -> shared/notifications` is
+    // the intended shape, while `orders -> restaurant` still is not.
+    //
+    // The kernel keeps its home domain for classification (so the barrel and the
+    // generated facades still line up), but the edge itself is exempt. Without
+    // this, extracting the code out of the directory would change nothing:
+    // the edge would simply be re-measured as orders -> notifications.
+    if (isSharedKernel(b)) continue;
     const na = nodes.get(a);
     const nb = nodes.get(b);
     if (!na || !nb || na.domain === null || nb.domain === null) continue;

@@ -1,8 +1,8 @@
 /**
- * LocalWala – Local Commerce & Delivery Platform
+ * LocalWala â€“ Local Commerce & Delivery Platform
  * (NodeJS, MongoDB, Angular & Flutter)
  *
- * Copyright © 2026 WeWorkLocal Private Limited
+ * Copyright Â© 2026 WeWorkLocal Private Limited
  * https://weworklocal.in/
  *
  * WeWorkLocal Private Limited
@@ -33,10 +33,10 @@ const {
   SubscriptionTiffinPackage,
   UserPurchasedTiffinSubscription,
   KitchenOwner,
-} = require('../models');
-const ApiError = require('../utils/ApiError');
+} = require('../../models');
+const ApiError = require('../../utils/ApiError');
 
-const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
+const checkArrayNotEmpty = require('../../utils/arrayNotEmpty');
 
 const sendTestNotification = async () => {
   const registrationTokens = [
@@ -3652,8 +3652,8 @@ const kitchenOwnerNewOrder = async (kind, restaurant) => {
           }
         }
       } else {
-        notificationTitle = `Incoming {{kind}} Order – Start Cooking!`;
-        notificationDescription = `Incoming {{kind}} Order – Start Cooking!`;
+        notificationTitle = `Incoming {{kind}} Order â€“ Start Cooking!`;
+        notificationDescription = `Incoming {{kind}} Order â€“ Start Cooking!`;
       }
       // regular_order, pos_order, table_order
       let orderName = 'Regular';

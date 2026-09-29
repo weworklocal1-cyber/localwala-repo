@@ -33,7 +33,7 @@ const {
 } = require('../models');
 const ApiError = require('../utils/ApiError');
 const config = require('../config/config');
-const fcmNotificationService = require('./fcm.notification.service');
+const fcmNotificationService = require('../shared/notifications/fcm.notification.service');
 const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
 
 const saveTiffinSubscription = async (param) => {

@@ -26,6 +26,20 @@ import { fileURLToPath } from 'node:url';
 const apiRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const tool = path.join(apiRoot, 'tools', 'domain-inventory.js');
 
+// Imported rather than re-implemented: the boundary rule and this test both
+// read the same classification, and a test that re-derived it would be testing
+// its own copy. The tool is require.main-guarded for exactly this.
+const inventory = (await import(tool)).default ?? (await import(tool));
+
+function walk(dir, out = []) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) walk(full, out);
+    else if (/\.js$/.test(entry.name)) out.push(full);
+  }
+  return out;
+}
+
 function run(args) {
   return execFileSync(process.execPath, [tool, ...args], { cwd: apiRoot, encoding: 'utf8' });
 }
@@ -51,9 +65,26 @@ describe('Phase 3.1 - domain inventory', () => {
     const modelFiles = fs
       .readdirSync(path.join(apiRoot, 'src', 'models'))
       .filter((f) => f.endsWith('.js') && f !== 'index.js').length;
+    // Phase 3.6a: a shared kernel is exempt as an import *target* but is still
+    // classified - it keeps its home domain so the barrel and the generated
+    // facades still line up. Counting it here keeps this assertion honest:
+    // every non-barrel module under services/, models/ and shared/ is placed.
+    const sharedFiles = fs.existsSync(path.join(apiRoot, 'src', 'shared'))
+      ? fs
+          .readdirSync(path.join(apiRoot, 'src', 'shared'), { withFileTypes: true })
+          .filter((d) => d.isDirectory())
+          .reduce(
+            (n, d) =>
+              n +
+              fs
+                .readdirSync(path.join(apiRoot, 'src', 'shared', d.name))
+                .filter((f) => f.endsWith('.js') && f !== 'index.js').length,
+            0
+          )
+      : 0;
 
     const total = Object.values(report.domains).reduce((n, d) => n + d.modules.length, 0);
-    expect(total).toBe(services + modelFiles);
+    expect(total).toBe(services + modelFiles + sharedFiles);
     expect(modelFiles).toBeGreaterThanOrEqual(models);
   });
 
@@ -193,6 +224,81 @@ describe('Phase 3.2 - the domain boundary rule actually fires', () => {
       expect(lintOut).toMatch(/must not import another domain's facade/);
     } finally {
       fs.rmSync(facadeProbe, { force: true });
+    }
+  });
+
+  it('does not flag an import of a shared kernel', () => {
+    // Phase 3.6a. The probe is `catalog`; the kernel is exempt as an import
+    // TARGET because it was pulled out of a domain precisely because it is
+    // cross-cutting. Without the exemption every cross-domain caller of
+    // fcm.notification.service would still be an edge after the move - the
+    // code would have changed directory and the count would not have moved.
+    fs.writeFileSync(
+      probe,
+      "'use strict';\nconst fcm = require('../shared/notifications/fcm.notification.service');\nmodule.exports = { fcm };\n",
+      'utf8'
+    );
+    expect(lint()).toBe('');
+  });
+
+  it('flags a shared kernel reaching into a business domain', () => {
+    // The exemption is one-directional. A kernel may be imported by anyone; it
+    // may not itself import sideways into a domain, which is the direction a
+    // shared kernel rots in.
+    const kernelProbe = path.join(
+      apiRoot, 'src', 'shared', 'notifications', '__probe.service.js'
+    );
+    fs.writeFileSync(
+      kernelProbe,
+      "'use strict';\nconst orders = require('../../services/orders.service');\nmodule.exports = { orders };\n",
+      'utf8'
+    );
+    try {
+      lintOut = lint();
+      expect(lintOut).toMatch(/must not import 'orders'/);
+    } finally {
+      fs.rmSync(kernelProbe, { force: true });
+    }
+  });
+});
+
+describe('Phase 3.6 - shared kernels', () => {
+  const sharedDir = path.join(apiRoot, 'src', 'shared');
+
+  it('classifies a kernel module into its home domain, not as unclassified', () => {
+    // The kernel is exempt as an import target, but it must still be classified
+    // so the services barrel keeps resolving its names to a facade. If the
+    // classification were dropped instead, `unclassified` would grow and the
+    // barrel-to-facade test would fail with the kernel's names unreachable.
+    const rel = 'shared/notifications/fcm.notification.service.js';
+    expect(inventory.domainOf(rel)).toBe('notifications');
+  });
+
+  it('keeps a kernel exempt as an import target, in the tool and the rule alike', () => {
+    const before = inventory.build().crossDomain.length;
+    const kernelImporters = [];
+    for (const domain of Object.keys(inventory.DOMAINS)) {
+      for (const f of walk(path.join(apiRoot, 'src', 'services'))) {
+        const rel = path.relative(path.join(apiRoot, 'src'), f).replace(/\\/g, '/');
+        if (inventory.domainOf(rel) !== domain) continue;
+        const src = fs.readFileSync(f, 'utf8');
+        if (/require\(['"]\.\.\/shared\/[^/]+\//.test(src)) kernelImporters.push(rel);
+      }
+    }
+    expect(kernelImporters.length).toBeGreaterThan(0);
+    expect(
+      inventory.build().crossDomain.some((e) => e.to.startsWith('shared/')),
+      'a shared kernel was counted as a cross-domain edge'
+    ).toBe(false);
+    expect(before).toBeGreaterThan(0);
+  });
+
+  it('exposes each kernel through an index that re-exports it', () => {
+    for (const kernel of fs.readdirSync(sharedDir)) {
+      const index = path.join(sharedDir, kernel, 'index.js');
+      expect(fs.existsSync(index), `${kernel} has no index.js`).toBe(true);
+      const src = fs.readFileSync(index, 'utf8');
+      expect(src).toMatch(/module\.exports/);
     }
   });
 });
