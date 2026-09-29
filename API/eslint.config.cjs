@@ -75,7 +75,12 @@ module.exports = [
   // catch the things the type system lets through (floating promises aside,
   // ban-ts-comment, no-explicit-any usage, unused locals).
   {
-    files: ['src/**/*.ts'],
+    // `apps/**` is the gateway. It was absent here, and absent from the root
+    // tsconfig's include, so the new code was invisible to both gates while
+    // `npm run lint` and `npm run typecheck` still reported success. A gate
+    // that is not pointed at the code is the same failure as a rule that never
+    // fires, and it is why the gateway's own tsconfig now exists.
+    files: ['src/**/*.ts', 'apps/**/*.ts'],
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {

@@ -563,6 +563,26 @@
 
 ---
 
+#### 4.1 done - the gateway, and a measurement that changes the extraction order
+
+`apps/gateway` is a transparent reverse proxy in front of the monolith, with `SERVICE_ROUTES` as the map every later extraction plugs into. **The map is empty**, so the gateway is a pass-through and no behaviour changes: that is the point of doing 4.1 before anything is extracted. Adding an entry is the only change a later step makes to the gateway, which is why it is data rather than conditionals in the handler.
+
+A proxy is the first thing in this project that changes the request path, so the gate is not "the gateway works" but **"a client cannot tell the difference"** - same status, same observable headers, same body bytes, across 11 cases: plain GET, query strings, 404, 500, 302, 204, unknown path, JSON POST, text POST, PUT, DELETE.
+
+**The gate caught a real transparency bug on its first run.** Fastify sets a default `content-type: application/json; charset=utf-8` when handed a Buffer with none of its own, so a proxied 302 that upstream sent bare came back with a header the monolith never set. The response is now written through `reply.raw` instead of `reply.send()`, which stops the framework touching it at all - a proxy must not invent headers, and the only way to guarantee that is to opt out of serialisation.
+
+**`apps/**` was invisible to both gates, and that is the finding worth keeping.** The root `tsconfig.json` included only `src/**` and the lint script only globbed `src`, so `npm run typecheck` and `npm run lint` reported success while saying nothing about the new code - the same failure as a rule that never fires, and the third time this phase that a green number turned out to be looking at nothing. The gateway has its own `tsconfig.json` (`rootDir` is `src`, so it could not simply be folded in), `typecheck` now runs both, and `lint` covers `apps/**/*.ts`. Extending the coverage immediately found a type error that had been there all along.
+
+**Two of eight mutations were missed, and both were the test's fault, not the code's:**
+- The hop-by-hop test went through `fetch`, and undici strips `connection` from a response before the test can see it - so it passed with the filter removed entirely. The filters are now exported and asserted directly.
+- The longest-prefix test declared its routes shortest-first, where longest-match and last-match agree, so it could not tell them apart. Adding the same routes in the opposite order separates them.
+
+**Before 4.3, the plan's premise needs correcting.** 4.3 chooses notifications as the first extraction because it is "self-contained". Measured, **6 of its 6 candidate modules use `require('../models')`** - and resolving what they actually name gives **21 schemas, including `Orders`, `Restaurant` and `User`**. A notifications service deciding what to send has to read the orders, restaurant and user collections, so extracting it means either duplicating three core schemas or reading another domain's data. It is self-contained in *code* and not in *data*, and the first extraction should be one that owns its data. `notification.list` + `push.notification.token` (782 lines) is the obvious candidate to re-check first.
+
+**220 tests / 24 files**, both manifests `PARITY OK`, `domain:check` in sync, allowlist 8 edges, lint 0 errors / 6 warnings, `tsc` clean for both projects, `git diff --check` clean.
+
+---
+
 ---
 
 ### Phase 4 — Gateway + first extraction: **notifications**
