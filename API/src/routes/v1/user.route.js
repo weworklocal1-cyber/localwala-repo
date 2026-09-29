@@ -16,7 +16,6 @@
  * LWL|WWL|2026|LOCALWALA|NODE
  */
 
-const express = require('express');
 const appAuth = require('../../middlewares/appAuth');
 const validate = require('../../middlewares/validate');
 
@@ -86,685 +85,977 @@ const SupportChatRoomController = require('../../controllers/support.chat.room.c
 const UserDeleteAccountReasonController = require('../../controllers/user.delete.account.reason.controller');
 const UserNotificationSettingController = require('../../controllers/user.notification.setting.controller');
 
-const router = express.Router();
+module.exports.register = function register(route) {
+  // Profile Routes ///
+  route({
+    method: 'GET',
+    url: '/profile/user/:id',
+    preHandler: [
+      appAuth('getUserProfile'),
+      validate(AuthValidation.profileValidation),
+    ],
+    handler: AuthController.getMyProfile,
+  });
+  route({
+    method: 'PATCH',
+    url: '/profile/update/:id',
+    preHandler: [
+      appAuth('updateUserProfile'),
+      validate(AuthValidation.updateProfileValidation),
+    ],
+    handler: AuthController.updateMyProfile,
+  });
+  route({
+    method: 'GET',
+    url: '/profile/user_avatar',
+    preHandler: [appAuth('getAvatarList')],
+    handler: UserAvatarController.getAvatarList,
+  });
+  route({
+    method: 'GET',
+    url: '/media/photos/:uid',
+    preHandler: [
+      appAuth('getMyMediaFiles'),
+      validate(AuthValidation.getMyMediaFilesValidation),
+    ],
+    handler: MediaController.getMyMediaFiles,
+  });
+  route({
+    method: 'GET',
+    url: '/profile/getReferralCode/:userId',
+    preHandler: [
+      appAuth('getReferralCode'),
+      validate(UserValidation.getReferralCodeValidation),
+    ],
+    handler: UserController.getMyReferralCode,
+  });
+  // Profile Routes ///
 
-// Profile Routes ///
-router.get(
-  '/profile/user/:id',
-  appAuth('getUserProfile'),
-  validate(AuthValidation.profileValidation),
-  AuthController.getMyProfile
-);
-router.patch(
-  '/profile/update/:id',
-  appAuth('updateUserProfile'),
-  validate(AuthValidation.updateProfileValidation),
-  AuthController.updateMyProfile
-);
-router.get('/profile/user_avatar', appAuth('getAvatarList'), UserAvatarController.getAvatarList);
-router.get(
-  '/media/photos/:uid',
-  appAuth('getMyMediaFiles'),
-  validate(AuthValidation.getMyMediaFilesValidation),
-  MediaController.getMyMediaFiles
-);
-router.get(
-  '/profile/getReferralCode/:userId',
-  appAuth('getReferralCode'),
-  validate(UserValidation.getReferralCodeValidation),
-  UserController.getMyReferralCode
-);
-// Profile Routes ///
+  // Favourite Routes //
+  route({
+    method: 'POST',
+    url: '/favourite/save',
+    preHandler: [
+      appAuth('saveFavourite'),
+      validate(FavouriteValidation.saveFavourite),
+    ],
+    handler: FavouriteController.saveFavourite,
+  });
+  route({
+    method: 'POST',
+    url: '/favourite/restaurants',
+    preHandler: [
+      appAuth('getFavouriteRestaurants'),
+      validate(FavouriteValidation.getFavouriteRestaurants),
+    ],
+    handler: FavouriteController.getFavouriteRestaurants,
+  });
+  route({
+    method: 'POST',
+    url: '/favourite/foods',
+    preHandler: [
+      appAuth('getFavouriteFoods'),
+      validate(FavouriteValidation.getFavouriteFoods),
+    ],
+    handler: FavouriteController.getFavouriteFoods,
+  });
+  route({
+    method: 'DELETE',
+    url: '/favourite/foods/:foodId/:userId',
+    preHandler: [
+      appAuth('deleteFavouriteFoods'),
+      validate(FavouriteValidation.deleteFavouriteFoodValidation),
+    ],
+    handler: FavouriteController.deleteFavouriteFood,
+  });
+  route({
+    method: 'DELETE',
+    url: '/favourite/restaurants/:restaurantId/:userId',
+    preHandler: [
+      appAuth('deleteFavouriteRestaurant'),
+      validate(FavouriteValidation.deleteFavouriteRestaurantValidation),
+    ],
+    handler: FavouriteController.deleteFavouriteRestaurant,
+  });
+  // Favourite Routes //
 
-// Favourite Routes //
-router.post(
-  '/favourite/save',
-  appAuth('saveFavourite'),
-  validate(FavouriteValidation.saveFavourite),
-  FavouriteController.saveFavourite
-);
-router.post(
-  '/favourite/restaurants',
-  appAuth('getFavouriteRestaurants'),
-  validate(FavouriteValidation.getFavouriteRestaurants),
-  FavouriteController.getFavouriteRestaurants
-);
-router.post(
-  '/favourite/foods',
-  appAuth('getFavouriteFoods'),
-  validate(FavouriteValidation.getFavouriteFoods),
-  FavouriteController.getFavouriteFoods
-);
-router.delete(
-  '/favourite/foods/:foodId/:userId',
-  appAuth('deleteFavouriteFoods'),
-  validate(FavouriteValidation.deleteFavouriteFoodValidation),
-  FavouriteController.deleteFavouriteFood
-);
-router.delete(
-  '/favourite/restaurants/:restaurantId/:userId',
-  appAuth('deleteFavouriteRestaurant'),
-  validate(FavouriteValidation.deleteFavouriteRestaurantValidation),
-  FavouriteController.deleteFavouriteRestaurant
-);
-// Favourite Routes //
+  // Cart Routes //
 
-// Cart Routes //
+  // Cart Routes //
 
-// Cart Routes //
+  // User Address Routes //
+  route({
+    method: 'POST',
+    url: '/address/save',
+    preHandler: [
+      appAuth('saveAddress'),
+      validate(UserAddressValidation.saveAddress),
+    ],
+    handler: UserAddressController.saveAddress,
+  });
+  route({
+    method: 'GET',
+    url: '/address/deliveryAddressList/:id',
+    preHandler: [
+      appAuth('getMyAddress'),
+      validate(UserAddressValidation.myAddressValidation),
+    ],
+    handler: UserAddressController.getDeliveryAddressList,
+  });
+  route({
+    method: 'PATCH',
+    url: '/address/update/:id',
+    preHandler: [
+      appAuth('updateAddress'),
+      validate(UserAddressValidation.updateValidation),
+    ],
+    handler: UserAddressController.updateAddress,
+  });
+  route({
+    method: 'DELETE',
+    url: '/address/delete/:id',
+    preHandler: [
+      appAuth('deleteAddress'),
+      validate(UserAddressValidation.idValidation),
+    ],
+    handler: UserAddressController.drop,
+  });
+  route({
+    method: 'POST',
+    url: '/address/myAddressListFromRestaurant',
+    preHandler: [
+      appAuth('getMyAddress'),
+      validate(UserAddressValidation.myAddressFromRestaurantValidation),
+    ],
+    handler: UserAddressController.getMyAddressListFromRestaurant,
+  });
+  // User Address Routes //
 
-// User Address Routes //
-router.post(
-  '/address/save',
-  appAuth('saveAddress'),
-  validate(UserAddressValidation.saveAddress),
-  UserAddressController.saveAddress
-);
-router.get(
-  '/address/deliveryAddressList/:id',
-  appAuth('getMyAddress'),
-  validate(UserAddressValidation.myAddressValidation),
-  UserAddressController.getDeliveryAddressList
-);
-router.patch(
-  '/address/update/:id',
-  appAuth('updateAddress'),
-  validate(UserAddressValidation.updateValidation),
-  UserAddressController.updateAddress
-);
-router.delete(
-  '/address/delete/:id',
-  appAuth('deleteAddress'),
-  validate(UserAddressValidation.idValidation),
-  UserAddressController.drop
-);
-router.post(
-  '/address/myAddressListFromRestaurant',
-  appAuth('getMyAddress'),
-  validate(UserAddressValidation.myAddressFromRestaurantValidation),
-  UserAddressController.getMyAddressListFromRestaurant
-);
-// User Address Routes //
+  // Orders Routes //
+  route({
+    method: 'POST',
+    url: '/orders/orderSettings/',
+    preHandler: [
+      appAuth('getOrderSettings'),
+      validate(OrderSettingValidation.settingValidation),
+    ],
+    handler: OrderSettingsController.getOrderSettings,
+  });
+  route({
+    method: 'POST',
+    url: '/orders/placeOrderApp/',
+    preHandler: [
+      appAuth('createOrder'),
+      validate(OrdersValidation.createOrderValidation),
+    ],
+    handler: OrdersController.placeOrderFromApp,
+  });
+  route({
+    method: 'POST',
+    url: '/orders/getMyOrderList/',
+    preHandler: [
+      appAuth('getMyOrderList'),
+      validate(OrdersValidation.orderListValidation),
+    ],
+    handler: OrdersController.getMyOrderList,
+  });
+  route({
+    method: 'POST',
+    url: '/orders/getMyFavouriteOrderList/',
+    preHandler: [
+      appAuth('getMyFavouriteOrderList'),
+      validate(OrdersValidation.favuoriteOrderListValidation),
+    ],
+    handler: OrdersController.getMyFavouriteOrders,
+  });
+  route({
+    method: 'GET',
+    url: '/orders/userOrderDetail/:id/:user',
+    preHandler: [
+      appAuth('userOrderDetail'),
+      validate(OrdersValidation.userOrderIdValidation),
+    ],
+    handler: OrdersController.getUserOrderDetail,
+  });
+  route({
+    method: 'POST',
+    url: '/orders/repayPendingOrder/',
+    preHandler: [
+      appAuth('repayPendingOrder'),
+      validate(OrdersValidation.repayPendingOrderValidation),
+    ],
+    handler: OrdersController.repayPendingOrder,
+  });
+  route({
+    method: 'POST',
+    url: '/orders/cancelMyOrder/',
+    preHandler: [
+      appAuth('cancelMyOrder'),
+      validate(OrdersValidation.cancleUserOrderValidation),
+    ],
+    handler: OrdersController.cancelMyOrder,
+  });
+  route({
+    method: 'GET',
+    url: '/orders/forComplaint/:id',
+    preHandler: [
+      appAuth('detailsForComplaint'),
+      validate(OrdersValidation.orderIdValidation),
+    ],
+    handler: OrdersController.getOrderDetailsForComplaints,
+  });
+  route({
+    method: 'GET',
+    url: '/orders/getOrderDetailsForReview/:id/:user',
+    preHandler: [
+      appAuth('getOrderDetailsForReview'),
+      validate(OrdersValidation.userOrderIdValidation),
+    ],
+    handler: OrdersController.getOrderDetailForReview,
+  });
+  route({
+    method: 'GET',
+    url: '/orders/summary/:id/:user/:locale',
+    preHandler: [
+      appAuth('downloadOrderReceipt'),
+      validate(OrdersValidation.downloadOrderReceiptValidation),
+    ],
+    handler: OrdersController.downloadOrderSummary,
+  });
+  route({
+    method: 'GET',
+    url: '/orders/invoice/:id/:user/:locale',
+    preHandler: [
+      appAuth('downloadOrderReceipt'),
+      validate(OrdersValidation.downloadOrderReceiptValidation),
+    ],
+    handler: OrdersController.downloadOrderInvoice,
+  });
+  // Orders Routes //
 
-// Orders Routes //
-router.post(
-  '/orders/orderSettings/',
-  appAuth('getOrderSettings'),
-  validate(OrderSettingValidation.settingValidation),
-  OrderSettingsController.getOrderSettings
-);
-router.post(
-  '/orders/placeOrderApp/',
-  appAuth('createOrder'),
-  validate(OrdersValidation.createOrderValidation),
-  OrdersController.placeOrderFromApp
-);
-router.post(
-  '/orders/getMyOrderList/',
-  appAuth('getMyOrderList'),
-  validate(OrdersValidation.orderListValidation),
-  OrdersController.getMyOrderList
-);
-router.post(
-  '/orders/getMyFavouriteOrderList/',
-  appAuth('getMyFavouriteOrderList'),
-  validate(OrdersValidation.favuoriteOrderListValidation),
-  OrdersController.getMyFavouriteOrders
-);
-router.get(
-  '/orders/userOrderDetail/:id/:user',
-  appAuth('userOrderDetail'),
-  validate(OrdersValidation.userOrderIdValidation),
-  OrdersController.getUserOrderDetail
-);
-router.post(
-  '/orders/repayPendingOrder/',
-  appAuth('repayPendingOrder'),
-  validate(OrdersValidation.repayPendingOrderValidation),
-  OrdersController.repayPendingOrder
-);
-router.post(
-  '/orders/cancelMyOrder/',
-  appAuth('cancelMyOrder'),
-  validate(OrdersValidation.cancleUserOrderValidation),
-  OrdersController.cancelMyOrder
-);
-router.get(
-  '/orders/forComplaint/:id',
-  appAuth('detailsForComplaint'),
-  validate(OrdersValidation.orderIdValidation),
-  OrdersController.getOrderDetailsForComplaints
-);
-router.get(
-  '/orders/getOrderDetailsForReview/:id/:user',
-  appAuth('getOrderDetailsForReview'),
-  validate(OrdersValidation.userOrderIdValidation),
-  OrdersController.getOrderDetailForReview
-);
-router.get(
-  '/orders/summary/:id/:user/:locale',
-  appAuth('downloadOrderReceipt'),
-  validate(OrdersValidation.downloadOrderReceiptValidation),
-  OrdersController.downloadOrderSummary
-);
-router.get(
-  '/orders/invoice/:id/:user/:locale',
-  appAuth('downloadOrderReceipt'),
-  validate(OrdersValidation.downloadOrderReceiptValidation),
-  OrdersController.downloadOrderInvoice
-);
-// Orders Routes //
+  // Coupon Routes //
+  route({
+    method: 'POST',
+    url: '/coupon/userCoupon/',
+    preHandler: [
+      appAuth('getUserCoupon'),
+      validate(CouponValidation.userValidation),
+    ],
+    handler: CouponController.getUserCoupon,
+  });
+  route({
+    method: 'POST',
+    url: '/coupon/redeem',
+    preHandler: [
+      appAuth('redeeemCoupon'),
+      validate(CouponValidation.redeemValidation),
+    ],
+    handler: CouponController.redeemCoupon,
+  });
+  // Coupon Routes //
 
-// Coupon Routes //
-router.post(
-  '/coupon/userCoupon/',
-  appAuth('getUserCoupon'),
-  validate(CouponValidation.userValidation),
-  CouponController.getUserCoupon
-);
-router.post(
-  '/coupon/redeem',
-  appAuth('redeeemCoupon'),
-  validate(CouponValidation.redeemValidation),
-  CouponController.redeemCoupon
-);
-// Coupon Routes //
+  // Wallet & Loyality Routes //
+  route({
+    method: 'GET',
+    url: '/wallet/getMyWalletData/:user',
+    preHandler: [
+      appAuth('getWallet'),
+      validate(UserValidation.idValidation),
+    ],
+    handler: WalletController.getMyWalletData,
+  });
+  route({
+    method: 'GET',
+    url: '/payments/walletList',
+    preHandler: [appAuth('getPaymentList')],
+    handler: PaymentConfigController.getWalletPaymentList,
+  });
+  route({
+    method: 'POST',
+    url: '/payments/initiate/',
+    preHandler: [
+      appAuth('initiatePayment'),
+      validate(PaymentInitiationValidation.paymentInitiationValidation),
+    ],
+    handler: PaymentInitiationController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/loyaltyPoints/getMyLoyaltyPoints/:user',
+    preHandler: [
+      appAuth('getLoyaltyPoints'),
+      validate(LoyaltyPointValidation.idValidation),
+    ],
+    handler: LoyaltyPointController.getLoyaltyPointsData,
+  });
+  route({
+    method: 'POST',
+    url: '/loyaltyPoints/redeemPoints/',
+    preHandler: [
+      appAuth('redeemPoints'),
+      validate(LoyaltyPointValidation.redeemValidation),
+    ],
+    handler: LoyaltyPointController.redeemLoyaltyPoints,
+  });
+  // Wallet & Loyality Routes //
 
-// Wallet & Loyality Routes //
-router.get(
-  '/wallet/getMyWalletData/:user',
-  appAuth('getWallet'),
-  validate(UserValidation.idValidation),
-  WalletController.getMyWalletData
-);
-router.get(
-  '/payments/walletList',
-  appAuth('getPaymentList'),
-  PaymentConfigController.getWalletPaymentList
-);
-router.post(
-  '/payments/initiate/',
-  appAuth('initiatePayment'),
-  validate(PaymentInitiationValidation.paymentInitiationValidation),
-  PaymentInitiationController.create
-);
-router.get(
-  '/loyaltyPoints/getMyLoyaltyPoints/:user',
-  appAuth('getLoyaltyPoints'),
-  validate(LoyaltyPointValidation.idValidation),
-  LoyaltyPointController.getLoyaltyPointsData
-);
-router.post(
-  '/loyaltyPoints/redeemPoints/',
-  appAuth('redeemPoints'),
-  validate(LoyaltyPointValidation.redeemValidation),
-  LoyaltyPointController.redeemLoyaltyPoints
-);
-// Wallet & Loyality Routes //
+  // Order Cancellation Reason Routes //
+  route({
+    method: 'GET',
+    url: '/cancellation/user',
+    preHandler: [appAuth('cancellationReason')],
+    handler: OrdersCancellationReasonController.getCustomerCancellationList,
+  });
+  // Order Cancellation Reason Routes //
 
-// Order Cancellation Reason Routes //
-router.get(
-  '/cancellation/user',
-  appAuth('cancellationReason'),
-  OrdersCancellationReasonController.getCustomerCancellationList
-);
-// Order Cancellation Reason Routes //
+  // Refund Request Reason List Routes //
+  route({
+    method: 'GET',
+    url: '/refund/reasons',
+    preHandler: [appAuth('getRefundReason')],
+    handler: RefundRequestReasonController.getReasons,
+  });
+  route({
+    method: 'POST',
+    url: '/refund/request/',
+    preHandler: [
+      appAuth('createRefundRequest'),
+      validate(RefundRequestValidation.saveRefundRequestValidation),
+    ],
+    handler: RefundRequestController.saveRefundRequest,
+  });
+  // Refund Request Reason List Routes //
 
-// Refund Request Reason List Routes //
-router.get('/refund/reasons', appAuth('getRefundReason'), RefundRequestReasonController.getReasons);
-router.post(
-  '/refund/request/',
-  appAuth('createRefundRequest'),
-  validate(RefundRequestValidation.saveRefundRequestValidation),
-  RefundRequestController.saveRefundRequest
-);
-// Refund Request Reason List Routes //
+  // Media Routes //
+  route({
+    method: 'POST',
+    url: '/media/deleteMyImage',
+    preHandler: [
+      appAuth('deleteMyImage'),
+      validate(FileUploadValidation.userMediaDropValidation),
+    ],
+    handler: MediaController.dropUserMedia,
+  });
+  // Media Routes //
 
-// Media Routes //
-router.post(
-  '/media/deleteMyImage',
-  appAuth('deleteMyImage'),
-  validate(FileUploadValidation.userMediaDropValidation),
-  MediaController.dropUserMedia
-);
-// Media Routes //
+  // Complaints Routes //
+  route({
+    method: 'POST',
+    url: '/complaints/save',
+    preHandler: [
+      appAuth('saveComplaints'),
+      validate(ComplaintsValidation.saveComplaintValidation),
+    ],
+    handler: ComplaintsController.save,
+  });
+  // Complaints Routes //
 
-// Complaints Routes //
-router.post(
-  '/complaints/save',
-  appAuth('saveComplaints'),
-  validate(ComplaintsValidation.saveComplaintValidation),
-  ComplaintsController.save
-);
-// Complaints Routes //
+  // Hide Restaurant Routes //
+  route({
+    method: 'POST',
+    url: '/hide/restaurant',
+    preHandler: [
+      appAuth('hideRestaurant'),
+      validate(HideRestaurantValidation.hideRestaurantValidation),
+    ],
+    handler: HideRestaurantController.hideRestauarant,
+  });
+  route({
+    method: 'PATCH',
+    url: '/hide_reason/restaurant/update_reason/',
+    preHandler: [
+      appAuth('updateHideReasonRestaurant'),
+      validate(HideRestaurantValidation.updateHideReasonValidation),
+    ],
+    handler: HideRestaurantController.updateHideReason,
+  });
+  route({
+    method: 'POST',
+    url: '/hide/showHiddenRestaurant',
+    preHandler: [
+      appAuth('showHiddenRestaurant'),
+      validate(HideRestaurantValidation.showRestaurantValidation),
+    ],
+    handler: HideRestaurantController.showRestaurant,
+  });
+  route({
+    method: 'GET',
+    url: '/hide_reason/restaurant/',
+    preHandler: [appAuth('getRestaurantHideReason')],
+    handler: HideRestaurantReasonController.getReasons,
+  });
+  route({
+    method: 'POST',
+    url: '/hide/restaurants/get',
+    preHandler: [
+      appAuth('getMyHiddenRestaurants'),
+      validate(HideRestaurantValidation.getMyHiddenRestaurantsValidation),
+    ],
+    handler: HideRestaurantController.getMyHiddenRestaurants,
+  });
+  // Hide Restaurant Routes //
 
-// Hide Restaurant Routes //
-router.post(
-  '/hide/restaurant',
-  appAuth('hideRestaurant'),
-  validate(HideRestaurantValidation.hideRestaurantValidation),
-  HideRestaurantController.hideRestauarant
-);
-router.patch(
-  '/hide_reason/restaurant/update_reason/',
-  appAuth('updateHideReasonRestaurant'),
-  validate(HideRestaurantValidation.updateHideReasonValidation),
-  HideRestaurantController.updateHideReason
-);
-router.post(
-  '/hide/showHiddenRestaurant',
-  appAuth('showHiddenRestaurant'),
-  validate(HideRestaurantValidation.showRestaurantValidation),
-  HideRestaurantController.showRestaurant
-);
-router.get(
-  '/hide_reason/restaurant/',
-  appAuth('getRestaurantHideReason'),
-  HideRestaurantReasonController.getReasons
-);
-router.post(
-  '/hide/restaurants/get',
-  appAuth('getMyHiddenRestaurants'),
-  validate(HideRestaurantValidation.getMyHiddenRestaurantsValidation),
-  HideRestaurantController.getMyHiddenRestaurants
-);
-// Hide Restaurant Routes //
+  // Report Issue Restaurant Routes //
+  route({
+    method: 'GET',
+    url: '/report/reasons',
+    preHandler: [appAuth('getReportReasons')],
+    handler: ReportIssueRestaurantReasonController.getReasons,
+  });
+  route({
+    method: 'POST',
+    url: '/report/restaurant',
+    preHandler: [
+      appAuth('reportRestaurant'),
+      validate(ReportIssueRestaurantValidation.saveIssueValidation),
+    ],
+    handler: ReportIssueRestaurantController.create,
+  });
+  // Report Issue Restaurant Routes //
 
-// Report Issue Restaurant Routes //
-router.get(
-  '/report/reasons',
-  appAuth('getReportReasons'),
-  ReportIssueRestaurantReasonController.getReasons
-);
-router.post(
-  '/report/restaurant',
-  appAuth('reportRestaurant'),
-  validate(ReportIssueRestaurantValidation.saveIssueValidation),
-  ReportIssueRestaurantController.create
-);
-// Report Issue Restaurant Routes //
+  // Favourite Orders Routes //
+  route({
+    method: 'POST',
+    url: '/favouriteOrders/save/',
+    preHandler: [
+      appAuth('saveFavouriteOrder'),
+      validate(FavouriteOrderValidation.saveFavouriteOrderValidation),
+    ],
+    handler: FavouriteOrderController.saveFavourite,
+  });
+  route({
+    method: 'POST',
+    url: '/favouriteOrders/remove/',
+    preHandler: [
+      appAuth('removeFavouriteOrder'),
+      validate(FavouriteOrderValidation.removeFavouriteOrderValidation),
+    ],
+    handler: FavouriteOrderController.removeFavourite,
+  });
+  // Favourite Orders Routes //
 
-// Favourite Orders Routes //
-router.post(
-  '/favouriteOrders/save/',
-  appAuth('saveFavouriteOrder'),
-  validate(FavouriteOrderValidation.saveFavouriteOrderValidation),
-  FavouriteOrderController.saveFavourite
-);
-router.post(
-  '/favouriteOrders/remove/',
-  appAuth('removeFavouriteOrder'),
-  validate(FavouriteOrderValidation.removeFavouriteOrderValidation),
-  FavouriteOrderController.removeFavourite
-);
-// Favourite Orders Routes //
+  // Review & Ratings Routes //
+  route({
+    method: 'POST',
+    url: '/review/save/',
+    preHandler: [
+      appAuth('saveOrderReview'),
+      validate(ReviewRatingValidation.saveReviewValidation),
+    ],
+    handler: ReviewRatingController.saveOrderReview,
+  });
+  route({
+    method: 'GET',
+    url: '/review/restaurant/direct/:restaurant',
+    preHandler: [
+      appAuth('getRestaurantInfoForDirectReview'),
+      validate(RestaurantValidation.getRestaurantInfoForDirectReviewValidation),
+    ],
+    handler: RestaurantController.getRestaurantInfoForDirectReview,
+  });
+  route({
+    method: 'POST',
+    url: '/review/restaurant/direct/save',
+    preHandler: [
+      appAuth('saveDirectRestaurantReview'),
+      validate(ReviewRatingValidation.savePublicRestaurantReviewValidation),
+    ],
+    handler: ReviewRatingController.savePublicRestaurantReview,
+  });
+  route({
+    method: 'GET',
+    url: '/review/myReviewList/:uid',
+    preHandler: [
+      appAuth('myReviewList'),
+      validate(ReviewRatingValidation.getMyReviewListValidation),
+    ],
+    handler: ReviewRatingController.getMyReviewList,
+  });
+  route({
+    method: 'POST',
+    url: '/review/search/restaurants/',
+    preHandler: [
+      appAuth('searchRestaurantForReview'),
+      validate(RestaurantValidation.globalRestaurantSearchForReviewValidation),
+    ],
+    handler: RestaurantController.globalRestaurantSearchForReview,
+  });
+  // Review & Ratings Routes //
 
-// Review & Ratings Routes //
-router.post(
-  '/review/save/',
-  appAuth('saveOrderReview'),
-  validate(ReviewRatingValidation.saveReviewValidation),
-  ReviewRatingController.saveOrderReview
-);
-router.get(
-  '/review/restaurant/direct/:restaurant',
-  appAuth('getRestaurantInfoForDirectReview'),
-  validate(RestaurantValidation.getRestaurantInfoForDirectReviewValidation),
-  RestaurantController.getRestaurantInfoForDirectReview
-);
-router.post(
-  '/review/restaurant/direct/save',
-  appAuth('saveDirectRestaurantReview'),
-  validate(ReviewRatingValidation.savePublicRestaurantReviewValidation),
-  ReviewRatingController.savePublicRestaurantReview
-);
-router.get(
-  '/review/myReviewList/:uid',
-  appAuth('myReviewList'),
-  validate(ReviewRatingValidation.getMyReviewListValidation),
-  ReviewRatingController.getMyReviewList
-);
-router.post(
-  '/review/search/restaurants/',
-  appAuth('searchRestaurantForReview'),
-  validate(RestaurantValidation.globalRestaurantSearchForReviewValidation),
-  RestaurantController.globalRestaurantSearchForReview
-);
-// Review & Ratings Routes //
+  // Notification Routes //
+  route({
+    method: 'GET',
+    url: '/notification/count/:user',
+    preHandler: [
+      appAuth('getNotificationCount'),
+      validate(UserValidation.idValidation),
+    ],
+    handler: NotificationListController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/notification/list/',
+    preHandler: [
+      appAuth('getNotificationList'),
+      validate(UserValidation.notificationListValidation),
+    ],
+    handler: NotificationListController.getMyNotificationList,
+  });
+  route({
+    method: 'GET',
+    url: '/notification/readAll/:user',
+    preHandler: [
+      appAuth('readAllNotification'),
+      validate(UserValidation.idValidation),
+    ],
+    handler: NotificationListController.readAllNotification,
+  });
+  // Notification Routes //
 
-// Notification Routes //
-router.get(
-  '/notification/count/:user',
-  appAuth('getNotificationCount'),
-  validate(UserValidation.idValidation),
-  NotificationListController.get
-);
-router.post(
-  '/notification/list/',
-  appAuth('getNotificationList'),
-  validate(UserValidation.notificationListValidation),
-  NotificationListController.getMyNotificationList
-);
-router.get(
-  '/notification/readAll/:user',
-  appAuth('readAllNotification'),
-  validate(UserValidation.idValidation),
-  NotificationListController.readAllNotification
-);
-// Notification Routes //
+  // Subscription Tiffin Package Routes //
+  route({
+    method: 'GET',
+    url: '/tiffin_packages/buy/:id/',
+    preHandler: [
+      appAuth('buyTiffinSubscription'),
+      validate(SubscriptionTiffinPackageValidation.getDetailValidation),
+    ],
+    handler: SubscriptionTiffinPackageController.buySubscriptionDetails,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_packages/purchase_tiffin_package/',
+    preHandler: [
+      appAuth('purchaseTiffinSubscription'),
+      validate(UserPurchasedTiffinSubscriptionValidation.buyTiffinSubscriptionValidation),
+    ],
+    handler: UserPurchasedTiffinSubscriptionController.purchaseTiffinSubscription,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_packages/purchased/',
+    preHandler: [
+      appAuth('purchasedTiffinSubscriptionList'),
+      validate(UserPurchasedTiffinSubscriptionValidation.purchasedSubscriptionListValidation),
+    ],
+    handler: UserPurchasedTiffinSubscriptionController.getMyPurchasedSubscription,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_packages/purchased/info/',
+    preHandler: [
+      appAuth('purchasedTiffinSubscriptionInfo'),
+      validate(UserPurchasedTiffinSubscriptionValidation.purchasedSubscriptionInfoValidation),
+    ],
+    handler: UserPurchasedTiffinSubscriptionController.getPurchasedSubscriptionInfo,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_packages/repayPendingSubscriptionPackage/',
+    preHandler: [
+      appAuth('repayPendingSubscriptionPackage'),
+      validate(
+      UserPurchasedTiffinSubscriptionValidation.repayPendingSubscriptionTiffinPackageValidation
+    ),
+    ],
+    handler: UserPurchasedTiffinSubscriptionController.repayPendingSubscriptionPackage,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_packages/userCancelTiffinSubscription/',
+    preHandler: [
+      appAuth('userCancelTiffinSubscription'),
+      validate(UserPurchasedTiffinSubscriptionValidation.userCancelTiffinSubscriptionValidation),
+    ],
+    handler: UserPurchasedTiffinSubscriptionController.userCancelTiffinSubscription,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_packages/requestOffDay/',
+    preHandler: [
+      appAuth('userRequestOffDayTiffinSubscription'),
+      validate(UserPurchasedTiffinSubscriptionValidation.userRequestOffDayOnSubscriptionValidation),
+    ],
+    handler: UserPurchasedTiffinSubscriptionController.userRequestOffDayOnSubscription,
+  });
+  route({
+    method: 'GET',
+    url: '/tiffin_packages/summary/:id/:user/:locale',
+    preHandler: [
+      appAuth('download_tiffin_packages_receipt'),
+      validate(UserPurchasedTiffinSubscriptionValidation.downloadBookingReceiptValidation),
+    ],
+    handler: UserPurchasedTiffinSubscriptionController.downloadSummary,
+  });
+  route({
+    method: 'GET',
+    url: '/tiffin_packages/invoice/:id/:user/:locale',
+    preHandler: [
+      appAuth('download_tiffin_packages_receipt'),
+      validate(UserPurchasedTiffinSubscriptionValidation.downloadBookingReceiptValidation),
+    ],
+    handler: UserPurchasedTiffinSubscriptionController.downloadInvoice,
+  });
+  // Subscription Tiffin Package Routes //
 
-// Subscription Tiffin Package Routes //
-router.get(
-  '/tiffin_packages/buy/:id/',
-  appAuth('buyTiffinSubscription'),
-  validate(SubscriptionTiffinPackageValidation.getDetailValidation),
-  SubscriptionTiffinPackageController.buySubscriptionDetails
-);
-router.post(
-  '/tiffin_packages/purchase_tiffin_package/',
-  appAuth('purchaseTiffinSubscription'),
-  validate(UserPurchasedTiffinSubscriptionValidation.buyTiffinSubscriptionValidation),
-  UserPurchasedTiffinSubscriptionController.purchaseTiffinSubscription
-);
-router.post(
-  '/tiffin_packages/purchased/',
-  appAuth('purchasedTiffinSubscriptionList'),
-  validate(UserPurchasedTiffinSubscriptionValidation.purchasedSubscriptionListValidation),
-  UserPurchasedTiffinSubscriptionController.getMyPurchasedSubscription
-);
-router.post(
-  '/tiffin_packages/purchased/info/',
-  appAuth('purchasedTiffinSubscriptionInfo'),
-  validate(UserPurchasedTiffinSubscriptionValidation.purchasedSubscriptionInfoValidation),
-  UserPurchasedTiffinSubscriptionController.getPurchasedSubscriptionInfo
-);
-router.post(
-  '/tiffin_packages/repayPendingSubscriptionPackage/',
-  appAuth('repayPendingSubscriptionPackage'),
-  validate(
-    UserPurchasedTiffinSubscriptionValidation.repayPendingSubscriptionTiffinPackageValidation
-  ),
-  UserPurchasedTiffinSubscriptionController.repayPendingSubscriptionPackage
-);
-router.post(
-  '/tiffin_packages/userCancelTiffinSubscription/',
-  appAuth('userCancelTiffinSubscription'),
-  validate(UserPurchasedTiffinSubscriptionValidation.userCancelTiffinSubscriptionValidation),
-  UserPurchasedTiffinSubscriptionController.userCancelTiffinSubscription
-);
-router.post(
-  '/tiffin_packages/requestOffDay/',
-  appAuth('userRequestOffDayTiffinSubscription'),
-  validate(UserPurchasedTiffinSubscriptionValidation.userRequestOffDayOnSubscriptionValidation),
-  UserPurchasedTiffinSubscriptionController.userRequestOffDayOnSubscription
-);
-router.get(
-  '/tiffin_packages/summary/:id/:user/:locale',
-  appAuth('download_tiffin_packages_receipt'),
-  validate(UserPurchasedTiffinSubscriptionValidation.downloadBookingReceiptValidation),
-  UserPurchasedTiffinSubscriptionController.downloadSummary
-);
-router.get(
-  '/tiffin_packages/invoice/:id/:user/:locale',
-  appAuth('download_tiffin_packages_receipt'),
-  validate(UserPurchasedTiffinSubscriptionValidation.downloadBookingReceiptValidation),
-  UserPurchasedTiffinSubscriptionController.downloadInvoice
-);
-// Subscription Tiffin Package Routes //
+  // Tiffin Subscription Cancellation Reason Routes //
+  route({
+    method: 'GET',
+    url: '/tiffin_subscription_cancel_reason/user',
+    preHandler: [appAuth('tiffinSubscriptionCancellationReason')],
+    handler: TiffinSubscriptionCancellationReasonController.getCustomerCancellationList,
+  });
+  // Tiffin Subscription Cancellation Reason Routes //
 
-// Tiffin Subscription Cancellation Reason Routes //
-router.get(
-  '/tiffin_subscription_cancel_reason/user',
-  appAuth('tiffinSubscriptionCancellationReason'),
-  TiffinSubscriptionCancellationReasonController.getCustomerCancellationList
-);
-// Tiffin Subscription Cancellation Reason Routes //
+  /// Tiffin Subscription Refund Routes //
+  route({
+    method: 'GET',
+    url: '/tiffin_subscription_refund/reasons',
+    preHandler: [appAuth('getTiffinSubscriptionRefundReason')],
+    handler: TiffinSubscriptionRefundRequestReasonController.getReasons,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_subscription_refund/sendRefundRequest/',
+    preHandler: [
+      appAuth('sendTiffinSubscriptionRefundRequest'),
+      validate(TiffinSubscriptionRefundRequestValidation.saveRefundRequestValidation),
+    ],
+    handler: TiffinSubscriptionRefundRequestController.saveRefundRequest,
+  });
+  /// Tiffin Subscription Refund Routes //
 
-/// Tiffin Subscription Refund Routes //
-router.get(
-  '/tiffin_subscription_refund/reasons',
-  appAuth('getTiffinSubscriptionRefundReason'),
-  TiffinSubscriptionRefundRequestReasonController.getReasons
-);
-router.post(
-  '/tiffin_subscription_refund/sendRefundRequest/',
-  appAuth('sendTiffinSubscriptionRefundRequest'),
-  validate(TiffinSubscriptionRefundRequestValidation.saveRefundRequestValidation),
-  TiffinSubscriptionRefundRequestController.saveRefundRequest
-);
-/// Tiffin Subscription Refund Routes //
+  /// Dining Bookings Routes //
+  route({
+    method: 'POST',
+    url: '/dining_booking/confirm/',
+    preHandler: [
+      appAuth('confirmDiningBooking'),
+      validate(DiningBookingValidation.diningBookingConfirmValidation),
+    ],
+    handler: RestaurantController.getDiningBookingConfirmInformation,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_coupon/redeem/:user/:coupon',
+    preHandler: [
+      appAuth('redeeemDiningCoupon'),
+      validate(DiningCouponValidation.redeemValidation),
+    ],
+    handler: DiningCouponController.redeemCoupon,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_booking/create/',
+    preHandler: [
+      appAuth('createDiningBooking'),
+      validate(DiningBookingValidation.createBookingValidation),
+    ],
+    handler: DiningBookingController.createBooking,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_booking/search/:uid/:query',
+    preHandler: [
+      appAuth('searchDiningBooking'),
+      validate(DiningBookingValidation.queryValidation),
+    ],
+    handler: DiningBookingController.searchDiningBooking,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_booking/list/',
+    preHandler: [
+      appAuth('diningBookingList'),
+      validate(DiningBookingValidation.diningBookingByUserIdValidation),
+    ],
+    handler: DiningBookingController.getDiningBookingWithUserId,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_booking/information/',
+    preHandler: [
+      appAuth('diningBookingInformation'),
+      validate(DiningBookingValidation.getUserDiningBookingInformationValidation),
+    ],
+    handler: DiningBookingController.getUserDiningBookingInformation,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_booking/repayPendingBooking/',
+    preHandler: [
+      appAuth('repayPendingBooking'),
+      validate(DiningBookingValidation.repayPendingBookingValidation),
+    ],
+    handler: DiningBookingController.repayPendingBooking,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_booking/cancellation/user',
+    preHandler: [appAuth('diningBookingCancellationReason')],
+    handler: DiningCancellationReasonController.getCustomerCancellationList,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_booking/cancelMyDiningBooking/',
+    preHandler: [
+      appAuth('cancelMyDiningBooking'),
+      validate(DiningBookingValidation.cancleUserDiningBookingValidation),
+    ],
+    handler: DiningBookingController.cancelMyDiningBooking,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_booking_refund/reasons',
+    preHandler: [appAuth('getDiningBookingRefundReason')],
+    handler: DiningBookingRefundRequestReasonController.getReasons,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_booking_refund/request/',
+    preHandler: [
+      appAuth('createDiningBookingRefundRequest'),
+      validate(DiningBookingRefundRequestValidation.saveRefundRequestValidation),
+    ],
+    handler: DiningBookingRefundRequestController.saveRefundRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_booking/summary/:id/:user/:locale',
+    preHandler: [
+      appAuth('download_booking_receipt'),
+      validate(DiningBookingValidation.downloadBookingReceiptValidation),
+    ],
+    handler: DiningBookingController.downloadBookingSummary,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_booking/invoice/:id/:user/:locale',
+    preHandler: [
+      appAuth('download_booking_receipt'),
+      validate(DiningBookingValidation.downloadBookingReceiptValidation),
+    ],
+    handler: DiningBookingController.downloadBookingInvoice,
+  });
+  /// Dining Bookings Routes //
 
-/// Dining Bookings Routes //
-router.post(
-  '/dining_booking/confirm/',
-  appAuth('confirmDiningBooking'),
-  validate(DiningBookingValidation.diningBookingConfirmValidation),
-  RestaurantController.getDiningBookingConfirmInformation
-);
-router.get(
-  '/dining_coupon/redeem/:user/:coupon',
-  appAuth('redeeemDiningCoupon'),
-  validate(DiningCouponValidation.redeemValidation),
-  DiningCouponController.redeemCoupon
-);
-router.post(
-  '/dining_booking/create/',
-  appAuth('createDiningBooking'),
-  validate(DiningBookingValidation.createBookingValidation),
-  DiningBookingController.createBooking
-);
-router.get(
-  '/dining_booking/search/:uid/:query',
-  appAuth('searchDiningBooking'),
-  validate(DiningBookingValidation.queryValidation),
-  DiningBookingController.searchDiningBooking
-);
-router.post(
-  '/dining_booking/list/',
-  appAuth('diningBookingList'),
-  validate(DiningBookingValidation.diningBookingByUserIdValidation),
-  DiningBookingController.getDiningBookingWithUserId
-);
-router.post(
-  '/dining_booking/information/',
-  appAuth('diningBookingInformation'),
-  validate(DiningBookingValidation.getUserDiningBookingInformationValidation),
-  DiningBookingController.getUserDiningBookingInformation
-);
-router.post(
-  '/dining_booking/repayPendingBooking/',
-  appAuth('repayPendingBooking'),
-  validate(DiningBookingValidation.repayPendingBookingValidation),
-  DiningBookingController.repayPendingBooking
-);
-router.get(
-  '/dining_booking/cancellation/user',
-  appAuth('diningBookingCancellationReason'),
-  DiningCancellationReasonController.getCustomerCancellationList
-);
-router.post(
-  '/dining_booking/cancelMyDiningBooking/',
-  appAuth('cancelMyDiningBooking'),
-  validate(DiningBookingValidation.cancleUserDiningBookingValidation),
-  DiningBookingController.cancelMyDiningBooking
-);
-router.get(
-  '/dining_booking_refund/reasons',
-  appAuth('getDiningBookingRefundReason'),
-  DiningBookingRefundRequestReasonController.getReasons
-);
-router.post(
-  '/dining_booking_refund/request/',
-  appAuth('createDiningBookingRefundRequest'),
-  validate(DiningBookingRefundRequestValidation.saveRefundRequestValidation),
-  DiningBookingRefundRequestController.saveRefundRequest
-);
-router.get(
-  '/dining_booking/summary/:id/:user/:locale',
-  appAuth('download_booking_receipt'),
-  validate(DiningBookingValidation.downloadBookingReceiptValidation),
-  DiningBookingController.downloadBookingSummary
-);
-router.get(
-  '/dining_booking/invoice/:id/:user/:locale',
-  appAuth('download_booking_receipt'),
-  validate(DiningBookingValidation.downloadBookingReceiptValidation),
-  DiningBookingController.downloadBookingInvoice
-);
-/// Dining Bookings Routes //
+  // Payment Transaction Routes //
+  route({
+    method: 'POST',
+    url: '/transaction/orders/',
+    preHandler: [
+      appAuth('getUserOrderTransactions'),
+      validate(PaymentInitiationValidation.getUserOrderTransactionsValidation),
+    ],
+    handler: PaymentInitiationController.getUserOrderTransaction,
+  });
+  route({
+    method: 'POST',
+    url: '/transaction/booking/',
+    preHandler: [
+      appAuth('getUserDiningTransactions'),
+      validate(PaymentInitiationValidation.getUserDiningransactionsValidation),
+    ],
+    handler: PaymentInitiationController.getUserDiningTransaction,
+  });
+  route({
+    method: 'POST',
+    url: '/transaction/food_subscription/',
+    preHandler: [
+      appAuth('getFoodSubscriptionTransactions'),
+      validate(PaymentInitiationValidation.getUserFoodSubscriptionTransactionsValidation),
+    ],
+    handler: PaymentInitiationController.getUserFoodSubscriptionTransaction,
+  });
+  // Payment Transaction Routes //
 
-// Payment Transaction Routes //
-router.post(
-  '/transaction/orders/',
-  appAuth('getUserOrderTransactions'),
-  validate(PaymentInitiationValidation.getUserOrderTransactionsValidation),
-  PaymentInitiationController.getUserOrderTransaction
-);
-router.post(
-  '/transaction/booking/',
-  appAuth('getUserDiningTransactions'),
-  validate(PaymentInitiationValidation.getUserDiningransactionsValidation),
-  PaymentInitiationController.getUserDiningTransaction
-);
-router.post(
-  '/transaction/food_subscription/',
-  appAuth('getFoodSubscriptionTransactions'),
-  validate(PaymentInitiationValidation.getUserFoodSubscriptionTransactionsValidation),
-  PaymentInitiationController.getUserFoodSubscriptionTransaction
-);
-// Payment Transaction Routes //
+  // Phone Number Call Routes //
+  route({
+    method: 'GET',
+    url: '/driver/call/:driver',
+    preHandler: [
+      appAuth('fetchDriverPhoneNumber'),
+      validate(OrdersValidation.fetchDriverPhoneNumberValidation),
+    ],
+    handler: OrdersController.fetchDriverPhoneNumber,
+  });
+  // Phone Number Call Routes //
 
-// Phone Number Call Routes //
-router.get(
-  '/driver/call/:driver',
-  appAuth('fetchDriverPhoneNumber'),
-  validate(OrdersValidation.fetchDriverPhoneNumberValidation),
-  OrdersController.fetchDriverPhoneNumber
-);
-// Phone Number Call Routes //
+  /// Chat Messages Routes //
+  route({
+    method: 'POST',
+    url: '/chat_room/fetchMessages/',
+    preHandler: [
+      appAuth('fetchChatMessages'),
+      validate(ChatRoomValidation.checkChatRoomValidation),
+    ],
+    handler: ChatRoomController.checkChatRoom,
+  });
+  route({
+    method: 'POST',
+    url: '/chat_room/sendMessage/',
+    preHandler: [
+      appAuth('sendChatMessage'),
+      validate(ChatRoomValidation.sendChatMessageValidation),
+    ],
+    handler: ChatRoomController.saveNewMessage,
+  });
+  route({
+    method: 'GET',
+    url: '/chat_room/list/:user',
+    preHandler: [
+      appAuth('getChatList'),
+      validate(ChatRoomValidation.chatListValidation),
+    ],
+    handler: ChatRoomController.getMyConversionList,
+  });
+  route({
+    method: 'POST',
+    url: '/chat_room/conversion',
+    preHandler: [
+      appAuth('getChatConversion'),
+      validate(ChatRoomValidation.getChatConversionValidation),
+    ],
+    handler: ChatRoomController.getChatConversion,
+  });
+  /// Chat Messages Routes //
 
-/// Chat Messages Routes //
-router.post(
-  '/chat_room/fetchMessages/',
-  appAuth('fetchChatMessages'),
-  validate(ChatRoomValidation.checkChatRoomValidation),
-  ChatRoomController.checkChatRoom
-);
-router.post(
-  '/chat_room/sendMessage/',
-  appAuth('sendChatMessage'),
-  validate(ChatRoomValidation.sendChatMessageValidation),
-  ChatRoomController.saveNewMessage
-);
-router.get(
-  '/chat_room/list/:user',
-  appAuth('getChatList'),
-  validate(ChatRoomValidation.chatListValidation),
-  ChatRoomController.getMyConversionList
-);
-router.post(
-  '/chat_room/conversion',
-  appAuth('getChatConversion'),
-  validate(ChatRoomValidation.getChatConversionValidation),
-  ChatRoomController.getChatConversion
-);
-/// Chat Messages Routes //
+  // Support Chat Message Routes //
+  route({
+    method: 'POST',
+    url: '/support_chat_room/fetchMessages/',
+    preHandler: [
+      appAuth('fetchChatMessages'),
+      validate(ChatRoomValidation.supportChatRoomValidation),
+    ],
+    handler: SupportChatRoomController.checkChatRoom,
+  });
+  route({
+    method: 'GET',
+    url: '/support_chat_room/list/:user',
+    preHandler: [
+      appAuth('getChatList'),
+      validate(ChatRoomValidation.chatListValidation),
+    ],
+    handler: SupportChatRoomController.mySupportChat,
+  });
+  route({
+    method: 'POST',
+    url: '/support_chat_room/sendMessage/',
+    preHandler: [
+      appAuth('sendChatMessage'),
+      validate(ChatRoomValidation.sendChatMessageValidation),
+    ],
+    handler: SupportChatRoomController.saveNewMessage,
+  });
+  route({
+    method: 'POST',
+    url: '/support_chat_room/conversion',
+    preHandler: [
+      appAuth('getChatConversion'),
+      validate(ChatRoomValidation.getChatConversionValidation),
+    ],
+    handler: SupportChatRoomController.getChatConversion,
+  });
+  // Support Chat Message Routes //
 
-// Support Chat Message Routes //
-router.post(
-  '/support_chat_room/fetchMessages/',
-  appAuth('fetchChatMessages'),
-  validate(ChatRoomValidation.supportChatRoomValidation),
-  SupportChatRoomController.checkChatRoom
-);
-router.get(
-  '/support_chat_room/list/:user',
-  appAuth('getChatList'),
-  validate(ChatRoomValidation.chatListValidation),
-  SupportChatRoomController.mySupportChat
-);
-router.post(
-  '/support_chat_room/sendMessage/',
-  appAuth('sendChatMessage'),
-  validate(ChatRoomValidation.sendChatMessageValidation),
-  SupportChatRoomController.saveNewMessage
-);
-router.post(
-  '/support_chat_room/conversion',
-  appAuth('getChatConversion'),
-  validate(ChatRoomValidation.getChatConversionValidation),
-  SupportChatRoomController.getChatConversion
-);
-// Support Chat Message Routes //
+  // Account Settings Routes//
+  route({
+    method: 'PATCH',
+    url: '/account_setting/update_password/:id',
+    preHandler: [
+      appAuth('update_password'),
+      validate(UserValidation.updatePasswordValidation),
+    ],
+    handler: UserController.updatePassword,
+  });
+  route({
+    method: 'PATCH',
+    url: '/account_setting/update_email/:id',
+    preHandler: [
+      appAuth('update_email'),
+      validate(UserValidation.updateEmailValidation),
+    ],
+    handler: UserController.updateEmail,
+  });
+  route({
+    method: 'PATCH',
+    url: '/account_setting/update_email_after_verification/:id',
+    preHandler: [
+      appAuth('update_email'),
+      validate(UserValidation.updateEmailAfterVerificationValidation),
+    ],
+    handler: UserController.updateEmailAfterVerification,
+  });
+  route({
+    method: 'PATCH',
+    url: '/account_setting/update_mobile_number/:id',
+    preHandler: [
+      appAuth('update_mobile_number'),
+      validate(UserValidation.updateMobileValidation),
+    ],
+    handler: UserController.updateMobileNumber,
+  });
+  route({
+    method: 'PATCH',
+    url: '/account_setting/update_mobile_number_after_verification/:id',
+    preHandler: [
+      appAuth('update_mobile_number'),
+      validate(UserValidation.updateMobileAfterVerificationValidation),
+    ],
+    handler: UserController.updateMobileAfterVerification,
+  });
+  route({
+    method: 'PATCH',
+    url: '/account_setting/update_mobile_number_after_firebase_verification/:id',
+    preHandler: [
+      appAuth('update_mobile_number'),
+      validate(UserValidation.updateMobileAfterFirebaseVerificationValidation),
+    ],
+    handler: UserController.updateMobileAfterFirebaseVerification,
+  });
+  route({
+    method: 'GET',
+    url: '/delete_account_reason_list',
+    preHandler: [appAuth('delete_account_reason_list')],
+    handler: UserDeleteAccountReasonController.getUserActiveReason,
+  });
+  route({
+    method: 'POST',
+    url: '/account_setting/delete_account',
+    preHandler: [
+      appAuth('delete_account'),
+      validate(UserValidation.deleteUserAccountValidation),
+    ],
+    handler: UserController.deleteUserAccount,
+  });
 
-// Account Settings Routes//
-router.patch(
-  '/account_setting/update_password/:id',
-  appAuth('update_password'),
-  validate(UserValidation.updatePasswordValidation),
-  UserController.updatePassword
-);
-router.patch(
-  '/account_setting/update_email/:id',
-  appAuth('update_email'),
-  validate(UserValidation.updateEmailValidation),
-  UserController.updateEmail
-);
-router.patch(
-  '/account_setting/update_email_after_verification/:id',
-  appAuth('update_email'),
-  validate(UserValidation.updateEmailAfterVerificationValidation),
-  UserController.updateEmailAfterVerification
-);
-router.patch(
-  '/account_setting/update_mobile_number/:id',
-  appAuth('update_mobile_number'),
-  validate(UserValidation.updateMobileValidation),
-  UserController.updateMobileNumber
-);
-router.patch(
-  '/account_setting/update_mobile_number_after_verification/:id',
-  appAuth('update_mobile_number'),
-  validate(UserValidation.updateMobileAfterVerificationValidation),
-  UserController.updateMobileAfterVerification
-);
-router.patch(
-  '/account_setting/update_mobile_number_after_firebase_verification/:id',
-  appAuth('update_mobile_number'),
-  validate(UserValidation.updateMobileAfterFirebaseVerificationValidation),
-  UserController.updateMobileAfterFirebaseVerification
-);
-router.get(
-  '/delete_account_reason_list',
-  appAuth('delete_account_reason_list'),
-  UserDeleteAccountReasonController.getUserActiveReason
-);
-router.post(
-  '/account_setting/delete_account',
-  appAuth('delete_account'),
-  validate(UserValidation.deleteUserAccountValidation),
-  UserController.deleteUserAccount
-);
-
-router.get(
-  '/account_setting/notification_setting/:id',
-  appAuth('notification_setting'),
-  validate(UserNotificationSettingValidation.idValidation),
-  UserNotificationSettingController.getNotificationSettings
-);
-router.patch(
-  '/account_setting/notification_setting/:id',
-  appAuth('notification_setting'),
-  validate(UserNotificationSettingValidation.updateSettingValidation),
-  UserNotificationSettingController.updateNotificationSetting
-);
-router.patch(
-  '/account_setting/update_locale/',
-  appAuth('update_locale'),
-  validate(UserValidation.updateLocaleValidation),
-  UserController.updateUserLocale
-);
-// Account Settings Routes//
-
-module.exports = router;
-
+  route({
+    method: 'GET',
+    url: '/account_setting/notification_setting/:id',
+    preHandler: [
+      appAuth('notification_setting'),
+      validate(UserNotificationSettingValidation.idValidation),
+    ],
+    handler: UserNotificationSettingController.getNotificationSettings,
+  });
+  route({
+    method: 'PATCH',
+    url: '/account_setting/notification_setting/:id',
+    preHandler: [
+      appAuth('notification_setting'),
+      validate(UserNotificationSettingValidation.updateSettingValidation),
+    ],
+    handler: UserNotificationSettingController.updateNotificationSetting,
+  });
+  route({
+    method: 'PATCH',
+    url: '/account_setting/update_locale/',
+    preHandler: [
+      appAuth('update_locale'),
+      validate(UserValidation.updateLocaleValidation),
+    ],
+    handler: UserController.updateUserLocale,
+  });
+  // Account Settings Routes//
+};

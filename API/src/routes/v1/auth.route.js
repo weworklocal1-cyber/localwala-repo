@@ -16,402 +16,504 @@
  * LWL|WWL|2026|LOCALWALA|NODE
  */
 
-const express = require('express');
 const validate = require('../../middlewares/validate');
 const AuthValidation = require('../../validations/auth.validation');
 const AuthController = require('../../controllers/auth.controller');
 
-const router = express.Router();
+module.exports.register = function register(route) {
+  route({
+    method: 'POST',
+    url: '/verifyAccount',
+    preHandler: [validate(AuthValidation.userRegister)],
+    handler: AuthController.verifyUserRegisterAccount,
+  });
+  route({
+    method: 'POST',
+    url: '/verifyOTP',
+    preHandler: [validate(AuthValidation.verifyOTP)],
+    handler: AuthController.verifyOTP,
+  });
+  route({
+    method: 'GET',
+    url: '/resendOTP/:id',
+    preHandler: [validate(AuthValidation.resendOTP)],
+    handler: AuthController.resendOTP,
+  });
+  route({
+    method: 'POST',
+    url: '/register-user-account',
+    preHandler: [validate(AuthValidation.userRegister)],
+    handler: AuthController.register,
+  });
+  route({
+    method: 'POST',
+    url: '/register-user-account-firebase',
+    preHandler: [validate(AuthValidation.userRegisterFirebaseVerification)],
+    handler: AuthController.registerFirebaseAccount,
+  });
+  route({
+    method: 'POST',
+    url: '/register-admin-account',
+    preHandler: [validate(AuthValidation.registerAdmin)],
+    handler: AuthController.registerAdminAccount,
+  });
+  route({
+    method: 'POST',
+    url: '/customer/login',
+    preHandler: [validate(AuthValidation.loginWithEmailPassword)],
+    handler: AuthController.userLoginWithEmailAndPassword,
+  });
+  route({
+    method: 'POST',
+    url: '/customer/login_cmp',
+    preHandler: [validate(AuthValidation.loginWithCountryCodeAndMobilePassword)],
+    handler: AuthController.userLoginWithCountryCodeAndMobilePassword,
+  });
+  route({
+    method: 'POST',
+    url: '/customer/login_eo_verification',
+    preHandler: [validate(AuthValidation.emailOtpValidation)],
+    handler: AuthController.userLoginWithEmailOtpVerification,
+  });
+  route({
+    method: 'POST',
+    url: '/customer/login_eo',
+    preHandler: [validate(AuthValidation.loginWithEmailOTPValidation)],
+    handler: AuthController.userLoginWithEmailOtp,
+  });
+  route({
+    method: 'POST',
+    url: '/customer/login_po_verification',
+    preHandler: [validate(AuthValidation.phoneOtpValidation)],
+    handler: AuthController.userLoginWithPhoneOtpVerification,
+  });
+  route({
+    method: 'POST',
+    url: '/customer/login_po/',
+    preHandler: [validate(AuthValidation.userLoginWithPhoneOTPValidation)],
+    handler: AuthController.userLoginWithPhoneOTP,
+  });
+  route({
+    method: 'POST',
+    url: '/customer/login_po_firebase',
+    preHandler: [validate(AuthValidation.userLoginWithFirebasePhoneOTPValidation)],
+    handler: AuthController.verifyUserLoginFirebaseOTP,
+  });
+  route({
+    method: 'POST',
+    url: '/customer/login_with_google_account/',
+    preHandler: [validate(AuthValidation.googleLoginValidation)],
+    handler: AuthController.userLoginWithGoogleAccount,
+  });
+  route({
+    method: 'POST',
+    url: '/customer/check_mobile_exist/',
+    preHandler: [validate(AuthValidation.checkMobileNumberExistValidation)],
+    handler: AuthController.checkMobileNumberExist,
+  });
+  route({
+    method: 'POST',
+    url: '/customer/create_google_user_account/',
+    preHandler: [validate(AuthValidation.registerGoogleAccountValidation)],
+    handler: AuthController.createGoogleUserAccount,
+  });
+  route({
+    method: 'POST',
+    url: '/customer/login_with_facebook_account/',
+    preHandler: [validate(AuthValidation.facebookLoginValidation)],
+    handler: AuthController.userLoginWithFacebookAccount,
+  });
+  route({
+    method: 'POST',
+    url: '/customer/create_facebook_user_account/',
+    preHandler: [validate(AuthValidation.registerFacebookAccountValidation)],
+    handler: AuthController.createFacebookUserAccount,
+  });
+  route({
+    method: 'POST',
+    url: '/admin/login',
+    preHandler: [validate(AuthValidation.loginWithEmailPassword)],
+    handler: AuthController.adminLoginWithEmailAndPassword,
+  });
+  route({
+    method: 'POST',
+    url: '/vendor/login',
+    preHandler: [validate(AuthValidation.loginWithEmailPassword)],
+    handler: AuthController.vendorLoginWithEmailAndPassword,
+  });
+  route({
+    method: 'POST',
+    url: '/vendor_web/login',
+    preHandler: [validate(AuthValidation.loginWithEmailPassword)],
+    handler: AuthController.vendorWebLoginWithEmailAndPassword,
+  });
+  route({
+    method: 'POST',
+    url: '/vendor/login_cmp',
+    preHandler: [validate(AuthValidation.loginWithCountryCodeAndMobilePassword)],
+    handler: AuthController.vendorLoginWithCountryCodeAndMobilePassword,
+  });
+  route({
+    method: 'POST',
+    url: '/vendor/login_cmp_web',
+    preHandler: [validate(AuthValidation.loginWithCountryCodeAndMobilePassword)],
+    handler: AuthController.vendorWebLoginWithCountryCodeAndMobilePassword,
+  });
+  route({
+    method: 'POST',
+    url: '/vendor/login_eo_verification',
+    preHandler: [validate(AuthValidation.emailOtpValidation)],
+    handler: AuthController.vendorLoginWithEmailOtpVerification,
+  });
+  route({
+    method: 'POST',
+    url: '/vendor/login_eo',
+    preHandler: [validate(AuthValidation.loginWithEmailOTPValidation)],
+    handler: AuthController.vendorLoginWithEmailOtp,
+  });
+  route({
+    method: 'POST',
+    url: '/vendor/login_eo_web',
+    preHandler: [validate(AuthValidation.loginWithEmailOTPValidation)],
+    handler: AuthController.vendorWebLoginWithEmailOtp,
+  });
+  route({
+    method: 'POST',
+    url: '/vendor/login_po_verification',
+    preHandler: [validate(AuthValidation.phoneOtpValidation)],
+    handler: AuthController.vendorLoginWithPhoneOtpVerification,
+  });
+  route({
+    method: 'POST',
+    url: '/vendor/login_po_web_verification',
+    preHandler: [validate(AuthValidation.phoneOtpWebValidation)],
+    handler: AuthController.vendorWebLoginWithPhoneOtpVerification,
+  });
+  route({
+    method: 'POST',
+    url: '/vendor/login_po/',
+    preHandler: [validate(AuthValidation.userLoginWithPhoneOTPValidation)],
+    handler: AuthController.vendorLoginWithPhoneOTP,
+  });
+  route({
+    method: 'POST',
+    url: '/vendor/login_po_web/',
+    preHandler: [validate(AuthValidation.userLoginWithPhoneOTPValidation)],
+    handler: AuthController.vendorWebLoginWithPhoneOTP,
+  });
+  route({
+    method: 'POST',
+    url: '/vendor/login_po_firebase/',
+    preHandler: [validate(AuthValidation.userLoginWithFirebasePhoneOTPValidation)],
+    handler: AuthController.verifyVendorLoginFirebaseOTP,
+  });
+  route({
+    method: 'POST',
+    url: '/vendor/login_po_firebase_web/',
+    preHandler: [validate(AuthValidation.userWebLoginWithFirebasePhoneOTPValidation)],
+    handler: AuthController.verifyWebVendorLoginFirebaseOTP,
+  });
+  route({
+    method: 'POST',
+    url: '/vendor/login_with_google_account/',
+    preHandler: [validate(AuthValidation.googleLoginValidation)],
+    handler: AuthController.vendorLoginWithGoogleAccount,
+  });
+  route({
+    method: 'POST',
+    url: '/vendor/login_with_facebook_account/',
+    preHandler: [validate(AuthValidation.facebookLoginValidation)],
+    handler: AuthController.vendorLoginWithFacebookAccount,
+  });
+  route({
+    method: 'POST',
+    url: '/driver/login',
+    preHandler: [validate(AuthValidation.loginWithEmailPassword)],
+    handler: AuthController.driverLognWithEmailAndPassword,
+  });
+  route({
+    method: 'POST',
+    url: '/driver/login_cmp',
+    preHandler: [validate(AuthValidation.loginWithCountryCodeAndMobilePassword)],
+    handler: AuthController.driverLoginWithCountryCodeAndMobilePassword,
+  });
+  route({
+    method: 'POST',
+    url: '/driver/login_eo_verification',
+    preHandler: [validate(AuthValidation.emailOtpValidation)],
+    handler: AuthController.driverLoginWithEmailOtpVerification,
+  });
+  route({
+    method: 'POST',
+    url: '/driver/login_eo',
+    preHandler: [validate(AuthValidation.loginWithEmailOTPValidation)],
+    handler: AuthController.driverLoginWithEmailOtp,
+  });
+  route({
+    method: 'POST',
+    url: '/driver/login_po_verification',
+    preHandler: [validate(AuthValidation.phoneOtpValidation)],
+    handler: AuthController.driverLoginWithPhoneOtpVerification,
+  });
+  route({
+    method: 'POST',
+    url: '/driver/login_po/',
+    preHandler: [validate(AuthValidation.userLoginWithPhoneOTPValidation)],
+    handler: AuthController.driverLoginWithPhoneOTP,
+  });
+  route({
+    method: 'POST',
+    url: '/driver/login_po_firebase',
+    preHandler: [validate(AuthValidation.userLoginWithFirebasePhoneOTPValidation)],
+    handler: AuthController.verifyDriverLoginFirebaseOTP,
+  });
+  route({
+    method: 'POST',
+    url: '/driver/login_with_google_account/',
+    preHandler: [validate(AuthValidation.googleLoginValidation)],
+    handler: AuthController.driverLoginWithGoogleAccount,
+  });
+  route({
+    method: 'POST',
+    url: '/driver/login_with_facebook_account/',
+    preHandler: [validate(AuthValidation.facebookLoginValidation)],
+    handler: AuthController.driverLoginWithFacebookAccount,
+  });
+  route({
+    method: 'GET',
+    url: '/register_guest_account/:agent/:locale',
+    preHandler: [validate(AuthValidation.createGuestAccount)],
+    handler: AuthController.createGuestAccount,
+  });
+  route({
+    method: 'POST',
+    url: '/logout',
+    preHandler: [validate(AuthValidation.logout)],
+    handler: AuthController.logout,
+  });
+  route({
+    method: 'POST',
+    url: '/logout_web',
+    handler: AuthController.logoutWeb,
+  });
+  route({
+    method: 'POST',
+    url: '/refresh-tokens-web',
+    handler: AuthController.refreshTokensWeb,
+  });
+  route({
+    method: 'POST',
+    url: '/refresh-tokens-app',
+    preHandler: [validate(AuthValidation.refreshTokens)],
+    handler: AuthController.refreshTokensApp,
+  });
+  route({
+    method: 'POST',
+    url: '/forgot-password-email',
+    preHandler: [validate(AuthValidation.forgotPasswordWithEmail)],
+    handler: AuthController.forgotPasswordWithEmail,
+  });
+  route({
+    method: 'POST',
+    url: '/forgot-password-phone',
+    preHandler: [validate(AuthValidation.forgotPasswordWithPhone)],
+    handler: AuthController.forgotPasswordWithPhone,
+  });
+  route({
+    method: 'POST',
+    url: '/forgot-password-phone-web',
+    preHandler: [validate(AuthValidation.forgotWebPasswordWithPhone)],
+    handler: AuthController.forgotWebPasswordWithPhone,
+  });
+  route({
+    method: 'POST',
+    url: '/reset-password',
+    preHandler: [validate(AuthValidation.resetPassword)],
+    handler: AuthController.resetPassword,
+  });
+  route({
+    method: 'POST',
+    url: '/reset-web-password',
+    preHandler: [validate(AuthValidation.resetPasswordWeb)],
+    handler: AuthController.resetWebPassword,
+  });
+  route({
+    method: 'POST',
+    url: '/reset-password-firebase',
+    preHandler: [validate(AuthValidation.resetPasswordFirebase)],
+    handler: AuthController.resetPasswordFirebase,
+  });
+  route({
+    method: 'POST',
+    url: '/reset-password-firebase-web',
+    preHandler: [validate(AuthValidation.resetPasswordFirebaseWeb)],
+    handler: AuthController.resetFirebaseWebPassword,
+  });
+  route({
+    method: 'POST',
+    url: '/verify-email',
+    preHandler: [validate(AuthValidation.verifyEmail)],
+    handler: AuthController.verifyEmail,
+  });
+  route({
+    method: 'GET',
+    url: '/installations',
+    handler: AuthController.isAdminSetupDone,
+  });
+  route({
+    method: 'POST',
+    url: '/check-register-status',
+    preHandler: [validate(AuthValidation.checkRegisterStatusValidation)],
+    handler: AuthController.checkUserRegisterStatus,
+  });
 
-router.post(
-  '/verifyAccount',
-  validate(AuthValidation.userRegister),
-  AuthController.verifyUserRegisterAccount
-);
-router.post('/verifyOTP', validate(AuthValidation.verifyOTP), AuthController.verifyOTP);
-router.get('/resendOTP/:id', validate(AuthValidation.resendOTP), AuthController.resendOTP);
-router.post(
-  '/register-user-account',
-  validate(AuthValidation.userRegister),
-  AuthController.register
-);
-router.post(
-  '/register-user-account-firebase',
-  validate(AuthValidation.userRegisterFirebaseVerification),
-  AuthController.registerFirebaseAccount
-);
-router.post(
-  '/register-admin-account',
-  validate(AuthValidation.registerAdmin),
-  AuthController.registerAdminAccount
-);
-router.post(
-  '/customer/login',
-  validate(AuthValidation.loginWithEmailPassword),
-  AuthController.userLoginWithEmailAndPassword
-);
-router.post(
-  '/customer/login_cmp',
-  validate(AuthValidation.loginWithCountryCodeAndMobilePassword),
-  AuthController.userLoginWithCountryCodeAndMobilePassword
-);
-router.post(
-  '/customer/login_eo_verification',
-  validate(AuthValidation.emailOtpValidation),
-  AuthController.userLoginWithEmailOtpVerification
-);
-router.post(
-  '/customer/login_eo',
-  validate(AuthValidation.loginWithEmailOTPValidation),
-  AuthController.userLoginWithEmailOtp
-);
-router.post(
-  '/customer/login_po_verification',
-  validate(AuthValidation.phoneOtpValidation),
-  AuthController.userLoginWithPhoneOtpVerification
-);
-router.post(
-  '/customer/login_po/',
-  validate(AuthValidation.userLoginWithPhoneOTPValidation),
-  AuthController.userLoginWithPhoneOTP
-);
-router.post(
-  '/customer/login_po_firebase',
-  validate(AuthValidation.userLoginWithFirebasePhoneOTPValidation),
-  AuthController.verifyUserLoginFirebaseOTP
-);
-router.post(
-  '/customer/login_with_google_account/',
-  validate(AuthValidation.googleLoginValidation),
-  AuthController.userLoginWithGoogleAccount
-);
-router.post(
-  '/customer/check_mobile_exist/',
-  validate(AuthValidation.checkMobileNumberExistValidation),
-  AuthController.checkMobileNumberExist
-);
-router.post(
-  '/customer/create_google_user_account/',
-  validate(AuthValidation.registerGoogleAccountValidation),
-  AuthController.createGoogleUserAccount
-);
-router.post(
-  '/customer/login_with_facebook_account/',
-  validate(AuthValidation.facebookLoginValidation),
-  AuthController.userLoginWithFacebookAccount
-);
-router.post(
-  '/customer/create_facebook_user_account/',
-  validate(AuthValidation.registerFacebookAccountValidation),
-  AuthController.createFacebookUserAccount
-);
-router.post(
-  '/admin/login',
-  validate(AuthValidation.loginWithEmailPassword),
-  AuthController.adminLoginWithEmailAndPassword
-);
-router.post(
-  '/vendor/login',
-  validate(AuthValidation.loginWithEmailPassword),
-  AuthController.vendorLoginWithEmailAndPassword
-);
-router.post(
-  '/vendor_web/login',
-  validate(AuthValidation.loginWithEmailPassword),
-  AuthController.vendorWebLoginWithEmailAndPassword
-);
-router.post(
-  '/vendor/login_cmp',
-  validate(AuthValidation.loginWithCountryCodeAndMobilePassword),
-  AuthController.vendorLoginWithCountryCodeAndMobilePassword
-);
-router.post(
-  '/vendor/login_cmp_web',
-  validate(AuthValidation.loginWithCountryCodeAndMobilePassword),
-  AuthController.vendorWebLoginWithCountryCodeAndMobilePassword
-);
-router.post(
-  '/vendor/login_eo_verification',
-  validate(AuthValidation.emailOtpValidation),
-  AuthController.vendorLoginWithEmailOtpVerification
-);
-router.post(
-  '/vendor/login_eo',
-  validate(AuthValidation.loginWithEmailOTPValidation),
-  AuthController.vendorLoginWithEmailOtp
-);
-router.post(
-  '/vendor/login_eo_web',
-  validate(AuthValidation.loginWithEmailOTPValidation),
-  AuthController.vendorWebLoginWithEmailOtp
-);
-router.post(
-  '/vendor/login_po_verification',
-  validate(AuthValidation.phoneOtpValidation),
-  AuthController.vendorLoginWithPhoneOtpVerification
-);
-router.post(
-  '/vendor/login_po_web_verification',
-  validate(AuthValidation.phoneOtpWebValidation),
-  AuthController.vendorWebLoginWithPhoneOtpVerification
-);
-router.post(
-  '/vendor/login_po/',
-  validate(AuthValidation.userLoginWithPhoneOTPValidation),
-  AuthController.vendorLoginWithPhoneOTP
-);
-router.post(
-  '/vendor/login_po_web/',
-  validate(AuthValidation.userLoginWithPhoneOTPValidation),
-  AuthController.vendorWebLoginWithPhoneOTP
-);
-router.post(
-  '/vendor/login_po_firebase/',
-  validate(AuthValidation.userLoginWithFirebasePhoneOTPValidation),
-  AuthController.verifyVendorLoginFirebaseOTP
-);
-router.post(
-  '/vendor/login_po_firebase_web/',
-  validate(AuthValidation.userWebLoginWithFirebasePhoneOTPValidation),
-  AuthController.verifyWebVendorLoginFirebaseOTP
-);
-router.post(
-  '/vendor/login_with_google_account/',
-  validate(AuthValidation.googleLoginValidation),
-  AuthController.vendorLoginWithGoogleAccount
-);
-router.post(
-  '/vendor/login_with_facebook_account/',
-  validate(AuthValidation.facebookLoginValidation),
-  AuthController.vendorLoginWithFacebookAccount
-);
-router.post(
-  '/driver/login',
-  validate(AuthValidation.loginWithEmailPassword),
-  AuthController.driverLognWithEmailAndPassword
-);
-router.post(
-  '/driver/login_cmp',
-  validate(AuthValidation.loginWithCountryCodeAndMobilePassword),
-  AuthController.driverLoginWithCountryCodeAndMobilePassword
-);
-router.post(
-  '/driver/login_eo_verification',
-  validate(AuthValidation.emailOtpValidation),
-  AuthController.driverLoginWithEmailOtpVerification
-);
-router.post(
-  '/driver/login_eo',
-  validate(AuthValidation.loginWithEmailOTPValidation),
-  AuthController.driverLoginWithEmailOtp
-);
-router.post(
-  '/driver/login_po_verification',
-  validate(AuthValidation.phoneOtpValidation),
-  AuthController.driverLoginWithPhoneOtpVerification
-);
-router.post(
-  '/driver/login_po/',
-  validate(AuthValidation.userLoginWithPhoneOTPValidation),
-  AuthController.driverLoginWithPhoneOTP
-);
-router.post(
-  '/driver/login_po_firebase',
-  validate(AuthValidation.userLoginWithFirebasePhoneOTPValidation),
-  AuthController.verifyDriverLoginFirebaseOTP
-);
-router.post(
-  '/driver/login_with_google_account/',
-  validate(AuthValidation.googleLoginValidation),
-  AuthController.driverLoginWithGoogleAccount
-);
-router.post(
-  '/driver/login_with_facebook_account/',
-  validate(AuthValidation.facebookLoginValidation),
-  AuthController.driverLoginWithFacebookAccount
-);
-router.get(
-  '/register_guest_account/:agent/:locale',
-  validate(AuthValidation.createGuestAccount),
-  AuthController.createGuestAccount
-);
-router.post('/logout', validate(AuthValidation.logout), AuthController.logout);
-router.post('/logout_web', AuthController.logoutWeb);
-router.post('/refresh-tokens-web', AuthController.refreshTokensWeb);
-router.post(
-  '/refresh-tokens-app',
-  validate(AuthValidation.refreshTokens),
-  AuthController.refreshTokensApp
-);
-router.post(
-  '/forgot-password-email',
-  validate(AuthValidation.forgotPasswordWithEmail),
-  AuthController.forgotPasswordWithEmail
-);
-router.post(
-  '/forgot-password-phone',
-  validate(AuthValidation.forgotPasswordWithPhone),
-  AuthController.forgotPasswordWithPhone
-);
-router.post(
-  '/forgot-password-phone-web',
-  validate(AuthValidation.forgotWebPasswordWithPhone),
-  AuthController.forgotWebPasswordWithPhone
-);
-router.post(
-  '/reset-password',
-  validate(AuthValidation.resetPassword),
-  AuthController.resetPassword
-);
-router.post(
-  '/reset-web-password',
-  validate(AuthValidation.resetPasswordWeb),
-  AuthController.resetWebPassword
-);
-router.post(
-  '/reset-password-firebase',
-  validate(AuthValidation.resetPasswordFirebase),
-  AuthController.resetPasswordFirebase
-);
-router.post(
-  '/reset-password-firebase-web',
-  validate(AuthValidation.resetPasswordFirebaseWeb),
-  AuthController.resetFirebaseWebPassword
-);
-router.post('/verify-email', validate(AuthValidation.verifyEmail), AuthController.verifyEmail);
-router.get('/installations', AuthController.isAdminSetupDone);
-router.post(
-  '/check-register-status',
-  validate(AuthValidation.checkRegisterStatusValidation),
-  AuthController.checkUserRegisterStatus
-);
+  // Waiter Auth //
+  route({
+    method: 'POST',
+    url: '/waiter/login',
+    preHandler: [validate(AuthValidation.loginWithEmailPassword)],
+    handler: AuthController.waiterLognWithEmailAndPassword,
+  });
+  route({
+    method: 'POST',
+    url: '/waiter/login_cmp',
+    preHandler: [validate(AuthValidation.loginWithCountryCodeAndMobilePassword)],
+    handler: AuthController.waiterLoginWithPhoneAndPassword,
+  });
+  route({
+    method: 'POST',
+    url: '/waiter/login_eo_verification',
+    preHandler: [validate(AuthValidation.emailOtpValidation)],
+    handler: AuthController.waiterLoginWithEmailOtpVerification,
+  });
+  route({
+    method: 'POST',
+    url: '/waiter/login_eo',
+    preHandler: [validate(AuthValidation.loginWithEmailOTPValidation)],
+    handler: AuthController.waiterLoginWithEmailOtp,
+  });
+  route({
+    method: 'POST',
+    url: '/waiter/login_po_verification',
+    preHandler: [validate(AuthValidation.phoneOtpValidation)],
+    handler: AuthController.waiterLoginWithPhoneOtpVerification,
+  });
+  route({
+    method: 'POST',
+    url: '/waiter/login_po/',
+    preHandler: [validate(AuthValidation.userLoginWithPhoneOTPValidation)],
+    handler: AuthController.waiterLoginWithPhoneOTP,
+  });
+  route({
+    method: 'POST',
+    url: '/waiter/login_po_firebase/',
+    preHandler: [validate(AuthValidation.userLoginWithFirebasePhoneOTPValidation)],
+    handler: AuthController.verifyWaiterLoginFirebaseOTP,
+  });
+  route({
+    method: 'POST',
+    url: '/waiter/login_with_google_account/',
+    preHandler: [validate(AuthValidation.googleLoginValidation)],
+    handler: AuthController.waiterLoginWithGoogleAccount,
+  });
+  route({
+    method: 'POST',
+    url: '/waiter/login_with_facebook_account/',
+    preHandler: [validate(AuthValidation.facebookLoginValidation)],
+    handler: AuthController.waiterLoginWithFacebookAccount,
+  });
+  // Waiter Auth //
 
-// Waiter Auth //
-router.post(
-  '/waiter/login',
-  validate(AuthValidation.loginWithEmailPassword),
-  AuthController.waiterLognWithEmailAndPassword
-);
-router.post(
-  '/waiter/login_cmp',
-  validate(AuthValidation.loginWithCountryCodeAndMobilePassword),
-  AuthController.waiterLoginWithPhoneAndPassword
-);
-router.post(
-  '/waiter/login_eo_verification',
-  validate(AuthValidation.emailOtpValidation),
-  AuthController.waiterLoginWithEmailOtpVerification
-);
-router.post(
-  '/waiter/login_eo',
-  validate(AuthValidation.loginWithEmailOTPValidation),
-  AuthController.waiterLoginWithEmailOtp
-);
-router.post(
-  '/waiter/login_po_verification',
-  validate(AuthValidation.phoneOtpValidation),
-  AuthController.waiterLoginWithPhoneOtpVerification
-);
-router.post(
-  '/waiter/login_po/',
-  validate(AuthValidation.userLoginWithPhoneOTPValidation),
-  AuthController.waiterLoginWithPhoneOTP
-);
-router.post(
-  '/waiter/login_po_firebase/',
-  validate(AuthValidation.userLoginWithFirebasePhoneOTPValidation),
-  AuthController.verifyWaiterLoginFirebaseOTP
-);
-router.post(
-  '/waiter/login_with_google_account/',
-  validate(AuthValidation.googleLoginValidation),
-  AuthController.waiterLoginWithGoogleAccount
-);
-router.post(
-  '/waiter/login_with_facebook_account/',
-  validate(AuthValidation.facebookLoginValidation),
-  AuthController.waiterLoginWithFacebookAccount
-);
-// Waiter Auth //
+  // Kitchen Auth //
+  route({
+    method: 'POST',
+    url: '/kitchen/login',
+    preHandler: [validate(AuthValidation.loginWithEmailPassword)],
+    handler: AuthController.kitchenOwnerLoginWithEmailAndPassword,
+  });
+  route({
+    method: 'POST',
+    url: '/kitchen/login_cmp',
+    preHandler: [validate(AuthValidation.loginWithCountryCodeAndMobilePassword)],
+    handler: AuthController.kitchenLoginWithPhoneAndPassword,
+  });
+  route({
+    method: 'POST',
+    url: '/kitchen/login_eo_verification',
+    preHandler: [validate(AuthValidation.emailOtpValidation)],
+    handler: AuthController.kitchenLoginWithEmailOtpVerification,
+  });
+  route({
+    method: 'POST',
+    url: '/kitchen/login_eo',
+    preHandler: [validate(AuthValidation.loginWithEmailOTPValidation)],
+    handler: AuthController.kitchenLoginWithEmailOtp,
+  });
+  route({
+    method: 'POST',
+    url: '/kitchen/login_po_verification',
+    preHandler: [validate(AuthValidation.phoneOtpValidation)],
+    handler: AuthController.kitchenLoginWithPhoneOtpVerification,
+  });
+  route({
+    method: 'POST',
+    url: '/kitchen/login_po/',
+    preHandler: [validate(AuthValidation.userLoginWithPhoneOTPValidation)],
+    handler: AuthController.kitchenLoginWithPhoneOTP,
+  });
+  route({
+    method: 'POST',
+    url: '/kitchen/login_po_firebase/',
+    preHandler: [validate(AuthValidation.userLoginWithFirebasePhoneOTPValidation)],
+    handler: AuthController.verifyKitchenLoginFirebaseOTP,
+  });
+  route({
+    method: 'POST',
+    url: '/kitchen/login_with_google_account/',
+    preHandler: [validate(AuthValidation.googleLoginValidation)],
+    handler: AuthController.kitchenLoginWithGoogleAccount,
+  });
+  route({
+    method: 'POST',
+    url: '/kitchen/login_with_facebook_account/',
+    preHandler: [validate(AuthValidation.facebookLoginValidation)],
+    handler: AuthController.kitchenLoginWithFacebookAccount,
+  });
+  // Kitchen Auth //
 
-// Kitchen Auth //
-router.post(
-  '/kitchen/login',
-  validate(AuthValidation.loginWithEmailPassword),
-  AuthController.kitchenOwnerLoginWithEmailAndPassword
-);
-router.post(
-  '/kitchen/login_cmp',
-  validate(AuthValidation.loginWithCountryCodeAndMobilePassword),
-  AuthController.kitchenLoginWithPhoneAndPassword
-);
-router.post(
-  '/kitchen/login_eo_verification',
-  validate(AuthValidation.emailOtpValidation),
-  AuthController.kitchenLoginWithEmailOtpVerification
-);
-router.post(
-  '/kitchen/login_eo',
-  validate(AuthValidation.loginWithEmailOTPValidation),
-  AuthController.kitchenLoginWithEmailOtp
-);
-router.post(
-  '/kitchen/login_po_verification',
-  validate(AuthValidation.phoneOtpValidation),
-  AuthController.kitchenLoginWithPhoneOtpVerification
-);
-router.post(
-  '/kitchen/login_po/',
-  validate(AuthValidation.userLoginWithPhoneOTPValidation),
-  AuthController.kitchenLoginWithPhoneOTP
-);
-router.post(
-  '/kitchen/login_po_firebase/',
-  validate(AuthValidation.userLoginWithFirebasePhoneOTPValidation),
-  AuthController.verifyKitchenLoginFirebaseOTP
-);
-router.post(
-  '/kitchen/login_with_google_account/',
-  validate(AuthValidation.googleLoginValidation),
-  AuthController.kitchenLoginWithGoogleAccount
-);
-router.post(
-  '/kitchen/login_with_facebook_account/',
-  validate(AuthValidation.facebookLoginValidation),
-  AuthController.kitchenLoginWithFacebookAccount
-);
-// Kitchen Auth //
+  // Accountant Auth //
+  route({
+    method: 'POST',
+    url: '/accountant/login',
+    preHandler: [validate(AuthValidation.loginWithEmailPassword)],
+    handler: AuthController.loginAccountantWithEmailAndPassword,
+  });
+  // Accountant Auth //
 
-// Accountant Auth //
-router.post(
-  '/accountant/login',
-  validate(AuthValidation.loginWithEmailPassword),
-  AuthController.loginAccountantWithEmailAndPassword
-);
-// Accountant Auth //
+  // Support Team Auth //
+  route({
+    method: 'POST',
+    url: '/support_team/login',
+    preHandler: [validate(AuthValidation.loginWithEmailPassword)],
+    handler: AuthController.loginSupportTeamWithEmailAndPassword,
+  });
+  // Support Team Auth //
 
-// Support Team Auth //
-router.post(
-  '/support_team/login',
-  validate(AuthValidation.loginWithEmailPassword),
-  AuthController.loginSupportTeamWithEmailAndPassword
-);
-// Support Team Auth //
+  // City Master Team Auth //
+  route({
+    method: 'POST',
+    url: '/cityzen/login',
+    preHandler: [validate(AuthValidation.loginWithEmailPassword)],
+    handler: AuthController.loginCityzenWithEmailAndPassword,
+  });
+  // City Master Team Auth //
 
-// City Master Team Auth //
-router.post(
-  '/cityzen/login',
-  validate(AuthValidation.loginWithEmailPassword),
-  AuthController.loginCityzenWithEmailAndPassword
-);
-// City Master Team Auth //
-
-// Web Otp Verification Auth //
-router.get(
-  '/web_verification/:id',
-  validate(AuthValidation.smsVerificationWebValidation),
-  AuthController.webOtpVerification
-);
-// Web Otp Verification Auth //
-module.exports = router;
-
+  // Web Otp Verification Auth //
+  route({
+    method: 'GET',
+    url: '/web_verification/:id',
+    preHandler: [validate(AuthValidation.smsVerificationWebValidation)],
+    handler: AuthController.webOtpVerification,
+  });
+  // Web Otp Verification Auth //
+};

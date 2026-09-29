@@ -252,7 +252,7 @@
 | 2.15 | `index.js`: `await fastify.ready()` → `socketIo(fastify.server)`; cron → `onReady`/`onClose` hooks |
 | 2.16 | Route-manifest parity diff + full smoke suite |
 
-**Internal order:** 2.1 → 2.2–2.4 → 2.5 spike → 2.6 → 2.7 → 2.8 → 2.9a (reply adapter) → 2.9b (shared route registrar + first file) → 2.9c (remaining 12 route files) → 2.10 → 2.11 → 2.12 (hardest: `auth.controller`, `payment.initiation`) → 2.13–2.15 → 2.16.
+**Internal order:** 2.1 → 2.2–2.4 → 2.5 spike → 2.6 → 2.7 → 2.8 → 2.9a (reply adapter) → 2.9b (shared route registrar + first file) → 2.9c ✅ (all 13 route files dual-registered) → 2.10 → 2.11 → 2.12 (hardest: `auth.controller`, `payment.initiation`) → 2.13–2.15 → 2.16.
 
 **Exit criteria:** all routes identical, tests green, `express` removed from `package.json`.
 
@@ -347,6 +347,8 @@
 > - It drops `const express = require('express')` only when `express` is used for nothing else, and re-emits the whole registration block indented two for the `register()` wrapper.
 >
 > The gate that matters here is **`manifest:check` staying 0/0/0**, not just "tests pass": the manifest records `auth` strategy, `rights`, `validated`, *and* the ordered `middleware` label list for every route, so a dropped, reordered or mis-wrapped `validate(...)` shows up as `changed` rather than passing silently. Combined with `tests/routeconv.parity.test.js` (now 9 assertions) that diffs behaviour on both servers, 98 tests are green.
+
+> **2.9c complete (12/12) - all 1,925 routes now register on both servers.** The remaining files fell in plan order, each gated by `manifest:check` staying 0/0/0 and a behaviour assertion in `tests/routeconv.parity.test.js` (now 19 assertions, 107 tests total): `support.team` (22, first `webAuth` cookie case), `kitchen` (24), `auth` (80, first `validate`-only rejection without DB), `driver` (54), `public` (79, first single-line-per-line batch), `accountant` (87), `user` (103), `cityzen` (264), `vendor` (217) + `vendor_web` (230, same sub-path `/getMyProfile/:userId` under different strategies - the strongest mount-separation proof), `admin` (743). Tallies sum to exactly 1,925, and Fastify boots all of them with no duplicate-route or trailing-slash collisions. `routes/v1/index.js` no longer mounts a single `express.Router` - every file goes through the registrar; unconverted shape handling stays in place for safety but matches nothing.
 
 ---
 

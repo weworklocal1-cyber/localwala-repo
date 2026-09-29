@@ -16,7 +16,6 @@
  * LWL|WWL|2026|LOCALWALA|NODE
  */
 
-const express = require('express');
 const webAuth = require('../../middlewares/webAuth');
 const validate = require('../../middlewares/validate');
 
@@ -59,503 +58,741 @@ const UserPurchasedTiffinSubscriptionController = require('../../controllers/use
 const NotificationListController = require('../../controllers/notification.list.controller');
 const ChatRoomController = require('../../controllers/chat.room.controller');
 
-const router = express.Router();
+module.exports.register = function register(route) {
+  route({
+    method: 'GET',
+    url: '/web_guard/:id',
+    preHandler: [
+      webAuth('web_guard'),
+      validate(UserValidation.webGuardValidation),
+    ],
+    handler: UserController.accountantProfile,
+  });
 
-router.get(
-  '/web_guard/:id',
-  webAuth('web_guard'),
-  validate(UserValidation.webGuardValidation),
-  UserController.accountantProfile
-);
+  route({
+    method: 'GET',
+    url: '/dashboard',
+    preHandler: [webAuth('dashboard')],
+    handler: OrdersController.accountantDashboard,
+  });
+  route({
+    method: 'GET',
+    url: '/expense_initial',
+    preHandler: [webAuth('expense_report')],
+    handler: AdminExpenseController.getInitialResponse,
+  });
+  route({
+    method: 'GET',
+    url: '/expense',
+    preHandler: [webAuth('expense_report')],
+    handler: AdminExpenseController.getExpenseList,
+  });
+  route({
+    method: 'POST',
+    url: '/save_expense',
+    preHandler: [
+      webAuth('expense_report'),
+      validate(AdminExpenseValidation.saveExpenseValidation),
+    ],
+    handler: AdminExpenseController.create,
+  });
 
-router.get('/dashboard', webAuth('dashboard'), OrdersController.accountantDashboard);
-router.get(
-  '/expense_initial',
-  webAuth('expense_report'),
-  AdminExpenseController.getInitialResponse
-);
-router.get('/expense', webAuth('expense_report'), AdminExpenseController.getExpenseList);
-router.post(
-  '/save_expense',
-  webAuth('expense_report'),
-  validate(AdminExpenseValidation.saveExpenseValidation),
-  AdminExpenseController.create
-);
+  route({
+    method: 'GET',
+    url: '/city_list',
+    preHandler: [webAuth('city_list')],
+    handler: CityController.getAll,
+  });
+  route({
+    method: 'GET',
+    url: '/regular_order_report',
+    preHandler: [
+      webAuth('order_report'),
+      validate(OrdersValidation.orderReportValidation),
+    ],
+    handler: OrdersController.orderReports,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_with_city/:cityId',
+    preHandler: [
+      webAuth('restaurant_list'),
+      validate(RestaurantValidation.restaurantByCityIdLimitedDetailsValidation),
+    ],
+    handler: RestaurantController.getRestaurantsByCityIdLimitedDetailsForAdmin,
+  });
+  route({
+    method: 'GET',
+    url: '/pos_order_report',
+    preHandler: [
+      webAuth('order_report'),
+      validate(OrdersValidation.orderReportValidation),
+    ],
+    handler: PosOrTableOrderController.posOrderReport,
+  });
+  route({
+    method: 'GET',
+    url: '/table_order_report',
+    preHandler: [
+      webAuth('order_report'),
+      validate(OrdersValidation.orderReportValidation),
+    ],
+    handler: TableOrderController.tableOrderReport,
+  });
+  route({
+    method: 'GET',
+    url: '/wallet_transaction_report/',
+    preHandler: [webAuth('wallet_report')],
+    handler: WalletController.getTransactionReport,
+  });
+  route({
+    method: 'GET',
+    url: '/payment_transaction_report/',
+    preHandler: [webAuth('payment_report')],
+    handler: PaymentInitiationController.getPaymentInitiateReport,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_booking_report',
+    preHandler: [webAuth('order_report')],
+    handler: DiningBookingController.diningBookingReport,
+  });
+  route({
+    method: 'GET',
+    url: '/food_report/',
+    preHandler: [webAuth('food_report')],
+    handler: FoodController.foodReport,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_report_initial',
+    preHandler: [webAuth('restaurant_report')],
+    handler: RestaurantController.restauratReportInitialFilter,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_report',
+    preHandler: [webAuth('restaurant_report')],
+    handler: RestaurantController.restaurantReport,
+  });
+  route({
+    method: 'GET',
+    url: '/customer_report',
+    preHandler: [webAuth('customer_report')],
+    handler: UserController.customerReport,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_report',
+    preHandler: [webAuth('deliveryman_report')],
+    handler: DriverController.deliverymanReport,
+  });
 
-router.get('/city_list', webAuth('city_list'), CityController.getAll);
-router.get(
-  '/regular_order_report',
-  webAuth('order_report'),
-  validate(OrdersValidation.orderReportValidation),
-  OrdersController.orderReports
-);
-router.get(
-  '/restaurant_with_city/:cityId',
-  webAuth('restaurant_list'),
-  validate(RestaurantValidation.restaurantByCityIdLimitedDetailsValidation),
-  RestaurantController.getRestaurantsByCityIdLimitedDetailsForAdmin
-);
-router.get(
-  '/pos_order_report',
-  webAuth('order_report'),
-  validate(OrdersValidation.orderReportValidation),
-  PosOrTableOrderController.posOrderReport
-);
-router.get(
-  '/table_order_report',
-  webAuth('order_report'),
-  validate(OrdersValidation.orderReportValidation),
-  TableOrderController.tableOrderReport
-);
-router.get(
-  '/wallet_transaction_report/',
-  webAuth('wallet_report'),
-  WalletController.getTransactionReport
-);
-router.get(
-  '/payment_transaction_report/',
-  webAuth('payment_report'),
-  PaymentInitiationController.getPaymentInitiateReport
-);
-router.get(
-  '/dining_booking_report',
-  webAuth('order_report'),
-  DiningBookingController.diningBookingReport
-);
-router.get('/food_report/', webAuth('food_report'), FoodController.foodReport);
-router.get(
-  '/restaurant_report_initial',
-  webAuth('restaurant_report'),
-  RestaurantController.restauratReportInitialFilter
-);
-router.get(
-  '/restaurant_report',
-  webAuth('restaurant_report'),
-  RestaurantController.restaurantReport
-);
-router.get('/customer_report', webAuth('customer_report'), UserController.customerReport);
-router.get(
-  '/deliveryman_report',
-  webAuth('deliveryman_report'),
-  DriverController.deliverymanReport
-);
+  route({
+    method: 'GET',
+    url: '/restaurant_initial_disbursement',
+    preHandler: [webAuth('disbursement_report')],
+    handler: DisbursementController.disbursementTransactionInitial,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_disbursement',
+    preHandler: [webAuth('disbursement_report')],
+    handler: DisbursementController.restaurantDisbursementTransactionReport,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_disbursement_detail/:id',
+    preHandler: [
+      webAuth('disbursement_report'),
+      validate(DisbursementValidation.disbursementReportValidation),
+    ],
+    handler: DisbursementController.restaurantDisbursementDetail,
+  });
+  route({
+    method: 'GET',
+    url: '/accept_restaurant_disbursement/:id',
+    preHandler: [
+      webAuth('disbursement_report'),
+      validate(DisbursementValidation.disbursementReportValidation),
+    ],
+    handler: DisbursementController.acceptRestaurantDisburment,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_initial_disbursement',
+    preHandler: [webAuth('disbursement_report')],
+    handler: DisbursementController.deliverymanDisbursementTransactionInitial,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_disbursement',
+    preHandler: [webAuth('disbursement_report')],
+    handler: DisbursementController.deliverymanDisbursementTransactionReport,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_disbursement_detail/:id',
+    preHandler: [
+      webAuth('disbursement_report'),
+      validate(DisbursementValidation.disbursementReportValidation),
+    ],
+    handler: DisbursementController.deliverymanDisbursementDetail,
+  });
+  route({
+    method: 'GET',
+    url: '/accept_deliveryman_disbursement/:id',
+    preHandler: [
+      webAuth('disbursement_report'),
+      validate(DisbursementValidation.disbursementReportValidation),
+    ],
+    handler: DisbursementController.acceptDeliverymanDisbursment,
+  });
+  route({
+    method: 'GET',
+    url: '/reject_restaurant_disbursement/:id',
+    preHandler: [
+      webAuth('disbursement_report'),
+      validate(DisbursementValidation.disbursementReportValidation),
+    ],
+    handler: DisbursementController.rejectRestaurantDisburment,
+  });
 
-router.get(
-  '/restaurant_initial_disbursement',
-  webAuth('disbursement_report'),
-  DisbursementController.disbursementTransactionInitial
-);
-router.get(
-  '/restaurant_disbursement',
-  webAuth('disbursement_report'),
-  DisbursementController.restaurantDisbursementTransactionReport
-);
-router.get(
-  '/restaurant_disbursement_detail/:id',
-  webAuth('disbursement_report'),
-  validate(DisbursementValidation.disbursementReportValidation),
-  DisbursementController.restaurantDisbursementDetail
-);
-router.get(
-  '/accept_restaurant_disbursement/:id',
-  webAuth('disbursement_report'),
-  validate(DisbursementValidation.disbursementReportValidation),
-  DisbursementController.acceptRestaurantDisburment
-);
-router.get(
-  '/deliveryman_initial_disbursement',
-  webAuth('disbursement_report'),
-  DisbursementController.deliverymanDisbursementTransactionInitial
-);
-router.get(
-  '/deliveryman_disbursement',
-  webAuth('disbursement_report'),
-  DisbursementController.deliverymanDisbursementTransactionReport
-);
-router.get(
-  '/deliveryman_disbursement_detail/:id',
-  webAuth('disbursement_report'),
-  validate(DisbursementValidation.disbursementReportValidation),
-  DisbursementController.deliverymanDisbursementDetail
-);
-router.get(
-  '/accept_deliveryman_disbursement/:id',
-  webAuth('disbursement_report'),
-  validate(DisbursementValidation.disbursementReportValidation),
-  DisbursementController.acceptDeliverymanDisbursment
-);
-router.get(
-  '/reject_restaurant_disbursement/:id',
-  webAuth('disbursement_report'),
-  validate(DisbursementValidation.disbursementReportValidation),
-  DisbursementController.rejectRestaurantDisburment
-);
+  route({
+    method: 'GET',
+    url: '/collect_cash_list',
+    preHandler: [
+      webAuth('collect_cash'),
+      validate(CollectCashValidation.collectCashListValidation),
+    ],
+    handler: CollectCashController.get,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_with_city/:city',
+    preHandler: [
+      webAuth('deliveryman_list'),
+      validate(DriverValidation.driverByCityValidation),
+    ],
+    handler: DriverController.getDeliverymanFromCity,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_cash_in_hand/:vendor',
+    preHandler: [
+      webAuth('restaurant_cash_in_hand'),
+      validate(RestaurantValidation.vendorCashInHandValidation),
+    ],
+    handler: RestaurantController.getRestaurantCashInHand,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_cash_in_hand/:deliveryman',
+    preHandler: [
+      webAuth('deliveryman_cash_in_hand'),
+      validate(DriverValidation.deliverymanCashInHandValidation),
+    ],
+    handler: DriverController.getDeliverymanCashInHand,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant_clear_cash_in_hand',
+    preHandler: [
+      webAuth('restaurant_cash_in_hand'),
+      validate(RestaurantValidation.collectCashValidation),
+    ],
+    handler: RestaurantController.clearCashInHandAndUpdateWallet,
+  });
+  route({
+    method: 'POST',
+    url: '/deliveryman_clear_cash_in_hand',
+    preHandler: [
+      webAuth('deliveryman_cash_in_hand'),
+      validate(DriverValidation.collectCashValidation),
+    ],
+    handler: DriverController.clearCashInHand,
+  });
 
-router.get(
-  '/collect_cash_list',
-  webAuth('collect_cash'),
-  validate(CollectCashValidation.collectCashListValidation),
-  CollectCashController.get
-);
-router.get(
-  '/deliveryman_with_city/:city',
-  webAuth('deliveryman_list'),
-  validate(DriverValidation.driverByCityValidation),
-  DriverController.getDeliverymanFromCity
-);
-router.get(
-  '/restaurant_cash_in_hand/:vendor',
-  webAuth('restaurant_cash_in_hand'),
-  validate(RestaurantValidation.vendorCashInHandValidation),
-  RestaurantController.getRestaurantCashInHand
-);
-router.get(
-  '/deliveryman_cash_in_hand/:deliveryman',
-  webAuth('deliveryman_cash_in_hand'),
-  validate(DriverValidation.deliverymanCashInHandValidation),
-  DriverController.getDeliverymanCashInHand
-);
-router.post(
-  '/restaurant_clear_cash_in_hand',
-  webAuth('restaurant_cash_in_hand'),
-  validate(RestaurantValidation.collectCashValidation),
-  RestaurantController.clearCashInHandAndUpdateWallet
-);
-router.post(
-  '/deliveryman_clear_cash_in_hand',
-  webAuth('deliveryman_cash_in_hand'),
-  validate(DriverValidation.collectCashValidation),
-  DriverController.clearCashInHand
-);
+  route({
+    method: 'GET',
+    url: '/withdrawal_method_list',
+    preHandler: [webAuth('withdrawal_method')],
+    handler: WithdrawalMethodController.methodList,
+  });
+  route({
+    method: 'DELETE',
+    url: '/delete_withdrawal_method/:methodId',
+    preHandler: [
+      webAuth('delete_withdrawal_method'),
+      validate(WithdrawalMethodValidation.idValidation),
+    ],
+    handler: WithdrawalMethodController.drop,
+  });
+  route({
+    method: 'PATCH',
+    url: '/update_withdrawal_method/:methodId',
+    preHandler: [
+      webAuth('update_withdrawal_method'),
+      validate(WithdrawalMethodValidation.idValidation),
+    ],
+    handler: WithdrawalMethodController.update,
+  });
+  route({
+    method: 'PATCH',
+    url: '/update_default_withdrawal_method/:methodId',
+    preHandler: [
+      webAuth('update_withdrawal_method'),
+      validate(WithdrawalMethodValidation.idValidation),
+    ],
+    handler: WithdrawalMethodController.updateDefault,
+  });
+  route({
+    method: 'GET',
+    url: '/withdrawal_method_detail/:methodId',
+    preHandler: [
+      webAuth('withdrawal_method'),
+      validate(WithdrawalMethodValidation.idValidation),
+    ],
+    handler: WithdrawalMethodController.withdrawalMethodDetail,
+  });
+  route({
+    method: 'POST',
+    url: '/create_withdrawal_method',
+    preHandler: [
+      webAuth('create_withdrawal_method'),
+      validate(WithdrawalMethodValidation.createWithdrawalMethodValidation),
+    ],
+    handler: WithdrawalMethodController.create,
+  });
 
-router.get(
-  '/withdrawal_method_list',
-  webAuth('withdrawal_method'),
-  WithdrawalMethodController.methodList
-);
-router.delete(
-  '/delete_withdrawal_method/:methodId',
-  webAuth('delete_withdrawal_method'),
-  validate(WithdrawalMethodValidation.idValidation),
-  WithdrawalMethodController.drop
-);
-router.patch(
-  '/update_withdrawal_method/:methodId',
-  webAuth('update_withdrawal_method'),
-  validate(WithdrawalMethodValidation.idValidation),
-  WithdrawalMethodController.update
-);
-router.patch(
-  '/update_default_withdrawal_method/:methodId',
-  webAuth('update_withdrawal_method'),
-  validate(WithdrawalMethodValidation.idValidation),
-  WithdrawalMethodController.updateDefault
-);
-router.get(
-  '/withdrawal_method_detail/:methodId',
-  webAuth('withdrawal_method'),
-  validate(WithdrawalMethodValidation.idValidation),
-  WithdrawalMethodController.withdrawalMethodDetail
-);
-router.post(
-  '/create_withdrawal_method',
-  webAuth('create_withdrawal_method'),
-  validate(WithdrawalMethodValidation.createWithdrawalMethodValidation),
-  WithdrawalMethodController.create
-);
+  route({
+    method: 'GET',
+    url: '/media_list',
+    preHandler: [webAuth('media_list')],
+    handler: MediaController.get,
+  });
 
-router.get('/media_list', webAuth('media_list'), MediaController.get);
+  route({
+    method: 'GET',
+    url: '/restaurant_withdrawal_request',
+    preHandler: [
+      webAuth('restaurant_withdrawal_request'),
+      validate(WithdrawalRequestValidation.allValidation),
+    ],
+    handler: WithdrawalRequestController.getRestaurantWithdrawalRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_withdrawal_request',
+    preHandler: [webAuth('deliveryman_withdrawal_request')],
+    handler: WithdrawalRequestController.getDeliverymanWithdrawalRequest,
+  });
 
-router.get(
-  '/restaurant_withdrawal_request',
-  webAuth('restaurant_withdrawal_request'),
-  validate(WithdrawalRequestValidation.allValidation),
-  WithdrawalRequestController.getRestaurantWithdrawalRequest
-);
-router.get(
-  '/deliveryman_withdrawal_request',
-  webAuth('deliveryman_withdrawal_request'),
-  WithdrawalRequestController.getDeliverymanWithdrawalRequest
-);
+  route({
+    method: 'GET',
+    url: '/withdrawal_request_detail/:id',
+    preHandler: [
+      webAuth('withdrawal_request_detail'),
+      validate(WithdrawalRequestValidation.idValidation),
+    ],
+    handler: WithdrawalRequestController.withdrawalRequestDetail,
+  });
+  route({
+    method: 'POST',
+    url: '/approve_withdrawal_request',
+    preHandler: [
+      webAuth('approve_withdrawal_request'),
+      validate(WithdrawalRequestValidation.approveWithdrawalRequestValidation),
+    ],
+    handler: WithdrawalRequestController.approveWithdrawalRequest,
+  });
+  route({
+    method: 'POST',
+    url: '/decline_withdrawal_request',
+    preHandler: [
+      webAuth('decline_withdrawal_request'),
+      validate(WithdrawalRequestValidation.declineWithdrawalRequestValidation),
+    ],
+    handler: WithdrawalRequestController.declineWithdrawalRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_disbursement_list',
+    preHandler: [webAuth('disbursement_report')],
+    handler: DisbursementController.restaurantDisbursement,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_disbursement_report/:id',
+    preHandler: [
+      webAuth('disbursement_report'),
+      validate(DisbursementValidation.disbursementReportValidation),
+    ],
+    handler: DisbursementController.restaurantDisbursementReport,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_disbursement_list',
+    preHandler: [webAuth('disbursement_report')],
+    handler: DisbursementController.deliverymanDisbursement,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_disbursement_report/:id',
+    preHandler: [
+      webAuth('disbursement_report'),
+      validate(DisbursementValidation.disbursementReportValidation),
+    ],
+    handler: DisbursementController.deliverymanDisbursementReport,
+  });
+  route({
+    method: 'GET',
+    url: '/reject_deliveryman_disbursement/:id',
+    preHandler: [
+      webAuth('disbursement_report'),
+      validate(DisbursementValidation.disbursementReportValidation),
+    ],
+    handler: DisbursementController.rejectDeliverymanDisbursment,
+  });
 
-router.get(
-  '/withdrawal_request_detail/:id',
-  webAuth('withdrawal_request_detail'),
-  validate(WithdrawalRequestValidation.idValidation),
-  WithdrawalRequestController.withdrawalRequestDetail
-);
-router.post(
-  '/approve_withdrawal_request',
-  webAuth('approve_withdrawal_request'),
-  validate(WithdrawalRequestValidation.approveWithdrawalRequestValidation),
-  WithdrawalRequestController.approveWithdrawalRequest
-);
-router.post(
-  '/decline_withdrawal_request',
-  webAuth('decline_withdrawal_request'),
-  validate(WithdrawalRequestValidation.declineWithdrawalRequestValidation),
-  WithdrawalRequestController.declineWithdrawalRequest
-);
-router.get(
-  '/restaurant_disbursement_list',
-  webAuth('disbursement_report'),
-  DisbursementController.restaurantDisbursement
-);
-router.get(
-  '/restaurant_disbursement_report/:id',
-  webAuth('disbursement_report'),
-  validate(DisbursementValidation.disbursementReportValidation),
-  DisbursementController.restaurantDisbursementReport
-);
-router.get(
-  '/deliveryman_disbursement_list',
-  webAuth('disbursement_report'),
-  DisbursementController.deliverymanDisbursement
-);
-router.get(
-  '/deliveryman_disbursement_report/:id',
-  webAuth('disbursement_report'),
-  validate(DisbursementValidation.disbursementReportValidation),
-  DisbursementController.deliverymanDisbursementReport
-);
-router.get(
-  '/reject_deliveryman_disbursement/:id',
-  webAuth('disbursement_report'),
-  validate(DisbursementValidation.disbursementReportValidation),
-  DisbursementController.rejectDeliverymanDisbursment
-);
+  route({
+    method: 'GET',
+    url: '/regular_order_detail/:id',
+    preHandler: [
+      webAuth('order_detail'),
+      validate(OrdersValidation.orderDetailAdminValidation),
+    ],
+    handler: OrdersController.getOrderDetailAdmin,
+  });
+  route({
+    method: 'GET',
+    url: '/pos_order_detail/:id',
+    preHandler: [
+      webAuth('order_detail'),
+      validate(PosOrTableOrderValidation.adminPosOrderDetailValidation),
+    ],
+    handler: PosOrTableOrderController.adminPosOrderDetail,
+  });
+  route({
+    method: 'GET',
+    url: '/table_order_detail/:id',
+    preHandler: [
+      webAuth('order_detail'),
+      validate(TableOrderValidation.adminTableOrderDetailValidation),
+    ],
+    handler: TableOrderController.adminTableOrderDetail,
+  });
+  route({
+    method: 'GET',
+    url: '/tiffin_packages_purchase_detail/:id',
+    preHandler: [
+      webAuth('order_detail'),
+      validate(UserPurchasedTiffinSubscriptionValidation.purchaseDetailValidation),
+    ],
+    handler: UserPurchasedTiffinSubscriptionController.getPurchaseDetailAdmin,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_booking_detail/:bookingId',
+    preHandler: [
+      webAuth('order_detail'),
+      validate(DiningBookingValidation.bookingInformationAdminValidation),
+    ],
+    handler: DiningBookingController.getDiningBookingInfoAdmin,
+  });
 
-router.get(
-  '/regular_order_detail/:id',
-  webAuth('order_detail'),
-  validate(OrdersValidation.orderDetailAdminValidation),
-  OrdersController.getOrderDetailAdmin
-);
-router.get(
-  '/pos_order_detail/:id',
-  webAuth('order_detail'),
-  validate(PosOrTableOrderValidation.adminPosOrderDetailValidation),
-  PosOrTableOrderController.adminPosOrderDetail
-);
-router.get(
-  '/table_order_detail/:id',
-  webAuth('order_detail'),
-  validate(TableOrderValidation.adminTableOrderDetailValidation),
-  TableOrderController.adminTableOrderDetail
-);
-router.get(
-  '/tiffin_packages_purchase_detail/:id',
-  webAuth('order_detail'),
-  validate(UserPurchasedTiffinSubscriptionValidation.purchaseDetailValidation),
-  UserPurchasedTiffinSubscriptionController.getPurchaseDetailAdmin
-);
-router.get(
-  '/dining_booking_detail/:bookingId',
-  webAuth('order_detail'),
-  validate(DiningBookingValidation.bookingInformationAdminValidation),
-  DiningBookingController.getDiningBookingInfoAdmin
-);
+  route({
+    method: 'GET',
+    url: '/customer_detail/:user',
+    preHandler: [
+      webAuth('customer_detail'),
+      validate(UserValidation.idValidation),
+    ],
+    handler: UserController.customerDetail,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_detail/:id',
+    preHandler: [
+      webAuth('deliveryman_detail'),
+      validate(DriverValidation.deliverymanInformationValidation),
+    ],
+    handler: DriverController.deliverymanInformation,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_detail/:id',
+    preHandler: [
+      webAuth('restaurant_detail'),
+      validate(RestaurantValidation.vendorInformationValidation),
+    ],
+    handler: RestaurantController.vendorInformation,
+  });
+  route({
+    method: 'GET',
+    url: '/accountant_header_content',
+    preHandler: [webAuth('accountant_header_content')],
+    handler: NotificationListController.accountantHeaderContent,
+  });
+  route({
+    method: 'GET',
+    url: '/accountant_profile/:id',
+    preHandler: [
+      webAuth('accountant_profile'),
+      validate(UserValidation.accountantProfileValidation),
+    ],
+    handler: UserController.getAccountantProfile,
+  });
+  route({
+    method: 'PATCH',
+    url: '/update_accountant/:id',
+    preHandler: [
+      webAuth('update_accountant'),
+      validate(UserValidation.updateAccountantProfileValidation),
+    ],
+    handler: UserController.updateAccountantProfile,
+  });
+  route({
+    method: 'PATCH',
+    url: '/update_accountant_password/:id',
+    preHandler: [
+      webAuth('update_accountant_password'),
+      validate(UserValidation.updateAccountantPasswordValidation),
+    ],
+    handler: UserController.updateAccountantPassword,
+  });
 
-router.get(
-  '/customer_detail/:user',
-  webAuth('customer_detail'),
-  validate(UserValidation.idValidation),
-  UserController.customerDetail
-);
-router.get(
-  '/deliveryman_detail/:id',
-  webAuth('deliveryman_detail'),
-  validate(DriverValidation.deliverymanInformationValidation),
-  DriverController.deliverymanInformation
-);
-router.get(
-  '/restaurant_detail/:id',
-  webAuth('restaurant_detail'),
-  validate(RestaurantValidation.vendorInformationValidation),
-  RestaurantController.vendorInformation
-);
-router.get(
-  '/accountant_header_content',
-  webAuth('accountant_header_content'),
-  NotificationListController.accountantHeaderContent
-);
-router.get(
-  '/accountant_profile/:id',
-  webAuth('accountant_profile'),
-  validate(UserValidation.accountantProfileValidation),
-  UserController.getAccountantProfile
-);
-router.patch(
-  '/update_accountant/:id',
-  webAuth('update_accountant'),
-  validate(UserValidation.updateAccountantProfileValidation),
-  UserController.updateAccountantProfile
-);
-router.patch(
-  '/update_accountant_password/:id',
-  webAuth('update_accountant_password'),
-  validate(UserValidation.updateAccountantPasswordValidation),
-  UserController.updateAccountantPassword
-);
+  // Import & Export Routes //
+  route({
+    method: 'GET',
+    url: '/cash_collected/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(CollectCashValidation.exportValidation),
+    ],
+    handler: CollectCashController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_withdrawal_request/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(WithdrawalRequestValidation.exportValidation),
+    ],
+    handler: WithdrawalRequestController.exportRestaurantRequestCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_withdrawal_request/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(WithdrawalRequestValidation.exportValidation),
+    ],
+    handler: WithdrawalRequestController.exportDeliverymanRequestCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/withdrawal_method/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(WithdrawalMethodValidation.exportValidation),
+    ],
+    handler: WithdrawalMethodController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_disbursement/export/:type/:status',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DisbursementValidation.exportValidation),
+    ],
+    handler: DisbursementController.exportRestaurantCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/disbursement/restaurant_report/export/:id/:type',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DisbursementValidation.exportDisbursementReportValidation),
+    ],
+    handler: DisbursementController.exportRestaurantDisbursementCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_disbursement/export/:type/:status',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DisbursementValidation.exportValidation),
+    ],
+    handler: DisbursementController.exportDeliverymanCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/disbursement/deliveryman_report/export/:id/:type',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DisbursementValidation.exportDisbursementReportValidation),
+    ],
+    handler: DisbursementController.exportDeliverymanDisbursementCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/expense/export/:type/:status',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(AdminExpenseValidation.exportValidation),
+    ],
+    handler: AdminExpenseController.exportQueryCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/orders/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(OrdersValidation.exportOrderReportValidation),
+    ],
+    handler: OrdersController.exportRegularOrderReportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/pos_orders/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(PosOrTableOrderValidation.exportPOSOrderValidation),
+    ],
+    handler: PosOrTableOrderController.exportPOSOrderReportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/table_orders/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(TableOrderValidation.exportTableOrderValidation),
+    ],
+    handler: TableOrderController.exportTableOrderReportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/wallet_transaction/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(WalletValidation.exportTransactionValidation),
+    ],
+    handler: WalletController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/payment_transaction/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(PaymentConfigValidation.exportPaymentValidation),
+    ],
+    handler: PaymentInitiationController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/dining_booking/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DiningBookingValidation.exportReportValidation),
+    ],
+    handler: DiningBookingController.exportReportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/food_report/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(FoodValidation.exportReportValidation),
+    ],
+    handler: FoodController.exportReportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/restaurant/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(RestaurantValidation.exportReportValidation),
+    ],
+    handler: RestaurantController.exportRestaurantReportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/customer/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.exportCustomerReportValidation),
+    ],
+    handler: UserController.exportRawCustomerReportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/deliveryman/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DriverValidation.exportDeliverymanReportValidation),
+    ],
+    handler: DriverController.exportDeliverymanReportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/restaurant_disbursement/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DisbursementValidation.exportRestaurantReportValidation),
+    ],
+    handler: DisbursementController.exportRestaurantDisbursementReportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/deliveryman_disbursement/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DisbursementValidation.exportDeliverymanReportValidation),
+    ],
+    handler: DisbursementController.exportDeliverymanDisbursementReportCollection,
+  });
+  // Import & Export Routes //
 
-// Import & Export Routes //
-router.get(
-  '/cash_collected/export/',
-  webAuth('export_collection'),
-  validate(CollectCashValidation.exportValidation),
-  CollectCashController.exportCollection
-);
-router.get(
-  '/restaurant_withdrawal_request/export/',
-  webAuth('export_collection'),
-  validate(WithdrawalRequestValidation.exportValidation),
-  WithdrawalRequestController.exportRestaurantRequestCollection
-);
-router.get(
-  '/deliveryman_withdrawal_request/export/',
-  webAuth('export_collection'),
-  validate(WithdrawalRequestValidation.exportValidation),
-  WithdrawalRequestController.exportDeliverymanRequestCollection
-);
-router.get(
-  '/withdrawal_method/export/',
-  webAuth('export_collection'),
-  validate(WithdrawalMethodValidation.exportValidation),
-  WithdrawalMethodController.exportCollection
-);
-router.get(
-  '/restaurant_disbursement/export/:type/:status',
-  webAuth('export_collection'),
-  validate(DisbursementValidation.exportValidation),
-  DisbursementController.exportRestaurantCollection
-);
-router.get(
-  '/disbursement/restaurant_report/export/:id/:type',
-  webAuth('export_collection'),
-  validate(DisbursementValidation.exportDisbursementReportValidation),
-  DisbursementController.exportRestaurantDisbursementCollection
-);
-router.get(
-  '/deliveryman_disbursement/export/:type/:status',
-  webAuth('export_collection'),
-  validate(DisbursementValidation.exportValidation),
-  DisbursementController.exportDeliverymanCollection
-);
-router.get(
-  '/disbursement/deliveryman_report/export/:id/:type',
-  webAuth('export_collection'),
-  validate(DisbursementValidation.exportDisbursementReportValidation),
-  DisbursementController.exportDeliverymanDisbursementCollection
-);
-router.get(
-  '/expense/export/:type/:status',
-  webAuth('export_collection'),
-  validate(AdminExpenseValidation.exportValidation),
-  AdminExpenseController.exportQueryCollection
-);
-router.get(
-  '/reports/orders/export',
-  webAuth('export_collection'),
-  validate(OrdersValidation.exportOrderReportValidation),
-  OrdersController.exportRegularOrderReportCollection
-);
-router.get(
-  '/reports/pos_orders/export',
-  webAuth('export_collection'),
-  validate(PosOrTableOrderValidation.exportPOSOrderValidation),
-  PosOrTableOrderController.exportPOSOrderReportCollection
-);
-router.get(
-  '/reports/table_orders/export',
-  webAuth('export_collection'),
-  validate(TableOrderValidation.exportTableOrderValidation),
-  TableOrderController.exportTableOrderReportCollection
-);
-router.get(
-  '/reports/wallet_transaction/export',
-  webAuth('export_collection'),
-  validate(WalletValidation.exportTransactionValidation),
-  WalletController.exportCollection
-);
-router.get(
-  '/reports/payment_transaction/export',
-  webAuth('export_collection'),
-  validate(PaymentConfigValidation.exportPaymentValidation),
-  PaymentInitiationController.exportCollection
-);
-router.get(
-  '/reports/dining_booking/export',
-  webAuth('export_collection'),
-  validate(DiningBookingValidation.exportReportValidation),
-  DiningBookingController.exportReportCollection
-);
-router.get(
-  '/reports/food_report/export',
-  webAuth('export_collection'),
-  validate(FoodValidation.exportReportValidation),
-  FoodController.exportReportCollection
-);
-router.get(
-  '/reports/restaurant/export',
-  webAuth('export_collection'),
-  validate(RestaurantValidation.exportReportValidation),
-  RestaurantController.exportRestaurantReportCollection
-);
-router.get(
-  '/reports/customer/export',
-  webAuth('export_collection'),
-  validate(UserValidation.exportCustomerReportValidation),
-  UserController.exportRawCustomerReportCollection
-);
-router.get(
-  '/reports/deliveryman/export',
-  webAuth('export_collection'),
-  validate(DriverValidation.exportDeliverymanReportValidation),
-  DriverController.exportDeliverymanReportCollection
-);
-router.get(
-  '/reports/restaurant_disbursement/export',
-  webAuth('export_collection'),
-  validate(DisbursementValidation.exportRestaurantReportValidation),
-  DisbursementController.exportRestaurantDisbursementReportCollection
-);
-router.get(
-  '/reports/deliveryman_disbursement/export',
-  webAuth('export_collection'),
-  validate(DisbursementValidation.exportDeliverymanReportValidation),
-  DisbursementController.exportDeliverymanDisbursementReportCollection
-);
-// Import & Export Routes //
+  // Accountant User Contact Detail Routes //
+  route({
+    method: 'GET',
+    url: '/user_contact_detail/:id',
+    preHandler: [
+      webAuth('user_contact_detail'),
+      validate(UserValidation.adminUserContactDetailValidation),
+    ],
+    handler: UserController.adminUserContactDetail,
+  });
+  // Accountant User Contact Detail Routes //
 
-// Accountant User Contact Detail Routes //
-router.get(
-  '/user_contact_detail/:id',
-  webAuth('user_contact_detail'),
-  validate(UserValidation.adminUserContactDetailValidation),
-  UserController.adminUserContactDetail
-);
-// Accountant User Contact Detail Routes //
-
-/// Chat Messages Routes //
-router.post(
-  '/chat_room/fetch_messages/',
-  webAuth('regular_chat_messages'),
-  validate(ChatRoomValidation.checkChatRoomValidation),
-  ChatRoomController.checkChatRoom
-);
-router.get(
-  '/regular_chat_messages/:id',
-  webAuth('regular_chat_messages'),
-  validate(ChatRoomValidation.cityzenChatMessagesValidation),
-  ChatRoomController.cityzenGetChatMessages
-);
-router.post(
-  '/chat_room/send_regular_message/',
-  webAuth('send_regular_message'),
-  validate(ChatRoomValidation.sendChatMessageValidation),
-  ChatRoomController.saveNewMessage
-);
-/// Chat Messages Routes //
-
-module.exports = router;
-
+  /// Chat Messages Routes //
+  route({
+    method: 'POST',
+    url: '/chat_room/fetch_messages/',
+    preHandler: [
+      webAuth('regular_chat_messages'),
+      validate(ChatRoomValidation.checkChatRoomValidation),
+    ],
+    handler: ChatRoomController.checkChatRoom,
+  });
+  route({
+    method: 'GET',
+    url: '/regular_chat_messages/:id',
+    preHandler: [
+      webAuth('regular_chat_messages'),
+      validate(ChatRoomValidation.cityzenChatMessagesValidation),
+    ],
+    handler: ChatRoomController.cityzenGetChatMessages,
+  });
+  route({
+    method: 'POST',
+    url: '/chat_room/send_regular_message/',
+    preHandler: [
+      webAuth('send_regular_message'),
+      validate(ChatRoomValidation.sendChatMessageValidation),
+    ],
+    handler: ChatRoomController.saveNewMessage,
+  });
+  /// Chat Messages Routes //
+};

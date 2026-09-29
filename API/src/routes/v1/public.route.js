@@ -16,7 +16,6 @@
  * LWL|WWL|2026|LOCALWALA|NODE
  */
 
-const express = require('express');
 
 const PublicValidation = require('../../validations/public.validation');
 const EmailConfigValidation = require('../../validations/email.config.validation');
@@ -68,415 +67,531 @@ const LandingPageController = require('../../controllers/landing.page.controller
 
 const validate = require('../../middlewares/validate');
 
-const router = express.Router();
+module.exports.register = function register(route) {
+  // Settings Routes //
+  route({
+    method: 'POST',
+    url: '/getDefaultSettings/',
+    preHandler: [validate(PublicValidation.visitorTrackingValidation)],
+    handler: PublicController.getDefaultSettings,
+  });
+  route({
+    method: 'GET',
+    url: '/get_web_settings/',
+    handler: PublicController.getDefaultWebSettings,
+  });
+  route({
+    method: 'GET',
+    url: '/getVendorSettings',
+    handler: BusinessSettingsController.getVendorSettings,
+  });
+  route({
+    method: 'GET',
+    url: '/getDriverSettings',
+    handler: PublicController.getDriverDefaultSettings,
+  });
+  route({
+    method: 'GET',
+    url: '/getWaiterSettings',
+    handler: PublicController.getWaiterDefaultSettings,
+  });
+  route({
+    method: 'GET',
+    url: '/getKitchenSetting',
+    handler: PublicController.getKitchenDefaultSettings,
+  });
+  route({
+    method: 'GET',
+    url: '/customer_header_content',
+    handler: PublicController.publicHeaderContent,
+  });
+  // Settings Routes //
 
-// Settings Routes //
-router.post(
-  '/getDefaultSettings/',
-  validate(PublicValidation.visitorTrackingValidation),
-  PublicController.getDefaultSettings
-);
-router.get('/get_web_settings/', PublicController.getDefaultWebSettings);
-router.get('/getVendorSettings', BusinessSettingsController.getVendorSettings);
-router.get('/getDriverSettings', PublicController.getDriverDefaultSettings);
-router.get('/getWaiterSettings', PublicController.getWaiterDefaultSettings);
-router.get('/getKitchenSetting', PublicController.getKitchenDefaultSettings);
-router.get('/customer_header_content', PublicController.publicHeaderContent);
-// Settings Routes //
+  // Restaurant Routes //
+  route({
+    method: 'POST',
+    url: '/restaurant/near',
+    preHandler: [validate(PublicValidation.nearMeRestaurants)],
+    handler: RestaurantController.getNearMeRestaurants,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant/find_with_cuisine/',
+    preHandler: [validate(PublicValidation.restaurantsByCuisine)],
+    handler: RestaurantController.getRestaurantsByCuisine,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant/find_with_category/',
+    preHandler: [validate(PublicValidation.restaurantsByCategory)],
+    handler: RestaurantController.getRestaurantsByCategory,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant/find_with_brands/',
+    preHandler: [validate(PublicValidation.restaurantsByBrands)],
+    handler: RestaurantController.getRestaurantsByBrand,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant/get_restaurant_info/',
+    preHandler: [validate(PublicValidation.getRestaurantInfo)],
+    handler: RestaurantController.getRestaurantsInfo,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant/find_with_localities/',
+    preHandler: [validate(PublicValidation.restaurantsByLocalities)],
+    handler: RestaurantController.getRestaurantsByLocalities,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_restaurant/near',
+    preHandler: [validate(PublicValidation.nearMeDiningRestaurants)],
+    handler: RestaurantController.getNearMeDiningRestaurants,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_restaurant/near_on_map',
+    preHandler: [validate(PublicValidation.nearMeDiningRestaurantOnMap)],
+    handler: RestaurantController.getNearMeDiningRestaurantOnMap,
+  });
+  route({
+    method: 'POST',
+    url: '/campaign/dining_campaign/:campaignId/',
+    preHandler: [validate(DiningCampaignValidation.infoValidation)],
+    handler: DiningCampaignController.getDiningCampaign,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_restaurant/find_with_category',
+    preHandler: [validate(PublicValidation.diningByCategory)],
+    handler: RestaurantController.getDiningByCategory,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant/detail_information/',
+    preHandler: [validate(PublicValidation.restaurantDetailInformation)],
+    handler: RestaurantController.getRestaurantDetailInformation,
+  });
+  // Restaurant Routes //
 
-// Restaurant Routes //
-router.post(
-  '/restaurant/near',
-  validate(PublicValidation.nearMeRestaurants),
-  RestaurantController.getNearMeRestaurants
-);
-router.post(
-  '/restaurant/find_with_cuisine/',
-  validate(PublicValidation.restaurantsByCuisine),
-  RestaurantController.getRestaurantsByCuisine
-);
-router.post(
-  '/restaurant/find_with_category/',
-  validate(PublicValidation.restaurantsByCategory),
-  RestaurantController.getRestaurantsByCategory
-);
-router.post(
-  '/restaurant/find_with_brands/',
-  validate(PublicValidation.restaurantsByBrands),
-  RestaurantController.getRestaurantsByBrand
-);
-router.post(
-  '/restaurant/get_restaurant_info/',
-  validate(PublicValidation.getRestaurantInfo),
-  RestaurantController.getRestaurantsInfo
-);
-router.post(
-  '/restaurant/find_with_localities/',
-  validate(PublicValidation.restaurantsByLocalities),
-  RestaurantController.getRestaurantsByLocalities
-);
-router.post(
-  '/dining_restaurant/near',
-  validate(PublicValidation.nearMeDiningRestaurants),
-  RestaurantController.getNearMeDiningRestaurants
-);
-router.post(
-  '/dining_restaurant/near_on_map',
-  validate(PublicValidation.nearMeDiningRestaurantOnMap),
-  RestaurantController.getNearMeDiningRestaurantOnMap
-);
-router.post(
-  '/campaign/dining_campaign/:campaignId/',
-  validate(DiningCampaignValidation.infoValidation),
-  DiningCampaignController.getDiningCampaign
-);
-router.post(
-  '/dining_restaurant/find_with_category',
-  validate(PublicValidation.diningByCategory),
-  RestaurantController.getDiningByCategory
-);
-router.post(
-  '/restaurant/detail_information/',
-  validate(PublicValidation.restaurantDetailInformation),
-  RestaurantController.getRestaurantDetailInformation
-);
-// Restaurant Routes //
+  // Cart Item Routes //
+  route({
+    method: 'POST',
+    url: '/cart/addToCart/',
+    preHandler: [validate(CartItemValidation.addItemToCartValidation)],
+    handler: CartItemController.addToCart,
+  });
+  route({
+    method: 'POST',
+    url: '/cart/removeCartItemByRestaurant/',
+    preHandler: [validate(CartItemValidation.removeCartItemByRestaurantValidation)],
+    handler: CartItemController.removeCartItemByRestaurant,
+  });
+  route({
+    method: 'DELETE',
+    url: '/cart/removeCartItemByTracking/:trackingId',
+    preHandler: [validate(CartItemValidation.removeCartItemByTrackingValidation)],
+    handler: CartItemController.removeCartItemByTrackingId,
+  });
+  route({
+    method: 'POST',
+    url: '/cart/removeFromCartWithUuid/',
+    preHandler: [validate(CartItemValidation.removeFromCartWithUuidValidation)],
+    handler: CartItemController.removeFromCartWithUuid,
+  });
+  route({
+    method: 'POST',
+    url: '/cart/removeFromCartWithFoodId/',
+    preHandler: [validate(CartItemValidation.removeFromCartWithFoodIdValidation)],
+    handler: CartItemController.removeFromCartWithFoodId,
+  });
+  route({
+    method: 'POST',
+    url: '/cart/updateFoodQuantity/',
+    preHandler: [validate(CartItemValidation.updateFoodQuantityValidation)],
+    handler: CartItemController.updateFoodQuantity,
+  });
+  route({
+    method: 'POST',
+    url: '/cart/updateFoodVariationQuantity/',
+    preHandler: [validate(CartItemValidation.updateFoodVariationQuantityValidation)],
+    handler: CartItemController.updateFoodVariationQuantity,
+  });
+  // Cart Item Routes //
 
-// Cart Item Routes //
-router.post(
-  '/cart/addToCart/',
-  validate(CartItemValidation.addItemToCartValidation),
-  CartItemController.addToCart
-);
-router.post(
-  '/cart/removeCartItemByRestaurant/',
-  validate(CartItemValidation.removeCartItemByRestaurantValidation),
-  CartItemController.removeCartItemByRestaurant
-);
-router.delete(
-  '/cart/removeCartItemByTracking/:trackingId',
-  validate(CartItemValidation.removeCartItemByTrackingValidation),
-  CartItemController.removeCartItemByTrackingId
-);
-router.post(
-  '/cart/removeFromCartWithUuid/',
-  validate(CartItemValidation.removeFromCartWithUuidValidation),
-  CartItemController.removeFromCartWithUuid
-);
-router.post(
-  '/cart/removeFromCartWithFoodId/',
-  validate(CartItemValidation.removeFromCartWithFoodIdValidation),
-  CartItemController.removeFromCartWithFoodId
-);
-router.post(
-  '/cart/updateFoodQuantity/',
-  validate(CartItemValidation.updateFoodQuantityValidation),
-  CartItemController.updateFoodQuantity
-);
-router.post(
-  '/cart/updateFoodVariationQuantity/',
-  validate(CartItemValidation.updateFoodVariationQuantityValidation),
-  CartItemController.updateFoodVariationQuantity
-);
-// Cart Item Routes //
+  // Search Routes //
+  route({
+    method: 'POST',
+    url: '/search/global/initial/',
+    preHandler: [validate(PublicValidation.globalSearchInitial)],
+    handler: RestaurantController.globalSearchInitial,
+  });
+  route({
+    method: 'POST',
+    url: '/search/global_dining/initial/',
+    preHandler: [validate(PublicValidation.globalSearchInitial)],
+    handler: RestaurantController.globalDiningSearchInitial,
+  });
+  route({
+    method: 'POST',
+    url: '/search/global/',
+    preHandler: [validate(PublicValidation.globalSearch)],
+    handler: RestaurantController.globalSearch,
+  });
+  route({
+    method: 'POST',
+    url: '/search/global_dining/',
+    preHandler: [validate(PublicValidation.globalSearch)],
+    handler: RestaurantController.globalDiningSearch,
+  });
+  route({
+    method: 'POST',
+    url: '/search/food/initial',
+    preHandler: [validate(PublicValidation.foodSearchInitial)],
+    handler: RestaurantController.foodSearchInitial,
+  });
+  route({
+    method: 'POST',
+    url: '/search/food/',
+    preHandler: [validate(PublicValidation.foodSearch)],
+    handler: RestaurantController.foodSearch,
+  });
+  // Search Routes //
 
-// Search Routes //
-router.post(
-  '/search/global/initial/',
-  validate(PublicValidation.globalSearchInitial),
-  RestaurantController.globalSearchInitial
-);
-router.post(
-  '/search/global_dining/initial/',
-  validate(PublicValidation.globalSearchInitial),
-  RestaurantController.globalDiningSearchInitial
-);
-router.post(
-  '/search/global/',
-  validate(PublicValidation.globalSearch),
-  RestaurantController.globalSearch
-);
-router.post(
-  '/search/global_dining/',
-  validate(PublicValidation.globalSearch),
-  RestaurantController.globalDiningSearch
-);
-router.post(
-  '/search/food/initial',
-  validate(PublicValidation.foodSearchInitial),
-  RestaurantController.foodSearchInitial
-);
-router.post(
-  '/search/food/',
-  validate(PublicValidation.foodSearch),
-  RestaurantController.foodSearch
-);
-// Search Routes //
+  // Foods Routes //
+  route({
+    method: 'POST',
+    url: '/foods/find_foods_with_category/',
+    preHandler: [validate(PublicValidation.restaurantsFoodsByCategory)],
+    handler: RestaurantController.getFoodsNearMeByCategory,
+  });
+  route({
+    method: 'POST',
+    url: '/foods/single_food/',
+    preHandler: [validate(FoodValidation.singleFoodInfoValidation)],
+    handler: FoodController.getSingleFoodInfo,
+  });
+  // Foods Routes //
 
-// Foods Routes //
-router.post(
-  '/foods/find_foods_with_category/',
-  validate(PublicValidation.restaurantsFoodsByCategory),
-  RestaurantController.getFoodsNearMeByCategory
-);
-router.post(
-  '/foods/single_food/',
-  validate(FoodValidation.singleFoodInfoValidation),
-  FoodController.getSingleFoodInfo
-);
-// Foods Routes //
+  // Pages Routes //
+  route({
+    method: 'GET',
+    url: '/app_pages/content/:slug',
+    preHandler: [validate(AppPageValidation.idValidation)],
+    handler: AppPageController.getContent,
+  });
+  route({
+    method: 'GET',
+    url: '/app_pages/getContent/:slug',
+    preHandler: [validate(AppPageValidation.idValidation)],
+    handler: AppPageController.getPageContent,
+  });
+  // Pages Routes //
 
-// Pages Routes //
-router.get(
-  '/app_pages/content/:slug',
-  validate(AppPageValidation.idValidation),
-  AppPageController.getContent
-);
-router.get(
-  '/app_pages/getContent/:slug',
-  validate(AppPageValidation.idValidation),
-  AppPageController.getPageContent
-);
-// Pages Routes //
+  // Campaign Routes //
+  route({
+    method: 'POST',
+    url: '/campaign/food_campaign/:campaignId/',
+    preHandler: [validate(FoodCampaignValidation.contentValidation)],
+    handler: FoodCampaignController.getFoodCampaign,
+  });
+  route({
+    method: 'POST',
+    url: '/campaign/restaurant_campaign/:campaignId/',
+    preHandler: [validate(RestaurantCampaignValidation.infoValidation)],
+    handler: RestaurantCampaignController.getRestaurantCampaign,
+  });
+  // Campaign Routes //
 
-// Campaign Routes //
-router.post(
-  '/campaign/food_campaign/:campaignId/',
-  validate(FoodCampaignValidation.contentValidation),
-  FoodCampaignController.getFoodCampaign
-);
-router.post(
-  '/campaign/restaurant_campaign/:campaignId/',
-  validate(RestaurantCampaignValidation.infoValidation),
-  RestaurantCampaignController.getRestaurantCampaign
-);
-// Campaign Routes //
+  // Test Routes ///
+  route({
+    method: 'GET',
+    url: '/email_config/userEmailVerification/:email/:locale',
+    preHandler: [validate(EmailConfigValidation.demoTestValidation)],
+    handler: EmailConfigController.sendVerificationEmail,
+  });
+  // Test Route ///
 
-// Test Routes ///
-router.get(
-  '/email_config/userEmailVerification/:email/:locale',
-  validate(EmailConfigValidation.demoTestValidation),
-  EmailConfigController.sendVerificationEmail
-);
-// Test Route ///
+  // Payment Routes //
+  route({
+    method: 'GET',
+    url: '/payments/makePayment/:id',
+    preHandler: [validate(PaymentInitiationValidation.idValidation)],
+    handler: PaymentInitiationController.makePayment,
+  });
+  route({
+    method: 'GET',
+    url: '/payments/paid_success/:id',
+    preHandler: [validate(PaymentInitiationValidation.idValidation)],
+    handler: PaymentInitiationController.successPayment,
+  });
+  route({
+    method: 'POST',
+    url: '/payments/paid_success/:id',
+    preHandler: [validate(PaymentInitiationValidation.idValidation)],
+    handler: PaymentInitiationController.successPayment,
+  });
+  route({
+    method: 'GET',
+    url: '/payments/payment_processed/',
+    handler: PaymentInitiationController.paymentProcessed,
+  });
+  route({
+    method: 'GET',
+    url: '/payments/payment_repeated/',
+    handler: PaymentInitiationController.repeatedPayment,
+  });
+  route({
+    method: 'GET',
+    url: '/payments/paid_failed/:id',
+    preHandler: [validate(PaymentInitiationValidation.idValidation)],
+    handler: PaymentInitiationController.failedPayment,
+  });
+  // Payment Routes //
 
-// Payment Routes //
-router.get(
-  '/payments/makePayment/:id',
-  validate(PaymentInitiationValidation.idValidation),
-  PaymentInitiationController.makePayment
-);
-router.get(
-  '/payments/paid_success/:id',
-  validate(PaymentInitiationValidation.idValidation),
-  PaymentInitiationController.successPayment
-);
-router.post(
-  '/payments/paid_success/:id',
-  validate(PaymentInitiationValidation.idValidation),
-  PaymentInitiationController.successPayment
-);
-router.get('/payments/payment_processed/', PaymentInitiationController.paymentProcessed);
-router.get('/payments/payment_repeated/', PaymentInitiationController.repeatedPayment);
-router.get(
-  '/payments/paid_failed/:id',
-  validate(PaymentInitiationValidation.idValidation),
-  PaymentInitiationController.failedPayment
-);
-// Payment Routes //
+  // Push Notification Tokens
+  route({
+    method: 'POST',
+    url: '/pushTokens/save',
+    preHandler: [validate(PushNotificationTokenValidation.saveTokenValidation)],
+    handler: PushNotificationTokenController.save,
+  });
+  route({
+    method: 'POST',
+    url: '/pushTokens/update',
+    preHandler: [validate(PushNotificationTokenValidation.saveTokenValidation)],
+    handler: PushNotificationTokenController.update,
+  });
+  // Push Notification Tokens
 
-// Push Notification Tokens
-router.post(
-  '/pushTokens/save',
-  validate(PushNotificationTokenValidation.saveTokenValidation),
-  PushNotificationTokenController.save
-);
-router.post(
-  '/pushTokens/update',
-  validate(PushNotificationTokenValidation.saveTokenValidation),
-  PushNotificationTokenController.update
-);
-// Push Notification Tokens
+  // Web OTP Verification //
+  route({
+    method: 'GET',
+    url: '/verification/otp/:locale/:id',
+    preHandler: [validate(AuthValidation.verifyWebSMSOTPValidation)],
+    handler: AuthController.verifyWebSMSOTP,
+  });
+  route({
+    method: 'GET',
+    url: '/verification/otp_web_version/:id',
+    preHandler: [validate(AuthValidation.verifyWebVersionSMSOTPValidation)],
+    handler: AuthController.verifyWebVersionSMSOTP,
+  });
+  route({
+    method: 'GET',
+    url: '/verification/otp_web_reset_password_version/',
+    preHandler: [validate(AuthValidation.verifyWebVersionSMSOTPValidation)],
+    handler: AuthController.verifyWebVersionResetPasswordSMSOTP,
+  });
+  route({
+    method: 'GET',
+    url: '/verification/firebase_otp_web_version/',
+    preHandler: [validate(AuthValidation.verifyFirebaseWebVersionSMSOTPValidation)],
+    handler: AuthController.verifyFirebaseWebVersionSMSOTP,
+  });
+  route({
+    method: 'GET',
+    url: '/verification/firebase_reset_password_otp_web_version/',
+    preHandler: [validate(AuthValidation.verifyFirebaseWebVersionSMSOTPValidation)],
+    handler: AuthController.verifyFirebaseWebVersionResetPasswordSMSOTP,
+  });
+  route({
+    method: 'GET',
+    url: '/otp/verify/:id',
+    preHandler: [validate(AuthValidation.verificationIdValidation)],
+    handler: AuthController.smsVerification,
+  });
+  route({
+    method: 'GET',
+    url: '/otp/verify_web/:id',
+    preHandler: [validate(AuthValidation.smsVerificationWebValidation)],
+    handler: AuthController.smsWebVersionVerification,
+  });
+  route({
+    method: 'GET',
+    url: '/otp/verify_reset_password_web/',
+    preHandler: [validate(AuthValidation.smsVerificationWebValidation)],
+    handler: AuthController.smsWebVersionResetPasswordVerification,
+  });
+  route({
+    method: 'GET',
+    url: '/otp/success/:id',
+    preHandler: [validate(AuthValidation.verificationIdValidation)],
+    handler: AuthController.smsVerificationSuccess,
+  });
+  route({
+    method: 'GET',
+    url: '/otp/failed/:id',
+    preHandler: [validate(AuthValidation.verificationIdValidation)],
+    handler: AuthController.smsVerificationFailed,
+  });
+  // Web OTP Verification //
 
-// Web OTP Verification //
-router.get(
-  '/verification/otp/:locale/:id',
-  validate(AuthValidation.verifyWebSMSOTPValidation),
-  AuthController.verifyWebSMSOTP
-);
-router.get(
-  '/verification/otp_web_version/:id',
-  validate(AuthValidation.verifyWebVersionSMSOTPValidation),
-  AuthController.verifyWebVersionSMSOTP
-);
-router.get(
-  '/verification/otp_web_reset_password_version/',
-  validate(AuthValidation.verifyWebVersionSMSOTPValidation),
-  AuthController.verifyWebVersionResetPasswordSMSOTP
-);
-router.get(
-  '/verification/firebase_otp_web_version/',
-  validate(AuthValidation.verifyFirebaseWebVersionSMSOTPValidation),
-  AuthController.verifyFirebaseWebVersionSMSOTP
-);
-router.get(
-  '/verification/firebase_reset_password_otp_web_version/',
-  validate(AuthValidation.verifyFirebaseWebVersionSMSOTPValidation),
-  AuthController.verifyFirebaseWebVersionResetPasswordSMSOTP
-);
-router.get(
-  '/otp/verify/:id',
-  validate(AuthValidation.verificationIdValidation),
-  AuthController.smsVerification
-);
-router.get(
-  '/otp/verify_web/:id',
-  validate(AuthValidation.smsVerificationWebValidation),
-  AuthController.smsWebVersionVerification
-);
-router.get(
-  '/otp/verify_reset_password_web/',
-  validate(AuthValidation.smsVerificationWebValidation),
-  AuthController.smsWebVersionResetPasswordVerification
-);
-router.get(
-  '/otp/success/:id',
-  validate(AuthValidation.verificationIdValidation),
-  AuthController.smsVerificationSuccess
-);
-router.get(
-  '/otp/failed/:id',
-  validate(AuthValidation.verificationIdValidation),
-  AuthController.smsVerificationFailed
-);
-// Web OTP Verification //
+  // Review Ratings Routes //
+  route({
+    method: 'POST',
+    url: '/restaurant/reviews',
+    preHandler: [validate(PublicValidation.restaurantReview)],
+    handler: ReviewRatingController.getRestaurantReview,
+  });
+  route({
+    method: 'POST',
+    url: '/food/reviews',
+    preHandler: [validate(PublicValidation.foodReview)],
+    handler: ReviewRatingController.getFoodReview,
+  });
+  // Review Ratings Routes //
 
-// Review Ratings Routes //
-router.post(
-  '/restaurant/reviews',
-  validate(PublicValidation.restaurantReview),
-  ReviewRatingController.getRestaurantReview
-);
-router.post(
-  '/food/reviews',
-  validate(PublicValidation.foodReview),
-  ReviewRatingController.getFoodReview
-);
-// Review Ratings Routes //
+  // Subscription Tiffin Package Routes //
+  route({
+    method: 'GET',
+    url: '/tiffin_packages/info/:id/',
+    preHandler: [validate(SubscriptionTiffinPackageValidation.getDetailValidation)],
+    handler: SubscriptionTiffinPackageController.getSubscriptionPackageDetailCustomer,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_packages/from_restaurant/',
+    preHandler: [validate(SubscriptionTiffinPackageValidation.getSubscriptionPackageFromVendorValidation)],
+    handler: SubscriptionTiffinPackageController.getSubscriptionPackageFromVendor,
+  });
+  // Subscription Tiffin Package Routes //
 
-// Subscription Tiffin Package Routes //
-router.get(
-  '/tiffin_packages/info/:id/',
-  validate(SubscriptionTiffinPackageValidation.getDetailValidation),
-  SubscriptionTiffinPackageController.getSubscriptionPackageDetailCustomer
-);
-router.post(
-  '/tiffin_packages/from_restaurant/',
-  validate(SubscriptionTiffinPackageValidation.getSubscriptionPackageFromVendorValidation),
-  SubscriptionTiffinPackageController.getSubscriptionPackageFromVendor
-);
-// Subscription Tiffin Package Routes //
+  /// Dining Booking Routes ///
+  route({
+    method: 'POST',
+    url: '/dining_booking/info/',
+    preHandler: [validate(PublicValidation.diningBookingInformationValidation)],
+    handler: RestaurantController.getDiningBookingInformation,
+  });
 
-/// Dining Booking Routes ///
-router.post(
-  '/dining_booking/info/',
-  validate(PublicValidation.diningBookingInformationValidation),
-  RestaurantController.getDiningBookingInformation
-);
+  /// Dining Booking Routes ///
 
-/// Dining Booking Routes ///
+  ///  Phone Call Routes ///
+  route({
+    method: 'GET',
+    url: '/restaurant/call/:restaurant',
+    preHandler: [validate(PublicValidation.fetchRestaurantCallNumberValidation)],
+    handler: RestaurantController.fetchResturantPhoneNumber,
+  });
+  ///  Phone Call Routes ///
 
-///  Phone Call Routes ///
-router.get(
-  '/restaurant/call/:restaurant',
-  validate(PublicValidation.fetchRestaurantCallNumberValidation),
-  RestaurantController.fetchResturantPhoneNumber
-);
-///  Phone Call Routes ///
+  // Feedback Form Routes //
+  route({
+    method: 'POST',
+    url: '/feedback_form/save/',
+    preHandler: [validate(FeedbackFormValidation.saveFeedback)],
+    handler: FeedbackFormController.saveFeedback,
+  });
+  route({
+    method: 'POST',
+    url: '/report_emergency/save/',
+    preHandler: [validate(ReportEmergencyValidation.saveReportEmergencyValidation)],
+    handler: ReportEmergencyController.saveReportEmergency,
+  });
+  // Feedback Form Routes //
 
-// Feedback Form Routes //
-router.post(
-  '/feedback_form/save/',
-  validate(FeedbackFormValidation.saveFeedback),
-  FeedbackFormController.saveFeedback
-);
-router.post(
-  '/report_emergency/save/',
-  validate(ReportEmergencyValidation.saveReportEmergencyValidation),
-  ReportEmergencyController.saveReportEmergency
-);
-// Feedback Form Routes //
+  // Locality Routes //
+  route({
+    method: 'GET',
+    url: '/localities_from_city/:id',
+    preHandler: [validate(PublicValidation.cityValidation)],
+    handler: LocalityController.getLocalitiesList,
+  });
+  // Locality Routes //
 
-// Locality Routes //
-router.get(
-  '/localities_from_city/:id',
-  validate(PublicValidation.cityValidation),
-  LocalityController.getLocalitiesList
-);
-// Locality Routes //
+  // Restaurant Register Request Routes //
+  route({
+    method: 'GET',
+    url: '/register/getBasicDataRestaurantRequest',
+    handler: RestaurantController.getBasicDataRegisterRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/register/restaurant_web_self_register_detail',
+    handler: RestaurantController.getBasicDataRegisterRequestWeb,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant/activeCuisine/',
+    handler: CuisineController.getActiveCuisine,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant/activeType/',
+    handler: RestaurantTypeController.getActiveRestaurantType,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant/activeFacility/',
+    handler: RestaurantFacilitiesController.getActiveFacilities,
+  });
+  route({
+    method: 'POST',
+    url: '/uploadImage',
+    handler: FileController.uploadImage,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant_joining/request/',
+    preHandler: [validate(RestaurantJoiningRequestValidation.createRequestValidation)],
+    handler: RestaurantJoiningRequestController.createRequest,
+  });
+  // Restaurant Register Request Routes //
 
-// Restaurant Register Request Routes //
-router.get(
-  '/register/getBasicDataRestaurantRequest',
-  RestaurantController.getBasicDataRegisterRequest
-);
-router.get(
-  '/register/restaurant_web_self_register_detail',
-  RestaurantController.getBasicDataRegisterRequestWeb
-);
-router.get('/restaurant/activeCuisine/', CuisineController.getActiveCuisine);
-router.get('/restaurant/activeType/', RestaurantTypeController.getActiveRestaurantType);
-router.get('/restaurant/activeFacility/', RestaurantFacilitiesController.getActiveFacilities);
-router.post('/uploadImage', FileController.uploadImage);
-router.post(
-  '/restaurant_joining/request/',
-  validate(RestaurantJoiningRequestValidation.createRequestValidation),
-  RestaurantJoiningRequestController.createRequest
-);
-// Restaurant Register Request Routes //
+  // Deliveryman Register Request Routes //
+  route({
+    method: 'GET',
+    url: '/deliveryman_joining/getBasicDataDeliverymanRequest',
+    handler: DriverController.getBasicDataRegisterRequest,
+  });
+  route({
+    method: 'POST',
+    url: '/deliveryman_joining/request/',
+    preHandler: [validate(DeliverymanJoiningRequestValidation.createRequestValidation)],
+    handler: DeliverymanJoiningRequestController.createRequest,
+  });
+  // Deliveryman Register Request Routes //
 
-// Deliveryman Register Request Routes //
-router.get(
-  '/deliveryman_joining/getBasicDataDeliverymanRequest',
-  DriverController.getBasicDataRegisterRequest
-);
-router.post(
-  '/deliveryman_joining/request/',
-  validate(DeliverymanJoiningRequestValidation.createRequestValidation),
-  DeliverymanJoiningRequestController.createRequest
-);
-// Deliveryman Register Request Routes //
+  // Firebase Auth Test //
+  route({
+    method: 'GET',
+    url: '/sms_provider/demo_firebase/',
+    preHandler: [validate(SmsProviderConfigValidation.firebaseWebDemoValidation)],
+    handler: AuthController.adminDemoFirebaseSMS,
+  });
+  // Firebase Auth Test //
+  // MSG91 Auth Test //
+  route({
+    method: 'GET',
+    url: '/sms_provider/demo_msg91/',
+    preHandler: [validate(SmsProviderConfigValidation.firebaseWebDemoValidation)],
+    handler: AuthController.adminDemoMSG91SMS,
+  });
+  // MSG91 Auth Test //
 
-// Firebase Auth Test //
-router.get(
-  '/sms_provider/demo_firebase/',
-  validate(SmsProviderConfigValidation.firebaseWebDemoValidation),
-  AuthController.adminDemoFirebaseSMS
-);
-// Firebase Auth Test //
-// MSG91 Auth Test //
-router.get(
-  '/sms_provider/demo_msg91/',
-  validate(SmsProviderConfigValidation.firebaseWebDemoValidation),
-  AuthController.adminDemoMSG91SMS
-);
-// MSG91 Auth Test //
+  // Customer Table Order Menu Routes //
+  route({
+    method: 'GET',
+    url: '/qr_code_menu/:restaurant/:table',
+    preHandler: [validate(RestaurantValidation.userTableQrMenuValidation)],
+    handler: RestaurantController.userTableQrMenu,
+  });
+  route({
+    method: 'POST',
+    url: '/qr_code_menu/add_to_cart/',
+    preHandler: [validate(TableOrderCartItemValidation.customerAddItemToCartValidation)],
+    handler: TableOrderCartItemController.customerAddItemToCart,
+  });
+  // Customer Table Order Menu Routes //
 
-// Customer Table Order Menu Routes //
-router.get(
-  '/qr_code_menu/:restaurant/:table',
-  validate(RestaurantValidation.userTableQrMenuValidation),
-  RestaurantController.userTableQrMenu
-);
-router.post(
-  '/qr_code_menu/add_to_cart/',
-  validate(TableOrderCartItemValidation.customerAddItemToCartValidation),
-  TableOrderCartItemController.customerAddItemToCart
-);
-// Customer Table Order Menu Routes //
-
-// Landing Page Routes //
-router.get('/landing_page/get_content', LandingPageController.getContent);
-// Landing Page Routes //
-module.exports = router;
-
+  // Landing Page Routes //
+  route({
+    method: 'GET',
+    url: '/landing_page/get_content',
+    handler: LandingPageController.getContent,
+  });
+  // Landing Page Routes //
+};

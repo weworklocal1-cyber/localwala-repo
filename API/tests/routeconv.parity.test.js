@@ -1,9 +1,10 @@
 /**
  * Phase 2.9b/2.9c gate: a converted route file serves both servers.
  *
- * `src/routes/v1/file.route.js` (2.9b) and `waiter.route.js` (2.9c) have been
- * moved to Fastify's `route({ method, url, preHandler, handler })` shape. Their
- * declarations are replayed by `src/routes/routeRegistrar.js`:
+ * Route files are converted to Fastify's `route({ method, url, preHandler,
+ * handler })` shape one at a time (see the 2.9 notes in the migration plan
+ * for which ones). Their declarations are replayed by
+ * `src/routes/routeRegistrar.js`:
  *
  *   - Express gets the same `router.post(url, ...preHandler, handler)` layers
  *     it always got, which is why `manifest:check` is still 0/0/0.
@@ -68,11 +69,83 @@ describe('Phase 2.9 - converted route files registered on both servers', () => {
     expect(fastify.hasRoute({ method: 'GET', url: '/v1/waiter/delete_account_reason_list' })).toBe(
       true
     );
+    expect(fastify.hasRoute({ method: 'GET', url: '/v1/kitchen/profile/me/:uid' })).toBe(true);
+    expect(fastify.hasRoute({ method: 'GET', url: '/v1/support_team/dashboard' })).toBe(true);
   });
 
-  it('leaves unconverted files on Express only', () => {
-    expect(fastify.hasRoute({ method: 'GET', url: '/v1/kitchen/profile/me/:uid' })).toBe(false);
-    expect(fastify.hasRoute({ method: 'GET', url: '/v1/public/getVendorSettings' })).toBe(false);
+  it('public.route.js - single-line declarations register and 404 identically', async () => {
+    const r = await compare('GET', '/v1/public/does-not-exist', { accept: 'application/json' });
+    expect(r.fastify.status).toBe(r.express.status);
+    expect(r.fastify.text).toBe(r.express.text);
+    expect(r.express.status).toBe(404);
+  });
+
+  it('accountant.route.js - webAuth + validate chain matches without a cookie', async () => {
+    const r = await compare('GET', '/v1/accountant/dashboard', { accept: 'application/json' });
+    expect(r.fastify.status).toBe(r.express.status);
+    expect(r.fastify.text).toBe(r.express.text);
+    expect(r.express.status).toBe(401);
+  });
+
+  it('user.route.js - single-line declarations match without a token', async () => {
+    const r = await compare('GET', '/v1/users/profile/user_avatar', {
+      accept: 'application/json',
+    });
+    expect(r.fastify.status).toBe(r.express.status);
+    expect(r.fastify.text).toBe(r.express.text);
+    expect(r.express.status).toBe(401);
+  });
+
+  it('cityzen.route.js - converted bulk file matches without a token', async () => {
+    const r = await compare('GET', '/v1/cityzen/dashboard/master1', {
+      accept: 'application/json',
+    });
+    expect(r.fastify.status).toBe(r.express.status);
+    expect(r.fastify.text).toBe(r.express.text);
+    expect(r.express.status).toBe(401);
+  });
+
+  it('vendor.route.js - single-line appAuth route matches without a token', async () => {
+    const r = await compare('GET', '/v1/vendor/getMyProfile/123', {
+      accept: 'application/json',
+    });
+    expect(r.fastify.status).toBe(r.express.status);
+    expect(r.fastify.text).toBe(r.express.text);
+    expect(r.express.status).toBe(401);
+  });
+
+  it('vendor_web.route.js - same sub-path as vendor but a different strategy', async () => {
+    expect(fastify.hasRoute({ method: 'GET', url: '/v1/vendor_web/getMyProfile/:userId' })).toBe(
+      true
+    );
+    const r = await compare('GET', '/v1/vendor_web/getMyProfile/123', {
+      accept: 'application/json',
+    });
+    expect(r.fastify.status).toBe(r.express.status);
+    expect(r.fastify.text).toBe(r.express.text);
+    expect(r.express.status).toBe(401);
+  });
+
+  it('admin.route.js - the last file, all 13 mounts now live on Fastify', async () => {
+    expect(fastify.hasRoute({ method: 'GET', url: '/v1/admin/dashboard' })).toBe(true);
+    const r = await compare('GET', '/v1/admin/dashboard', { accept: 'application/json' });
+    expect(r.fastify.status).toBe(r.express.status);
+    expect(r.fastify.text).toBe(r.express.text);
+    expect(r.express.status).toBe(401);
+  });
+
+  it('auth.route.js - a validate-only public route rejects a bad body identically', async () => {
+    const r = await compare('POST', '/v1/auth/verifyOTP', JSON_BODY, {});
+    expect(r.fastify.status).toBe(r.express.status);
+    expect(r.fastify.text).toBe(r.express.text);
+    expect(r.express.status).toBe(400);
+  });
+
+  it('kitchen.route.js - matches without a token', async () => {
+    const r = await compare('GET', '/v1/kitchen/profile/me/123', { accept: 'application/json' });
+    expect(r.fastify.status).toBe(r.express.status);
+    expect(r.fastify.text).toBe(r.express.text);
+    expect(r.express.status).toBe(401);
   });
 
   it('waiter.route.js - converted route answers 401 identically without a token', async () => {
@@ -88,6 +161,13 @@ describe('Phase 2.9 - converted route files registered on both servers', () => {
     const r = await compare('GET', '/v1/waiter/delete_account_reason_list', {
       accept: 'application/json',
     });
+    expect(r.fastify.status).toBe(r.express.status);
+    expect(r.fastify.text).toBe(r.express.text);
+    expect(r.express.status).toBe(401);
+  });
+
+  it('support.team.route.js - a webAuth (cookie) route also matches', async () => {
+    const r = await compare('GET', '/v1/support_team/dashboard', { accept: 'application/json' });
     expect(r.fastify.status).toBe(r.express.status);
     expect(r.fastify.text).toBe(r.express.text);
     expect(r.express.status).toBe(401);

@@ -16,7 +16,6 @@
  * LWL|WWL|2026|LOCALWALA|NODE
  */
 
-const express = require('express');
 const webAuth = require('../../middlewares/webAuth');
 const validate = require('../../middlewares/validate');
 
@@ -37,126 +36,189 @@ const CityController = require('../../controllers/city.controller');
 const DriverController = require('../../controllers/driver.controller');
 const NotificationListController = require('../../controllers/notification.list.controller');
 
-const router = express.Router();
+module.exports.register = function register(route) {
+  route({
+    method: 'GET',
+    url: '/web_guard/:id',
+    preHandler: [
+      webAuth('web_guard'),
+      validate(UserValidation.webGuardValidation),
+    ],
+    handler: UserController.supportTeamProfile,
+  });
 
-router.get(
-  '/web_guard/:id',
-  webAuth('web_guard'),
-  validate(UserValidation.webGuardValidation),
-  UserController.supportTeamProfile
-);
+  route({
+    method: 'GET',
+    url: '/dashboard',
+    preHandler: [webAuth('support_chats')],
+    handler: SupportChatRoomController.filterChatList,
+  });
+  route({
+    method: 'POST',
+    url: '/chat_message_initial',
+    preHandler: [
+      webAuth('support_chats'),
+      validate(ChatRoomValidation.supportChatValidation),
+    ],
+    handler: SupportChatRoomController.getInitialChatSupportMessages,
+  });
+  route({
+    method: 'POST',
+    url: '/fetche_more_result',
+    preHandler: [
+      webAuth('support_chats'),
+      validate(ChatRoomValidation.supportChatValidation),
+    ],
+    handler: SupportChatRoomController.fetchMoreSupportMessages,
+  });
+  route({
+    method: 'POST',
+    url: '/chat/send/',
+    preHandler: [
+      webAuth('support_chats'),
+      validate(ChatRoomValidation.sendChatMessageValidation),
+    ],
+    handler: SupportChatRoomController.saveSupportMessage,
+  });
+  route({
+    method: 'GET',
+    url: '/order_detail/:id',
+    preHandler: [
+      webAuth('order_detail'),
+      validate(OrdersValidation.orderDetailSupportTeamValidation),
+    ],
+    handler: OrdersController.supportTeamOrderDetail,
+  });
+  route({
+    method: 'GET',
+    url: '/booking_detail/:bookingId',
+    preHandler: [
+      webAuth('booking_detail'),
+      validate(DiningBookingValidation.supportTeamDiningValidation),
+    ],
+    handler: DiningBookingController.supportTeamBookingDetail,
+  });
+  route({
+    method: 'GET',
+    url: '/purchase_detail/:id',
+    preHandler: [
+      webAuth('purchase_detail'),
+      validate(UserPurchasedTiffinSubscriptionValidation.supportTeamPurchaseDetailValidation),
+    ],
+    handler: UserPurchasedTiffinSubscriptionController.supportTeamPurchaseDetail,
+  });
+  route({
+    method: 'POST',
+    url: '/resolve_support_chat',
+    preHandler: [
+      webAuth('support_chats'),
+      validate(ChatRoomValidation.resolveSupportChatValidation),
+    ],
+    handler: SupportChatRoomController.resolveSupportChat,
+  });
+  route({
+    method: 'GET',
+    url: '/export_chats/:id',
+    preHandler: [
+      webAuth('support_chats'),
+      validate(ChatRoomValidation.exportSupportChatValidation),
+    ],
+    handler: SupportChatRoomController.exportSupportChat,
+  });
+  route({
+    method: 'GET',
+    url: '/support_team_chat_list/:id',
+    preHandler: [
+      webAuth('support_chats'),
+      validate(ChatRoomValidation.supportTeamChatValidation),
+    ],
+    handler: SupportChatRoomController.supportTeamChat,
+  });
+  route({
+    method: 'GET',
+    url: '/customer_list',
+    preHandler: [webAuth('customer_list')],
+    handler: UserController.customerList,
+  });
+  route({
+    method: 'GET',
+    url: '/customer_detail/:id',
+    preHandler: [
+      webAuth('customer_list'),
+      validate(UserValidation.supportTeamCustomerDetailValidation),
+    ],
+    handler: UserController.supportTeamCustomerDetail,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_initial',
+    preHandler: [webAuth('restaurant_list')],
+    handler: RestaurantController.restauratReportInitialFilter,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_list',
+    preHandler: [webAuth('restaurant_list')],
+    handler: RestaurantController.supportTeamRestaurantList,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_detail/:id',
+    preHandler: [
+      webAuth('restaurant_list'),
+      validate(RestaurantValidation.supportTeamRestaurantValidation),
+    ],
+    handler: RestaurantController.supportTeamRestaurantDetail,
+  });
 
-router.get('/dashboard', webAuth('support_chats'), SupportChatRoomController.filterChatList);
-router.post(
-  '/chat_message_initial',
-  webAuth('support_chats'),
-  validate(ChatRoomValidation.supportChatValidation),
-  SupportChatRoomController.getInitialChatSupportMessages
-);
-router.post(
-  '/fetche_more_result',
-  webAuth('support_chats'),
-  validate(ChatRoomValidation.supportChatValidation),
-  SupportChatRoomController.fetchMoreSupportMessages
-);
-router.post(
-  '/chat/send/',
-  webAuth('support_chats'),
-  validate(ChatRoomValidation.sendChatMessageValidation),
-  SupportChatRoomController.saveSupportMessage
-);
-router.get(
-  '/order_detail/:id',
-  webAuth('order_detail'),
-  validate(OrdersValidation.orderDetailSupportTeamValidation),
-  OrdersController.supportTeamOrderDetail
-);
-router.get(
-  '/booking_detail/:bookingId',
-  webAuth('booking_detail'),
-  validate(DiningBookingValidation.supportTeamDiningValidation),
-  DiningBookingController.supportTeamBookingDetail
-);
-router.get(
-  '/purchase_detail/:id',
-  webAuth('purchase_detail'),
-  validate(UserPurchasedTiffinSubscriptionValidation.supportTeamPurchaseDetailValidation),
-  UserPurchasedTiffinSubscriptionController.supportTeamPurchaseDetail
-);
-router.post(
-  '/resolve_support_chat',
-  webAuth('support_chats'),
-  validate(ChatRoomValidation.resolveSupportChatValidation),
-  SupportChatRoomController.resolveSupportChat
-);
-router.get(
-  '/export_chats/:id',
-  webAuth('support_chats'),
-  validate(ChatRoomValidation.exportSupportChatValidation),
-  SupportChatRoomController.exportSupportChat
-);
-router.get(
-  '/support_team_chat_list/:id',
-  webAuth('support_chats'),
-  validate(ChatRoomValidation.supportTeamChatValidation),
-  SupportChatRoomController.supportTeamChat
-);
-router.get('/customer_list', webAuth('customer_list'), UserController.customerList);
-router.get(
-  '/customer_detail/:id',
-  webAuth('customer_list'),
-  validate(UserValidation.supportTeamCustomerDetailValidation),
-  UserController.supportTeamCustomerDetail
-);
-router.get(
-  '/restaurant_initial',
-  webAuth('restaurant_list'),
-  RestaurantController.restauratReportInitialFilter
-);
-router.get(
-  '/restaurant_list',
-  webAuth('restaurant_list'),
-  RestaurantController.supportTeamRestaurantList
-);
-router.get(
-  '/restaurant_detail/:id',
-  webAuth('restaurant_list'),
-  validate(RestaurantValidation.supportTeamRestaurantValidation),
-  RestaurantController.supportTeamRestaurantDetail
-);
+  route({
+    method: 'GET',
+    url: '/all_cities',
+    preHandler: [webAuth('cities_list')],
+    handler: CityController.getAll,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_list',
+    preHandler: [webAuth('deliveryman_list')],
+    handler: DriverController.supportTeamDeliverymanList,
+  });
 
-router.get('/all_cities', webAuth('cities_list'), CityController.getAll);
-router.get(
-  '/deliveryman_list',
-  webAuth('deliveryman_list'),
-  DriverController.supportTeamDeliverymanList
-);
+  route({
+    method: 'GET',
+    url: '/support_team_profile/:id',
+    preHandler: [
+      webAuth('support_team_profile'),
+      validate(UserValidation.supportTeamProfileValidation),
+    ],
+    handler: UserController.getSupportTeamProfile,
+  });
+  route({
+    method: 'PATCH',
+    url: '/update_support_team/:id',
+    preHandler: [
+      webAuth('update_support_team'),
+      validate(UserValidation.updateSupportTeamProfileValidation),
+    ],
+    handler: UserController.updateSupportTeamProfile,
+  });
+  route({
+    method: 'PATCH',
+    url: '/update_support_team_password/:id',
+    preHandler: [
+      webAuth('update_support_team_password'),
+      validate(UserValidation.updateSupportTeamPasswordValidation),
+    ],
+    handler: UserController.updateSupportTeamPassword,
+  });
 
-router.get(
-  '/support_team_profile/:id',
-  webAuth('support_team_profile'),
-  validate(UserValidation.supportTeamProfileValidation),
-  UserController.getSupportTeamProfile
-);
-router.patch(
-  '/update_support_team/:id',
-  webAuth('update_support_team'),
-  validate(UserValidation.updateSupportTeamProfileValidation),
-  UserController.updateSupportTeamProfile
-);
-router.patch(
-  '/update_support_team_password/:id',
-  webAuth('update_support_team_password'),
-  validate(UserValidation.updateSupportTeamPasswordValidation),
-  UserController.updateSupportTeamPassword
-);
-
-router.get(
-  '/support_team_header_content/:id',
-  webAuth('support_team_header_content'),
-  validate(UserValidation.supportTeamHeaderValidation),
-  NotificationListController.supportTeamHeaderContent
-);
-
-module.exports = router;
-
+  route({
+    method: 'GET',
+    url: '/support_team_header_content/:id',
+    preHandler: [
+      webAuth('support_team_header_content'),
+      validate(UserValidation.supportTeamHeaderValidation),
+    ],
+    handler: NotificationListController.supportTeamHeaderContent,
+  });
+};

@@ -16,7 +16,6 @@
  * LWL|WWL|2026|LOCALWALA|NODE
  */
 
-const express = require('express');
 const webAuth = require('../../middlewares/webAuth');
 const validate = require('../../middlewares/validate');
 
@@ -225,4563 +224,6667 @@ const SupportChatRoomController = require('../../controllers/support.chat.room.c
 const MediaStorageSettingController = require('../../controllers/media.storage.setting.controller');
 const LandingPageController = require('../../controllers/landing.page.controller');
 
-const router = express.Router();
-
-router.get(
-  '/web_guard/:id',
-  webAuth('web_guard'),
-  validate(UserValidation.webGuardValidation),
-  UserController.adminProfile
-);
-
-// Country Routes //
-router.get('/dashboard', webAuth('dashboard'), OrdersController.adminDashboard);
-router.post(
-  '/country/save',
-  webAuth('createCountry'),
-  validate(CountryValidation.createCountry),
-  CountryController.create
-);
-router.get('/country/getAll', webAuth('getCountries'), CountryController.get);
-router.patch(
-  '/country/update/:countryId',
-  webAuth('updateCountry'),
-  validate(CountryValidation.idValidation),
-  CountryController.update
-);
-router.delete(
-  '/country/delete/:countryId',
-  webAuth('deleteCountry'),
-  validate(CountryValidation.idValidation),
-  CountryController.drop
-);
-// Country Routes //
-
-// City Routes //
-router.post(
-  '/cities/save',
-  webAuth('createCity'),
-  validate(CityValidation.createCity),
-  CityController.create
-);
-router.get(
-  '/cities/getAll',
-  webAuth('getCities'),
-  validate(CityValidation.getAllCities),
-  CityController.get
-);
-router.get('/cities/listAllCities', webAuth('getCities'), CityController.getAll);
-router.patch(
-  '/cities/update/:cityId',
-  webAuth('updateCity'),
-  validate(CityValidation.idValidation),
-  CityController.update
-);
-router.patch(
-  '/cities/updateStatus/:cityId',
-  webAuth('updateCity'),
-  validate(CityValidation.idValidation),
-  CityController.updateStatus
-);
-router.delete(
-  '/cities/delete/:cityId',
-  webAuth('deleteCity'),
-  validate(CityValidation.idValidation),
-  CityController.drop
-);
-
-router.get(
-  '/cities/map_dialog/:city',
-  webAuth('getCities'),
-  validate(RestaurantValidation.cityMapDialogValidation),
-  RestaurantController.cityMapDialogData
-);
-// City Routes //
-
-// Locality Routes //
-router.post(
-  '/localities/save',
-  webAuth('createLocality'),
-  validate(LocalityValidation.createLocality),
-  LocalityController.create
-);
-router.get(
-  '/localities/getAll',
-  webAuth('getLocalities'),
-  validate(LocalityValidation.allValidation),
-  LocalityController.get
-);
-router.get(
-  '/localities/getByCityId/:cityId',
-  webAuth('getLocalities'),
-  validate(CityValidation.idValidation),
-  LocalityController.getByCityId
-);
-router.patch(
-  '/localities/update/:localityId',
-  webAuth('updateLocality'),
-  validate(LocalityValidation.idValidation),
-  LocalityController.update
-);
-router.patch(
-  '/localities/updateStatus/:localityId',
-  webAuth('updateLocality'),
-  validate(LocalityValidation.idValidation),
-  LocalityController.updateStatus
-);
-router.delete(
-  '/localities/deleteLocality/:localityId',
-  webAuth('deleteLocality'),
-  validate(LocalityValidation.idValidation),
-  LocalityController.drop
-);
-// Locality Routes //
-
-// Cuisine Routes //
-router.post(
-  '/cuisine/save',
-  webAuth('createCuisine'),
-  validate(CuisineValidation.createCuisine),
-  CuisineController.create
-);
-router.get(
-  '/cuisine/getAll',
-  webAuth('getCuisines'),
-  validate(CuisineValidation.allValidation),
-  CuisineController.get
-);
-router.get('/cuisine/listAllCuisine', webAuth('getCuisines'), CuisineController.getAll);
-router.patch(
-  '/cuisine/update/:cuisineId',
-  webAuth('updateCuisine'),
-  validate(CuisineValidation.idValidation),
-  CuisineController.update
-);
-router.patch(
-  '/cuisine/updateStatus/:cuisineId',
-  webAuth('updateCuisine'),
-  validate(CuisineValidation.idValidation),
-  CuisineController.updateStatus
-);
-router.delete(
-  '/cuisine/delete/:cuisineId',
-  webAuth('deleteCuisine'),
-  validate(CuisineValidation.idValidation),
-  CuisineController.drop
-);
-// Cuisine Routes //
-
-// Files Routes //
-router.delete(
-  '/files/delete/:path',
-  webAuth('deleteFile'),
-  validate(FileValidation.pathValidation),
-  MediaController.drop
-);
-// Files Routes //
-
-// Language Routes //
-router.post(
-  '/language/save',
-  webAuth('createLanguage'),
-  validate(LanguageValidation.createLanguage),
-  LangaugeController.create
-);
-router.get(
-  '/language/getAll',
-  webAuth('getLanguage'),
-  validate(LanguageValidation.allValidation),
-  LangaugeController.get
-);
-router.patch(
-  '/language/update/:languageId',
-  webAuth('updateLanguage'),
-  validate(LanguageValidation.idValidation),
-  LangaugeController.update
-);
-router.patch(
-  '/language/updateDefault/:languageId',
-  webAuth('updateDefault'),
-  validate(LanguageValidation.idValidation),
-  LangaugeController.updateDefault
-);
-router.delete(
-  '/language/delete/:languageId',
-  webAuth('deleteLanguage'),
-  validate(LanguageValidation.idValidation),
-  LangaugeController.drop
-);
-// Language Routes //
-
-// Subscriptions Routes //
-router.post(
-  '/subscription/save',
-  webAuth('createSubscription'),
-  validate(SubscriptionValidation.createSubscription),
-  SubscriptionController.create
-);
-router.get(
-  '/subscription/getAll',
-  webAuth('getSubscriptions'),
-  validate(SubscriptionValidation.allValidation),
-  SubscriptionController.getAdminSubscriptionList
-);
-router.get(
-  '/subscription/get/:subscriptionId',
-  webAuth('subscriptionGetById'),
-  validate(SubscriptionValidation.idValidation),
-  SubscriptionController.getById
-);
-router.patch(
-  '/subscription/update/:subscriptionId',
-  webAuth('updateSubscription'),
-  validate(SubscriptionValidation.idValidation),
-  SubscriptionController.update
-);
-router.patch(
-  '/subscription/updateStatus/:subscriptionId',
-  webAuth('updateSubscription'),
-  validate(SubscriptionValidation.idValidation),
-  SubscriptionController.updateStatus
-);
-router.delete(
-  '/subscription/delete/:subscriptionId',
-  webAuth('deleteSubscription'),
-  validate(SubscriptionValidation.idValidation),
-  SubscriptionController.drop
-);
-// Subscriptions Routes //
-
-// Restaurant Type Routes //
-router.post(
-  '/restaurantType/save',
-  webAuth('createRestaurantType'),
-  validate(RestaurantTypeValidation.createRestaurantType),
-  RestaurantTypeController.create
-);
-router.get(
-  '/restaurantType/getAll',
-  webAuth('getRestaurantType'),
-  validate(RestaurantTypeValidation.allValidation),
-  RestaurantTypeController.get
-);
-router.patch(
-  '/restaurantType/update/:id',
-  webAuth('updateRestaurantType'),
-  validate(RestaurantTypeValidation.idValidation),
-  RestaurantTypeController.update
-);
-router.patch(
-  '/restaurantType/updateStatus/:id',
-  webAuth('updateRestaurantType'),
-  validate(RestaurantTypeValidation.idValidation),
-  RestaurantTypeController.updateStatus
-);
-router.delete(
-  '/restaurantType/delete/:id',
-  webAuth('deleteRestaurantType'),
-  validate(RestaurantTypeValidation.idValidation),
-  RestaurantTypeController.drop
-);
-// Restaurant Type Routes //
-
-// Restaurant Routes //
-router.post(
-  '/restaurant/save',
-  webAuth('createRestaurant'),
-  validate(RestaurantValidation.createVendor),
-  RestaurantController.registerVendorAccount
-);
-router.get(
-  '/restaurant/getBasicDataForNewRestaurant',
-  webAuth('createRestaurant'),
-  RestaurantController.getBasicDataForNewRestaurant
-);
-router.get(
-  '/restaurant/getAll',
-  webAuth('getAllRestaurant'),
-  validate(RestaurantValidation.allValidation),
-  RestaurantController.get
-);
-router.get(
-  '/restaurant/getOutlets',
-  webAuth('getAllRestaurant'),
-  validate(RestaurantValidation.allValidation),
-  RestaurantController.getOutlets
-);
-router.patch(
-  '/restaurant/updateStatus/:restaurantId',
-  webAuth('updateRestaurant'),
-  validate(RestaurantValidation.idValidation),
-  RestaurantController.updateStatus
-);
-router.get(
-  '/restaurant/getById/:restaurantId',
-  webAuth('getRestaurantById'),
-  validate(RestaurantValidation.idValidation),
-  RestaurantController.getById
-);
-router.patch(
-  '/restaurant/update/:restaurantId',
-  webAuth('updateRestaurant'),
-  validate(RestaurantValidation.idValidation),
-  RestaurantController.update
-);
-router.get(
-  '/restaurant/getRestaurantByCityId/:cityId',
-  webAuth('getRestaurantByCity'),
-  validate(RestaurantValidation.cityIdValidation),
-  RestaurantController.getRestaurantByCityId
-);
-router.get(
-  '/restaurant/getRestaurantByCityIdLimitedData/:cityId',
-  webAuth('getRestaurantByCity'),
-  validate(RestaurantValidation.restaurantByCityIdLimitedDetailsValidation),
-  RestaurantController.getRestaurantsByCityIdLimitedDetailsForAdmin
-);
-router.get(
-  '/restaurant/getRestaurantByCityIdForTiffinPackages/:cityId',
-  webAuth('getRestaurantByCity'),
-  validate(RestaurantValidation.restaurantByCityIdLimitedDetailsValidation),
-  RestaurantController.getRestaurantsByCityIdForTiffinPackagesAdmin
-);
-router.get(
-  '/restaurant/getDiningSupportedRestaurantByCityId/:cityId',
-  webAuth('getRestaurantByCity'),
-  validate(RestaurantValidation.restaurantByCityIdLimitedDetailsValidation),
-  RestaurantController.getDiningSupportedRestaurantByCityId
-);
-router.get(
-  '/restaurant/map_dialog/:city',
-  webAuth('getRestaurantByCity'),
-  validate(RestaurantValidation.cityMapDialogValidation),
-  RestaurantController.cityMapDialogRestaurants
-);
-router.get(
-  '/restaurant/filter/:kind/:id',
-  webAuth('getAllRestaurant'),
-  validate(RestaurantValidation.filterValidation),
-  RestaurantController.filterRestaurantList
-);
-router.get(
-  '/restaurant/filter_data',
-  webAuth('getAllRestaurant'),
-  RestaurantController.filterQueryData
-);
-router.post(
-  '/restaurant/filter_restaurant',
-  webAuth('getAllRestaurant'),
-  validate(RestaurantValidation.filterQueryValidation),
-  RestaurantController.filterQuery
-);
-// Restaurant Routes //
-
-// Category Routes //
-router.post(
-  '/category/save',
-  webAuth('createCategory'),
-  validate(CategoryValidation.createCategory),
-  CategoryController.create
-);
-router.get(
-  '/category/getAll',
-  webAuth('getCategories'),
-  validate(CategoryValidation.allValidation),
-  CategoryController.get
-);
-router.get('/category/getCategoryList', webAuth('getCategories'), CategoryController.getAll);
-router.patch(
-  '/category/update/:categoryId',
-  webAuth('updateCategory'),
-  validate(CategoryValidation.idValidation),
-  CategoryController.update
-);
-router.delete(
-  '/category/delete/:categoryId',
-  webAuth('deleteCategory'),
-  validate(CategoryValidation.idValidation),
-  CategoryController.drop
-);
-// Category Routes //
-
-// Sub Category Routes //
-router.post(
-  '/subCategory/save',
-  webAuth('createSubCategory'),
-  validate(SubCategoryValidation.createSubCategory),
-  SubCategoryController.create
-);
-router.get(
-  '/subCategory/getAll',
-  webAuth('getSubCategories'),
-  validate(SubCategoryValidation.allValidation),
-  SubCategoryController.get
-);
-router.patch(
-  '/subCategory/update/:subCategoryId',
-  webAuth('updateSubCategory'),
-  validate(SubCategoryValidation.idValidation),
-  SubCategoryController.update
-);
-router.delete(
-  '/subCategory/delete/:subCategoryId',
-  webAuth('deleteSubCategory'),
-  validate(SubCategoryValidation.idValidation),
-  SubCategoryController.drop
-);
-router.get(
-  '/sub_category/getActive',
-  webAuth('getActiveSubCategory'),
-  SubCategoryController.getActive
-);
-router.get(
-  '/sub_category/getByCategoryId/:category',
-  webAuth('getActiveSubCategory'),
-  SubCategoryController.getActiveByCategoryId
-);
-
-router.get(
-  '/vendor_sub_category/getActiveByCategoryId/:category/:restaurant',
-  webAuth('getVendorSubCategories'),
-  validate(VendorSubCategoryValidation.mySubCategoryByCateIdValidation),
-  VendorSubCategoryController.getAllSubCategoryById
-);
-// Sub Category Routes //
-
-// Vehicle Routes //
-router.post(
-  '/vehicle/save',
-  webAuth('createVehicle'),
-  validate(VehicleValidation.createVehicle),
-  VehicleController.create
-);
-router.get(
-  '/vehicle/getAll',
-  webAuth('getVehicle'),
-  validate(VehicleValidation.allValidation),
-  VehicleController.get
-);
-router.patch(
-  '/vehicle/update/:vehicleId',
-  webAuth('updateVehicle'),
-  validate(VehicleValidation.idValidation),
-  VehicleController.update
-);
-router.delete(
-  '/vehicle/delete/:vehicleId',
-  webAuth('updateVehicle'),
-  validate(VehicleValidation.idValidation),
-  VehicleController.drop
-);
-// Vehicle Routes //
-
-// Driver Routes //
-router.post(
-  '/driver/save',
-  webAuth('createDriver'),
-  validate(DriverValidation.createDriver),
-  DriverController.registerDriverAccount
-);
-router.get('/driver/getBasicData', webAuth('createDriver'), DriverController.getBasicData);
-router.get(
-  '/driver/getAll',
-  webAuth('getDrivers'),
-  validate(DriverValidation.allValidation),
-  DriverController.get
-);
-router.get(
-  '/driver/getAllVendorDeliveryman',
-  webAuth('getDrivers'),
-  validate(DriverValidation.allValidation),
-  DriverController.getAllVendorDriverList
-);
-router.patch(
-  '/driver/updateStatus/:driverId',
-  webAuth('updateDriver'),
-  validate(DriverValidation.idValidation),
-  DriverController.updateStatus
-);
-router.get(
-  '/driver/getById/:driverId',
-  webAuth('getDriverById'),
-  validate(DriverValidation.idValidation),
-  DriverController.getById
-);
-router.patch(
-  '/driver/update/:driverId',
-  webAuth('updateDriver'),
-  validate(DriverValidation.idValidation),
-  DriverController.update
-);
-router.get(
-  '/driver/getByCity/:city',
-  webAuth('getDrivers'),
-  validate(DriverValidation.driverByCityValidation),
-  DriverController.getDeliverymanFromCity
-);
-router.get(
-  '/driver/walletFundList',
-  webAuth('walletFundList'),
-  DriverController.deliverymanWalletFundList
-);
-router.get(
-  '/driver/map_dialog/:city',
-  webAuth('getDrivers'),
-  validate(DriverValidation.driverByCityValidation),
-  DriverController.cityMapDialogDeliveryman
-);
-// Driver Routes //
-
-// Delivery Shift Schedule Routes //
-router.post(
-  '/deliveryShiftSchedule/save',
-  webAuth('createDeliveryShiftSchedule'),
-  validate(DeliveryShiftScheduleValidation.createScheduleValidation),
-  DeliveryShiftScheduleController.create
-);
-router.get(
-  '/deliveryShiftSchedule/get',
-  webAuth('getDeliveryShiftSchedule'),
-  validate(DeliveryShiftScheduleValidation.allValidation),
-  DeliveryShiftScheduleController.get
-);
-router.patch(
-  '/deliveryShiftSchedule/update/:id',
-  webAuth('updateDeliveryShift'),
-  validate(DeliveryShiftScheduleValidation.idValidation),
-  DeliveryShiftScheduleController.update
-);
-router.delete(
-  '/deliveryShiftSchedule/delete/:id',
-  webAuth('deleteDeliveryShift'),
-  validate(DeliveryShiftScheduleValidation.idValidation),
-  DeliveryShiftScheduleController.drop
-);
-// Delivery Shift Schedule Routes //
-
-// Restaurant Campaign Routes //
-router.post(
-  '/restaurant_campaign/save',
-  webAuth('createRestaurantCampaign'),
-  validate(RestaurantCampaignValidation.createRestaurantCampaign),
-  RestaurantCampaignController.create
-);
-router.get(
-  '/restaurant_campaign/getAll',
-  webAuth('getRestaurantCampaigns'),
-  validate(RestaurantCampaignValidation.allValidation),
-  RestaurantCampaignController.get
-);
-router.get(
-  '/restaurant_campaign/getBasicData',
-  webAuth('createRestaurantCampaign'),
-  RestaurantCampaignController.getBasicData
-);
-router.get(
-  '/restaurant_campaign/getById/:campaignId',
-  webAuth('getRestaurantCampaignById'),
-  validate(RestaurantCampaignValidation.idValidation),
-  RestaurantCampaignController.getById
-);
-router.patch(
-  '/restaurant_campaign/update/:campaignId',
-  webAuth('updateRestaurantCampaign'),
-  validate(RestaurantCampaignValidation.idValidation),
-  RestaurantCampaignController.update
-);
-router.patch(
-  '/restaurant_campaign/updateStatus/:campaignId',
-  webAuth('updateRestaurantCampaign'),
-  validate(RestaurantCampaignValidation.idValidation),
-  RestaurantCampaignController.updateStatus
-);
-router.delete(
-  '/restaurant_campaign/delete/:campaignId',
-  webAuth('deleteRestaurantCampaign'),
-  validate(RestaurantCampaignValidation.idValidation),
-  RestaurantCampaignController.drop
-);
-router.get(
-  '/restaurant_campaign/getRestaurantByCityId/:cityId',
-  webAuth('createRestaurantCampaign'),
-  validate(RestaurantCampaignValidation.cityIdValidation),
-  RestaurantCampaignController.getRestaurantByCityId
-);
-router.get(
-  '/restaurant_campaign/detail/:id',
-  webAuth('campaignDetail'),
-  validate(RestaurantCampaignValidation.detailValidation),
-  RestaurantCampaignController.detail
-);
-// Restaurant Campaign Routes //
-
-// Food Campaign Routes //
-router.post(
-  '/food_campaign/save',
-  webAuth('createFoodCampaign'),
-  validate(FoodCampaignValidation.createFoodCampaign),
-  FoodCampaignController.create
-);
-router.get(
-  '/food_campaign/getAll',
-  webAuth('getFoodCampaign'),
-  validate(FoodCampaignValidation.allValidation),
-  FoodCampaignController.get
-);
-router.patch(
-  '/food_campaign/updateStatus/:campaignId',
-  webAuth('updateFoodCampaign'),
-  validate(FoodCampaignValidation.idValidation),
-  FoodCampaignController.updateStatus
-);
-router.delete(
-  '/food_campaign/delete/:campaignId',
-  webAuth('deleteFoodCampaign'),
-  validate(FoodCampaignValidation.idValidation),
-  FoodCampaignController.drop
-);
-router.get(
-  '/food_campaign/getBasicData',
-  webAuth('createFoodCampaign'),
-  FoodCampaignController.getBasicData
-);
-router.get(
-  '/food_campaign/getRestaurantByCityId/:cityId',
-  webAuth('createFoodCampaign'),
-  validate(FoodCampaignValidation.cityIdValidation),
-  FoodCampaignController.getRestaurantByCityId
-);
-router.get(
-  '/food_campaign/getFoodByRestaurant/:restaurantId',
-  webAuth('createFoodCampaign'),
-  validate(FoodCampaignValidation.restaurantIdValidation),
-  FoodCampaignController.getFoodByRestaurantId
-);
-router.get(
-  '/food_campaign/getById/:campaignId',
-  webAuth('getFoodCampaignById'),
-  validate(FoodCampaignValidation.idValidation),
-  FoodCampaignController.getById
-);
-router.patch(
-  '/food_campaign/update/:campaignId',
-  webAuth('updateFoodCampaign'),
-  validate(FoodCampaignValidation.idValidation),
-  FoodCampaignController.update
-);
-router.get(
-  '/food_campaign/detail/:id',
-  webAuth('campaignDetail'),
-  validate(FoodCampaignValidation.detailValidation),
-  FoodCampaignController.detail
-);
-// Food Campaign Routes //
-
-// Media Routes //
-router.get('/medias/getAll', webAuth('getMedias'), MediaController.get);
-router.get('/medias/getMediaList', webAuth('getMediaList'), MediaController.getMediaListAdmin);
-// Media Routes //
-
-// Subscriber Routes //
-router.post(
-  '/subscriber/save',
-  webAuth('createSubscriber'),
-  validate(SubscriberValidation.createSubscriber),
-  SubscriberController.create
-);
-router.get(
-  '/subscriber/getAll',
-  webAuth('getSubscriberList'),
-  validate(SubscriberValidation.allValidation),
-  SubscriberController.get
-);
-router.post(
-  '/subscriber/extend_dates',
-  webAuth('extendSubscription'),
-  validate(SubscriberValidation.extendValidation),
-  SubscriberController.extendSubscriptionDate
-);
-// Subscriber Routes //
-
-// Addons Routes //
-router.post(
-  '/addons/save',
-  webAuth('createAddons'),
-  validate(AddonsValidation.createAddons),
-  AddonsController.create
-);
-router.get(
-  '/addons/getAll',
-  webAuth('getAllAddons'),
-  validate(AddonsValidation.allValidation),
-  AddonsController.get
-);
-router.patch(
-  '/addons/update/:addonId',
-  webAuth('updateAddons'),
-  validate(AddonsValidation.idValidation),
-  AddonsController.update
-);
-router.delete(
-  '/addons/delete/:addonId',
-  webAuth('deleteAddons'),
-  validate(AddonsValidation.idValidation),
-  AddonsController.drop
-);
-// Addons Routes //
-
-// Foods Routes //
-router.get(
-  '/foods/getAll',
-  webAuth('getAllFoods'),
-  validate(FoodValidation.allValidation),
-  FoodController.adminFoodList
-);
-router.patch(
-  '/foods/updateMetaInfo/:foodId',
-  webAuth('updateFood'),
-  validate(FoodValidation.idValidation),
-  FoodController.updateMetaInfo
-);
-router.delete(
-  '/foods/delete/:foodId',
-  webAuth('deleteFood'),
-  validate(FoodValidation.idValidation),
-  FoodController.drop
-);
-router.get(
-  '/foods/getFoodInfo/:foodId',
-  webAuth('getFoodDetails'),
-  validate(FoodValidation.idValidation),
-  FoodController.getFoodInfoForAdmin
-);
-router.patch(
-  '/foods/update/:foodId',
-  webAuth('updateFood'),
-  validate(FoodValidation.idValidation),
-  FoodController.update
-);
-router.get(
-  '/food/getRestaurantByCityId/:cityId',
-  webAuth('createFood'),
-  validate(RestaurantCampaignValidation.cityIdValidation),
-  RestaurantCampaignController.getRestaurantByCityId
-);
-router.get(
-  '/foods/getBasicData/:restaurant',
-  webAuth('createFood'),
-  validate(FoodValidation.myFoodValidation),
-  FoodController.getBasicData
-);
-router.post(
-  '/foods/save',
-  webAuth('createFood'),
-  validate(FoodValidation.createFood),
-  FoodController.create
-);
-router.get(
-  '/food/getFoodsByCity/:cityId',
-  webAuth('getFoodsByCity'),
-  validate(FoodValidation.cityValidation),
-  FoodController.getFoodByCity
-);
-router.get(
-  '/foods/detail/:foodId',
-  webAuth('getFoodDetails'),
-  validate(FoodValidation.idValidation),
-  FoodController.adminFoodDetail
-);
-// Foods Routes //
-
-// Business Settings Routes //
-router.post(
-  '/business_settings/save',
-  webAuth('createBusinessSettings'),
-  validate(BusinessSettingValidation.createSettings),
-  BusinessSettingController.create
-);
-router.patch(
-  '/business_settings/update/:businessId',
-  webAuth('updateBusinessSettings'),
-  validate(BusinessSettingValidation.idValidation),
-  BusinessSettingController.update
-);
-router.get('/business_settings/get', webAuth('getSettings'), BusinessSettingController.get);
-// Business Settings Routes //
-
-// Social Sign In Route //
-router.get('/social_signin/getList', webAuth('getSocialSignIn'), SocialSignInController.getList);
-router.post(
-  '/social_signin/save',
-  webAuth('createSocialSignIn'),
-  validate(SocialSignInValidation.createOrUpdateSocialSignin),
-  SocialSignInController.create
-);
-router.patch(
-  '/social_signin/update/:id',
-  webAuth('updateSocialSignIn'),
-  validate(SocialSignInValidation.idValidation),
-  SocialSignInController.update
-);
-// Social Sign In Route //
-
-// Order Settings Routes //
-router.post(
-  '/order_settings/save',
-  webAuth('createOrderSettings'),
-  validate(OrderSettingsValidation.createOrderSettings),
-  OrderSettingsController.create
-);
-router.get('/order_settings/get', webAuth('getOrderSettingsInfo'), OrderSettingsController.get);
-router.patch(
-  '/order_settings/update/:settingId',
-  webAuth('updateOrderSettings'),
-  validate(OrderSettingsValidation.idValidation),
-  OrderSettingsController.update
-);
-// Order Settings Routes //
-
-// Order Cancellation Reason Routes //
-router.get(
-  '/order_cancel_reason/getAll',
-  webAuth('getOrderCancelReason'),
-  validate(OrderCancellationReasonValidation.allValidation),
-  OrderCancellationReasonController.get
-);
-router.post(
-  '/order_cancel_reason/save',
-  webAuth('createOrderCancelReason'),
-  validate(OrderCancellationReasonValidation.createCancellationReason),
-  OrderCancellationReasonController.create
-);
-router.patch(
-  '/order_cancel_reason/update/:reasonId',
-  webAuth('updateOrderCancelReason'),
-  validate(OrderCancellationReasonValidation.idValidation),
-  OrderCancellationReasonController.update
-);
-router.delete(
-  '/order_cancel_reason/delete/:reasonId',
-  webAuth('deletetOrderCancelReason'),
-  validate(OrderCancellationReasonValidation.idValidation),
-  OrderCancellationReasonController.drop
-);
-// Order Cancellation Reason Routes //
-
-// Refund Request Reason Routes //
-router.get(
-  '/refund_request_reason/getAll',
-  webAuth('getRefundRequestReason'),
-  validate(RefundRequestReasonValidation.allValidation),
-  RefundRequestReasonController.get
-);
-router.post(
-  '/refund_request_reason/save',
-  webAuth('createRefundRequestReason'),
-  validate(RefundRequestReasonValidation.createRefundRequestReason),
-  RefundRequestReasonController.create
-);
-router.patch(
-  '/refund_request_reason/update/:reasonId',
-  webAuth('updateRefundRequestReason'),
-  validate(RefundRequestReasonValidation.idValidation),
-  RefundRequestReasonController.update
-);
-router.delete(
-  '/refund_request_reason/delete/:reasonId',
-  webAuth('deleteRefundRequestReason'),
-  validate(RefundRequestReasonValidation.idValidation),
-  RefundRequestReasonController.drop
-);
-// Refund Request Reason Routes //
-
-// User Settings Routes //
-router.get('/user_settings/get', webAuth('getUserSettings'), UserSettingsController.get);
-router.post(
-  '/user_settings/save',
-  webAuth('createUserSettings'),
-  validate(UserSettingsValidation.createSettings),
-  UserSettingsController.create
-);
-router.patch(
-  '/user_settings/update/:settingId',
-  webAuth('updateUserSettings'),
-  validate(UserSettingsValidation.idValidation),
-  UserSettingsController.update
-);
-// User Settings Routes //
-
-// Restaurant Settings Routes //
-router.get(
-  '/restaurant_settings/get',
-  webAuth('getRestaurantSettings'),
-  RestaurantSettingsController.get
-);
-router.post(
-  '/restaurant_settings/save',
-  webAuth('createRestaurantSettings'),
-  validate(RestaurantSettingsValidation.createSettings),
-  RestaurantSettingsController.create
-);
-router.patch(
-  '/restaurant_settings/update/:settingId',
-  webAuth('updateRestaurantSettings'),
-  validate(RestaurantSettingsValidation.idValidation),
-  RestaurantSettingsController.update
-);
-// Restaurant Settings Routes //
-
-// Driver Settings Routes //
-router.get('/driver_settings/get', webAuth('getDriverSettings'), DriverSettingsController.get);
-router.post(
-  '/driver_settings/save',
-  webAuth('createDriverSettings'),
-  validate(DriverSettingsValidation.createSettings),
-  DriverSettingsController.create
-);
-router.patch(
-  '/driver_settings/update/:settingId',
-  webAuth('updateDriverSettings'),
-  validate(DriverSettingsValidation.idValidation),
-  DriverSettingsController.update
-);
-// Driver Settings Routes //
-
-// Disbursement Setting Routes //
-router.get(
-  '/disbursement_settings/get',
-  webAuth('getDisbursementSettings'),
-  DisbursementController.get
-);
-router.post(
-  '/disbursement_settings/save',
-  webAuth('createDisbursementSettings'),
-  validate(DisbursementValidation.createDisbursement),
-  DisbursementController.create
-);
-router.patch(
-  '/disbursement_settings/update/:disbursementId',
-  webAuth('updateDisbursementSettings'),
-  validate(DisbursementValidation.idValidation),
-  DisbursementController.update
-);
-// Disbursement Setting Routes //
-
-// App Page Route //
-router.get(
-  '/app_pages/get/:slug',
-  webAuth('getPageInfo'),
-  validate(AppPageValidation.idValidation),
-  AppPageController.get
-);
-router.post(
-  '/app_pages/save',
-  webAuth('createPageInfo'),
-  validate(AppPageValidation.createOrUpdatePage),
-  AppPageController.create
-);
-router.patch(
-  '/app_pages/update/:slug',
-  webAuth('updatePageInfo'),
-  validate(AppPageValidation.idValidation),
-  AppPageController.update
-);
-// App Page Route //
-
-// Restaurant Campaign Routes //
-router.get(
-  '/restaurant_campaign_request/get/:campaignId',
-  webAuth('getRestaurantCampaignRequest'),
-  validate(RestaurantCampaignRequestValidation.idValidation),
-  RestaurantCampaignRequestController.get
-);
-
-router.get(
-  '/restaurant_campaign_request/accept/:campaignId/:restaurantId',
-  webAuth('acceptRestaurantCampaign'),
-  validate(RestaurantCampaignValidation.leaveAndJoinCampaignValidation),
-  RestaurantCampaignController.joinCampaign
-);
-
-router.delete(
-  '/restaurant_campaign_request/reject/:campaignId',
-  webAuth('rejectRestaurantCampaign'),
-  validate(RestaurantCampaignRequestValidation.idValidation),
-  RestaurantCampaignRequestController.drop
-);
-// Restaurant Campaign Routes //
-
-// Food Campaign Request Routes //
-router.get(
-  '/food_campaign_request/get/:campaignId',
-  webAuth('getFoodCampaignRequest'),
-  validate(FoodCampaignRequestValidation.idValidation),
-  FoodCampaignRequestController.get
-);
-router.delete(
-  '/food_campaign_request/reject/:campaignId',
-  webAuth('rejectFoodCampaignRequest'),
-  validate(FoodCampaignRequestValidation.idValidation),
-  FoodCampaignRequestController.drop
-);
-router.get(
-  '/food_campaign_request/accept/:campaignId/:foodId',
-  webAuth('acceptFoodCampaignRequest'),
-  validate(FoodCampaignValidation.leaveAndJoinCampaignIdValidation),
-  FoodCampaignController.joinCampaign
-);
-// Food Campaign Request Routes //
-
-// Banners Routes //
-router.get(
-  '/banners/getAll',
-  webAuth('getAllBanner'),
-  validate(BannersValidation.allValidation),
-  BannersController.get
-);
-router.post(
-  '/banners/save',
-  webAuth('createBanner'),
-  validate(BannersValidation.createBanner),
-  BannersController.create
-);
-router.patch(
-  '/banners/update/:bannerId',
-  webAuth('updateBanner'),
-  validate(BannersValidation.idValidation),
-  BannersController.update
-);
-router.patch(
-  '/banners/updateStatus/:bannerId',
-  webAuth('updateBanner'),
-  validate(BannersValidation.idValidation),
-  BannersController.updateStatus
-);
-router.delete(
-  '/banners/delete/:bannerId',
-  webAuth('deleteBanner'),
-  validate(BannersValidation.idValidation),
-  BannersController.drop
-);
-// Banners Routes //
-
-// App Web Settings Routes //
-router.get('/app_web_settings/get', webAuth('getAppWebSettings'), AppWebSettingController.get);
-router.post(
-  '/app_web_settings/save',
-  webAuth('createOrUpdateAppWebSettings'),
-  validate(AppWebSettingValidation.createOrUpdateAppWebSettings),
-  AppWebSettingController.create
-);
-router.patch(
-  '/app_web_settings/update/:settingId',
-  webAuth('createOrUpdateAppWebSettings'),
-  validate(AppWebSettingValidation.createOrUpdateAppWebSettings),
-  AppWebSettingController.update
-);
-// App Web Settings Routes //
-
-// Email Config Routes //
-router.get('/email_config/get', webAuth('getEmailConfig'), EmailConfigController.get);
-router.post(
-  '/email_config/save',
-  webAuth('createOrUpdateEmailConfig'),
-  validate(EmailConfigValidation.createOrUpdateConfig),
-  EmailConfigController.create
-);
-router.patch(
-  '/email_config/update/:configId',
-  webAuth('createOrUpdateEmailConfig'),
-  validate(EmailConfigValidation.createOrUpdateConfig),
-  EmailConfigController.update
-);
-router.get(
-  '/email_config/sendDemo/:email',
-  webAuth('sendDemoEmail'),
-  validate(EmailConfigValidation.demoValidation),
-  EmailConfigController.sendDemoMail
-);
-router.get(
-  '/email_config/media_list',
-  webAuth('getEmailConfig'),
-  EmailConfigController.emailMediaConfig
-);
-router.patch(
-  '/email_config/update_email_media',
-  webAuth('createOrUpdateEmailConfig'),
-  validate(EmailConfigValidation.emailMediaUrlValidation),
-  EmailConfigController.saveEmailMediaConfig
-);
-// Email Config Routes //
-
-// Email Template Routes //
-router.get(
-  '/email_templates/:slug',
-  webAuth('getEmailTemplate'),
-  validate(EmailTemplateValidation.idValidation),
-  EmailTemplateController.get
-);
-router.post(
-  '/email_templates/save',
-  webAuth('createEmailTemplates'),
-  validate(EmailTemplateValidation.createOrUpdateTemplate),
-  EmailTemplateController.create
-);
-router.patch(
-  '/email_templates/update/:slug',
-  webAuth('updateEmailTemplates'),
-  validate(EmailTemplateValidation.createOrUpdateTemplate),
-  EmailTemplateController.update
-);
-// Email Template Routes //
-
-// Restaurant Food License Routes //
-router.get(
-  '/restaurant_food_license/getAll',
-  webAuth('getRestaurantFoodLicense'),
-  validate(RestaurantFoodLicenseValidation.allValidation),
-  RestaurantFoodLicenseController.get
-);
-router.post(
-  '/restaurant_food_license/save',
-  webAuth('createRestaurantFoodLicense'),
-  validate(RestaurantFoodLicenseValidation.createRestaurantLicense),
-  RestaurantFoodLicenseController.create
-);
-router.patch(
-  '/restaurant_food_license/update/:licenseId',
-  webAuth('updateRestaurantFoodLicense'),
-  validate(RestaurantFoodLicenseValidation.idValidation),
-  RestaurantFoodLicenseController.update
-);
-router.delete(
-  '/restaurant_food_license/delete/:licenseId',
-  webAuth('deleteRestaurantFoodLicense'),
-  validate(RestaurantFoodLicenseValidation.idValidation),
-  RestaurantFoodLicenseController.drop
-);
-// Restaurant Food License Routes //
-
-// Payment Config Page Route //
-router.get(
-  '/payment_config/get/:slug',
-  webAuth('getPaymentConfig'),
-  validate(PaymentConfigValidation.idValidation),
-  PaymentConfigController.get
-);
-router.post(
-  '/payment_config/save',
-  webAuth('createPaymentConfig'),
-  validate(PaymentConfigValidation.createPaymentConfig),
-  PaymentConfigController.create
-);
-router.patch(
-  '/payment_config/update/:slug',
-  webAuth('updatePaymentConfig'),
-  validate(PaymentConfigValidation.idValidation),
-  PaymentConfigController.update
-);
-// Payment Config Page Route //
-
-// Delivery Instrunction Routes //
-router.post(
-  '/delivery_instruction/save',
-  webAuth('createDeliveryInstruction'),
-  validate(DeliveryInstructionValidation.createInstrunction),
-  DeliveryInstructionController.create
-);
-router.get(
-  '/delivery_instruction/get',
-  webAuth('getDeliveryInstruction'),
-  validate(DeliveryInstructionValidation.allValidation),
-  DeliveryInstructionController.get
-);
-router.patch(
-  '/delivery_instruction/update/:id',
-  webAuth('updateDeliveryInstruction'),
-  validate(DeliveryInstructionValidation.idValidation),
-  DeliveryInstructionController.update
-);
-router.delete(
-  '/delivery_instruction/delete/:id',
-  webAuth('deleteDeliveryInstruction'),
-  validate(DeliveryInstructionValidation.idValidation),
-  DeliveryInstructionController.drop
-);
-// Delivery Instrunction Routes //
-
-// Delivery Gratitude Routes //
-router.post(
-  '/gratitude/save',
-  webAuth('createGratitude'),
-  validate(DeliveryGratitudeValidation.createGratitude),
-  DeliveryGratitudeController.create
-);
-router.get(
-  '/gratitude/get',
-  webAuth('getGratitude'),
-  validate(DeliveryGratitudeValidation.allValidation),
-  DeliveryGratitudeController.get
-);
-router.patch(
-  '/gratitude/update/:id',
-  webAuth('updateGratitude'),
-  validate(DeliveryGratitudeValidation.idValidation),
-  DeliveryGratitudeController.update
-);
-router.delete(
-  '/gratitude/delete/:id',
-  webAuth('deleteGratitude'),
-  validate(DeliveryGratitudeValidation.idValidation),
-  DeliveryGratitudeController.drop
-);
-// Delivery Gratitude Routes //
-
-// Coupon Routes //
-router.post(
-  '/coupon/save',
-  webAuth('createCoupon'),
-  validate(CouponValidation.createCoupon),
-  CouponController.create
-);
-router.get(
-  '/coupon/get',
-  webAuth('getCoupon'),
-  validate(CouponValidation.allValidation),
-  CouponController.get
-);
-router.get(
-  '/coupon/getInfo/:id',
-  webAuth('getCoupon'),
-  validate(CouponValidation.idValidation),
-  CouponController.getInfo
-);
-router.patch(
-  '/coupon/update/:id',
-  webAuth('updateCoupon'),
-  validate(CouponValidation.idValidation),
-  CouponController.update
-);
-router.patch(
-  '/coupon/updateMeta/:id',
-  webAuth('updateCoupon'),
-  validate(CouponValidation.idValidation),
-  CouponController.updateMeta
-);
-router.delete(
-  '/coupon/delete/:id',
-  webAuth('deleteCoupon'),
-  validate(CouponValidation.idValidation),
-  CouponController.drop
-);
-router.get(
-  '/coupon/request',
-  webAuth('getCoupon'),
-  validate(CouponValidation.allValidation),
-  CouponController.getVendorCouponRequest
-);
-router.get(
-  '/coupon/detail/:id',
-  webAuth('getCoupon'),
-  validate(CouponValidation.detailValidation),
-  CouponController.couponDetail
-);
-// Coupon Routes //
-
-// User Routes //
-router.get(
-  '/users/search/:name',
-  webAuth('searchUser'),
-  validate(UserValidation.searchUser),
-  UserController.findUserWithName
-);
-// User Routes //
-
-// Driver Incetive Routes //
-router.post(
-  '/driver_incentive/save',
-  webAuth('createDriverIncentive'),
-  validate(DriverIncentiveValidation.createIncentive),
-  DriverIncentiveController.create
-);
-router.get(
-  '/driver_incentive/get',
-  webAuth('getDriverIncentive'),
-  validate(DriverIncentiveValidation.allValidation),
-  DriverIncentiveController.get
-);
-router.patch(
-  '/driver_incentive/update/:id',
-  webAuth('updateDriverIncentive'),
-  validate(DriverIncentiveValidation.updateIncentive),
-  DriverIncentiveController.update
-);
-router.patch(
-  '/driver_incentive/updateStatus/:id',
-  webAuth('updateDriverIncentive'),
-  validate(DriverIncentiveValidation.updateIncentiveStatus),
-  DriverIncentiveController.updateStatus
-);
-router.delete(
-  '/driver_incentive/delete/:id',
-  webAuth('deleteDriverIncentive'),
-  validate(DriverIncentiveValidation.idValidation),
-  DriverIncentiveController.drop
-);
-// Driver Incetive Routes //
-
-// Driver Offline Messages Routes //
-router.post(
-  '/driver_offline_messages/save',
-  webAuth('createDriverOfflineMessage'),
-  validate(DriverOfflineMessagesValidation.createOfflineMessage),
-  DriverOfflineMessagesController.create
-);
-router.get(
-  '/driver_offline_messages/get',
-  webAuth('getDriverOfflineMessages'),
-  validate(DriverOfflineMessagesValidation.allValidation),
-  DriverOfflineMessagesController.get
-);
-router.patch(
-  '/driver_offline_messages/update/:id',
-  webAuth('updateDriverOfflineMessages'),
-  validate(DriverOfflineMessagesValidation.idValidation),
-  DriverOfflineMessagesController.update
-);
-router.delete(
-  '/driver_offline_messages/delete/:id',
-  webAuth('deleteOfflineMessages'),
-  validate(DriverOfflineMessagesValidation.idValidation),
-  DriverOfflineMessagesController.drop
-);
-// Driver Offline Messages Routes //
-
-// Order Notification Translation Routes //
-router.get(
-  '/order_notification_translation/getBySlug/:slug',
-  webAuth('getOrderNotificationTranslation'),
-  validate(OrderNotificationTranslationValidation.getNotificationValidation),
-  OrderNotificationTranslationController.getBySlug
-);
-router.post(
-  '/order_notification_translation/save',
-  webAuth('saveOrderNotificationTranslation'),
-  validate(OrderNotificationTranslationValidation.saveOrderNotificationTranslationValidation),
-  OrderNotificationTranslationController.createOrUpdate
-);
-// Order Notification Translation Routes //
-
-// Orders Routes //
-router.get('/orders/getOrderCount', webAuth('getOrderCount'), OrdersController.getOrderCount);
-router.get(
-  '/orders/getOrderList',
-  webAuth('getOrderList'),
-  validate(OrdersValidation.adminOrderValidation),
-  OrdersController.getAdminOrderList
-);
-router.get(
-  '/orders/getScheduleOrders',
-  webAuth('getScheduleOrders'),
-  validate(OrdersValidation.adminScheduleOrderValidation),
-  OrdersController.getAdminScheduleOrderList
-);
-router.get(
-  '/orders/getSubscriptionOrders',
-  webAuth('getSubscriptionOrders'),
-  validate(OrdersValidation.adminSubscriptionOrderValidation),
-  OrdersController.getAdminSubscriptionOrderList
-);
-router.get(
-  '/orders/getUnAssignedOrders',
-  webAuth('getUnAssignedOrders'),
-  validate(OrdersValidation.adminScheduleOrderValidation),
-  OrdersController.getAdminUnAssignedOrderList
-);
-router.get(
-  '/orders/fetchDriverNearToOrder/:id/:restaurant',
-  webAuth('fetchDriverNearToOrder'),
-  validate(OrdersValidation.findDriverValidation),
-  OrdersController.fetchDriverNearToOrder
-);
-router.post(
-  '/orders/assignDriverOrderAdmin',
-  webAuth('assignDriverOrderAdmin'),
-  validate(OrdersValidation.assignDriverOrderAdminValidation),
-  OrdersController.assignDriverOrderAdmin
-);
-router.get(
-  '/orders/detailAdmin/:id',
-  webAuth('orderDetail'),
-  validate(OrdersValidation.orderDetailAdminValidation),
-  OrdersController.getOrderDetailAdmin
-);
-router.get(
-  '/orders/coupon/:id',
-  webAuth('getOrderList'),
-  validate(OrdersValidation.couponValidation),
-  OrdersController.couponOrders
-);
-router.get(
-  '/orders/invoice/:id',
-  webAuth('orderDetail'),
-  validate(OrdersValidation.adminInvoiceValidation),
-  OrdersController.adminOrderInvoice
-);
-// Orders Routes //
-
-// POS Orders Routes //
-router.get(
-  '/posOrders/list',
-  webAuth('posOrderList'),
-  validate(PosOrTableOrderValidation.adminOrderValidation),
-  PosOrTableOrderController.adminPosOrderList
-);
-router.get(
-  '/posOrders/detail/:id',
-  webAuth('posOrderDetail'),
-  validate(PosOrTableOrderValidation.adminPosOrderDetailValidation),
-  PosOrTableOrderController.adminPosOrderDetail
-);
-router.get(
-  '/posOrders/invoice/:id',
-  webAuth('posOrderDetail'),
-  validate(PosOrTableOrderValidation.orderInvoiceValidation),
-  PosOrTableOrderController.adminPOSOrderInvoice
-);
-// POS Orders Routes //
-
-// Table Orders Routes //
-router.get(
-  '/tableOrders/list',
-  webAuth('tableOrderList'),
-  validate(TableOrderValidation.adminOrderValidation),
-  TableOrderController.adminTableOrderList
-);
-router.get(
-  '/tableOrders/detail/:id',
-  webAuth('tableOrderDetail'),
-  validate(TableOrderValidation.adminTableOrderDetailValidation),
-  TableOrderController.adminTableOrderDetail
-);
-router.get(
-  '/tableOrders/invoice/:id',
-  webAuth('tableOrderDetail'),
-  validate(TableOrderValidation.orderInvoiceValidation),
-  TableOrderController.adminTableOrderInvoice
-);
-// Table Orders Routes //
-
-// Refund Request Routes //
-router.get(
-  '/refund_request/active',
-  webAuth('getActiveRefundRequest'),
-  validate(RefundRequestValidation.adminListValidation),
-  RefundRequestController.getActiveRefundRequest
-);
-router.get(
-  '/refund_request/info/:requestId',
-  webAuth('getRefundRequestInfo'),
-  validate(RefundRequestValidation.getRefundRequestInfoValidation),
-  RefundRequestController.getRefundRequestInfo
-);
-router.post(
-  '/refund_request/cancel',
-  webAuth('cancelRefundRequest'),
-  validate(RefundRequestValidation.cancelRefundRequestValidation),
-  RefundRequestController.cancelRefundRequest
-);
-router.post(
-  '/refund_request/approve',
-  webAuth('approveRefundRequest'),
-  validate(RefundRequestValidation.approveRefundRequestValidation),
-  RefundRequestController.approveRefundRequest
-);
-router.post(
-  '/refund_request/refundFromMerchant',
-  webAuth('refundFromMerchant'),
-  validate(RefundRequestValidation.refundFromMerchantValidation),
-  RefundRequestController.refundFromMerchant
-);
-// Refund Request Routes //
-
-// Complaints Reason Routes //
-router.get(
-  '/complaints_reason/getAll',
-  webAuth('getComplaintsReason'),
-  validate(ComplaintsReasonValidation.allValidation),
-  ComplaintsReasonController.get
-);
-router.post(
-  '/complaints_reason/save',
-  webAuth('createComplaintsReason'),
-  validate(ComplaintsReasonValidation.createComplaintsReason),
-  ComplaintsReasonController.create
-);
-router.patch(
-  '/complaints_reason/update/:reasonId',
-  webAuth('updateComplaintsReason'),
-  validate(ComplaintsReasonValidation.idValidation),
-  ComplaintsReasonController.update
-);
-router.delete(
-  '/complaints_reason/delete/:reasonId',
-  webAuth('deleteComplaintsReason'),
-  validate(ComplaintsReasonValidation.idValidation),
-  ComplaintsReasonController.drop
-);
-// Complaints Reason Routes //
-
-// Complaints Routes //
-router.get(
-  '/complaints/get',
-  webAuth('getComplaints'),
-  validate(UserValidation.adminComplaintValidation),
-  ComplaintsController.get
-);
-router.get(
-  '/restaurant_complaints/get',
-  webAuth('getComplaints'),
-  validate(UserValidation.adminRestaurantComplaintValidation),
-  RestaurantComplaintsController.get
-);
-
-// SMS Provider Config Routes //
-router.get(
-  '/sms_provider/get/:slug',
-  webAuth('getSmsProviderConfig'),
-  validate(SmsProviderConfigValidation.idValidation),
-  SmsProviderConfigController.get
-);
-router.post(
-  '/sms_provider/save',
-  webAuth('createSmsProviderConfig'),
-  validate(SmsProviderConfigValidation.createSMSProviderConfig),
-  SmsProviderConfigController.create
-);
-router.patch(
-  '/sms_provider/update/:slug',
-  webAuth('updateSmsProviderConfig'),
-  validate(SmsProviderConfigValidation.idValidation),
-  SmsProviderConfigController.update
-);
-router.post(
-  '/sms_provider/demoTwilio',
-  webAuth('sendDemoSMS'),
-  validate(SmsProviderConfigValidation.demoValidation),
-  SmsProviderConfigController.sendTwilioDemoSMS
-);
-router.post(
-  '/sms_provider/demoNexmo',
-  webAuth('sendDemoSMS'),
-  validate(SmsProviderConfigValidation.demoValidation),
-  SmsProviderConfigController.sendNexmoDemoSMS
-);
-router.post(
-  '/sms_provider/demo_sms_dot_to',
-  webAuth('sendDemoSMS'),
-  validate(SmsProviderConfigValidation.demoValidation),
-  SmsProviderConfigController.sendSMStoDemoSMS
-);
-router.post(
-  '/sms_provider/demo_2factor',
-  webAuth('sendDemoSMS'),
-  validate(SmsProviderConfigValidation.demoValidation),
-  SmsProviderConfigController.send2FactorDemoSMS
-);
-router.post(
-  '/sms_provider/demo_fast2sms',
-  webAuth('sendDemoSMS'),
-  validate(SmsProviderConfigValidation.demoValidation),
-  SmsProviderConfigController.sendFast2SMSDemoSMS
-);
-// SMS Provider Config Routes //
-
-// Report Issue Restaurant Reason Routes //
-router.get(
-  '/report_issue/restaurant/getAll',
-  webAuth('getReportIssueRestaurant'),
-  validate(ReportIssueRestaurantReasonValidation.allValidation),
-  ReportIssueRestaurantReasonController.get
-);
-router.post(
-  '/report_issue/restaurant/save',
-  webAuth('createReportIssueRestaurant'),
-  validate(ReportIssueRestaurantReasonValidation.createReportIssueRestaurantReason),
-  ReportIssueRestaurantReasonController.create
-);
-router.patch(
-  '/report_issue/restaurant/update/:reasonId',
-  webAuth('updateReportIssueRestaurant'),
-  validate(ReportIssueRestaurantReasonValidation.idValidation),
-  ReportIssueRestaurantReasonController.update
-);
-router.delete(
-  '/report_issue/restaurant/delete/:reasonId',
-  webAuth('deleteReportIssueRestaurant'),
-  validate(ReportIssueRestaurantReasonValidation.idValidation),
-  ReportIssueRestaurantReasonController.drop
-);
-// Report Issue Restaurant Reason Routes //
-
-// Report Issue Restaurant Routes //
-router.get(
-  '/report_issue_list/restaurant/get',
-  webAuth('getReportIssueRestaurantList'),
-  validate(ReportIssueRestaurantReasonValidation.reportValidation),
-  ReportIssueRestaurantController.getReportsList
-);
-// Report Issue Restaurant Routes //
-
-// Hidden Restaurant Routes //
-router.get(
-  '/hide/restaurant',
-  webAuth('hiddenRestaurant'),
-  validate(HideRestaurantReasonValidation.hiddenValidation),
-  HideRestaurantController.getHiddenRestaurantList
-);
-// Hidden Restaurant Routes //
-
-// Hide Restaurant Reason Routes //
-router.get(
-  '/hide_reason/restaurant/getAll',
-  webAuth('getHideRestaurantReasonList'),
-  validate(HideRestaurantReasonValidation.allValidation),
-  HideRestaurantReasonController.get
-);
-router.post(
-  '/hide_reason/restaurant/save',
-  webAuth('createHideRestaurantReason'),
-  validate(HideRestaurantReasonValidation.createHideRestaurantReason),
-  HideRestaurantReasonController.create
-);
-router.patch(
-  '/hide_reason/restaurant/update/:reasonId',
-  webAuth('updateHideRestaurantReason'),
-  validate(HideRestaurantReasonValidation.idValidation),
-  HideRestaurantReasonController.update
-);
-router.delete(
-  '/hide_reason/restaurant/delete/:reasonId',
-  webAuth('deleteHideRestaurantReason'),
-  validate(HideRestaurantReasonValidation.idValidation),
-  HideRestaurantReasonController.drop
-);
-// Hide Restaurant Reason Routes //
-
-// Order Rating Message Routes //
-router.get(
-  '/order_rating_message/getAll',
-  webAuth('getOrderRatingMessages'),
-  validate(OrderRatingMessageValidation.allValidation),
-  OrderRatingMessageController.get
-);
-router.post(
-  '/order_rating_message/save',
-  webAuth('createOrderRatingMessage'),
-  validate(OrderRatingMessageValidation.createRatingMessage),
-  OrderRatingMessageController.create
-);
-router.patch(
-  '/order_rating_message/update/:messageId',
-  webAuth('updateOrderRatingMessage'),
-  validate(OrderRatingMessageValidation.idValidation),
-  OrderRatingMessageController.update
-);
-router.delete(
-  '/order_rating_message/delete/:messageId',
-  webAuth('deleteOrderRatingMessage'),
-  validate(OrderRatingMessageValidation.idValidation),
-  OrderRatingMessageController.drop
-);
-// Order Rating Message Routes //
-
-// Restaurant Notice Routes //
-router.get(
-  '/restaurant/notice/getAll',
-  webAuth('getRestaurantNotice'),
-  validate(RestaurantNoticeValidation.allValidation),
-  RestaurantNoticeController.get
-);
-router.post(
-  '/restaurant/notice/save',
-  webAuth('createRestaurantNotice'),
-  validate(RestaurantNoticeValidation.createRestaurantNoticeReason),
-  RestaurantNoticeController.create
-);
-router.patch(
-  '/restaurant/notice/update/:noticeId',
-  webAuth('updateRestaurantNotice'),
-  validate(RestaurantNoticeValidation.idValidation),
-  RestaurantNoticeController.update
-);
-router.delete(
-  '/restaurant/notice/delete/:noticeId',
-  webAuth('deleteRestaurantNotice'),
-  validate(RestaurantNoticeValidation.idValidation),
-  RestaurantNoticeController.drop
-);
-// Restaurant Notice Routes //
-
-// Subscription Tiffin Package Routes //
-router.get(
-  '/tiffin_packages/getList',
-  webAuth('getTiffinPackages'),
-  validate(SubscriptionTiffinPackageValidation.allValidation),
-  SubscriptionTiffinPackageController.getSubscriptionPackageListAdmin
-);
-router.patch(
-  '/tiffin_packages/updateStatus/:id',
-  webAuth('updatePackageStatus'),
-  validate(SubscriptionTiffinPackageValidation.updateAdminStatusValidation),
-  SubscriptionTiffinPackageController.updatePackageStatus
-);
-router.get(
-  '/tiffin_packages/foods/:restaurant',
-  webAuth('getTiffinPackageFoods'),
-  validate(SubscriptionTiffinPackageValidation.getBasicValidation),
-  SubscriptionTiffinPackageController.getBasic
-);
-router.post(
-  '/tiffin_packages/create/',
-  webAuth('createTiffinPackage'),
-  validate(SubscriptionTiffinPackageValidation.createSubscriptionTiffinValidation),
-  SubscriptionTiffinPackageController.create
-);
-router.delete(
-  '/tiffin_packages/delete/:id',
-  webAuth('deleteTiffinPackage'),
-  validate(SubscriptionTiffinPackageValidation.deleteValidation),
-  SubscriptionTiffinPackageController.drop
-);
-router.get(
-  '/tiffin_packages/details/:id/:restaurant',
-  webAuth('getPackageDetail'),
-  validate(SubscriptionTiffinPackageValidation.idValidation),
-  SubscriptionTiffinPackageController.getById
-);
-router.patch(
-  '/tiffin_packages/update/:id',
-  webAuth('updatePackageDetail'),
-  validate(SubscriptionTiffinPackageValidation.updateValidation),
-  SubscriptionTiffinPackageController.updatePackage
-);
-router.post(
-  '/tiffin_packages/adminTiffinSubscriptionPurchased/',
-  webAuth('adminTiffinSubscriptionPurchased'),
-  validate(UserPurchasedTiffinSubscriptionValidation.purchasedSubscriptionListAdminValidation),
-  UserPurchasedTiffinSubscriptionController.getPurchaseListForAdmin
-);
-router.get(
-  '/tiffin_packages/getTiffinSubscriptionPurchaseDetail/:id',
-  webAuth('getTiffinSubscriptionPurchaseDetail'),
-  validate(UserPurchasedTiffinSubscriptionValidation.purchaseDetailValidation),
-  UserPurchasedTiffinSubscriptionController.getPurchaseDetailAdmin
-);
-// Subscription Tiffin Package Routes //
-
-// Cron Job Scheduler Controller Routes //
-router.get(
-  '/cronScheduler/start',
-  webAuth('startScheduler'),
-  CronJobSchedulerController.startScheduler
-);
-router.get(
-  '/cronScheduler/stop',
-  webAuth('stopScheduler'),
-  CronJobSchedulerController.stopScheduler
-);
-router.get(
-  '/cronScheduler/getInfo',
-  webAuth('getSchedulerInfo'),
-  CronJobSchedulerController.getSchedulerInfo
-);
-// Cron Job Scheduler Controller Routes //
-
-// Tiffin Subscription Cancellation Reason Routes //
-router.get(
-  '/tiffin_subscription_cancel_reason/getAll',
-  webAuth('getTiffinSubscriptionCancelReason'),
-  validate(TiffinSubscriptionCancellationReasonValidation.allValidation),
-  TiffinSubscriptionCancellationReasonController.get
-);
-router.post(
-  '/tiffin_subscription_cancel_reason/save',
-  webAuth('createTiffinSubscriptionCancelReason'),
-  validate(TiffinSubscriptionCancellationReasonValidation.createCancellationReason),
-  TiffinSubscriptionCancellationReasonController.create
-);
-router.patch(
-  '/tiffin_subscription_cancel_reason/update/:reasonId',
-  webAuth('updateTiffinSubscriptionCancelReason'),
-  validate(TiffinSubscriptionCancellationReasonValidation.idValidation),
-  TiffinSubscriptionCancellationReasonController.update
-);
-router.delete(
-  '/tiffin_subscription_cancel_reason/delete/:reasonId',
-  webAuth('deleteTiffinSubscriptionCancelReason'),
-  validate(TiffinSubscriptionCancellationReasonValidation.idValidation),
-  TiffinSubscriptionCancellationReasonController.drop
-);
-// Tiffin Subscription Cancellation Reason Routes //
-
-// Tiffin Subscription Refund Request Reason Routes //
-router.get(
-  '/tiffin_subscription_refund_request_reason/getAll',
-  webAuth('getTiffinSubscriptionRefundRequestReason'),
-  validate(TiffinSubscriptionRefundRequestReasonValidation.allValidation),
-  TiffinSubscriptionRefundRequestReasonController.get
-);
-router.post(
-  '/tiffin_subscription_refund_request_reason/save',
-  webAuth('createTiffinSubscriptionRefundRequestReason'),
-  validate(TiffinSubscriptionRefundRequestReasonValidation.createRefundRequestReason),
-  TiffinSubscriptionRefundRequestReasonController.create
-);
-router.patch(
-  '/tiffin_subscription_refund_request_reason/update/:reasonId',
-  webAuth('updateTiffinSubscriptionRefundRequestReason'),
-  validate(TiffinSubscriptionRefundRequestReasonValidation.idValidation),
-  TiffinSubscriptionRefundRequestReasonController.update
-);
-router.delete(
-  '/tiffin_subscription_refund_request_reason/delete/:reasonId',
-  webAuth('deleteTiffinSubscriptionRefundRequestReason'),
-  validate(TiffinSubscriptionRefundRequestReasonValidation.idValidation),
-  TiffinSubscriptionRefundRequestReasonController.drop
-);
-// Tiffin Subscription Refund Request Reason Routes //
-
-// Tiffin Subscription Refund Request Routes //
-router.get(
-  '/tiffin_subscription_refund_request/active',
-  webAuth('getActiveRefundRequest'),
-  validate(TiffinSubscriptionRefundRequestValidation.adminListValidation),
-  TiffinSubscriptionRefundRequestController.getActiveRefundRequest
-);
-router.get(
-  '/tiffin_subscription_refund_request/info/:requestId',
-  webAuth('getTiffinSubscriptionRefundRequestInfo'),
-  validate(
-    TiffinSubscriptionRefundRequestValidation.getTiffinSubscriptionRefundRequestInfoValidation
-  ),
-  TiffinSubscriptionRefundRequestController.getTiffinSubscriptionRefundRequestInfo
-);
-router.post(
-  '/tiffin_subscription_refund_request/cancel',
-  webAuth('cancelTiffinSubscriptionRefundRequest'),
-  validate(TiffinSubscriptionRefundRequestValidation.cancelRefundRequestValidation),
-  TiffinSubscriptionRefundRequestController.cancelRefundRequest
-);
-router.post(
-  '/tiffin_subscription_refund_request/refundFromMerchant',
-  webAuth('refundTiffinSubscriptionFromMerchant'),
-  validate(TiffinSubscriptionRefundRequestValidation.refundFromMerchantValidation),
-  TiffinSubscriptionRefundRequestController.refundFromMerchant
-);
-router.post(
-  '/tiffin_subscription_refund_request/approve',
-  webAuth('approveTiffinSubscriptionRefundRequest'),
-  validate(TiffinSubscriptionRefundRequestValidation.approveRefundRequestValidation),
-  TiffinSubscriptionRefundRequestController.approveRefundRequest
-);
-// Tiffin Subscription Refund Request Routes //
-
-// Dining Settings Routes //
-router.get('/dining_settings/get', webAuth('getDiningSettings'), DiningSettingController.get);
-router.post(
-  '/dining_settings/save',
-  webAuth('createOrUpdateDiningSettings'),
-  validate(DiningSettingValidation.createOrUpdateDiningSettings),
-  DiningSettingController.create
-);
-router.patch(
-  '/dining_settings/update/:settingId',
-  webAuth('createOrUpdateDiningSettings'),
-  validate(DiningSettingValidation.createOrUpdateDiningSettings),
-  DiningSettingController.update
-);
-// Dining Settings Routes //
-
-// Dining Cancellation Reason Routes //
-router.get(
-  '/dining_cancel_reason/getAll',
-  webAuth('getDiningCancelReason'),
-  validate(DiningCancellationReasonValidation.allValidation),
-  DiningCancellationReasonController.get
-);
-router.post(
-  '/dining_cancel_reason/save',
-  webAuth('createDiningCancelReason'),
-  validate(DiningCancellationReasonValidation.createCancellationReason),
-  DiningCancellationReasonController.create
-);
-router.patch(
-  '/dining_cancel_reason/update/:reasonId',
-  webAuth('updateDiningCancelReason'),
-  validate(DiningCancellationReasonValidation.idValidation),
-  DiningCancellationReasonController.update
-);
-router.delete(
-  '/dining_cancel_reason/delete/:reasonId',
-  webAuth('deletetDiningCancelReason'),
-  validate(DiningCancellationReasonValidation.idValidation),
-  DiningCancellationReasonController.drop
-);
-// Dining Cancellation Reason Routes //
-
-// Dining Category Routes //
-router.post(
-  '/dining_category/save',
-  webAuth('createDiningCategory'),
-  validate(DiningCategoryValidation.createCategory),
-  DiningCategoryController.create
-);
-router.get(
-  '/dining_category/getAll',
-  webAuth('getDiningCategories'),
-  validate(DiningCategoryValidation.allValidation),
-  DiningCategoryController.get
-);
-router.patch(
-  '/dining_category/update/:categoryId',
-  webAuth('updateDiningCategory'),
-  validate(DiningCategoryValidation.idValidation),
-  DiningCategoryController.update
-);
-router.delete(
-  '/dining_category/delete/:categoryId',
-  webAuth('deleteDiningCategory'),
-  validate(DiningCategoryValidation.idValidation),
-  DiningCategoryController.drop
-);
-// Dining Category Routes //
-
-// Dining Notice Routes //
-router.get(
-  '/dining/notice/getAll',
-  webAuth('getDiningNotice'),
-  validate(DiningNoticeValidation.allValidation),
-  DiningNoticeController.get
-);
-router.post(
-  '/dining/notice/save',
-  webAuth('createDiningNotice'),
-  validate(DiningNoticeValidation.createDiningNoticeReason),
-  DiningNoticeController.create
-);
-router.patch(
-  '/dining/notice/update/:noticeId',
-  webAuth('updateDiningNotice'),
-  validate(DiningNoticeValidation.idValidation),
-  DiningNoticeController.update
-);
-router.delete(
-  '/dining/notice/delete/:noticeId',
-  webAuth('deleteDiningNotice'),
-  validate(DiningNoticeValidation.idValidation),
-  DiningNoticeController.drop
-);
-// Dining Notice Routes //
-
-// Dining Campaign Routes //
-router.post(
-  '/dining_campaign/save',
-  webAuth('createDiningCampaign'),
-  validate(DiningCampaignValidation.createDiningCampaignValidation),
-  DiningCampaignController.create
-);
-router.get(
-  '/dining_campaign/getAll',
-  webAuth('getDiningCampaigns'),
-  validate(DiningCampaignValidation.allValidation),
-  DiningCampaignController.get
-);
-router.patch(
-  '/dining_campaign/updateStatus/:campaignId',
-  webAuth('updateDiningCampaign'),
-  validate(DiningCampaignValidation.idValidation),
-  DiningCampaignController.updateStatus
-);
-router.delete(
-  '/dining_campaign/delete/:campaignId',
-  webAuth('deleteDiningCampaign'),
-  validate(DiningCampaignValidation.idValidation),
-  DiningCampaignController.drop
-);
-router.get(
-  '/dining_campaign/getById/:campaignId',
-  webAuth('getDiningCampaignById'),
-  validate(DiningCampaignValidation.idValidation),
-  DiningCampaignController.getById
-);
-router.patch(
-  '/dining_campaign/update/:campaignId',
-  webAuth('updateDiningCampaign'),
-  validate(DiningCampaignValidation.idValidation),
-  DiningCampaignController.update
-);
-
-router.get(
-  '/dining_campaign_request/get/:campaignId',
-  webAuth('getDiningCampaignRequest'),
-  validate(DiningCampaignRequestValidation.idValidation),
-  DiningCampaignRequestController.get
-);
-router.get(
-  '/dining_campaign_request/accept/:campaignId/:restaurantId',
-  webAuth('acceptDiningCampaign'),
-  validate(DiningCampaignValidation.leaveAndJoinCampaignValidation),
-  DiningCampaignController.joinCampaign
-);
-router.delete(
-  '/dining_campaign_request/reject/:campaignId',
-  webAuth('rejectDiningCampaign'),
-  validate(DiningCampaignRequestValidation.idValidation),
-  DiningCampaignRequestController.drop
-);
-router.get(
-  '/dining_campaign/detail/:id',
-  webAuth('campaignDetail'),
-  validate(DiningCampaignValidation.detailValidation),
-  DiningCampaignController.detail
-);
-// Dining Campaign Routes //
-
-// Restaurant Facilities Routes //
-router.get(
-  '/restaurant/facilities/getAll',
-  webAuth('getRestaurantFacility'),
-  validate(RestaurantFacilitiesValidation.allValidation),
-  RestaurantFacilitiesController.get
-);
-router.post(
-  '/restaurant/facilities/save',
-  webAuth('createRestaurantFacility'),
-  validate(RestaurantFacilitiesValidation.createRestaurantFacility),
-  RestaurantFacilitiesController.create
-);
-router.patch(
-  '/restaurant/facilities/update/:id',
-  webAuth('updateRestaurantFacility'),
-  validate(RestaurantFacilitiesValidation.idValidation),
-  RestaurantFacilitiesController.update
-);
-router.delete(
-  '/restaurant/facilities/delete/:id',
-  webAuth('deleteRestaurantFacility'),
-  validate(RestaurantFacilitiesValidation.idValidation),
-  RestaurantFacilitiesController.drop
-);
-// Restaurant Facilities Routes //
-
-// Dining Coupon Routes //
-router.post(
-  '/dining_coupon/save',
-  webAuth('createDiningCoupon'),
-  validate(DiningCouponValidation.createCoupon),
-  DiningCouponController.create
-);
-router.get(
-  '/dining_coupon/get',
-  webAuth('getDiningCoupon'),
-  validate(DiningCouponValidation.allValidation),
-  DiningCouponController.get
-);
-router.patch(
-  '/dining_coupon/updateMeta/:id',
-  webAuth('updateDiningCoupon'),
-  validate(DiningCouponValidation.idValidation),
-  DiningCouponController.updateMeta
-);
-router.delete(
-  '/dining_coupon/delete/:id',
-  webAuth('deleteDiningCoupon'),
-  validate(DiningCouponValidation.idValidation),
-  DiningCouponController.drop
-);
-router.get(
-  '/dining_coupon/getInfo/:id',
-  webAuth('getDiningCoupon'),
-  validate(DiningCouponValidation.idValidation),
-  DiningCouponController.getInfo
-);
-router.patch(
-  '/dining_coupon/update/:id',
-  webAuth('updateDiningCoupon'),
-  validate(DiningCouponValidation.idValidation),
-  DiningCouponController.update
-);
-router.get(
-  '/dining_coupon/request',
-  webAuth('getDiningCoupon'),
-  validate(DiningCouponValidation.allValidation),
-  DiningCouponController.getVendorCouponRequest
-);
-router.get(
-  '/dining_coupon/detail/:id',
-  webAuth('getDiningCoupon'),
-  validate(DiningCouponValidation.detailValidation),
-  DiningCouponController.couponDetail
-);
-// Dining Coupon Routes //
-
-// Dining Booking Refund Request Reason Routes //
-router.get(
-  '/dining_booking_refund_request_reason/getAll',
-  webAuth('getDiningBookingRefundRequestReason'),
-  validate(DiningBookingRefundRequestReasonValidation.allValidation),
-  DiningBookingRefundRequestReasonController.get
-);
-router.post(
-  '/dining_booking_refund_request_reason/save',
-  webAuth('createDiningBookingRefundRequestReason'),
-  validate(DiningBookingRefundRequestReasonValidation.createRefundRequestReason),
-  DiningBookingRefundRequestReasonController.create
-);
-router.patch(
-  '/dining_booking_refund_request_reason/update/:reasonId',
-  webAuth('updateDiningBookingRefundRequestReason'),
-  validate(DiningBookingRefundRequestReasonValidation.idValidation),
-  DiningBookingRefundRequestReasonController.update
-);
-router.delete(
-  '/dining_booking_refund_request_reason/delete/:reasonId',
-  webAuth('deleteDiningBookingRefundRequestReason'),
-  validate(DiningBookingRefundRequestReasonValidation.idValidation),
-  DiningBookingRefundRequestReasonController.drop
-);
-// Dining Booking Refund Request Reason Routes //
-
-// Dining Refund Request Routes //
-router.get(
-  '/dining_booking_refund_request/active',
-  webAuth('getActiveDiningBookingRefundRequest'),
-  validate(DiningBookingRefundRequestValidation.adminListValidation),
-  DiningBookingRefundRequestController.getActiveRefundRequest
-);
-router.get(
-  '/dining_booking_refund_request/info/:requestId',
-  webAuth('getDiningBookingRefundRequestInfo'),
-  validate(DiningBookingRefundRequestValidation.getRefundRequestInfoValidation),
-  DiningBookingRefundRequestController.getRefundRequestInfo
-);
-router.post(
-  '/dining_booking_refund_request/cancel',
-  webAuth('cancelDiningBookingRefundRequest'),
-  validate(DiningBookingRefundRequestValidation.cancelRefundRequestValidation),
-  DiningBookingRefundRequestController.cancelRefundRequest
-);
-router.post(
-  '/dining_booking_refund_request/refundFromMerchant',
-  webAuth('refundDiningBookingFromMerchant'),
-  validate(DiningBookingRefundRequestValidation.refundFromMerchantValidation),
-  DiningBookingRefundRequestController.refundFromMerchant
-);
-router.post(
-  '/dining_booking_refund_request/approve',
-  webAuth('approveDiningBookingRefundRequest'),
-  validate(DiningBookingRefundRequestValidation.approveRefundRequestValidation),
-  DiningBookingRefundRequestController.approveRefundRequest
-);
-// Dining Refund Request Routes //
-
-/// Dining Booking Routes ///
-router.get(
-  '/dining_booking/getDiningBookingCount',
-  webAuth('getDiningBookingCount'),
-  DiningBookingController.adminDiningBookingCount
-);
-router.get(
-  '/dining_booking/getDiningBookingList',
-  webAuth('getDiningBookingList'),
-  validate(DiningBookingValidation.adminBookingValidation),
-  DiningBookingController.adminDiningBookingList
-);
-router.get(
-  '/dining_booking/bookingInformation/:bookingId',
-  webAuth('getDiningBookingInformation'),
-  validate(DiningBookingValidation.bookingInformationAdminValidation),
-  DiningBookingController.getDiningBookingInfoAdmin
-);
-router.get(
-  '/dining_booking/coupon/:id',
-  webAuth('getDiningBookingList'),
-  validate(DiningBookingValidation.couponValidation),
-  DiningBookingController.couponBooking
-);
-/// Dining Booking Routes ///
-
-/// Feedback & Report Emergency Routes //
-router.get(
-  '/feedback/list',
-  webAuth('getFeedbackList'),
-  validate(FeedbackFormValidation.allValidation),
-  FeedbackFormController.feedbackListAdmin
-);
-router.delete(
-  '/feedback/delete/:id',
-  webAuth('deleteFeedback'),
-  validate(FeedbackFormValidation.deleteFeedbackValidation),
-  FeedbackFormController.drop
-);
-router.patch(
-  '/feedback/update/',
-  webAuth('updateFeedback'),
-  validate(FeedbackFormValidation.updateFeedbackValidation),
-  FeedbackFormController.update
-);
-
-router.get(
-  '/report_emergency/list',
-  webAuth('getReportEmergencyList'),
-  validate(ReportEmergencyValidation.allValidation),
-  ReportEmergencyController.reportEmergencyListAdmin
-);
-router.delete(
-  '/report_emergency/delete/:id',
-  webAuth('deleteReportEmergency'),
-  validate(ReportEmergencyValidation.deleteReportEmergencyValidation),
-  ReportEmergencyController.drop
-);
-router.patch(
-  '/report_emergency/update/',
-  webAuth('updateReportEmergency'),
-  validate(ReportEmergencyValidation.updateReportEmergencyValidation),
-  ReportEmergencyController.update
-);
-/// Feedback & Report Emergency Routes //
-
-// User Avatar Routes //
-router.get('/user_avatar/list', webAuth('getAvatarList'), UserAvatarController.get);
-router.post(
-  '/user_avatar/save',
-  webAuth('saveUserAvatar'),
-  validate(UserAvatarValidation.saveAvatarValidation),
-  UserAvatarController.create
-);
-router.patch(
-  '/user_avatar/updateDefault/:id',
-  webAuth('updateDefaultAvatar'),
-  validate(UserAvatarValidation.idValidation),
-  UserAvatarController.updateDefault
-);
-router.patch(
-  '/user_avatar/update/:id',
-  webAuth('updateAvatar'),
-  validate(UserAvatarValidation.idValidation),
-  UserAvatarController.update
-);
-router.delete(
-  '/user_avatar/delete/:id',
-  webAuth('deleteAvatar'),
-  validate(UserAvatarValidation.idValidation),
-  UserAvatarController.drop
-);
-// User Avatar Routes //
-
-// Waiter Routes //
-router.get(
-  '/waiter/getAll',
-  webAuth('getWaiter'),
-  validate(WaiterValidation.allValidation),
-  WaiterController.waiterListAdmin
-);
-router.patch(
-  '/waiter/updateWaiterStatus/:waiterId',
-  webAuth('updateWaiterInfo'),
-  validate(WaiterValidation.updateWaiterStatusValidation),
-  WaiterController.updateWaiterStatus
-);
-router.get(
-  '/waiter/getById/:waiterId',
-  webAuth('getWaiterById'),
-  validate(WaiterValidation.idValidation),
-  WaiterController.getById
-);
-router.patch(
-  '/waiter/updateWaiterInfo/:userId',
-  webAuth('updateWaiterInfo'),
-  validate(WaiterValidation.updateWaiterInfoValidation),
-  WaiterController.updateWaiterInfo
-);
-// Waiter Routes //
-
-// Kitchen Owner Routes //
-router.get(
-  '/kitchen_owners/list',
-  webAuth('get_kitchen_owner_list'),
-  validate(KitchenOwnerValidation.allValidation),
-  KitchenOwnerController.kitchenOwnerListAdmin
-);
-router.patch(
-  '/kitchen_owner/update_kitchen_status/:kitchenId',
-  webAuth('update_kitchen_status'),
-  validate(KitchenOwnerValidation.updateKitchenOwnerStatusValidation),
-  KitchenOwnerController.updateKitchenOwnerStatus
-);
-router.get(
-  '/kitchen_owner/info/:kitchenId',
-  webAuth('kitchen_owner_info'),
-  validate(KitchenOwnerValidation.idValidation),
-  KitchenOwnerController.getById
-);
-router.patch(
-  '/kitchen_owner/update_detail/:userId',
-  webAuth('update_kitchen_owner'),
-  validate(KitchenOwnerValidation.updateKitchenOwnerInfoValidation),
-  KitchenOwnerController.updateKitchenOwnerInfo
-);
-// Kitchen Owner Routes //
-
-// Waiter Settings Routes //
-router.get('/waiter_settings/get', webAuth('getWaiterSettings'), WaiterSettingController.get);
-router.post(
-  '/waiter_settings/save',
-  webAuth('createWaiterSettings'),
-  validate(WaiterSettingValidation.createSettings),
-  WaiterSettingController.create
-);
-router.patch(
-  '/waiter_settings/update/:settingId',
-  webAuth('updateWaiterSettings'),
-  validate(WaiterSettingValidation.idValidation),
-  WaiterSettingController.update
-);
-// Waiter Settings Routes //
-
-// Kitchen Owner Setting Routes //
-router.get(
-  '/kitchen_owner_setting/get',
-  webAuth('get_kitchen_owner_setting'),
-  KitchenOwnerSettingController.get
-);
-router.post(
-  '/kitchen_owner_setting/save',
-  webAuth('create_kitchen_owner_setting'),
-  validate(KitchenOwnerSettingValidation.createSettings),
-  KitchenOwnerSettingController.create
-);
-router.patch(
-  '/kitchen_owner_setting/update/:settingId',
-  webAuth('update_kitchen_owner_setting'),
-  validate(KitchenOwnerSettingValidation.idValidation),
-  KitchenOwnerSettingController.update
-);
-// Kitchen Owner Setting Routes //
-
-// Food Taxation Routes //
-router.get(
-  '/food_taxation/getAll',
-  webAuth('getFoodTaxationList'),
-  validate(FoodTaxationValidation.allValidation),
-  FoodTaxationController.getTaxationListAdmin
-);
-router.delete(
-  '/food_taxation/delete_restaurant_taxation/:restaurant',
-  webAuth('deleteFoodTaxation'),
-  validate(FoodTaxationValidation.deleteAdminValidation),
-  FoodTaxationController.deleteTaxationAdmin
-);
-// Food Taxation Routes //
-
-// Cash In Hand Routes //
-router.get(
-  '/cashCollection/list',
-  webAuth('cashCollectionList'),
-  validate(CollectCashValidation.collectCashListValidation),
-  CollectCashController.get
-);
-router.get(
-  '/restaurant/getRestaurantByCityCollectCash/:cityId',
-  webAuth('getRestaurantByCity'),
-  validate(RestaurantValidation.restaurantByCityIdLimitedDetailsValidation),
-  RestaurantController.getRestaurantByCityIdFromCollectCash
-);
-router.get(
-  '/restaurant/cashInHand/:vendor',
-  webAuth('getRestaurantCashInHand'),
-  validate(RestaurantValidation.vendorCashInHandValidation),
-  RestaurantController.getRestaurantCashInHand
-);
-router.post(
-  '/restaurant/clearCashInHand',
-  webAuth('clearCashInHand'),
-  validate(RestaurantValidation.collectCashValidation),
-  RestaurantController.clearCashInHandAndUpdateWallet
-);
-router.get(
-  '/deliveryman/cashInHand/:deliveryman',
-  webAuth('getDeliverymanCashInHand'),
-  validate(DriverValidation.deliverymanCashInHandValidation),
-  DriverController.getDeliverymanCashInHand
-);
-router.post(
-  '/deliveryman/clearCashInHand',
-  webAuth('clearCashInHand'),
-  validate(DriverValidation.collectCashValidation),
-  DriverController.clearCashInHand
-);
-// Cash In Hand Routes //
-
-// Withdrawal Method Routes //
-router.post(
-  '/withdrawalMethod/create',
-  webAuth('createWithdrawalMethod'),
-  validate(WithdrawalMethodValidation.createWithdrawalMethodValidation),
-  WithdrawalMethodController.create
-);
-router.get(
-  '/withdrawalMethod/list',
-  webAuth('getWithdrawalMethodList'),
-  validate(WithdrawalMethodValidation.allValidation),
-  WithdrawalMethodController.methodList
-);
-router.get(
-  '/withdrawalMethod/detail/:methodId',
-  webAuth('getWithdrawalMethodList'),
-  validate(WithdrawalMethodValidation.idValidation),
-  WithdrawalMethodController.withdrawalMethodDetail
-);
-router.patch(
-  '/withdrawalMethod/update/:methodId',
-  webAuth('updateWithdrawalMethod'),
-  validate(WithdrawalMethodValidation.idValidation),
-  WithdrawalMethodController.update
-);
-router.patch(
-  '/withdrawalMethod/updateDefault/:methodId',
-  webAuth('updateDefaultWithdrawalMethod'),
-  validate(WithdrawalMethodValidation.idValidation),
-  WithdrawalMethodController.updateDefault
-);
-router.delete(
-  '/withdrawalMethod/delete/:methodId',
-  webAuth('deleteWithdrawalMethod'),
-  validate(WithdrawalMethodValidation.idValidation),
-  WithdrawalMethodController.drop
-);
-// Withdrawal Method Routes //
-
-// Withdrawal Request Routes //
-router.get(
-  '/withdrawalRequest/restaurant',
-  webAuth('getRestaurantWithdrawalRequest'),
-  validate(WithdrawalRequestValidation.allValidation),
-  WithdrawalRequestController.getRestaurantWithdrawalRequest
-);
-router.get(
-  '/withdrawalRequest/deliveryman',
-  webAuth('getDeliverymanWithdrawalRequest'),
-  validate(WithdrawalRequestValidation.allValidation),
-  WithdrawalRequestController.getDeliverymanWithdrawalRequest
-);
-router.get(
-  '/withdrawalRequest/detail/:id',
-  webAuth('getWithdrawalRequestDetail'),
-  validate(WithdrawalRequestValidation.idValidation),
-  WithdrawalRequestController.withdrawalRequestDetail
-);
-router.post(
-  '/withdrawalRequest/decline',
-  webAuth('declineWithdrawalRequest'),
-  validate(WithdrawalRequestValidation.declineWithdrawalRequestValidation),
-  WithdrawalRequestController.declineWithdrawalRequest
-);
-router.post(
-  '/withdrawalRequest/approve',
-  webAuth('approveWithdrawalRequest'),
-  validate(WithdrawalRequestValidation.approveWithdrawalRequestValidation),
-  WithdrawalRequestController.approveWithdrawalRequest
-);
-// Withdrawal Request Routes //
-
-// Joining Form Routes //
-router.post(
-  '/joining_form/restaurant',
-  webAuth('saveJoiningForm'),
-  validate(JoiningFormValidation.saveRestaurantJoiningFormValidation),
-  JoiningFormController.saveRestaurantForm
-);
-router.post(
-  '/joining_form/deliveryman',
-  webAuth('saveJoiningForm'),
-  validate(JoiningFormValidation.saveRestaurantJoiningFormValidation),
-  JoiningFormController.saveDeliverymanForm
-);
-router.get(
-  '/restaurant_joining_form',
-  webAuth('getJoinigFormDetail'),
-  JoiningFormController.getRestaurantForm
-);
-router.get(
-  '/deliveryman_joining_form',
-  webAuth('getJoinigFormDetail'),
-  JoiningFormController.getDeliverymanForm
-);
-// Joining Form Routes //
-
-// Joining Request Routes //
-router.get(
-  '/restaurant_request/list/:status',
-  webAuth('getRestaurantJoiningRequest'),
-  validate(RestaurantJoiningRequestValidation.statusValidation),
-  RestaurantJoiningRequestController.getJoiningRequestList
-);
-router.delete(
-  '/restaurant_request/delete/:id',
-  webAuth('deleteRestaurantJoiningRequest'),
-  validate(RestaurantJoiningRequestValidation.idValidation),
-  RestaurantJoiningRequestController.deleteRequest
-);
-router.get(
-  '/restaurant_request/detail/:id',
-  webAuth('getRestaurantJoiningRequest'),
-  validate(RestaurantJoiningRequestValidation.idValidation),
-  RestaurantJoiningRequestController.getDetail
-);
-router.patch(
-  '/restaurant_request/reject/:id',
-  webAuth('rejectRestaurantJoiningRequest'),
-  validate(RestaurantJoiningRequestValidation.rejectValidation),
-  RestaurantJoiningRequestController.rejectRequest
-);
-router.post(
-  '/restaurant_request/approve/:id',
-  webAuth('acceptRestaurantJoiningRequest'),
-  validate(RestaurantJoiningRequestValidation.approveValidation),
-  RestaurantJoiningRequestController.approveRequest
-);
-
-router.get(
-  '/deliveryman_request/list/:status',
-  webAuth('getDeliverymanJoiningRequest'),
-  validate(DeliverymanJoiningRequestValidation.statusValidation),
-  DeliverymanJoiningRequestController.getJoiningRequestList
-);
-router.delete(
-  '/deliveryman_request/delete/:id',
-  webAuth('deleteDeliverymanJoiningRequest'),
-  validate(DeliverymanJoiningRequestValidation.idValidation),
-  DeliverymanJoiningRequestController.deleteRequest
-);
-router.get(
-  '/deliveryman_request/detail/:id',
-  webAuth('getDeliverymanJoiningRequest'),
-  validate(DeliverymanJoiningRequestValidation.idValidation),
-  DeliverymanJoiningRequestController.getDetail
-);
-router.patch(
-  '/deliveryman_request/reject/:id',
-  webAuth('rejectDeliverymanJoiningRequest'),
-  validate(DeliverymanJoiningRequestValidation.rejectValidation),
-  DeliverymanJoiningRequestController.rejectRequest
-);
-router.post(
-  '/deliveryman_request/approve/:id',
-  webAuth('acceptDeliverymanJoiningRequest'),
-  validate(DeliverymanJoiningRequestValidation.approveValidation),
-  DeliverymanJoiningRequestController.approveRequest
-);
-// Joining Request Routes //
-
-// Invoice Instructions Routes //
-router.get(
-  '/invoice/instruction/getAll',
-  webAuth('getInvoiceInstructions'),
-  validate(InvoiceInstructionValidation.allValidation),
-  InvoiceInstructionController.get
-);
-router.post(
-  '/invoice/instruction/save',
-  webAuth('createInvoiceInstruction'),
-  validate(InvoiceInstructionValidation.createInvoiceInstructionValidation),
-  InvoiceInstructionController.create
-);
-router.patch(
-  '/invoice/instruction/update/:noticeId',
-  webAuth('updateInvoiceInstruction'),
-  validate(InvoiceInstructionValidation.idValidation),
-  InvoiceInstructionController.update
-);
-router.delete(
-  '/invoice/instruction/delete/:noticeId',
-  webAuth('deleteInvoiceInstruction'),
-  validate(InvoiceInstructionValidation.idValidation),
-  InvoiceInstructionController.drop
-);
-// Invoice Instructions Routes //
-
-// Customer Routes //
-router.get('/customer/getList', webAuth('getCustomerList'), UserController.customerList);
-router.patch(
-  '/customer/update/:id',
-  webAuth('updateCustomerStatus'),
-  validate(UserValidation.updateStatusValidation),
-  UserController.updateStatus
-);
-router.get(
-  '/customer/loyaltyPointsReport',
-  webAuth('loyaltyPointsReport'),
-  validate(UserValidation.loyalityPointValidation),
-  LoyaltyPointsController.loyalityPointReport
-);
-router.get(
-  '/customer/walletFundList',
-  webAuth('walletFundList'),
-  UserController.customerWalletFundList
-);
-router.post(
-  '/customer/wallet/addFund',
-  webAuth('addWalletFund'),
-  validate(WalletValidation.adminAddWalletFundValidation),
-  WalletController.adminAddWalletFund
-);
-// Customer Routes //
-
-// Wallet Bonus Routes //
-router.post(
-  '/wallet/bonus/save',
-  webAuth('createWalletBonus'),
-  validate(WalletBonusValidation.createBonusValidation),
-  WalletBonusController.create
-);
-router.get(
-  '/wallet/bonus/getAll',
-  webAuth('getWalletBonus'),
-  validate(WalletBonusValidation.allValidation),
-  WalletBonusController.getAll
-);
-router.patch(
-  '/wallet/bonus/updateStatus/:id',
-  webAuth('updateWalletBonus'),
-  validate(WalletBonusValidation.updateStatusValidation),
-  WalletBonusController.updateStatus
-);
-router.delete(
-  '/wallet/bonus/delete/:id',
-  webAuth('deleteBonus'),
-  validate(WalletBonusValidation.idValidation),
-  WalletBonusController.drop
-);
-router.patch(
-  '/wallet/bonus/update/:id',
-  webAuth('updateWalletBonus'),
-  validate(WalletBonusValidation.updateValidation),
-  WalletBonusController.updateData
-);
-// Wallet Bonus Routes //
-
-// Admin Expense Routes //
-router.post(
-  '/expense/save',
-  webAuth('saveAdminExpense'),
-  validate(AdminExpenseValidation.saveExpenseValidation),
-  AdminExpenseController.create
-);
-// Admin Expense Routes //
-
-// Report Routes //
-router.get(
-  '/reports/wallet_transaction/',
-  webAuth('walletTransactionReport'),
-  WalletController.getTransactionReport
-);
-router.get(
-  '/reports/payment_transaction/',
-  webAuth('paymentTransactionReport'),
-  validate(PaymentConfigValidation.allPaymentValidation),
-  PaymentInitiationController.getPaymentInitiateReport
-);
-router.get('/reports/food_report/', webAuth('foodReport'), FoodController.foodReport);
-router.get(
-  '/reports/restaurantInitial',
-  webAuth('restaurantReport'),
-  RestaurantController.restauratReportInitialFilter
-);
-router.get(
-  '/reports/restaurant',
-  webAuth('restaurantReport'),
-  RestaurantController.restaurantReport
-);
-router.get('/reports/customer', webAuth('customerReport'), UserController.customerReport);
-router.get(
-  '/reports/deliveryman',
-  webAuth('deliverymanReport'),
-  DriverController.deliverymanReport
-);
-router.get(
-  '/reports/orders',
-  webAuth('orderReport'),
-  validate(OrdersValidation.orderReportValidation),
-  OrdersController.orderReports
-);
-router.get(
-  '/reports/posOrders',
-  webAuth('orderReport'),
-  validate(OrdersValidation.orderReportValidation),
-  PosOrTableOrderController.posOrderReport
-);
-router.get(
-  '/reports/tableOrders',
-  webAuth('orderReport'),
-  validate(OrdersValidation.orderReportValidation),
-  TableOrderController.tableOrderReport
-);
-router.get(
-  '/reports/diningBooking',
-  webAuth('orderReport'),
-  DiningBookingController.diningBookingReport
-);
-router.get(
-  '/reports/expenseInitial',
-  webAuth('expenseReport'),
-  AdminExpenseController.getInitialResponse
-);
-router.get('/reports/expense', webAuth('expenseReport'), AdminExpenseController.getExpenseList);
-router.get(
-  '/reports/disbursementReportInitial',
-  webAuth('disbursementReport'),
-  DisbursementController.disbursementTransactionInitial
-);
-router.get(
-  '/reports/restaurantDisbursement',
-  webAuth('disbursementReport'),
-  DisbursementController.restaurantDisbursementTransactionReport
-);
-router.get(
-  '/reports/deliverymanDisbursementReportInitial',
-  webAuth('disbursementReport'),
-  DisbursementController.deliverymanDisbursementTransactionInitial
-);
-router.get(
-  '/reports/deliverymanDisbursement',
-  webAuth('disbursementReport'),
-  DisbursementController.deliverymanDisbursementTransactionReport
-);
-// Report Routes //
-
-// Disbursement //
-router.get(
-  '/disbursement/restaurant',
-  webAuth('restaurantDisbursement'),
-  DisbursementController.restaurantDisbursement
-);
-router.get(
-  '/disbursement/deliveryman',
-  webAuth('deliverymanDisbursement'),
-  DisbursementController.deliverymanDisbursement
-);
-router.get(
-  '/disbursement/restaurantReport/:id',
-  webAuth('restaurantDisbursement'),
-  validate(DisbursementValidation.disbursementReportValidation),
-  DisbursementController.restaurantDisbursementReport
-);
-router.get(
-  '/disbursement/deliverymanReport/:id',
-  webAuth('deliverymanDisbursement'),
-  validate(DisbursementValidation.disbursementReportValidation),
-  DisbursementController.deliverymanDisbursementReport
-);
-router.get(
-  '/disbursement/restaurantDisbursementDetail/:id',
-  webAuth('restaurantDisbursement'),
-  validate(DisbursementValidation.disbursementReportValidation),
-  DisbursementController.restaurantDisbursementDetail
-);
-router.get(
-  '/disbursement/deliverymanDisbursementDetail/:id',
-  webAuth('deliverymanDisbursement'),
-  validate(DisbursementValidation.disbursementReportValidation),
-  DisbursementController.deliverymanDisbursementDetail
-);
-router.get(
-  '/disbursement/acceptRestaurantDisbursement/:id',
-  webAuth('restaurantDisbursement'),
-  validate(DisbursementValidation.disbursementReportValidation),
-  DisbursementController.acceptRestaurantDisburment
-);
-router.get(
-  '/disbursement/rejectRestaurantDisbursement/:id',
-  webAuth('restaurantDisbursement'),
-  validate(DisbursementValidation.disbursementReportValidation),
-  DisbursementController.rejectRestaurantDisburment
-);
-
-router.get(
-  '/disbursement/acceptDeliverymanDisbursement/:id',
-  webAuth('deliverymanDisbursement'),
-  validate(DisbursementValidation.disbursementReportValidation),
-  DisbursementController.acceptDeliverymanDisbursment
-);
-router.get(
-  '/disbursement/rejectDeliverymanDisbursement/:id',
-  webAuth('deliverymanDisbursement'),
-  validate(DisbursementValidation.disbursementReportValidation),
-  DisbursementController.rejectDeliverymanDisbursment
-);
-// Disbursement //
-
-// Customer Detail Routes //
-router.get('/customer/orderList', webAuth('customerDetail'), OrdersController.customerOrderList);
-router.get(
-  '/customer/diningBookingList',
-  webAuth('customerDetail'),
-  DiningBookingController.customerDiningBooking
-);
-router.get(
-  '/customer/deliveryAddressList',
-  webAuth('customerDetail'),
-  UserAddressController.customerAddressList
-);
-router.get(
-  '/customer/purchasedTiffinPackages',
-  webAuth('customerDetail'),
-  UserPurchasedTiffinSubscriptionController.customerPurchasedPackages
-);
-router.get(
-  '/customer/customerAllRefundRequest',
-  webAuth('customerDetail'),
-  OrdersController.customerAllRefundRequest
-);
-router.get(
-  '/customer/customerOrderRefundList',
-  webAuth('customerDetail'),
-  OrdersController.customerOrderRefundList
-);
-router.get(
-  '/customer/customerTiffinRefundList',
-  webAuth('customerDetail'),
-  OrdersController.customerTiffinRefundList
-);
-router.get(
-  '/customer/customerBookingRefundList',
-  webAuth('customerDetail'),
-  OrdersController.customerBookingRefundList
-);
-router.get(
-  '/customer/customerComplaintList',
-  webAuth('customerDetail'),
-  ComplaintsController.customerComplaintList
-);
-router.get(
-  '/customer/customerAllFavourite',
-  webAuth('customerDetail'),
-  FavouriteController.customerAllFavourite
-);
-router.get(
-  '/customer/customerFavouriteOrders',
-  webAuth('customerDetail'),
-  FavouriteController.customerFavouriteOrders
-);
-router.get(
-  '/customer/customerFavouriteRestaurant',
-  webAuth('customerDetail'),
-  FavouriteController.customerFavouriteRestaurant
-);
-router.get(
-  '/customer/customerFavouriteFood',
-  webAuth('customerDetail'),
-  FavouriteController.customerFavouriteFood
-);
-router.get(
-  '/customer/customerHiddenRestaurants',
-  webAuth('customerDetail'),
-  HideRestaurantController.customerHiddenRestaurants
-);
-router.get(
-  '/customer/detail/:user',
-  webAuth('customerDetail'),
-  validate(UserValidation.idValidation),
-  UserController.customerDetail
-);
-router.get(
-  '/customer/customerMediaFiles',
-  webAuth('customerDetail'),
-  MediaController.customerMediaFiles
-);
-router.get(
-  '/customer/customerAllReviews',
-  webAuth('customerDetail'),
-  ReviewRatingController.customerAllReviews
-);
-router.get(
-  '/customer/customerRestaurantReview',
-  webAuth('customerDetail'),
-  ReviewRatingController.customerRestaurantReview
-);
-router.get(
-  '/customer/customerFoodReview',
-  webAuth('customerDetail'),
-  ReviewRatingController.customerFoodReview
-);
-router.get(
-  '/customer/customerDeliverymanReview',
-  webAuth('customerDetail'),
-  ReviewRatingController.customerDeliverymanReview
-);
-router.get(
-  '/customer/wallet_transactions',
-  webAuth('customerDetail'),
-  WalletController.customerTransactionList
-);
-// Customer Detail Routes //
-
-// Restaurant Detail Routes //
-router.get(
-  '/vendor_detail/orderList',
-  webAuth('restaurantDetail'),
-  OrdersController.vendorOrderList
-);
-router.get(
-  '/vendor_detail/pos_order_list',
-  webAuth('restaurantDetail'),
-  PosOrTableOrderController.vendorPosOrderList
-);
-router.get(
-  '/vendor_detail/table_order_list',
-  webAuth('restaurantDetail'),
-  TableOrderController.vendorTableOrderList
-);
-router.get(
-  '/vendor_detail/booking_list',
-  webAuth('restaurantDetail'),
-  DiningBookingController.vendorBookingList
-);
-router.get('/vendor_detail/food_list', webAuth('restaurantDetail'), FoodController.vendorFoodList);
-router.get(
-  '/vendor_detail/waiter_list',
-  webAuth('restaurantDetail'),
-  WaiterController.vendorWaiterList
-);
-router.get(
-  '/vendor_detail/deliveryman_list',
-  webAuth('restaurantDetail'),
-  DriverController.vendorDeliverymanList
-);
-router.get(
-  '/vendor_detail/tiffin_package_list',
-  webAuth('restaurantDetail'),
-  SubscriptionTiffinPackageController.vendorTiffinPackageList
-);
-router.get(
-  '/vendor_detail/complaints',
-  webAuth('restaurantDetail'),
-  ComplaintsController.vendorComplaintList
-);
-router.get(
-  '/vendor_detail/complaint_orders',
-  webAuth('restaurantDetail'),
-  ComplaintsController.vendorUserOrderComplaintList
-);
-router.get(
-  '/vendor_detail/complaint_vendor',
-  webAuth('restaurantDetail'),
-  ComplaintsController.vendorOwnOrderComplaintList
-);
-router.get(
-  '/vendor_detail/all_refund_request',
-  webAuth('restaurantDetail'),
-  OrdersController.vendorAllRefundRequest
-);
-router.get(
-  '/vendor_detail/order_refund_request',
-  webAuth('restaurantDetail'),
-  OrdersController.vendorOrderRefundRequest
-);
-router.get(
-  '/vendor_detail/dining_refund_request',
-  webAuth('restaurantDetail'),
-  OrdersController.vendorDiningRefundRequest
-);
-router.get(
-  '/vendor_detail/tiffin_subscription_refund_request',
-  webAuth('restaurantDetail'),
-  OrdersController.vendorTiffinRefundRequest
-);
-router.get(
-  '/vendor_detail/media_files',
-  webAuth('restaurantDetail'),
-  MediaController.vendorMediaFiles
-);
-router.get(
-  '/vendor_detail/outlet_list',
-  webAuth('restaurantDetail'),
-  RestaurantController.vendorOutletList
-);
-router.get(
-  '/vendor_detail/disbursement_list',
-  webAuth('restaurantDetail'),
-  DisbursementController.vendorDisbursementList
-);
-router.get(
-  '/vendor_detail/collected_cash_list',
-  webAuth('restaurantDetail'),
-  CollectCashController.vendorCollectedCashList
-);
-router.get(
-  '/vendor_detail/withdrawal_request_list',
-  webAuth('restaurantDetail'),
-  WithdrawalRequestController.vendorWithdrawalRequest
-);
-router.get(
-  '/vendor_detail/payout_accounts',
-  webAuth('restaurantDetail'),
-  RestaurantPayoutMethodController.vendorPayoutAccounts
-);
-router.get(
-  '/vendor_detail/all_reviews',
-  webAuth('restaurantDetail'),
-  ReviewRatingController.vendorAllReviews
-);
-router.get(
-  '/vendor_detail/vendor_reviews',
-  webAuth('restaurantDetail'),
-  ReviewRatingController.vendorReviews
-);
-router.get(
-  '/vendor_detail/vendor_food_reviews',
-  webAuth('restaurantDetail'),
-  ReviewRatingController.vendorFoodReviews
-);
-router.get(
-  '/vendor_detail/information/:id',
-  webAuth('restaurantDetail'),
-  validate(RestaurantValidation.vendorInformationValidation),
-  RestaurantController.vendorInformation
-);
-router.get(
-  '/vendor_detail/wallet_transactions',
-  webAuth('restaurantDetail'),
-  WalletController.vendorTransactionList
-);
-router.get(
-  '/vendor_detail/kitchen_owner_list',
-  webAuth('restaurantDetail'),
-  KitchenOwnerController.vendorKitchenOwnerList
-);
-// Restaurant Detail Routes //
-
-// Deliveryman Detail Routes //
-router.get(
-  '/deliveryman_detail/information/:id',
-  webAuth('deliverymanDetail'),
-  validate(DriverValidation.deliverymanInformationValidation),
-  DriverController.deliverymanInformation
-);
-router.get(
-  '/deliveryman_detail/order_list',
-  webAuth('deliverymanDetail'),
-  OrdersController.deliverymanOrderList
-);
-router.get(
-  '/deliveryman_detail/disbursement_list',
-  webAuth('deliverymanDetail'),
-  DisbursementController.deliverymanDisbursementList
-);
-router.get(
-  '/deliveryman_detail/collected_cash_list',
-  webAuth('deliverymanDetail'),
-  CollectCashController.deliverymanCollectedCashList
-);
-router.get(
-  '/deliveryman_detail/payout_accounts',
-  webAuth('deliverymanDetail'),
-  DeliverymanPayoutMethodController.deliverymanPayoutAccounts
-);
-router.get(
-  '/deliveryman_detail/withdrawal_request_list',
-  webAuth('deliverymanDetail'),
-  WithdrawalRequestController.deliverymanWithdrawalRequest
-);
-router.get(
-  '/deliveryman_detail/reviews',
-  webAuth('deliverymanDetail'),
-  ReviewRatingController.deliverymanReviews
-);
-router.get(
-  '/deliveryman_detail/media_files',
-  webAuth('deliverymanDetail'),
-  MediaController.deliverymanMediaFiles
-);
-router.get(
-  '/deliveryman_detail/complaints',
-  webAuth('deliverymanDetail'),
-  ComplaintsController.deliverymanComplaintList
-);
-router.get(
-  '/deliveryman_detail/complaint_orders',
-  webAuth('deliverymanDetail'),
-  ComplaintsController.deliverymanUserOrderComplaintList
-);
-router.get(
-  '/deliveryman_detail/complaint_vendor',
-  webAuth('deliverymanDetail'),
-  ComplaintsController.deliverymanRestaurantComplaintList
-);
-router.get(
-  '/deliveryman_detail/wallet_transactions',
-  webAuth('deliverymanDetail'),
-  WalletController.deliverymanTransactionList
-);
-//
-// Deliveryman Detail Routes //
-
-// POS Routes //
-router.get('/pos/initial', webAuth('posOrder'), CityController.posCities);
-router.get(
-  '/pos/restaurants/:cityId',
-  webAuth('posOrder'),
-  validate(RestaurantValidation.cityIdValidation),
-  RestaurantController.posRestaurantListFromCity
-);
-router.get(
-  '/pos/categories/:restaurantId',
-  webAuth('posOrder'),
-  validate(RestaurantValidation.idValidation),
-  RestaurantController.posRestaurantData
-);
-router.post(
-  '/pos/food_list/',
-  webAuth('posOrder'),
-  validate(RestaurantValidation.posFoodListWebValidation),
-  RestaurantController.getPosFoodDataWeb
-);
-router.get(
-  '/pos/search/:vendor/:searchQuery',
-  webAuth('posOrder'),
-  validate(RestaurantValidation.posFoodSearchValidation),
-  RestaurantController.posFoodSearch
-);
-router.post(
-  '/pos/createCustomer',
-  webAuth('createCustomer'),
-  validate(AuthValidation.adminAddCustomerValidation),
-  UserController.adminCreateCustomer
-);
-router.get(
-  '/pos/customer_detail/:user',
-  webAuth('posOrder'),
-  validate(UserValidation.idValidation),
-  UserController.adminPosCustomerDetail
-);
-router.post(
-  '/pos/place_order',
-  webAuth('posOrder'),
-  validate(OrdersValidation.adminPOSOrderValidation),
-  OrdersController.placePOSAdminOrder
-);
-// POS Routes //
-
-// Roles Routes //
-router.get(
-  '/auth_roles/role_account_list',
-  webAuth('manage_role'),
-  validate(AuthValidation.roleAccountListValidation),
-  AuthController.getRoleAccountList
-);
-router.post(
-  '/auth_roles/new_admin',
-  webAuth('manage_role'),
-  validate(AuthValidation.roleValidation),
-  AuthController.addAdminAccount
-);
-router.get(
-  '/auth_roles/detail/:id',
-  webAuth('manage_role'),
-  validate(AuthValidation.roleAccountDetailValidation),
-  AuthController.roleAccountDetail
-);
-router.patch(
-  '/auth_roles/update_status/:id',
-  webAuth('manage_role'),
-  validate(AuthValidation.updateRoleStatusValidation),
-  AuthController.updateRoleStatus
-);
-router.patch(
-  '/auth_roles/update_detail/:id',
-  webAuth('manage_role'),
-  validate(AuthValidation.updateRoleDetailValidation),
-  AuthController.updateRoleDetail
-);
-router.post(
-  '/auth_roles/new_accountant',
-  webAuth('manage_role'),
-  validate(AuthValidation.roleValidation),
-  AuthController.addAccountantAccount
-);
-router.post(
-  '/auth_roles/new_support_team',
-  webAuth('manage_role'),
-  validate(AuthValidation.roleValidation),
-  AuthController.addSupportTeamAccount
-);
-router.get(
-  '/auth_roles/city_master_list',
-  webAuth('manage_role'),
-  validate(AuthValidation.cityZenAccountListValidation),
-  AuthController.cityMasterList
-);
-router.post(
-  '/auth_roles/new_city_master',
-  webAuth('manage_role'),
-  validate(AuthValidation.cityRoleValidation),
-  AuthController.addCityMaterAccount
-);
-router.get(
-  '/auth_roles/city_master_detail/:id',
-  webAuth('manage_role'),
-  validate(AuthValidation.roleAccountDetailValidation),
-  AuthController.cityMasterAccountDetail
-);
-router.patch(
-  '/auth_roles/update_city_master/:id',
-  webAuth('manage_role'),
-  validate(AuthValidation.updateCityMasterValidation),
-  AuthController.updateCityMasterDetail
-);
-// Roles Routes //
-
-// Admin Profile //
-router.get(
-  '/admin_profile/:id',
-  webAuth('admin_profile'),
-  validate(UserValidation.adminProfileValidation),
-  UserController.getAdminProfile
-);
-router.patch(
-  '/update_admin/:id',
-  webAuth('update_admin'),
-  validate(UserValidation.updateAdminProfileValidation),
-  UserController.updateAdminProfile
-);
-router.patch(
-  '/update_admin_password/:id',
-  webAuth('update_admin_password'),
-  validate(UserValidation.updateAdminPasswordValidation),
-  UserController.updateAdminPassword
-);
-// Admin Profile //
-
-// User Account Delete Reason Routes //
-router.post(
-  '/delete_account_reason/save',
-  webAuth('create_user_delete_account_reason'),
-  validate(UserAccountDeleteReasonValidation.createAccountDeleteReasonValidation),
-  UserDeleteAccountReasonController.create
-);
-router.patch(
-  '/update_delete_account_reason/:reasonId',
-  webAuth('update_delete_account_reason'),
-  validate(UserAccountDeleteReasonValidation.idValidation),
-  UserDeleteAccountReasonController.update
-);
-router.get(
-  '/delete_account_reason_list',
-  webAuth('delete_account_reason_list'),
-  validate(UserAccountDeleteReasonValidation.allValidation),
-  UserDeleteAccountReasonController.get
-);
-router.delete(
-  '/drop_delete_account_reason/:reasonId',
-  webAuth('drop_delete_account_reason'),
-  validate(UserAccountDeleteReasonValidation.idValidation),
-  UserDeleteAccountReasonController.drop
-);
-// User Account Delete Reason Routes //
-
-// Deleted Account Routes //
-router.get(
-  '/customer/deleted_accounts',
-  webAuth('customer_deleted_accounts'),
-  validate(UserValidation.deletedAccountValidation),
-  UserController.customerDeletedAccount
-);
-router.get(
-  '/waiters/deleted_waiter',
-  webAuth('waiter_deleted_accounts'),
-  validate(UserValidation.deletedAccountValidation),
-  UserController.waiterDeletedAccount
-);
-router.get(
-  '/deliveryman/deleted_deliveryman',
-  webAuth('deliveryman_deleted_accounts'),
-  validate(UserValidation.deletedAccountValidation),
-  UserController.deliverymanDeletedAccount
-);
-router.get(
-  '/restaurants/deleted_restaurants',
-  webAuth('restaurant_deleted_accounts'),
-  validate(UserValidation.deletedAccountValidation),
-  UserController.restaurantDeletedAccount
-);
-router.get(
-  '/kitchen/deleted_kitchen_owner',
-  webAuth('deleted_kitchen_owner'),
-  validate(UserValidation.deletedAccountValidation),
-  UserController.kitchenDeletedAccount
-);
-// Deleted Account Routes //
-
-// Notification Routes //
-router.post(
-  '/send_notification',
-  webAuth('send_notification'),
-  validate(UserValidation.sendNotificationValidation),
-  FcmController.adminSendNotification
-);
-router.get(
-  '/admin_header_content',
-  webAuth('admin_header_content'),
-  NotificationListController.adminHeaderContent
-);
-router.get(
-  '/notification_list',
-  webAuth('notification_list'),
-  NotificationListController.adminNotificationList
-);
-router.get('/regular_chat_list', webAuth('regular_chat_list'), ChatRoomController.adminChatList);
-router.get(
-  '/support_chat_list',
-  webAuth('support_chat_list'),
-  SupportChatRoomController.adminSupportChatList
-);
-router.get(
-  '/regular_chat_messages/:id',
-  webAuth('regular_chat_messages'),
-  validate(ChatRoomValidation.adminChatMessagesValidation),
-  ChatRoomController.adminGetChatMessages
-);
-router.get(
-  '/support_chat_messages/:id',
-  webAuth('support_chat_messages'),
-  validate(ChatRoomValidation.adminChatMessagesValidation),
-  SupportChatRoomController.adminChatMessages
-);
-router.post(
-  '/chat_room/send_regular_message/',
-  webAuth('send_regular_message'),
-  validate(ChatRoomValidation.sendChatMessageValidation),
-  ChatRoomController.saveNewMessage
-);
-router.post(
-  '/chat_room/send_support_message/',
-  webAuth('send_support_message'),
-  validate(ChatRoomValidation.sendChatMessageValidation),
-  SupportChatRoomController.saveSupportMessage
-);
-// Notification Routes //
-
-// Admin User Contact Detail Routes //
-router.get(
-  '/user_contact_detail/:id',
-  webAuth('user_contact_detail'),
-  validate(UserValidation.adminUserContactDetailValidation),
-  UserController.adminUserContactDetail
-);
-// Admin User Contact Detail Routes //
-// Import & Export Routes //
-router.get(
-  '/cities/export/',
-  webAuth('export_collection'),
-  validate(CityValidation.exportValidation),
-  CityController.exportCollection
-);
-router.get(
-  '/localities/export/',
-  webAuth('export_collection'),
-  validate(LocalityValidation.exportValidation),
-  LocalityController.exportCollection
-);
-router.get(
-  '/cuisine/export/',
-  webAuth('export_collection'),
-  validate(CuisineValidation.exportValidation),
-  CuisineController.exportCollection
-);
-router.get(
-  '/report_issue/restaurant/export/',
-  webAuth('export_collection'),
-  validate(ReportIssueRestaurantReasonValidation.exportValidation),
-  ReportIssueRestaurantReasonController.exportCollection
-);
-router.get(
-  '/hide_reason/export/',
-  webAuth('export_collection'),
-  validate(HideRestaurantReasonValidation.exportValidation),
-  HideRestaurantReasonController.exportCollection
-);
-router.get(
-  '/restaurant_type/export/',
-  webAuth('export_collection'),
-  validate(RestaurantTypeValidation.exportValidation),
-  RestaurantTypeController.exportCollection
-);
-router.get(
-  '/restaurant_facilities/export/',
-  webAuth('export_collection'),
-  validate(RestaurantFacilitiesValidation.exportValidation),
-  RestaurantFacilitiesController.exportCollection
-);
-router.get(
-  '/category/export/',
-  webAuth('export_collection'),
-  validate(CategoryValidation.exportValidation),
-  CategoryController.exportCollection
-);
-router.get(
-  '/sub_category/export/',
-  webAuth('export_collection'),
-  validate(SubCategoryValidation.exportValidation),
-  SubCategoryController.exportCollection
-);
-router.get(
-  '/vehicle/export/',
-  webAuth('export_collection'),
-  validate(VehicleValidation.exportValidation),
-  VehicleController.exportCollection
-);
-router.get(
-  '/deliveryshift_schedule/export/',
-  webAuth('export_collection'),
-  validate(DeliveryShiftScheduleValidation.exportValidation),
-  DeliveryShiftScheduleController.exportCollection
-);
-router.get(
-  '/auth_roles/admin/export/',
-  webAuth('export_collection'),
-  validate(UserValidation.exportRoleValidation),
-  AuthController.exportCollectionAdminRole
-);
-router.get(
-  '/auth_roles/accountant/export/',
-  webAuth('export_collection'),
-  validate(UserValidation.exportRoleValidation),
-  AuthController.exportCollectionAccountantRole
-);
-router.get(
-  '/auth_roles/support_team/export/',
-  webAuth('export_collection'),
-  validate(UserValidation.exportRoleValidation),
-  AuthController.exportCollectionSupportRole
-);
-router.get(
-  '/auth_roles/cityzen/export/',
-  webAuth('export_collection'),
-  validate(UserValidation.exportRoleValidation),
-  AuthController.exportCollectionCityzenRole
-);
-router.get(
-  '/restaurant_all_data/export/',
-  webAuth('export_collection'),
-  validate(RestaurantValidation.exportValidation),
-  RestaurantController.exportCollectionRestaurantAllData
-);
-router.get(
-  '/outlet_all_data/export/',
-  webAuth('export_collection'),
-  validate(RestaurantValidation.exportValidation),
-  RestaurantController.exportCollectionOutletAllData
-);
-router.get(
-  '/report_issue_list/restaurant/export/',
-  webAuth('export_collection'),
-  validate(ReportIssueRestaurantReasonValidation.restaurantReportExportValidation),
-  ReportIssueRestaurantController.exportCollection
-);
-router.get(
-  '/hidden_restaurants/export/',
-  webAuth('export_collection'),
-  validate(HideRestaurantReasonValidation.exportValidation),
-  HideRestaurantController.exportCollection
-);
-router.get(
-  '/waiter/export/',
-  webAuth('export_collection'),
-  validate(WaiterValidation.exportValidation),
-  WaiterController.exportCollection
-);
-router.get(
-  '/kitchen_owners/export/',
-  webAuth('export_collection'),
-  validate(KitchenOwnerValidation.exportValidation),
-  KitchenOwnerController.exportCollection
-);
-router.get(
-  '/restaurant_request/export/',
-  webAuth('export_collection'),
-  validate(RestaurantJoiningRequestValidation.exportValidation),
-  RestaurantJoiningRequestController.exportCollection
-);
-router.get(
-  '/order_cancel_reason/export/',
-  webAuth('export_collection'),
-  validate(OrderCancellationReasonValidation.exportValidation),
-  OrderCancellationReasonController.exportCollection
-);
-router.get(
-  '/order_rating_message/export/',
-  webAuth('export_collection'),
-  validate(OrderRatingMessageValidation.exportValidation),
-  OrderRatingMessageController.exportCollection
-);
-router.get(
-  '/invoice_instruction/export/',
-  webAuth('export_collection'),
-  validate(InvoiceInstructionValidation.exportValidation),
-  InvoiceInstructionController.exportCollection
-);
-router.get(
-  '/restaurant_food_license/export/',
-  webAuth('export_collection'),
-  validate(RestaurantFoodLicenseValidation.exportValidation),
-  RestaurantFoodLicenseController.exportCollection
-);
-router.get(
-  '/restaurant_notice/export/',
-  webAuth('export_collection'),
-  validate(RestaurantNoticeValidation.exportValidation),
-  RestaurantNoticeController.exportCollection
-);
-router.get(
-  '/delivery_instruction/export/',
-  webAuth('export_collection'),
-  validate(DeliveryInstructionValidation.exportValidation),
-  DeliveryInstructionController.exportCollection
-);
-router.get(
-  '/gratitude/export/',
-  webAuth('export_collection'),
-  validate(DeliveryGratitudeValidation.exportValidation),
-  DeliveryGratitudeController.exportCollection
-);
-router.get(
-  '/driver_incentive/export/',
-  webAuth('export_collection'),
-  validate(DriverIncentiveValidation.exportValidation),
-  DriverIncentiveController.exportCollection
-);
-router.get(
-  '/driver_offline_messages/export/',
-  webAuth('export_collection'),
-  validate(DriverOfflineMessagesValidation.exportValidation),
-  DriverOfflineMessagesController.exportCollection
-);
-router.get(
-  '/delete_account_reason_list/export/',
-  webAuth('export_collection'),
-  validate(UserAccountDeleteReasonValidation.exportValidation),
-  UserDeleteAccountReasonController.exportCollection
-);
-router.get(
-  '/dining_category/export/',
-  webAuth('export_collection'),
-  validate(DiningCategoryValidation.exportValidation),
-  DiningCategoryController.exportCollection
-);
-router.get(
-  '/dining_cancel_reason/export/',
-  webAuth('export_collection'),
-  validate(DiningCancellationReasonValidation.exportValidation),
-  DiningCancellationReasonController.exportCollection
-);
-router.get(
-  '/dining_notice/export/',
-  webAuth('export_collection'),
-  validate(DiningNoticeValidation.exportValidation),
-  DiningNoticeController.exportCollection
-);
-router.get(
-  '/language/export/',
-  webAuth('export_collection'),
-  validate(LanguageValidation.exportValidation),
-  LangaugeController.exportCollection
-);
-router.get(
-  '/user_avatar/export/:type',
-  webAuth('export_collection'),
-  validate(UserValidation.exportValidation),
-  UserAvatarController.exportCollection
-);
-router.get(
-  '/addons/export/',
-  webAuth('export_collection'),
-  validate(AddonsValidation.exportValidation),
-  AddonsController.exportCollection
-);
-router.get(
-  '/food_taxation/export/',
-  webAuth('export_collection'),
-  validate(FoodTaxationValidation.exportValidation),
-  FoodTaxationController.exportCollection
-);
-router.get(
-  '/subscription/export/',
-  webAuth('export_collection'),
-  validate(SubscriptionValidation.exportValidation),
-  SubscriptionController.exportCollection
-);
-router.get(
-  '/subscriber/export/',
-  webAuth('export_collection'),
-  validate(SubscriberValidation.exportValidation),
-  SubscriberController.exportCollection
-);
-router.get(
-  '/foods/export/',
-  webAuth('export_collection'),
-  validate(FoodValidation.exportValidation),
-  FoodController.exportCollection
-);
-router.get(
-  '/feedback/export/',
-  webAuth('export_collection'),
-  validate(FeedbackFormValidation.exportValidation),
-  FeedbackFormController.exportCollection
-);
-router.get(
-  '/report_emergency/export/',
-  webAuth('export_collection'),
-  validate(ReportEmergencyValidation.exportValidation),
-  ReportEmergencyController.exportCollection
-);
-router.get(
-  '/wallet_bonus/export/',
-  webAuth('export_collection'),
-  validate(WalletBonusValidation.exportValidation),
-  WalletBonusController.exportCollection
-);
-router.get(
-  '/customer/deleted_accounts/export/',
-  webAuth('export_collection'),
-  validate(UserValidation.exportDeletedAccountValidation),
-  UserController.exportCollectionCustomerDeletedAccounts
-);
-router.get(
-  '/restaurants/deleted_restaurants/export/',
-  webAuth('export_collection'),
-  validate(UserValidation.exportDeletedAccountValidation),
-  UserController.exportCollectionRestaurantDeletedAccounts
-);
-router.get(
-  '/deliveryman/deleted_deliveryman/export/',
-  webAuth('export_collection'),
-  validate(UserValidation.exportDeletedAccountValidation),
-  UserController.exportCollectionDeliverymanDeletedAccounts
-);
-router.get(
-  '/waiters/deleted_waiter/export/',
-  webAuth('export_collection'),
-  validate(UserValidation.exportDeletedAccountValidation),
-  UserController.exportCollectionWaiterDeletedAccounts
-);
-router.get(
-  '/kitchen/deleted_kitchen_owner/export/',
-  webAuth('export_collection'),
-  validate(UserValidation.exportDeletedAccountValidation),
-  UserController.exportCollectionKitchenOwnerDeletedAccounts
-);
-router.get(
-  '/medias/export/:type',
-  webAuth('export_collection'),
-  validate(UserValidation.exportValidation),
-  MediaController.exportCollection
-);
-router.get(
-  '/restaurant_campaign/export/',
-  webAuth('export_collection'),
-  validate(RestaurantCampaignValidation.exportValidation),
-  RestaurantCampaignController.exportCollection
-);
-router.get(
-  '/dining_campaign/export/',
-  webAuth('export_collection'),
-  validate(DiningCampaignValidation.exportValidation),
-  DiningCampaignController.exportCollection
-);
-router.get(
-  '/food_campaign/export/',
-  webAuth('export_collection'),
-  validate(FoodCampaignValidation.exportValidation),
-  FoodCampaignController.exportCollection
-);
-router.get(
-  '/banners/export/',
-  webAuth('export_collection'),
-  validate(BannersValidation.exportValidation),
-  BannersController.exportCollection
-);
-router.get(
-  '/coupon/export/',
-  webAuth('export_collection'),
-  validate(CouponValidation.exportValidation),
-  CouponController.exportCollection
-);
-router.get(
-  '/dining_coupon/export/',
-  webAuth('export_collection'),
-  validate(DiningCouponValidation.exportValidation),
-  DiningCouponController.exportCollection
-);
-router.get(
-  '/cash_collected/export/',
-  webAuth('export_collection'),
-  validate(CollectCashValidation.exportValidation),
-  CollectCashController.exportCollection
-);
-router.get(
-  '/complaints_reason/export/',
-  webAuth('export_collection'),
-  validate(ComplaintsReasonValidation.exportValidation),
-  ComplaintsReasonController.exportCollection
-);
-router.get(
-  '/complaints/export/',
-  webAuth('export_collection'),
-  validate(UserValidation.adminComplaintExportValidation),
-  ComplaintsController.exportCollection
-);
-router.get(
-  '/restaurant_complaints/export/',
-  webAuth('export_collection'),
-  validate(UserValidation.adminRestaurantComplaintExportValidation),
-  RestaurantComplaintsController.exportCollection
-);
-router.get(
-  '/refund_request_reason/export/',
-  webAuth('export_collection'),
-  validate(RefundRequestReasonValidation.exportValidation),
-  RefundRequestReasonController.exportCollection
-);
-router.get(
-  '/tiffin_subscription_refund_request_reason/export/',
-  webAuth('export_collection'),
-  validate(TiffinSubscriptionRefundRequestReasonValidation.exportValidation),
-  TiffinSubscriptionRefundRequestReasonController.exportCollection
-);
-router.get(
-  '/dining_booking_refund_request_reason/export/',
-  webAuth('export_collection'),
-  validate(DiningBookingRefundRequestReasonValidation.exportValidation),
-  DiningBookingRefundRequestReasonController.exportCollection
-);
-router.get(
-  '/tiffin_subscription_cancel_reason/export/',
-  webAuth('export_collection'),
-  validate(TiffinSubscriptionCancellationReasonValidation.exportValidation),
-  TiffinSubscriptionCancellationReasonController.exportCollection
-);
-router.get(
-  '/orders/export/',
-  webAuth('export_collection'),
-  validate(OrdersValidation.exportValidation),
-  OrdersController.exportQueryCollection
-);
-router.get(
-  '/unassigned_orders/export/',
-  webAuth('export_collection'),
-  validate(OrdersValidation.exportUnassignedValidation),
-  OrdersController.exportUnAssignedOrderCollection
-);
-router.get(
-  '/subscription_orders/export/',
-  webAuth('export_collection'),
-  validate(OrdersValidation.exportUnassignedValidation),
-  OrdersController.exportSubscriptionOrderCollection
-);
-router.get(
-  '/pos_orders/export/',
-  webAuth('export_collection'),
-  validate(PosOrTableOrderValidation.exportValidation),
-  PosOrTableOrderController.exportCollection
-);
-router.get(
-  '/table_orders/export/',
-  webAuth('export_collection'),
-  validate(TableOrderValidation.exportValidation),
-  TableOrderController.exportCollection
-);
-router.get(
-  '/tiffin_packages/export',
-  webAuth('export_collection'),
-  validate(SubscriptionTiffinPackageValidation.exportValidation),
-  SubscriptionTiffinPackageController.exportCollection
-);
-router.get(
-  '/dining_booking/export/',
-  webAuth('export_collection'),
-  validate(DiningBookingValidation.exportValidation),
-  DiningBookingController.exportCollection
-);
-router.get(
-  '/refund_request/export/',
-  webAuth('export_collection'),
-  validate(RefundRequestValidation.exportValidation),
-  RefundRequestController.exportQueryCollection
-);
-router.get(
-  '/tiffin_subscription_refund_request/export/',
-  webAuth('export_collection'),
-  validate(TiffinSubscriptionRefundRequestValidation.exportValidation),
-  TiffinSubscriptionRefundRequestController.exportQueryCollection
-);
-router.get(
-  '/dining_booking_refund_request/export/',
-  webAuth('export_collection'),
-  validate(DiningBookingRefundRequestValidation.exportValidation),
-  DiningBookingRefundRequestController.exportQueryCollection
-);
-router.get(
-  '/system_deliveryman/export/',
-  webAuth('export_collection'),
-  validate(DriverValidation.exportValidation),
-  DriverController.exportSystemDeliverymanCollection
-);
-router.get(
-  '/vendor_deliveryman/export/',
-  webAuth('export_collection'),
-  validate(DriverValidation.exportValidation),
-  DriverController.exportVendorDeliverymanCollection
-);
-router.get(
-  '/withdrawal_method/export/',
-  webAuth('export_collection'),
-  validate(WithdrawalMethodValidation.exportValidation),
-  WithdrawalMethodController.exportCollection
-);
-router.get(
-  '/restaurant_withdrawal_request/export/',
-  webAuth('export_collection'),
-  validate(WithdrawalRequestValidation.exportValidation),
-  WithdrawalRequestController.exportRestaurantRequestCollection
-);
-router.get(
-  '/deliveryman_withdrawal_request/export/',
-  webAuth('export_collection'),
-  validate(WithdrawalRequestValidation.exportValidation),
-  WithdrawalRequestController.exportDeliverymanRequestCollection
-);
-router.get(
-  '/restaurant_disbursement/export/:type/:status',
-  webAuth('export_collection'),
-  validate(DisbursementValidation.exportValidation),
-  DisbursementController.exportRestaurantCollection
-);
-router.get(
-  '/deliveryman_disbursement/export/:type/:status',
-  webAuth('export_collection'),
-  validate(DisbursementValidation.exportValidation),
-  DisbursementController.exportDeliverymanCollection
-);
-router.get(
-  '/expense/export/:type/:status',
-  webAuth('export_collection'),
-  validate(AdminExpenseValidation.exportValidation),
-  AdminExpenseController.exportQueryCollection
-);
-router.get(
-  '/customer/export/',
-  webAuth('export_collection'),
-  validate(UserValidation.exportCustomerValidation),
-  UserController.exportCustomerCollection
-);
-router.get(
-  '/restaurant/filter/export/:type/:kind/:id',
-  webAuth('export_collection'),
-  validate(RestaurantValidation.exportFilterValidation),
-  RestaurantController.exportRestaurantFilterTypeCollection
-);
-router.get(
-  '/restaurant/filter_restaurant/export',
-  webAuth('export_collection'),
-  validate(RestaurantValidation.exportFilterQueryValidation),
-  RestaurantController.exportRestaurantFilterQueryCollection
-);
-router.get(
-  '/driver/wallet_fund/export/:type/:query',
-  webAuth('export_collection'),
-  validate(DriverValidation.fundExportValidation),
-  DriverController.exportDeliverymanFundCollection
-);
-router.get(
-  '/deliveryman_request/export/',
-  webAuth('export_collection'),
-  validate(DeliverymanJoiningRequestValidation.exportValidation),
-  DeliverymanJoiningRequestController.exportCollection
-);
-router.get(
-  '/customer/wallet_fund/export/:type/:query',
-  webAuth('export_collection'),
-  validate(UserValidation.exportWalletFundValidation),
-  UserController.exportCustomerFundCollection
-);
-router.get(
-  '/customer/loyalty_points/export',
-  webAuth('export_collection'),
-  validate(UserValidation.exportLoyalityPointsValidation),
-  LoyaltyPointsController.exportCollection
-);
-router.get(
-  '/disbursement/restaurant_report/export/:id/:type',
-  webAuth('export_collection'),
-  validate(DisbursementValidation.exportDisbursementReportValidation),
-  DisbursementController.exportRestaurantDisbursementCollection
-);
-router.get(
-  '/disbursement/deliveryman_report/export/:id/:type',
-  webAuth('export_collection'),
-  validate(DisbursementValidation.exportDisbursementReportValidation),
-  DisbursementController.exportDeliverymanDisbursementCollection
-);
-router.get(
-  '/reports/orders/export',
-  webAuth('export_collection'),
-  validate(OrdersValidation.exportOrderReportValidation),
-  OrdersController.exportRegularOrderReportCollection
-);
-router.get(
-  '/reports/pos_orders/export',
-  webAuth('export_collection'),
-  validate(OrdersValidation.exportOrderReportValidation),
-  PosOrTableOrderController.exportPOSOrderReportCollection
-);
-router.get(
-  '/reports/table_orders/export',
-  webAuth('export_collection'),
-  validate(TableOrderValidation.exportTableOrderValidation),
-  TableOrderController.exportTableOrderReportCollection
-);
-router.get(
-  '/reports/wallet_transaction/export',
-  webAuth('export_collection'),
-  validate(WalletValidation.exportTransactionValidation),
-  WalletController.exportCollection
-);
-router.get(
-  '/reports/payment_transaction/export',
-  webAuth('export_collection'),
-  validate(PaymentConfigValidation.exportPaymentValidation),
-  PaymentInitiationController.exportCollection
-);
-router.get(
-  '/reports/dining_booking/export',
-  webAuth('export_collection'),
-  validate(DiningBookingValidation.exportReportValidation),
-  DiningBookingController.exportReportCollection
-);
-router.get(
-  '/reports/food_report/export',
-  webAuth('export_collection'),
-  validate(FoodValidation.exportReportValidation),
-  FoodController.exportReportCollection
-);
-router.get(
-  '/reports/restaurant/export',
-  webAuth('export_collection'),
-  validate(RestaurantValidation.exportReportValidation),
-  RestaurantController.exportRestaurantReportCollection
-);
-router.get(
-  '/reports/customer/export',
-  webAuth('export_collection'),
-  validate(UserValidation.exportCustomerReportValidation),
-  UserController.exportRawCustomerReportCollection
-);
-router.get(
-  '/reports/deliveryman/export',
-  webAuth('export_collection'),
-  validate(DriverValidation.exportDeliverymanReportValidation),
-  DriverController.exportDeliverymanReportCollection
-);
-router.get(
-  '/reports/restaurant_disbursement/export',
-  webAuth('export_collection'),
-  validate(DisbursementValidation.exportRestaurantReportValidation),
-  DisbursementController.exportRestaurantDisbursementReportCollection
-);
-router.get(
-  '/reports/deliveryman_disbursement/export',
-  webAuth('export_collection'),
-  validate(DisbursementValidation.exportDeliverymanReportValidation),
-  DisbursementController.exportDeliverymanDisbursementReportCollection
-);
-router.get(
-  '/tiffin_packages/purchased/export/',
-  webAuth('export_collection'),
-  validate(UserPurchasedTiffinSubscriptionValidation.exportCollection),
-  UserPurchasedTiffinSubscriptionController.exportCollection
-);
-router.get(
-  '/regular_chat_list/export/',
-  webAuth('export_collection'),
-  validate(UserValidation.chatExportValidation),
-  ChatRoomController.exportChatListCollection
-);
-router.get(
-  '/regular_chat_message/export/',
-  webAuth('export_collection'),
-  validate(UserValidation.chatExportValidation),
-  ChatRoomController.exportChatMessageCollection
-);
-
-router.get(
-  '/support_chat_list/export/',
-  webAuth('export_collection'),
-  validate(UserValidation.chatExportValidation),
-  SupportChatRoomController.exportChatListCollection
-);
-router.get(
-  '/support_chat_message/export/',
-  webAuth('export_collection'),
-  validate(UserValidation.chatExportValidation),
-  SupportChatRoomController.exportChatMessageCollection
-);
-
-router.get(
-  '/download_import_sample/',
-  webAuth('download_sample'),
-  validate(UserValidation.downloadImportValidation),
-  UserController.downloadImportFile
-);
-router.post(
-  '/cities/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  CityController.importCollection
-);
-router.post(
-  '/localities/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  LocalityController.importCollection
-);
-router.post(
-  '/cuisine/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  CuisineController.importCollection
-);
-router.post(
-  '/order_cancel_reason/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  OrderCancellationReasonController.importCollection
-);
-router.post(
-  '/order_rating_message/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  OrderRatingMessageController.importCollection
-);
-router.post(
-  '/invoice_instruction/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  InvoiceInstructionController.importCollection
-);
-router.post(
-  '/restaurant_food_license/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  RestaurantFoodLicenseController.importCollection
-);
-router.post(
-  '/restaurant_notice/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  RestaurantNoticeController.importCollection
-);
-router.post(
-  '/delivery_instruction/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  DeliveryInstructionController.importCollection
-);
-router.post(
-  '/gratitude/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  DeliveryGratitudeController.importCollection
-);
-router.post(
-  '/driver_incentive/import_collection',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  DriverIncentiveController.importCollection
-);
-router.post(
-  '/driver_offline_messages/import_collection',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  DriverOfflineMessagesController.importCollection
-);
-router.post(
-  '/delete_account_reason/import_collection',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  UserDeleteAccountReasonController.importCollection
-);
-router.post(
-  '/dining_category/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  DiningCategoryController.importCollection
-);
-router.post(
-  '/dining_cancel_reason/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  DiningCancellationReasonController.importCollection
-);
-router.post(
-  '/dining_notice/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  DiningNoticeController.importCollection
-);
-router.post(
-  '/language/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  LangaugeController.importCollection
-);
-router.post(
-  '/user_avatar/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  UserAvatarController.importCollection
-);
-router.post(
-  '/subscription/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  SubscriptionController.importCollection
-);
-router.post(
-  '/subscriber/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  SubscriberController.importCollection
-);
-router.post(
-  '/report_issue_list/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  ReportIssueRestaurantController.importCollection
-);
-router.post(
-  '/report_issue_restaurant/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  ReportIssueRestaurantReasonController.importCollection
-);
-router.post(
-  '/customer/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  UserController.importCollection
-);
-router.post(
-  '/loyality_points/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  LoyaltyPointsController.importCollection
-);
-router.post(
-  '/hidden_restaurant/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  HideRestaurantController.importCollection
-);
-router.post(
-  '/hide_restaurant_reason/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  HideRestaurantReasonController.importCollection
-);
-router.post(
-  '/restaurant_type/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  RestaurantTypeController.importCollection
-);
-router.post(
-  '/restaurant_facilities/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  RestaurantFacilitiesController.importCollection
-);
-router.post(
-  '/vehicle/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  VehicleController.importCollection
-);
-router.post(
-  '/delivery_shift_schedule/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  DeliveryShiftScheduleController.importCollection
-);
-router.post(
-  '/auth_role/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importAuthRoleCollectionValidation),
-  UserController.importAuthRoleCollection
-);
-router.post(
-  '/customer_wallet_fund/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  UserController.importCustomerWalletFundCollection
-);
-router.post(
-  '/wallet_bonus/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  WalletBonusController.importCollection
-);
-router.post(
-  '/refund_request_reason/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  RefundRequestReasonController.importCollection
-);
-router.post(
-  '/tiffin_subscription_refund_request_reason/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  TiffinSubscriptionRefundRequestReasonController.importCollection
-);
-router.post(
-  '/dining_booking_refund_request_reason/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  DiningBookingRefundRequestReasonController.importCollection
-);
-router.post(
-  '/complaints_reason/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  ComplaintsReasonController.importCollection
-);
-router.post(
-  '/medias/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  MediaController.importCollection
-);
-router.post(
-  '/addons/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  AddonsController.importCollection
-);
-router.post(
-  '/category/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  CategoryController.importCollection
-);
-router.post(
-  '/sub_category/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  SubCategoryController.importCollection
-);
-router.post(
-  '/food_taxation/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  FoodTaxationController.importCollection
-);
-router.post(
-  '/tiffin_subscription_cancel_reason/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  TiffinSubscriptionCancellationReasonController.importCollection
-);
-router.post(
-  '/cash_collection/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  CollectCashController.importCollection
-);
-router.post(
-  '/banners/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  BannersController.importCollection
-);
-router.post(
-  '/deliveryman_wallet_fund/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  UserController.importDeliverymanWalletFundCollection
-);
-router.post(
-  '/system_deliveryman/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  DriverController.importSystemDeliverymanCollection
-);
-router.post(
-  '/vendor_deliveryman/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  DriverController.importVendorDeliverymanCollection
-);
-router.post(
-  '/restaurant_waiters/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  WaiterController.importCollection
-);
-router.post(
-  '/restaurant_kitchen_owner/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  KitchenOwnerController.importCollection
-);
-router.post(
-  '/restaurants/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  RestaurantController.importRestaurantCollection
-);
-router.post(
-  '/outlets/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  RestaurantController.importRestaurantOutletCollection
-);
-router.post(
-  '/regular_chat_list/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  ChatRoomController.importChatListCollection
-);
-router.post(
-  '/regular_chat_messages/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  ChatRoomController.importChatMessagesCollection
-);
-router.post(
-  '/support_chat_list/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  SupportChatRoomController.importChatListCollection
-);
-router.post(
-  '/support_chat_messages/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  SupportChatRoomController.importChatMessagesCollection
-);
-router.post(
-  '/customer_complaints/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  ComplaintsController.importCollection
-);
-router.post(
-  '/restaurant_complaints/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  RestaurantComplaintsController.importCollection
-);
-router.post(
-  '/admin_expense/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  AdminExpenseController.importCollection
-);
-router.post(
-  '/wallet_transactions/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  WalletController.importCollection
-);
-router.post(
-  '/payment_transactions/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  PaymentInitiationController.importCollection
-);
-router.post(
-  '/order_refund_request/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  RefundRequestController.importCollection
-);
-router.post(
-  '/tiffin_refund_request/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  TiffinSubscriptionRefundRequestController.importCollection
-);
-router.post(
-  '/dining_refund_request/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  DiningBookingRefundRequestController.importCollection
-);
-router.post(
-  '/order_coupon/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  CouponController.importCollection
-);
-router.post(
-  '/dining_coupon/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  DiningCouponController.importCollection
-);
-router.post(
-  '/restaurant_campaign/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  RestaurantCampaignController.importCollection
-);
-router.post(
-  '/dining_campaign/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  DiningCampaignController.importCollection
-);
-router.post(
-  '/food_campaign/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  FoodCampaignController.importCollection
-);
-router.post(
-  '/dining_booking/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  DiningBookingController.importCollection
-);
-router.post(
-  '/withdrawal_methods/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  WithdrawalMethodController.importCollection
-);
-router.post(
-  '/tiffin_packages_list/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  SubscriptionTiffinPackageController.importCollection
-);
-router.post(
-  '/tiffin_purchased_list/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  UserPurchasedTiffinSubscriptionController.importCollection
-);
-router.post(
-  '/foods/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  FoodController.importCollection
-);
-router.post(
-  '/regular_orders/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  OrdersController.importCollection
-);
-router.post(
-  '/vendor_pos_order_list/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  PosOrTableOrderController.importCollection
-);
-router.post(
-  '/vendor_table_order_list/import_collection/',
-  webAuth('download_sample'),
-  validate(UserValidation.importCollectionValidation),
-  TableOrderController.importCollection
-);
-// Import & Export Routes //
-
-/// Chat Messages Routes //
-router.post(
-  '/chat_room/fetch_messages/',
-  webAuth('regular_chat_messages'),
-  validate(ChatRoomValidation.checkChatRoomValidation),
-  ChatRoomController.checkChatRoom
-);
-/// Chat Messages Routes //
-
-// Media Storage Setting Routes //
-router.get(
-  '/media_storage_setting/get',
-  webAuth('media_storage_settings'),
-  MediaStorageSettingController.get
-);
-router.post(
-  '/media_storage_setting/save',
-  webAuth('media_storage_settings'),
-  validate(MediaStorageSettingValidation.createOrUpdateSettings),
-  MediaStorageSettingController.create
-);
-router.patch(
-  '/media_storage_setting/update/:settingId',
-  webAuth('media_storage_settings'),
-  validate(MediaStorageSettingValidation.createOrUpdateSettings),
-  MediaStorageSettingController.update
-);
-// Media Storage Setting Routes //
-
-// Landing Page Routes //
-router.get('/landing_page/get_content', webAuth('save_landing'), LandingPageController.getContent);
-router.post(
-  '/landing_page/save_hero_content',
-  webAuth('save_landing'),
-  validate(LandingPageValidation.heroValidation),
-  LandingPageController.saveHero
-);
-router.post(
-  '/landing_page/save_service_content',
-  webAuth('save_landing'),
-  validate(LandingPageValidation.serviceValidation),
-  LandingPageController.saveService
-);
-router.post(
-  '/landing_page/save_faqs_content',
-  webAuth('save_landing'),
-  validate(LandingPageValidation.faqsValidation),
-  LandingPageController.saveFaqs
-);
-router.post(
-  '/landing_page/save_review_content',
-  webAuth('save_landing'),
-  validate(LandingPageValidation.reviewValidation),
-  LandingPageController.saveReview
-);
-router.post(
-  '/landing_page/save_scan_qr_content',
-  webAuth('save_landing'),
-  validate(LandingPageValidation.scanQrValidation),
-  LandingPageController.saveScanQr
-);
-router.post(
-  '/landing_page/save_app_feature_content',
-  webAuth('save_landing'),
-  validate(LandingPageValidation.appFeatureValidation),
-  LandingPageController.saveAppFeatures
-);
-router.post(
-  '/landing_page/save_feature_content',
-  webAuth('save_landing'),
-  validate(LandingPageValidation.projectFeatureValidation),
-  LandingPageController.saveFeatures
-);
-// Landing Page Routes //
-
-module.exports = router;
-
+module.exports.register = function register(route) {
+  route({
+    method: 'GET',
+    url: '/web_guard/:id',
+    preHandler: [
+      webAuth('web_guard'),
+      validate(UserValidation.webGuardValidation),
+    ],
+    handler: UserController.adminProfile,
+  });
+
+  // Country Routes //
+  route({
+    method: 'GET',
+    url: '/dashboard',
+    preHandler: [webAuth('dashboard')],
+    handler: OrdersController.adminDashboard,
+  });
+  route({
+    method: 'POST',
+    url: '/country/save',
+    preHandler: [
+      webAuth('createCountry'),
+      validate(CountryValidation.createCountry),
+    ],
+    handler: CountryController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/country/getAll',
+    preHandler: [webAuth('getCountries')],
+    handler: CountryController.get,
+  });
+  route({
+    method: 'PATCH',
+    url: '/country/update/:countryId',
+    preHandler: [
+      webAuth('updateCountry'),
+      validate(CountryValidation.idValidation),
+    ],
+    handler: CountryController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/country/delete/:countryId',
+    preHandler: [
+      webAuth('deleteCountry'),
+      validate(CountryValidation.idValidation),
+    ],
+    handler: CountryController.drop,
+  });
+  // Country Routes //
+
+  // City Routes //
+  route({
+    method: 'POST',
+    url: '/cities/save',
+    preHandler: [
+      webAuth('createCity'),
+      validate(CityValidation.createCity),
+    ],
+    handler: CityController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/cities/getAll',
+    preHandler: [
+      webAuth('getCities'),
+      validate(CityValidation.getAllCities),
+    ],
+    handler: CityController.get,
+  });
+  route({
+    method: 'GET',
+    url: '/cities/listAllCities',
+    preHandler: [webAuth('getCities')],
+    handler: CityController.getAll,
+  });
+  route({
+    method: 'PATCH',
+    url: '/cities/update/:cityId',
+    preHandler: [
+      webAuth('updateCity'),
+      validate(CityValidation.idValidation),
+    ],
+    handler: CityController.update,
+  });
+  route({
+    method: 'PATCH',
+    url: '/cities/updateStatus/:cityId',
+    preHandler: [
+      webAuth('updateCity'),
+      validate(CityValidation.idValidation),
+    ],
+    handler: CityController.updateStatus,
+  });
+  route({
+    method: 'DELETE',
+    url: '/cities/delete/:cityId',
+    preHandler: [
+      webAuth('deleteCity'),
+      validate(CityValidation.idValidation),
+    ],
+    handler: CityController.drop,
+  });
+
+  route({
+    method: 'GET',
+    url: '/cities/map_dialog/:city',
+    preHandler: [
+      webAuth('getCities'),
+      validate(RestaurantValidation.cityMapDialogValidation),
+    ],
+    handler: RestaurantController.cityMapDialogData,
+  });
+  // City Routes //
+
+  // Locality Routes //
+  route({
+    method: 'POST',
+    url: '/localities/save',
+    preHandler: [
+      webAuth('createLocality'),
+      validate(LocalityValidation.createLocality),
+    ],
+    handler: LocalityController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/localities/getAll',
+    preHandler: [
+      webAuth('getLocalities'),
+      validate(LocalityValidation.allValidation),
+    ],
+    handler: LocalityController.get,
+  });
+  route({
+    method: 'GET',
+    url: '/localities/getByCityId/:cityId',
+    preHandler: [
+      webAuth('getLocalities'),
+      validate(CityValidation.idValidation),
+    ],
+    handler: LocalityController.getByCityId,
+  });
+  route({
+    method: 'PATCH',
+    url: '/localities/update/:localityId',
+    preHandler: [
+      webAuth('updateLocality'),
+      validate(LocalityValidation.idValidation),
+    ],
+    handler: LocalityController.update,
+  });
+  route({
+    method: 'PATCH',
+    url: '/localities/updateStatus/:localityId',
+    preHandler: [
+      webAuth('updateLocality'),
+      validate(LocalityValidation.idValidation),
+    ],
+    handler: LocalityController.updateStatus,
+  });
+  route({
+    method: 'DELETE',
+    url: '/localities/deleteLocality/:localityId',
+    preHandler: [
+      webAuth('deleteLocality'),
+      validate(LocalityValidation.idValidation),
+    ],
+    handler: LocalityController.drop,
+  });
+  // Locality Routes //
+
+  // Cuisine Routes //
+  route({
+    method: 'POST',
+    url: '/cuisine/save',
+    preHandler: [
+      webAuth('createCuisine'),
+      validate(CuisineValidation.createCuisine),
+    ],
+    handler: CuisineController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/cuisine/getAll',
+    preHandler: [
+      webAuth('getCuisines'),
+      validate(CuisineValidation.allValidation),
+    ],
+    handler: CuisineController.get,
+  });
+  route({
+    method: 'GET',
+    url: '/cuisine/listAllCuisine',
+    preHandler: [webAuth('getCuisines')],
+    handler: CuisineController.getAll,
+  });
+  route({
+    method: 'PATCH',
+    url: '/cuisine/update/:cuisineId',
+    preHandler: [
+      webAuth('updateCuisine'),
+      validate(CuisineValidation.idValidation),
+    ],
+    handler: CuisineController.update,
+  });
+  route({
+    method: 'PATCH',
+    url: '/cuisine/updateStatus/:cuisineId',
+    preHandler: [
+      webAuth('updateCuisine'),
+      validate(CuisineValidation.idValidation),
+    ],
+    handler: CuisineController.updateStatus,
+  });
+  route({
+    method: 'DELETE',
+    url: '/cuisine/delete/:cuisineId',
+    preHandler: [
+      webAuth('deleteCuisine'),
+      validate(CuisineValidation.idValidation),
+    ],
+    handler: CuisineController.drop,
+  });
+  // Cuisine Routes //
+
+  // Files Routes //
+  route({
+    method: 'DELETE',
+    url: '/files/delete/:path',
+    preHandler: [
+      webAuth('deleteFile'),
+      validate(FileValidation.pathValidation),
+    ],
+    handler: MediaController.drop,
+  });
+  // Files Routes //
+
+  // Language Routes //
+  route({
+    method: 'POST',
+    url: '/language/save',
+    preHandler: [
+      webAuth('createLanguage'),
+      validate(LanguageValidation.createLanguage),
+    ],
+    handler: LangaugeController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/language/getAll',
+    preHandler: [
+      webAuth('getLanguage'),
+      validate(LanguageValidation.allValidation),
+    ],
+    handler: LangaugeController.get,
+  });
+  route({
+    method: 'PATCH',
+    url: '/language/update/:languageId',
+    preHandler: [
+      webAuth('updateLanguage'),
+      validate(LanguageValidation.idValidation),
+    ],
+    handler: LangaugeController.update,
+  });
+  route({
+    method: 'PATCH',
+    url: '/language/updateDefault/:languageId',
+    preHandler: [
+      webAuth('updateDefault'),
+      validate(LanguageValidation.idValidation),
+    ],
+    handler: LangaugeController.updateDefault,
+  });
+  route({
+    method: 'DELETE',
+    url: '/language/delete/:languageId',
+    preHandler: [
+      webAuth('deleteLanguage'),
+      validate(LanguageValidation.idValidation),
+    ],
+    handler: LangaugeController.drop,
+  });
+  // Language Routes //
+
+  // Subscriptions Routes //
+  route({
+    method: 'POST',
+    url: '/subscription/save',
+    preHandler: [
+      webAuth('createSubscription'),
+      validate(SubscriptionValidation.createSubscription),
+    ],
+    handler: SubscriptionController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/subscription/getAll',
+    preHandler: [
+      webAuth('getSubscriptions'),
+      validate(SubscriptionValidation.allValidation),
+    ],
+    handler: SubscriptionController.getAdminSubscriptionList,
+  });
+  route({
+    method: 'GET',
+    url: '/subscription/get/:subscriptionId',
+    preHandler: [
+      webAuth('subscriptionGetById'),
+      validate(SubscriptionValidation.idValidation),
+    ],
+    handler: SubscriptionController.getById,
+  });
+  route({
+    method: 'PATCH',
+    url: '/subscription/update/:subscriptionId',
+    preHandler: [
+      webAuth('updateSubscription'),
+      validate(SubscriptionValidation.idValidation),
+    ],
+    handler: SubscriptionController.update,
+  });
+  route({
+    method: 'PATCH',
+    url: '/subscription/updateStatus/:subscriptionId',
+    preHandler: [
+      webAuth('updateSubscription'),
+      validate(SubscriptionValidation.idValidation),
+    ],
+    handler: SubscriptionController.updateStatus,
+  });
+  route({
+    method: 'DELETE',
+    url: '/subscription/delete/:subscriptionId',
+    preHandler: [
+      webAuth('deleteSubscription'),
+      validate(SubscriptionValidation.idValidation),
+    ],
+    handler: SubscriptionController.drop,
+  });
+  // Subscriptions Routes //
+
+  // Restaurant Type Routes //
+  route({
+    method: 'POST',
+    url: '/restaurantType/save',
+    preHandler: [
+      webAuth('createRestaurantType'),
+      validate(RestaurantTypeValidation.createRestaurantType),
+    ],
+    handler: RestaurantTypeController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurantType/getAll',
+    preHandler: [
+      webAuth('getRestaurantType'),
+      validate(RestaurantTypeValidation.allValidation),
+    ],
+    handler: RestaurantTypeController.get,
+  });
+  route({
+    method: 'PATCH',
+    url: '/restaurantType/update/:id',
+    preHandler: [
+      webAuth('updateRestaurantType'),
+      validate(RestaurantTypeValidation.idValidation),
+    ],
+    handler: RestaurantTypeController.update,
+  });
+  route({
+    method: 'PATCH',
+    url: '/restaurantType/updateStatus/:id',
+    preHandler: [
+      webAuth('updateRestaurantType'),
+      validate(RestaurantTypeValidation.idValidation),
+    ],
+    handler: RestaurantTypeController.updateStatus,
+  });
+  route({
+    method: 'DELETE',
+    url: '/restaurantType/delete/:id',
+    preHandler: [
+      webAuth('deleteRestaurantType'),
+      validate(RestaurantTypeValidation.idValidation),
+    ],
+    handler: RestaurantTypeController.drop,
+  });
+  // Restaurant Type Routes //
+
+  // Restaurant Routes //
+  route({
+    method: 'POST',
+    url: '/restaurant/save',
+    preHandler: [
+      webAuth('createRestaurant'),
+      validate(RestaurantValidation.createVendor),
+    ],
+    handler: RestaurantController.registerVendorAccount,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant/getBasicDataForNewRestaurant',
+    preHandler: [webAuth('createRestaurant')],
+    handler: RestaurantController.getBasicDataForNewRestaurant,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant/getAll',
+    preHandler: [
+      webAuth('getAllRestaurant'),
+      validate(RestaurantValidation.allValidation),
+    ],
+    handler: RestaurantController.get,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant/getOutlets',
+    preHandler: [
+      webAuth('getAllRestaurant'),
+      validate(RestaurantValidation.allValidation),
+    ],
+    handler: RestaurantController.getOutlets,
+  });
+  route({
+    method: 'PATCH',
+    url: '/restaurant/updateStatus/:restaurantId',
+    preHandler: [
+      webAuth('updateRestaurant'),
+      validate(RestaurantValidation.idValidation),
+    ],
+    handler: RestaurantController.updateStatus,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant/getById/:restaurantId',
+    preHandler: [
+      webAuth('getRestaurantById'),
+      validate(RestaurantValidation.idValidation),
+    ],
+    handler: RestaurantController.getById,
+  });
+  route({
+    method: 'PATCH',
+    url: '/restaurant/update/:restaurantId',
+    preHandler: [
+      webAuth('updateRestaurant'),
+      validate(RestaurantValidation.idValidation),
+    ],
+    handler: RestaurantController.update,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant/getRestaurantByCityId/:cityId',
+    preHandler: [
+      webAuth('getRestaurantByCity'),
+      validate(RestaurantValidation.cityIdValidation),
+    ],
+    handler: RestaurantController.getRestaurantByCityId,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant/getRestaurantByCityIdLimitedData/:cityId',
+    preHandler: [
+      webAuth('getRestaurantByCity'),
+      validate(RestaurantValidation.restaurantByCityIdLimitedDetailsValidation),
+    ],
+    handler: RestaurantController.getRestaurantsByCityIdLimitedDetailsForAdmin,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant/getRestaurantByCityIdForTiffinPackages/:cityId',
+    preHandler: [
+      webAuth('getRestaurantByCity'),
+      validate(RestaurantValidation.restaurantByCityIdLimitedDetailsValidation),
+    ],
+    handler: RestaurantController.getRestaurantsByCityIdForTiffinPackagesAdmin,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant/getDiningSupportedRestaurantByCityId/:cityId',
+    preHandler: [
+      webAuth('getRestaurantByCity'),
+      validate(RestaurantValidation.restaurantByCityIdLimitedDetailsValidation),
+    ],
+    handler: RestaurantController.getDiningSupportedRestaurantByCityId,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant/map_dialog/:city',
+    preHandler: [
+      webAuth('getRestaurantByCity'),
+      validate(RestaurantValidation.cityMapDialogValidation),
+    ],
+    handler: RestaurantController.cityMapDialogRestaurants,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant/filter/:kind/:id',
+    preHandler: [
+      webAuth('getAllRestaurant'),
+      validate(RestaurantValidation.filterValidation),
+    ],
+    handler: RestaurantController.filterRestaurantList,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant/filter_data',
+    preHandler: [webAuth('getAllRestaurant')],
+    handler: RestaurantController.filterQueryData,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant/filter_restaurant',
+    preHandler: [
+      webAuth('getAllRestaurant'),
+      validate(RestaurantValidation.filterQueryValidation),
+    ],
+    handler: RestaurantController.filterQuery,
+  });
+  // Restaurant Routes //
+
+  // Category Routes //
+  route({
+    method: 'POST',
+    url: '/category/save',
+    preHandler: [
+      webAuth('createCategory'),
+      validate(CategoryValidation.createCategory),
+    ],
+    handler: CategoryController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/category/getAll',
+    preHandler: [
+      webAuth('getCategories'),
+      validate(CategoryValidation.allValidation),
+    ],
+    handler: CategoryController.get,
+  });
+  route({
+    method: 'GET',
+    url: '/category/getCategoryList',
+    preHandler: [webAuth('getCategories')],
+    handler: CategoryController.getAll,
+  });
+  route({
+    method: 'PATCH',
+    url: '/category/update/:categoryId',
+    preHandler: [
+      webAuth('updateCategory'),
+      validate(CategoryValidation.idValidation),
+    ],
+    handler: CategoryController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/category/delete/:categoryId',
+    preHandler: [
+      webAuth('deleteCategory'),
+      validate(CategoryValidation.idValidation),
+    ],
+    handler: CategoryController.drop,
+  });
+  // Category Routes //
+
+  // Sub Category Routes //
+  route({
+    method: 'POST',
+    url: '/subCategory/save',
+    preHandler: [
+      webAuth('createSubCategory'),
+      validate(SubCategoryValidation.createSubCategory),
+    ],
+    handler: SubCategoryController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/subCategory/getAll',
+    preHandler: [
+      webAuth('getSubCategories'),
+      validate(SubCategoryValidation.allValidation),
+    ],
+    handler: SubCategoryController.get,
+  });
+  route({
+    method: 'PATCH',
+    url: '/subCategory/update/:subCategoryId',
+    preHandler: [
+      webAuth('updateSubCategory'),
+      validate(SubCategoryValidation.idValidation),
+    ],
+    handler: SubCategoryController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/subCategory/delete/:subCategoryId',
+    preHandler: [
+      webAuth('deleteSubCategory'),
+      validate(SubCategoryValidation.idValidation),
+    ],
+    handler: SubCategoryController.drop,
+  });
+  route({
+    method: 'GET',
+    url: '/sub_category/getActive',
+    preHandler: [webAuth('getActiveSubCategory')],
+    handler: SubCategoryController.getActive,
+  });
+  route({
+    method: 'GET',
+    url: '/sub_category/getByCategoryId/:category',
+    preHandler: [webAuth('getActiveSubCategory')],
+    handler: SubCategoryController.getActiveByCategoryId,
+  });
+
+  route({
+    method: 'GET',
+    url: '/vendor_sub_category/getActiveByCategoryId/:category/:restaurant',
+    preHandler: [
+      webAuth('getVendorSubCategories'),
+      validate(VendorSubCategoryValidation.mySubCategoryByCateIdValidation),
+    ],
+    handler: VendorSubCategoryController.getAllSubCategoryById,
+  });
+  // Sub Category Routes //
+
+  // Vehicle Routes //
+  route({
+    method: 'POST',
+    url: '/vehicle/save',
+    preHandler: [
+      webAuth('createVehicle'),
+      validate(VehicleValidation.createVehicle),
+    ],
+    handler: VehicleController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/vehicle/getAll',
+    preHandler: [
+      webAuth('getVehicle'),
+      validate(VehicleValidation.allValidation),
+    ],
+    handler: VehicleController.get,
+  });
+  route({
+    method: 'PATCH',
+    url: '/vehicle/update/:vehicleId',
+    preHandler: [
+      webAuth('updateVehicle'),
+      validate(VehicleValidation.idValidation),
+    ],
+    handler: VehicleController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/vehicle/delete/:vehicleId',
+    preHandler: [
+      webAuth('updateVehicle'),
+      validate(VehicleValidation.idValidation),
+    ],
+    handler: VehicleController.drop,
+  });
+  // Vehicle Routes //
+
+  // Driver Routes //
+  route({
+    method: 'POST',
+    url: '/driver/save',
+    preHandler: [
+      webAuth('createDriver'),
+      validate(DriverValidation.createDriver),
+    ],
+    handler: DriverController.registerDriverAccount,
+  });
+  route({
+    method: 'GET',
+    url: '/driver/getBasicData',
+    preHandler: [webAuth('createDriver')],
+    handler: DriverController.getBasicData,
+  });
+  route({
+    method: 'GET',
+    url: '/driver/getAll',
+    preHandler: [
+      webAuth('getDrivers'),
+      validate(DriverValidation.allValidation),
+    ],
+    handler: DriverController.get,
+  });
+  route({
+    method: 'GET',
+    url: '/driver/getAllVendorDeliveryman',
+    preHandler: [
+      webAuth('getDrivers'),
+      validate(DriverValidation.allValidation),
+    ],
+    handler: DriverController.getAllVendorDriverList,
+  });
+  route({
+    method: 'PATCH',
+    url: '/driver/updateStatus/:driverId',
+    preHandler: [
+      webAuth('updateDriver'),
+      validate(DriverValidation.idValidation),
+    ],
+    handler: DriverController.updateStatus,
+  });
+  route({
+    method: 'GET',
+    url: '/driver/getById/:driverId',
+    preHandler: [
+      webAuth('getDriverById'),
+      validate(DriverValidation.idValidation),
+    ],
+    handler: DriverController.getById,
+  });
+  route({
+    method: 'PATCH',
+    url: '/driver/update/:driverId',
+    preHandler: [
+      webAuth('updateDriver'),
+      validate(DriverValidation.idValidation),
+    ],
+    handler: DriverController.update,
+  });
+  route({
+    method: 'GET',
+    url: '/driver/getByCity/:city',
+    preHandler: [
+      webAuth('getDrivers'),
+      validate(DriverValidation.driverByCityValidation),
+    ],
+    handler: DriverController.getDeliverymanFromCity,
+  });
+  route({
+    method: 'GET',
+    url: '/driver/walletFundList',
+    preHandler: [webAuth('walletFundList')],
+    handler: DriverController.deliverymanWalletFundList,
+  });
+  route({
+    method: 'GET',
+    url: '/driver/map_dialog/:city',
+    preHandler: [
+      webAuth('getDrivers'),
+      validate(DriverValidation.driverByCityValidation),
+    ],
+    handler: DriverController.cityMapDialogDeliveryman,
+  });
+  // Driver Routes //
+
+  // Delivery Shift Schedule Routes //
+  route({
+    method: 'POST',
+    url: '/deliveryShiftSchedule/save',
+    preHandler: [
+      webAuth('createDeliveryShiftSchedule'),
+      validate(DeliveryShiftScheduleValidation.createScheduleValidation),
+    ],
+    handler: DeliveryShiftScheduleController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryShiftSchedule/get',
+    preHandler: [
+      webAuth('getDeliveryShiftSchedule'),
+      validate(DeliveryShiftScheduleValidation.allValidation),
+    ],
+    handler: DeliveryShiftScheduleController.get,
+  });
+  route({
+    method: 'PATCH',
+    url: '/deliveryShiftSchedule/update/:id',
+    preHandler: [
+      webAuth('updateDeliveryShift'),
+      validate(DeliveryShiftScheduleValidation.idValidation),
+    ],
+    handler: DeliveryShiftScheduleController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/deliveryShiftSchedule/delete/:id',
+    preHandler: [
+      webAuth('deleteDeliveryShift'),
+      validate(DeliveryShiftScheduleValidation.idValidation),
+    ],
+    handler: DeliveryShiftScheduleController.drop,
+  });
+  // Delivery Shift Schedule Routes //
+
+  // Restaurant Campaign Routes //
+  route({
+    method: 'POST',
+    url: '/restaurant_campaign/save',
+    preHandler: [
+      webAuth('createRestaurantCampaign'),
+      validate(RestaurantCampaignValidation.createRestaurantCampaign),
+    ],
+    handler: RestaurantCampaignController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_campaign/getAll',
+    preHandler: [
+      webAuth('getRestaurantCampaigns'),
+      validate(RestaurantCampaignValidation.allValidation),
+    ],
+    handler: RestaurantCampaignController.get,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_campaign/getBasicData',
+    preHandler: [webAuth('createRestaurantCampaign')],
+    handler: RestaurantCampaignController.getBasicData,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_campaign/getById/:campaignId',
+    preHandler: [
+      webAuth('getRestaurantCampaignById'),
+      validate(RestaurantCampaignValidation.idValidation),
+    ],
+    handler: RestaurantCampaignController.getById,
+  });
+  route({
+    method: 'PATCH',
+    url: '/restaurant_campaign/update/:campaignId',
+    preHandler: [
+      webAuth('updateRestaurantCampaign'),
+      validate(RestaurantCampaignValidation.idValidation),
+    ],
+    handler: RestaurantCampaignController.update,
+  });
+  route({
+    method: 'PATCH',
+    url: '/restaurant_campaign/updateStatus/:campaignId',
+    preHandler: [
+      webAuth('updateRestaurantCampaign'),
+      validate(RestaurantCampaignValidation.idValidation),
+    ],
+    handler: RestaurantCampaignController.updateStatus,
+  });
+  route({
+    method: 'DELETE',
+    url: '/restaurant_campaign/delete/:campaignId',
+    preHandler: [
+      webAuth('deleteRestaurantCampaign'),
+      validate(RestaurantCampaignValidation.idValidation),
+    ],
+    handler: RestaurantCampaignController.drop,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_campaign/getRestaurantByCityId/:cityId',
+    preHandler: [
+      webAuth('createRestaurantCampaign'),
+      validate(RestaurantCampaignValidation.cityIdValidation),
+    ],
+    handler: RestaurantCampaignController.getRestaurantByCityId,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_campaign/detail/:id',
+    preHandler: [
+      webAuth('campaignDetail'),
+      validate(RestaurantCampaignValidation.detailValidation),
+    ],
+    handler: RestaurantCampaignController.detail,
+  });
+  // Restaurant Campaign Routes //
+
+  // Food Campaign Routes //
+  route({
+    method: 'POST',
+    url: '/food_campaign/save',
+    preHandler: [
+      webAuth('createFoodCampaign'),
+      validate(FoodCampaignValidation.createFoodCampaign),
+    ],
+    handler: FoodCampaignController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/food_campaign/getAll',
+    preHandler: [
+      webAuth('getFoodCampaign'),
+      validate(FoodCampaignValidation.allValidation),
+    ],
+    handler: FoodCampaignController.get,
+  });
+  route({
+    method: 'PATCH',
+    url: '/food_campaign/updateStatus/:campaignId',
+    preHandler: [
+      webAuth('updateFoodCampaign'),
+      validate(FoodCampaignValidation.idValidation),
+    ],
+    handler: FoodCampaignController.updateStatus,
+  });
+  route({
+    method: 'DELETE',
+    url: '/food_campaign/delete/:campaignId',
+    preHandler: [
+      webAuth('deleteFoodCampaign'),
+      validate(FoodCampaignValidation.idValidation),
+    ],
+    handler: FoodCampaignController.drop,
+  });
+  route({
+    method: 'GET',
+    url: '/food_campaign/getBasicData',
+    preHandler: [webAuth('createFoodCampaign')],
+    handler: FoodCampaignController.getBasicData,
+  });
+  route({
+    method: 'GET',
+    url: '/food_campaign/getRestaurantByCityId/:cityId',
+    preHandler: [
+      webAuth('createFoodCampaign'),
+      validate(FoodCampaignValidation.cityIdValidation),
+    ],
+    handler: FoodCampaignController.getRestaurantByCityId,
+  });
+  route({
+    method: 'GET',
+    url: '/food_campaign/getFoodByRestaurant/:restaurantId',
+    preHandler: [
+      webAuth('createFoodCampaign'),
+      validate(FoodCampaignValidation.restaurantIdValidation),
+    ],
+    handler: FoodCampaignController.getFoodByRestaurantId,
+  });
+  route({
+    method: 'GET',
+    url: '/food_campaign/getById/:campaignId',
+    preHandler: [
+      webAuth('getFoodCampaignById'),
+      validate(FoodCampaignValidation.idValidation),
+    ],
+    handler: FoodCampaignController.getById,
+  });
+  route({
+    method: 'PATCH',
+    url: '/food_campaign/update/:campaignId',
+    preHandler: [
+      webAuth('updateFoodCampaign'),
+      validate(FoodCampaignValidation.idValidation),
+    ],
+    handler: FoodCampaignController.update,
+  });
+  route({
+    method: 'GET',
+    url: '/food_campaign/detail/:id',
+    preHandler: [
+      webAuth('campaignDetail'),
+      validate(FoodCampaignValidation.detailValidation),
+    ],
+    handler: FoodCampaignController.detail,
+  });
+  // Food Campaign Routes //
+
+  // Media Routes //
+  route({
+    method: 'GET',
+    url: '/medias/getAll',
+    preHandler: [webAuth('getMedias')],
+    handler: MediaController.get,
+  });
+  route({
+    method: 'GET',
+    url: '/medias/getMediaList',
+    preHandler: [webAuth('getMediaList')],
+    handler: MediaController.getMediaListAdmin,
+  });
+  // Media Routes //
+
+  // Subscriber Routes //
+  route({
+    method: 'POST',
+    url: '/subscriber/save',
+    preHandler: [
+      webAuth('createSubscriber'),
+      validate(SubscriberValidation.createSubscriber),
+    ],
+    handler: SubscriberController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/subscriber/getAll',
+    preHandler: [
+      webAuth('getSubscriberList'),
+      validate(SubscriberValidation.allValidation),
+    ],
+    handler: SubscriberController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/subscriber/extend_dates',
+    preHandler: [
+      webAuth('extendSubscription'),
+      validate(SubscriberValidation.extendValidation),
+    ],
+    handler: SubscriberController.extendSubscriptionDate,
+  });
+  // Subscriber Routes //
+
+  // Addons Routes //
+  route({
+    method: 'POST',
+    url: '/addons/save',
+    preHandler: [
+      webAuth('createAddons'),
+      validate(AddonsValidation.createAddons),
+    ],
+    handler: AddonsController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/addons/getAll',
+    preHandler: [
+      webAuth('getAllAddons'),
+      validate(AddonsValidation.allValidation),
+    ],
+    handler: AddonsController.get,
+  });
+  route({
+    method: 'PATCH',
+    url: '/addons/update/:addonId',
+    preHandler: [
+      webAuth('updateAddons'),
+      validate(AddonsValidation.idValidation),
+    ],
+    handler: AddonsController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/addons/delete/:addonId',
+    preHandler: [
+      webAuth('deleteAddons'),
+      validate(AddonsValidation.idValidation),
+    ],
+    handler: AddonsController.drop,
+  });
+  // Addons Routes //
+
+  // Foods Routes //
+  route({
+    method: 'GET',
+    url: '/foods/getAll',
+    preHandler: [
+      webAuth('getAllFoods'),
+      validate(FoodValidation.allValidation),
+    ],
+    handler: FoodController.adminFoodList,
+  });
+  route({
+    method: 'PATCH',
+    url: '/foods/updateMetaInfo/:foodId',
+    preHandler: [
+      webAuth('updateFood'),
+      validate(FoodValidation.idValidation),
+    ],
+    handler: FoodController.updateMetaInfo,
+  });
+  route({
+    method: 'DELETE',
+    url: '/foods/delete/:foodId',
+    preHandler: [
+      webAuth('deleteFood'),
+      validate(FoodValidation.idValidation),
+    ],
+    handler: FoodController.drop,
+  });
+  route({
+    method: 'GET',
+    url: '/foods/getFoodInfo/:foodId',
+    preHandler: [
+      webAuth('getFoodDetails'),
+      validate(FoodValidation.idValidation),
+    ],
+    handler: FoodController.getFoodInfoForAdmin,
+  });
+  route({
+    method: 'PATCH',
+    url: '/foods/update/:foodId',
+    preHandler: [
+      webAuth('updateFood'),
+      validate(FoodValidation.idValidation),
+    ],
+    handler: FoodController.update,
+  });
+  route({
+    method: 'GET',
+    url: '/food/getRestaurantByCityId/:cityId',
+    preHandler: [
+      webAuth('createFood'),
+      validate(RestaurantCampaignValidation.cityIdValidation),
+    ],
+    handler: RestaurantCampaignController.getRestaurantByCityId,
+  });
+  route({
+    method: 'GET',
+    url: '/foods/getBasicData/:restaurant',
+    preHandler: [
+      webAuth('createFood'),
+      validate(FoodValidation.myFoodValidation),
+    ],
+    handler: FoodController.getBasicData,
+  });
+  route({
+    method: 'POST',
+    url: '/foods/save',
+    preHandler: [
+      webAuth('createFood'),
+      validate(FoodValidation.createFood),
+    ],
+    handler: FoodController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/food/getFoodsByCity/:cityId',
+    preHandler: [
+      webAuth('getFoodsByCity'),
+      validate(FoodValidation.cityValidation),
+    ],
+    handler: FoodController.getFoodByCity,
+  });
+  route({
+    method: 'GET',
+    url: '/foods/detail/:foodId',
+    preHandler: [
+      webAuth('getFoodDetails'),
+      validate(FoodValidation.idValidation),
+    ],
+    handler: FoodController.adminFoodDetail,
+  });
+  // Foods Routes //
+
+  // Business Settings Routes //
+  route({
+    method: 'POST',
+    url: '/business_settings/save',
+    preHandler: [
+      webAuth('createBusinessSettings'),
+      validate(BusinessSettingValidation.createSettings),
+    ],
+    handler: BusinessSettingController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/business_settings/update/:businessId',
+    preHandler: [
+      webAuth('updateBusinessSettings'),
+      validate(BusinessSettingValidation.idValidation),
+    ],
+    handler: BusinessSettingController.update,
+  });
+  route({
+    method: 'GET',
+    url: '/business_settings/get',
+    preHandler: [webAuth('getSettings')],
+    handler: BusinessSettingController.get,
+  });
+  // Business Settings Routes //
+
+  // Social Sign In Route //
+  route({
+    method: 'GET',
+    url: '/social_signin/getList',
+    preHandler: [webAuth('getSocialSignIn')],
+    handler: SocialSignInController.getList,
+  });
+  route({
+    method: 'POST',
+    url: '/social_signin/save',
+    preHandler: [
+      webAuth('createSocialSignIn'),
+      validate(SocialSignInValidation.createOrUpdateSocialSignin),
+    ],
+    handler: SocialSignInController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/social_signin/update/:id',
+    preHandler: [
+      webAuth('updateSocialSignIn'),
+      validate(SocialSignInValidation.idValidation),
+    ],
+    handler: SocialSignInController.update,
+  });
+  // Social Sign In Route //
+
+  // Order Settings Routes //
+  route({
+    method: 'POST',
+    url: '/order_settings/save',
+    preHandler: [
+      webAuth('createOrderSettings'),
+      validate(OrderSettingsValidation.createOrderSettings),
+    ],
+    handler: OrderSettingsController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/order_settings/get',
+    preHandler: [webAuth('getOrderSettingsInfo')],
+    handler: OrderSettingsController.get,
+  });
+  route({
+    method: 'PATCH',
+    url: '/order_settings/update/:settingId',
+    preHandler: [
+      webAuth('updateOrderSettings'),
+      validate(OrderSettingsValidation.idValidation),
+    ],
+    handler: OrderSettingsController.update,
+  });
+  // Order Settings Routes //
+
+  // Order Cancellation Reason Routes //
+  route({
+    method: 'GET',
+    url: '/order_cancel_reason/getAll',
+    preHandler: [
+      webAuth('getOrderCancelReason'),
+      validate(OrderCancellationReasonValidation.allValidation),
+    ],
+    handler: OrderCancellationReasonController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/order_cancel_reason/save',
+    preHandler: [
+      webAuth('createOrderCancelReason'),
+      validate(OrderCancellationReasonValidation.createCancellationReason),
+    ],
+    handler: OrderCancellationReasonController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/order_cancel_reason/update/:reasonId',
+    preHandler: [
+      webAuth('updateOrderCancelReason'),
+      validate(OrderCancellationReasonValidation.idValidation),
+    ],
+    handler: OrderCancellationReasonController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/order_cancel_reason/delete/:reasonId',
+    preHandler: [
+      webAuth('deletetOrderCancelReason'),
+      validate(OrderCancellationReasonValidation.idValidation),
+    ],
+    handler: OrderCancellationReasonController.drop,
+  });
+  // Order Cancellation Reason Routes //
+
+  // Refund Request Reason Routes //
+  route({
+    method: 'GET',
+    url: '/refund_request_reason/getAll',
+    preHandler: [
+      webAuth('getRefundRequestReason'),
+      validate(RefundRequestReasonValidation.allValidation),
+    ],
+    handler: RefundRequestReasonController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/refund_request_reason/save',
+    preHandler: [
+      webAuth('createRefundRequestReason'),
+      validate(RefundRequestReasonValidation.createRefundRequestReason),
+    ],
+    handler: RefundRequestReasonController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/refund_request_reason/update/:reasonId',
+    preHandler: [
+      webAuth('updateRefundRequestReason'),
+      validate(RefundRequestReasonValidation.idValidation),
+    ],
+    handler: RefundRequestReasonController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/refund_request_reason/delete/:reasonId',
+    preHandler: [
+      webAuth('deleteRefundRequestReason'),
+      validate(RefundRequestReasonValidation.idValidation),
+    ],
+    handler: RefundRequestReasonController.drop,
+  });
+  // Refund Request Reason Routes //
+
+  // User Settings Routes //
+  route({
+    method: 'GET',
+    url: '/user_settings/get',
+    preHandler: [webAuth('getUserSettings')],
+    handler: UserSettingsController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/user_settings/save',
+    preHandler: [
+      webAuth('createUserSettings'),
+      validate(UserSettingsValidation.createSettings),
+    ],
+    handler: UserSettingsController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/user_settings/update/:settingId',
+    preHandler: [
+      webAuth('updateUserSettings'),
+      validate(UserSettingsValidation.idValidation),
+    ],
+    handler: UserSettingsController.update,
+  });
+  // User Settings Routes //
+
+  // Restaurant Settings Routes //
+  route({
+    method: 'GET',
+    url: '/restaurant_settings/get',
+    preHandler: [webAuth('getRestaurantSettings')],
+    handler: RestaurantSettingsController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant_settings/save',
+    preHandler: [
+      webAuth('createRestaurantSettings'),
+      validate(RestaurantSettingsValidation.createSettings),
+    ],
+    handler: RestaurantSettingsController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/restaurant_settings/update/:settingId',
+    preHandler: [
+      webAuth('updateRestaurantSettings'),
+      validate(RestaurantSettingsValidation.idValidation),
+    ],
+    handler: RestaurantSettingsController.update,
+  });
+  // Restaurant Settings Routes //
+
+  // Driver Settings Routes //
+  route({
+    method: 'GET',
+    url: '/driver_settings/get',
+    preHandler: [webAuth('getDriverSettings')],
+    handler: DriverSettingsController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/driver_settings/save',
+    preHandler: [
+      webAuth('createDriverSettings'),
+      validate(DriverSettingsValidation.createSettings),
+    ],
+    handler: DriverSettingsController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/driver_settings/update/:settingId',
+    preHandler: [
+      webAuth('updateDriverSettings'),
+      validate(DriverSettingsValidation.idValidation),
+    ],
+    handler: DriverSettingsController.update,
+  });
+  // Driver Settings Routes //
+
+  // Disbursement Setting Routes //
+  route({
+    method: 'GET',
+    url: '/disbursement_settings/get',
+    preHandler: [webAuth('getDisbursementSettings')],
+    handler: DisbursementController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/disbursement_settings/save',
+    preHandler: [
+      webAuth('createDisbursementSettings'),
+      validate(DisbursementValidation.createDisbursement),
+    ],
+    handler: DisbursementController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/disbursement_settings/update/:disbursementId',
+    preHandler: [
+      webAuth('updateDisbursementSettings'),
+      validate(DisbursementValidation.idValidation),
+    ],
+    handler: DisbursementController.update,
+  });
+  // Disbursement Setting Routes //
+
+  // App Page Route //
+  route({
+    method: 'GET',
+    url: '/app_pages/get/:slug',
+    preHandler: [
+      webAuth('getPageInfo'),
+      validate(AppPageValidation.idValidation),
+    ],
+    handler: AppPageController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/app_pages/save',
+    preHandler: [
+      webAuth('createPageInfo'),
+      validate(AppPageValidation.createOrUpdatePage),
+    ],
+    handler: AppPageController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/app_pages/update/:slug',
+    preHandler: [
+      webAuth('updatePageInfo'),
+      validate(AppPageValidation.idValidation),
+    ],
+    handler: AppPageController.update,
+  });
+  // App Page Route //
+
+  // Restaurant Campaign Routes //
+  route({
+    method: 'GET',
+    url: '/restaurant_campaign_request/get/:campaignId',
+    preHandler: [
+      webAuth('getRestaurantCampaignRequest'),
+      validate(RestaurantCampaignRequestValidation.idValidation),
+    ],
+    handler: RestaurantCampaignRequestController.get,
+  });
+
+  route({
+    method: 'GET',
+    url: '/restaurant_campaign_request/accept/:campaignId/:restaurantId',
+    preHandler: [
+      webAuth('acceptRestaurantCampaign'),
+      validate(RestaurantCampaignValidation.leaveAndJoinCampaignValidation),
+    ],
+    handler: RestaurantCampaignController.joinCampaign,
+  });
+
+  route({
+    method: 'DELETE',
+    url: '/restaurant_campaign_request/reject/:campaignId',
+    preHandler: [
+      webAuth('rejectRestaurantCampaign'),
+      validate(RestaurantCampaignRequestValidation.idValidation),
+    ],
+    handler: RestaurantCampaignRequestController.drop,
+  });
+  // Restaurant Campaign Routes //
+
+  // Food Campaign Request Routes //
+  route({
+    method: 'GET',
+    url: '/food_campaign_request/get/:campaignId',
+    preHandler: [
+      webAuth('getFoodCampaignRequest'),
+      validate(FoodCampaignRequestValidation.idValidation),
+    ],
+    handler: FoodCampaignRequestController.get,
+  });
+  route({
+    method: 'DELETE',
+    url: '/food_campaign_request/reject/:campaignId',
+    preHandler: [
+      webAuth('rejectFoodCampaignRequest'),
+      validate(FoodCampaignRequestValidation.idValidation),
+    ],
+    handler: FoodCampaignRequestController.drop,
+  });
+  route({
+    method: 'GET',
+    url: '/food_campaign_request/accept/:campaignId/:foodId',
+    preHandler: [
+      webAuth('acceptFoodCampaignRequest'),
+      validate(FoodCampaignValidation.leaveAndJoinCampaignIdValidation),
+    ],
+    handler: FoodCampaignController.joinCampaign,
+  });
+  // Food Campaign Request Routes //
+
+  // Banners Routes //
+  route({
+    method: 'GET',
+    url: '/banners/getAll',
+    preHandler: [
+      webAuth('getAllBanner'),
+      validate(BannersValidation.allValidation),
+    ],
+    handler: BannersController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/banners/save',
+    preHandler: [
+      webAuth('createBanner'),
+      validate(BannersValidation.createBanner),
+    ],
+    handler: BannersController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/banners/update/:bannerId',
+    preHandler: [
+      webAuth('updateBanner'),
+      validate(BannersValidation.idValidation),
+    ],
+    handler: BannersController.update,
+  });
+  route({
+    method: 'PATCH',
+    url: '/banners/updateStatus/:bannerId',
+    preHandler: [
+      webAuth('updateBanner'),
+      validate(BannersValidation.idValidation),
+    ],
+    handler: BannersController.updateStatus,
+  });
+  route({
+    method: 'DELETE',
+    url: '/banners/delete/:bannerId',
+    preHandler: [
+      webAuth('deleteBanner'),
+      validate(BannersValidation.idValidation),
+    ],
+    handler: BannersController.drop,
+  });
+  // Banners Routes //
+
+  // App Web Settings Routes //
+  route({
+    method: 'GET',
+    url: '/app_web_settings/get',
+    preHandler: [webAuth('getAppWebSettings')],
+    handler: AppWebSettingController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/app_web_settings/save',
+    preHandler: [
+      webAuth('createOrUpdateAppWebSettings'),
+      validate(AppWebSettingValidation.createOrUpdateAppWebSettings),
+    ],
+    handler: AppWebSettingController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/app_web_settings/update/:settingId',
+    preHandler: [
+      webAuth('createOrUpdateAppWebSettings'),
+      validate(AppWebSettingValidation.createOrUpdateAppWebSettings),
+    ],
+    handler: AppWebSettingController.update,
+  });
+  // App Web Settings Routes //
+
+  // Email Config Routes //
+  route({
+    method: 'GET',
+    url: '/email_config/get',
+    preHandler: [webAuth('getEmailConfig')],
+    handler: EmailConfigController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/email_config/save',
+    preHandler: [
+      webAuth('createOrUpdateEmailConfig'),
+      validate(EmailConfigValidation.createOrUpdateConfig),
+    ],
+    handler: EmailConfigController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/email_config/update/:configId',
+    preHandler: [
+      webAuth('createOrUpdateEmailConfig'),
+      validate(EmailConfigValidation.createOrUpdateConfig),
+    ],
+    handler: EmailConfigController.update,
+  });
+  route({
+    method: 'GET',
+    url: '/email_config/sendDemo/:email',
+    preHandler: [
+      webAuth('sendDemoEmail'),
+      validate(EmailConfigValidation.demoValidation),
+    ],
+    handler: EmailConfigController.sendDemoMail,
+  });
+  route({
+    method: 'GET',
+    url: '/email_config/media_list',
+    preHandler: [webAuth('getEmailConfig')],
+    handler: EmailConfigController.emailMediaConfig,
+  });
+  route({
+    method: 'PATCH',
+    url: '/email_config/update_email_media',
+    preHandler: [
+      webAuth('createOrUpdateEmailConfig'),
+      validate(EmailConfigValidation.emailMediaUrlValidation),
+    ],
+    handler: EmailConfigController.saveEmailMediaConfig,
+  });
+  // Email Config Routes //
+
+  // Email Template Routes //
+  route({
+    method: 'GET',
+    url: '/email_templates/:slug',
+    preHandler: [
+      webAuth('getEmailTemplate'),
+      validate(EmailTemplateValidation.idValidation),
+    ],
+    handler: EmailTemplateController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/email_templates/save',
+    preHandler: [
+      webAuth('createEmailTemplates'),
+      validate(EmailTemplateValidation.createOrUpdateTemplate),
+    ],
+    handler: EmailTemplateController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/email_templates/update/:slug',
+    preHandler: [
+      webAuth('updateEmailTemplates'),
+      validate(EmailTemplateValidation.createOrUpdateTemplate),
+    ],
+    handler: EmailTemplateController.update,
+  });
+  // Email Template Routes //
+
+  // Restaurant Food License Routes //
+  route({
+    method: 'GET',
+    url: '/restaurant_food_license/getAll',
+    preHandler: [
+      webAuth('getRestaurantFoodLicense'),
+      validate(RestaurantFoodLicenseValidation.allValidation),
+    ],
+    handler: RestaurantFoodLicenseController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant_food_license/save',
+    preHandler: [
+      webAuth('createRestaurantFoodLicense'),
+      validate(RestaurantFoodLicenseValidation.createRestaurantLicense),
+    ],
+    handler: RestaurantFoodLicenseController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/restaurant_food_license/update/:licenseId',
+    preHandler: [
+      webAuth('updateRestaurantFoodLicense'),
+      validate(RestaurantFoodLicenseValidation.idValidation),
+    ],
+    handler: RestaurantFoodLicenseController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/restaurant_food_license/delete/:licenseId',
+    preHandler: [
+      webAuth('deleteRestaurantFoodLicense'),
+      validate(RestaurantFoodLicenseValidation.idValidation),
+    ],
+    handler: RestaurantFoodLicenseController.drop,
+  });
+  // Restaurant Food License Routes //
+
+  // Payment Config Page Route //
+  route({
+    method: 'GET',
+    url: '/payment_config/get/:slug',
+    preHandler: [
+      webAuth('getPaymentConfig'),
+      validate(PaymentConfigValidation.idValidation),
+    ],
+    handler: PaymentConfigController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/payment_config/save',
+    preHandler: [
+      webAuth('createPaymentConfig'),
+      validate(PaymentConfigValidation.createPaymentConfig),
+    ],
+    handler: PaymentConfigController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/payment_config/update/:slug',
+    preHandler: [
+      webAuth('updatePaymentConfig'),
+      validate(PaymentConfigValidation.idValidation),
+    ],
+    handler: PaymentConfigController.update,
+  });
+  // Payment Config Page Route //
+
+  // Delivery Instrunction Routes //
+  route({
+    method: 'POST',
+    url: '/delivery_instruction/save',
+    preHandler: [
+      webAuth('createDeliveryInstruction'),
+      validate(DeliveryInstructionValidation.createInstrunction),
+    ],
+    handler: DeliveryInstructionController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/delivery_instruction/get',
+    preHandler: [
+      webAuth('getDeliveryInstruction'),
+      validate(DeliveryInstructionValidation.allValidation),
+    ],
+    handler: DeliveryInstructionController.get,
+  });
+  route({
+    method: 'PATCH',
+    url: '/delivery_instruction/update/:id',
+    preHandler: [
+      webAuth('updateDeliveryInstruction'),
+      validate(DeliveryInstructionValidation.idValidation),
+    ],
+    handler: DeliveryInstructionController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/delivery_instruction/delete/:id',
+    preHandler: [
+      webAuth('deleteDeliveryInstruction'),
+      validate(DeliveryInstructionValidation.idValidation),
+    ],
+    handler: DeliveryInstructionController.drop,
+  });
+  // Delivery Instrunction Routes //
+
+  // Delivery Gratitude Routes //
+  route({
+    method: 'POST',
+    url: '/gratitude/save',
+    preHandler: [
+      webAuth('createGratitude'),
+      validate(DeliveryGratitudeValidation.createGratitude),
+    ],
+    handler: DeliveryGratitudeController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/gratitude/get',
+    preHandler: [
+      webAuth('getGratitude'),
+      validate(DeliveryGratitudeValidation.allValidation),
+    ],
+    handler: DeliveryGratitudeController.get,
+  });
+  route({
+    method: 'PATCH',
+    url: '/gratitude/update/:id',
+    preHandler: [
+      webAuth('updateGratitude'),
+      validate(DeliveryGratitudeValidation.idValidation),
+    ],
+    handler: DeliveryGratitudeController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/gratitude/delete/:id',
+    preHandler: [
+      webAuth('deleteGratitude'),
+      validate(DeliveryGratitudeValidation.idValidation),
+    ],
+    handler: DeliveryGratitudeController.drop,
+  });
+  // Delivery Gratitude Routes //
+
+  // Coupon Routes //
+  route({
+    method: 'POST',
+    url: '/coupon/save',
+    preHandler: [
+      webAuth('createCoupon'),
+      validate(CouponValidation.createCoupon),
+    ],
+    handler: CouponController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/coupon/get',
+    preHandler: [
+      webAuth('getCoupon'),
+      validate(CouponValidation.allValidation),
+    ],
+    handler: CouponController.get,
+  });
+  route({
+    method: 'GET',
+    url: '/coupon/getInfo/:id',
+    preHandler: [
+      webAuth('getCoupon'),
+      validate(CouponValidation.idValidation),
+    ],
+    handler: CouponController.getInfo,
+  });
+  route({
+    method: 'PATCH',
+    url: '/coupon/update/:id',
+    preHandler: [
+      webAuth('updateCoupon'),
+      validate(CouponValidation.idValidation),
+    ],
+    handler: CouponController.update,
+  });
+  route({
+    method: 'PATCH',
+    url: '/coupon/updateMeta/:id',
+    preHandler: [
+      webAuth('updateCoupon'),
+      validate(CouponValidation.idValidation),
+    ],
+    handler: CouponController.updateMeta,
+  });
+  route({
+    method: 'DELETE',
+    url: '/coupon/delete/:id',
+    preHandler: [
+      webAuth('deleteCoupon'),
+      validate(CouponValidation.idValidation),
+    ],
+    handler: CouponController.drop,
+  });
+  route({
+    method: 'GET',
+    url: '/coupon/request',
+    preHandler: [
+      webAuth('getCoupon'),
+      validate(CouponValidation.allValidation),
+    ],
+    handler: CouponController.getVendorCouponRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/coupon/detail/:id',
+    preHandler: [
+      webAuth('getCoupon'),
+      validate(CouponValidation.detailValidation),
+    ],
+    handler: CouponController.couponDetail,
+  });
+  // Coupon Routes //
+
+  // User Routes //
+  route({
+    method: 'GET',
+    url: '/users/search/:name',
+    preHandler: [
+      webAuth('searchUser'),
+      validate(UserValidation.searchUser),
+    ],
+    handler: UserController.findUserWithName,
+  });
+  // User Routes //
+
+  // Driver Incetive Routes //
+  route({
+    method: 'POST',
+    url: '/driver_incentive/save',
+    preHandler: [
+      webAuth('createDriverIncentive'),
+      validate(DriverIncentiveValidation.createIncentive),
+    ],
+    handler: DriverIncentiveController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/driver_incentive/get',
+    preHandler: [
+      webAuth('getDriverIncentive'),
+      validate(DriverIncentiveValidation.allValidation),
+    ],
+    handler: DriverIncentiveController.get,
+  });
+  route({
+    method: 'PATCH',
+    url: '/driver_incentive/update/:id',
+    preHandler: [
+      webAuth('updateDriverIncentive'),
+      validate(DriverIncentiveValidation.updateIncentive),
+    ],
+    handler: DriverIncentiveController.update,
+  });
+  route({
+    method: 'PATCH',
+    url: '/driver_incentive/updateStatus/:id',
+    preHandler: [
+      webAuth('updateDriverIncentive'),
+      validate(DriverIncentiveValidation.updateIncentiveStatus),
+    ],
+    handler: DriverIncentiveController.updateStatus,
+  });
+  route({
+    method: 'DELETE',
+    url: '/driver_incentive/delete/:id',
+    preHandler: [
+      webAuth('deleteDriverIncentive'),
+      validate(DriverIncentiveValidation.idValidation),
+    ],
+    handler: DriverIncentiveController.drop,
+  });
+  // Driver Incetive Routes //
+
+  // Driver Offline Messages Routes //
+  route({
+    method: 'POST',
+    url: '/driver_offline_messages/save',
+    preHandler: [
+      webAuth('createDriverOfflineMessage'),
+      validate(DriverOfflineMessagesValidation.createOfflineMessage),
+    ],
+    handler: DriverOfflineMessagesController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/driver_offline_messages/get',
+    preHandler: [
+      webAuth('getDriverOfflineMessages'),
+      validate(DriverOfflineMessagesValidation.allValidation),
+    ],
+    handler: DriverOfflineMessagesController.get,
+  });
+  route({
+    method: 'PATCH',
+    url: '/driver_offline_messages/update/:id',
+    preHandler: [
+      webAuth('updateDriverOfflineMessages'),
+      validate(DriverOfflineMessagesValidation.idValidation),
+    ],
+    handler: DriverOfflineMessagesController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/driver_offline_messages/delete/:id',
+    preHandler: [
+      webAuth('deleteOfflineMessages'),
+      validate(DriverOfflineMessagesValidation.idValidation),
+    ],
+    handler: DriverOfflineMessagesController.drop,
+  });
+  // Driver Offline Messages Routes //
+
+  // Order Notification Translation Routes //
+  route({
+    method: 'GET',
+    url: '/order_notification_translation/getBySlug/:slug',
+    preHandler: [
+      webAuth('getOrderNotificationTranslation'),
+      validate(OrderNotificationTranslationValidation.getNotificationValidation),
+    ],
+    handler: OrderNotificationTranslationController.getBySlug,
+  });
+  route({
+    method: 'POST',
+    url: '/order_notification_translation/save',
+    preHandler: [
+      webAuth('saveOrderNotificationTranslation'),
+      validate(OrderNotificationTranslationValidation.saveOrderNotificationTranslationValidation),
+    ],
+    handler: OrderNotificationTranslationController.createOrUpdate,
+  });
+  // Order Notification Translation Routes //
+
+  // Orders Routes //
+  route({
+    method: 'GET',
+    url: '/orders/getOrderCount',
+    preHandler: [webAuth('getOrderCount')],
+    handler: OrdersController.getOrderCount,
+  });
+  route({
+    method: 'GET',
+    url: '/orders/getOrderList',
+    preHandler: [
+      webAuth('getOrderList'),
+      validate(OrdersValidation.adminOrderValidation),
+    ],
+    handler: OrdersController.getAdminOrderList,
+  });
+  route({
+    method: 'GET',
+    url: '/orders/getScheduleOrders',
+    preHandler: [
+      webAuth('getScheduleOrders'),
+      validate(OrdersValidation.adminScheduleOrderValidation),
+    ],
+    handler: OrdersController.getAdminScheduleOrderList,
+  });
+  route({
+    method: 'GET',
+    url: '/orders/getSubscriptionOrders',
+    preHandler: [
+      webAuth('getSubscriptionOrders'),
+      validate(OrdersValidation.adminSubscriptionOrderValidation),
+    ],
+    handler: OrdersController.getAdminSubscriptionOrderList,
+  });
+  route({
+    method: 'GET',
+    url: '/orders/getUnAssignedOrders',
+    preHandler: [
+      webAuth('getUnAssignedOrders'),
+      validate(OrdersValidation.adminScheduleOrderValidation),
+    ],
+    handler: OrdersController.getAdminUnAssignedOrderList,
+  });
+  route({
+    method: 'GET',
+    url: '/orders/fetchDriverNearToOrder/:id/:restaurant',
+    preHandler: [
+      webAuth('fetchDriverNearToOrder'),
+      validate(OrdersValidation.findDriverValidation),
+    ],
+    handler: OrdersController.fetchDriverNearToOrder,
+  });
+  route({
+    method: 'POST',
+    url: '/orders/assignDriverOrderAdmin',
+    preHandler: [
+      webAuth('assignDriverOrderAdmin'),
+      validate(OrdersValidation.assignDriverOrderAdminValidation),
+    ],
+    handler: OrdersController.assignDriverOrderAdmin,
+  });
+  route({
+    method: 'GET',
+    url: '/orders/detailAdmin/:id',
+    preHandler: [
+      webAuth('orderDetail'),
+      validate(OrdersValidation.orderDetailAdminValidation),
+    ],
+    handler: OrdersController.getOrderDetailAdmin,
+  });
+  route({
+    method: 'GET',
+    url: '/orders/coupon/:id',
+    preHandler: [
+      webAuth('getOrderList'),
+      validate(OrdersValidation.couponValidation),
+    ],
+    handler: OrdersController.couponOrders,
+  });
+  route({
+    method: 'GET',
+    url: '/orders/invoice/:id',
+    preHandler: [
+      webAuth('orderDetail'),
+      validate(OrdersValidation.adminInvoiceValidation),
+    ],
+    handler: OrdersController.adminOrderInvoice,
+  });
+  // Orders Routes //
+
+  // POS Orders Routes //
+  route({
+    method: 'GET',
+    url: '/posOrders/list',
+    preHandler: [
+      webAuth('posOrderList'),
+      validate(PosOrTableOrderValidation.adminOrderValidation),
+    ],
+    handler: PosOrTableOrderController.adminPosOrderList,
+  });
+  route({
+    method: 'GET',
+    url: '/posOrders/detail/:id',
+    preHandler: [
+      webAuth('posOrderDetail'),
+      validate(PosOrTableOrderValidation.adminPosOrderDetailValidation),
+    ],
+    handler: PosOrTableOrderController.adminPosOrderDetail,
+  });
+  route({
+    method: 'GET',
+    url: '/posOrders/invoice/:id',
+    preHandler: [
+      webAuth('posOrderDetail'),
+      validate(PosOrTableOrderValidation.orderInvoiceValidation),
+    ],
+    handler: PosOrTableOrderController.adminPOSOrderInvoice,
+  });
+  // POS Orders Routes //
+
+  // Table Orders Routes //
+  route({
+    method: 'GET',
+    url: '/tableOrders/list',
+    preHandler: [
+      webAuth('tableOrderList'),
+      validate(TableOrderValidation.adminOrderValidation),
+    ],
+    handler: TableOrderController.adminTableOrderList,
+  });
+  route({
+    method: 'GET',
+    url: '/tableOrders/detail/:id',
+    preHandler: [
+      webAuth('tableOrderDetail'),
+      validate(TableOrderValidation.adminTableOrderDetailValidation),
+    ],
+    handler: TableOrderController.adminTableOrderDetail,
+  });
+  route({
+    method: 'GET',
+    url: '/tableOrders/invoice/:id',
+    preHandler: [
+      webAuth('tableOrderDetail'),
+      validate(TableOrderValidation.orderInvoiceValidation),
+    ],
+    handler: TableOrderController.adminTableOrderInvoice,
+  });
+  // Table Orders Routes //
+
+  // Refund Request Routes //
+  route({
+    method: 'GET',
+    url: '/refund_request/active',
+    preHandler: [
+      webAuth('getActiveRefundRequest'),
+      validate(RefundRequestValidation.adminListValidation),
+    ],
+    handler: RefundRequestController.getActiveRefundRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/refund_request/info/:requestId',
+    preHandler: [
+      webAuth('getRefundRequestInfo'),
+      validate(RefundRequestValidation.getRefundRequestInfoValidation),
+    ],
+    handler: RefundRequestController.getRefundRequestInfo,
+  });
+  route({
+    method: 'POST',
+    url: '/refund_request/cancel',
+    preHandler: [
+      webAuth('cancelRefundRequest'),
+      validate(RefundRequestValidation.cancelRefundRequestValidation),
+    ],
+    handler: RefundRequestController.cancelRefundRequest,
+  });
+  route({
+    method: 'POST',
+    url: '/refund_request/approve',
+    preHandler: [
+      webAuth('approveRefundRequest'),
+      validate(RefundRequestValidation.approveRefundRequestValidation),
+    ],
+    handler: RefundRequestController.approveRefundRequest,
+  });
+  route({
+    method: 'POST',
+    url: '/refund_request/refundFromMerchant',
+    preHandler: [
+      webAuth('refundFromMerchant'),
+      validate(RefundRequestValidation.refundFromMerchantValidation),
+    ],
+    handler: RefundRequestController.refundFromMerchant,
+  });
+  // Refund Request Routes //
+
+  // Complaints Reason Routes //
+  route({
+    method: 'GET',
+    url: '/complaints_reason/getAll',
+    preHandler: [
+      webAuth('getComplaintsReason'),
+      validate(ComplaintsReasonValidation.allValidation),
+    ],
+    handler: ComplaintsReasonController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/complaints_reason/save',
+    preHandler: [
+      webAuth('createComplaintsReason'),
+      validate(ComplaintsReasonValidation.createComplaintsReason),
+    ],
+    handler: ComplaintsReasonController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/complaints_reason/update/:reasonId',
+    preHandler: [
+      webAuth('updateComplaintsReason'),
+      validate(ComplaintsReasonValidation.idValidation),
+    ],
+    handler: ComplaintsReasonController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/complaints_reason/delete/:reasonId',
+    preHandler: [
+      webAuth('deleteComplaintsReason'),
+      validate(ComplaintsReasonValidation.idValidation),
+    ],
+    handler: ComplaintsReasonController.drop,
+  });
+  // Complaints Reason Routes //
+
+  // Complaints Routes //
+  route({
+    method: 'GET',
+    url: '/complaints/get',
+    preHandler: [
+      webAuth('getComplaints'),
+      validate(UserValidation.adminComplaintValidation),
+    ],
+    handler: ComplaintsController.get,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_complaints/get',
+    preHandler: [
+      webAuth('getComplaints'),
+      validate(UserValidation.adminRestaurantComplaintValidation),
+    ],
+    handler: RestaurantComplaintsController.get,
+  });
+
+  // SMS Provider Config Routes //
+  route({
+    method: 'GET',
+    url: '/sms_provider/get/:slug',
+    preHandler: [
+      webAuth('getSmsProviderConfig'),
+      validate(SmsProviderConfigValidation.idValidation),
+    ],
+    handler: SmsProviderConfigController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/sms_provider/save',
+    preHandler: [
+      webAuth('createSmsProviderConfig'),
+      validate(SmsProviderConfigValidation.createSMSProviderConfig),
+    ],
+    handler: SmsProviderConfigController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/sms_provider/update/:slug',
+    preHandler: [
+      webAuth('updateSmsProviderConfig'),
+      validate(SmsProviderConfigValidation.idValidation),
+    ],
+    handler: SmsProviderConfigController.update,
+  });
+  route({
+    method: 'POST',
+    url: '/sms_provider/demoTwilio',
+    preHandler: [
+      webAuth('sendDemoSMS'),
+      validate(SmsProviderConfigValidation.demoValidation),
+    ],
+    handler: SmsProviderConfigController.sendTwilioDemoSMS,
+  });
+  route({
+    method: 'POST',
+    url: '/sms_provider/demoNexmo',
+    preHandler: [
+      webAuth('sendDemoSMS'),
+      validate(SmsProviderConfigValidation.demoValidation),
+    ],
+    handler: SmsProviderConfigController.sendNexmoDemoSMS,
+  });
+  route({
+    method: 'POST',
+    url: '/sms_provider/demo_sms_dot_to',
+    preHandler: [
+      webAuth('sendDemoSMS'),
+      validate(SmsProviderConfigValidation.demoValidation),
+    ],
+    handler: SmsProviderConfigController.sendSMStoDemoSMS,
+  });
+  route({
+    method: 'POST',
+    url: '/sms_provider/demo_2factor',
+    preHandler: [
+      webAuth('sendDemoSMS'),
+      validate(SmsProviderConfigValidation.demoValidation),
+    ],
+    handler: SmsProviderConfigController.send2FactorDemoSMS,
+  });
+  route({
+    method: 'POST',
+    url: '/sms_provider/demo_fast2sms',
+    preHandler: [
+      webAuth('sendDemoSMS'),
+      validate(SmsProviderConfigValidation.demoValidation),
+    ],
+    handler: SmsProviderConfigController.sendFast2SMSDemoSMS,
+  });
+  // SMS Provider Config Routes //
+
+  // Report Issue Restaurant Reason Routes //
+  route({
+    method: 'GET',
+    url: '/report_issue/restaurant/getAll',
+    preHandler: [
+      webAuth('getReportIssueRestaurant'),
+      validate(ReportIssueRestaurantReasonValidation.allValidation),
+    ],
+    handler: ReportIssueRestaurantReasonController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/report_issue/restaurant/save',
+    preHandler: [
+      webAuth('createReportIssueRestaurant'),
+      validate(ReportIssueRestaurantReasonValidation.createReportIssueRestaurantReason),
+    ],
+    handler: ReportIssueRestaurantReasonController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/report_issue/restaurant/update/:reasonId',
+    preHandler: [
+      webAuth('updateReportIssueRestaurant'),
+      validate(ReportIssueRestaurantReasonValidation.idValidation),
+    ],
+    handler: ReportIssueRestaurantReasonController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/report_issue/restaurant/delete/:reasonId',
+    preHandler: [
+      webAuth('deleteReportIssueRestaurant'),
+      validate(ReportIssueRestaurantReasonValidation.idValidation),
+    ],
+    handler: ReportIssueRestaurantReasonController.drop,
+  });
+  // Report Issue Restaurant Reason Routes //
+
+  // Report Issue Restaurant Routes //
+  route({
+    method: 'GET',
+    url: '/report_issue_list/restaurant/get',
+    preHandler: [
+      webAuth('getReportIssueRestaurantList'),
+      validate(ReportIssueRestaurantReasonValidation.reportValidation),
+    ],
+    handler: ReportIssueRestaurantController.getReportsList,
+  });
+  // Report Issue Restaurant Routes //
+
+  // Hidden Restaurant Routes //
+  route({
+    method: 'GET',
+    url: '/hide/restaurant',
+    preHandler: [
+      webAuth('hiddenRestaurant'),
+      validate(HideRestaurantReasonValidation.hiddenValidation),
+    ],
+    handler: HideRestaurantController.getHiddenRestaurantList,
+  });
+  // Hidden Restaurant Routes //
+
+  // Hide Restaurant Reason Routes //
+  route({
+    method: 'GET',
+    url: '/hide_reason/restaurant/getAll',
+    preHandler: [
+      webAuth('getHideRestaurantReasonList'),
+      validate(HideRestaurantReasonValidation.allValidation),
+    ],
+    handler: HideRestaurantReasonController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/hide_reason/restaurant/save',
+    preHandler: [
+      webAuth('createHideRestaurantReason'),
+      validate(HideRestaurantReasonValidation.createHideRestaurantReason),
+    ],
+    handler: HideRestaurantReasonController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/hide_reason/restaurant/update/:reasonId',
+    preHandler: [
+      webAuth('updateHideRestaurantReason'),
+      validate(HideRestaurantReasonValidation.idValidation),
+    ],
+    handler: HideRestaurantReasonController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/hide_reason/restaurant/delete/:reasonId',
+    preHandler: [
+      webAuth('deleteHideRestaurantReason'),
+      validate(HideRestaurantReasonValidation.idValidation),
+    ],
+    handler: HideRestaurantReasonController.drop,
+  });
+  // Hide Restaurant Reason Routes //
+
+  // Order Rating Message Routes //
+  route({
+    method: 'GET',
+    url: '/order_rating_message/getAll',
+    preHandler: [
+      webAuth('getOrderRatingMessages'),
+      validate(OrderRatingMessageValidation.allValidation),
+    ],
+    handler: OrderRatingMessageController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/order_rating_message/save',
+    preHandler: [
+      webAuth('createOrderRatingMessage'),
+      validate(OrderRatingMessageValidation.createRatingMessage),
+    ],
+    handler: OrderRatingMessageController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/order_rating_message/update/:messageId',
+    preHandler: [
+      webAuth('updateOrderRatingMessage'),
+      validate(OrderRatingMessageValidation.idValidation),
+    ],
+    handler: OrderRatingMessageController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/order_rating_message/delete/:messageId',
+    preHandler: [
+      webAuth('deleteOrderRatingMessage'),
+      validate(OrderRatingMessageValidation.idValidation),
+    ],
+    handler: OrderRatingMessageController.drop,
+  });
+  // Order Rating Message Routes //
+
+  // Restaurant Notice Routes //
+  route({
+    method: 'GET',
+    url: '/restaurant/notice/getAll',
+    preHandler: [
+      webAuth('getRestaurantNotice'),
+      validate(RestaurantNoticeValidation.allValidation),
+    ],
+    handler: RestaurantNoticeController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant/notice/save',
+    preHandler: [
+      webAuth('createRestaurantNotice'),
+      validate(RestaurantNoticeValidation.createRestaurantNoticeReason),
+    ],
+    handler: RestaurantNoticeController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/restaurant/notice/update/:noticeId',
+    preHandler: [
+      webAuth('updateRestaurantNotice'),
+      validate(RestaurantNoticeValidation.idValidation),
+    ],
+    handler: RestaurantNoticeController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/restaurant/notice/delete/:noticeId',
+    preHandler: [
+      webAuth('deleteRestaurantNotice'),
+      validate(RestaurantNoticeValidation.idValidation),
+    ],
+    handler: RestaurantNoticeController.drop,
+  });
+  // Restaurant Notice Routes //
+
+  // Subscription Tiffin Package Routes //
+  route({
+    method: 'GET',
+    url: '/tiffin_packages/getList',
+    preHandler: [
+      webAuth('getTiffinPackages'),
+      validate(SubscriptionTiffinPackageValidation.allValidation),
+    ],
+    handler: SubscriptionTiffinPackageController.getSubscriptionPackageListAdmin,
+  });
+  route({
+    method: 'PATCH',
+    url: '/tiffin_packages/updateStatus/:id',
+    preHandler: [
+      webAuth('updatePackageStatus'),
+      validate(SubscriptionTiffinPackageValidation.updateAdminStatusValidation),
+    ],
+    handler: SubscriptionTiffinPackageController.updatePackageStatus,
+  });
+  route({
+    method: 'GET',
+    url: '/tiffin_packages/foods/:restaurant',
+    preHandler: [
+      webAuth('getTiffinPackageFoods'),
+      validate(SubscriptionTiffinPackageValidation.getBasicValidation),
+    ],
+    handler: SubscriptionTiffinPackageController.getBasic,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_packages/create/',
+    preHandler: [
+      webAuth('createTiffinPackage'),
+      validate(SubscriptionTiffinPackageValidation.createSubscriptionTiffinValidation),
+    ],
+    handler: SubscriptionTiffinPackageController.create,
+  });
+  route({
+    method: 'DELETE',
+    url: '/tiffin_packages/delete/:id',
+    preHandler: [
+      webAuth('deleteTiffinPackage'),
+      validate(SubscriptionTiffinPackageValidation.deleteValidation),
+    ],
+    handler: SubscriptionTiffinPackageController.drop,
+  });
+  route({
+    method: 'GET',
+    url: '/tiffin_packages/details/:id/:restaurant',
+    preHandler: [
+      webAuth('getPackageDetail'),
+      validate(SubscriptionTiffinPackageValidation.idValidation),
+    ],
+    handler: SubscriptionTiffinPackageController.getById,
+  });
+  route({
+    method: 'PATCH',
+    url: '/tiffin_packages/update/:id',
+    preHandler: [
+      webAuth('updatePackageDetail'),
+      validate(SubscriptionTiffinPackageValidation.updateValidation),
+    ],
+    handler: SubscriptionTiffinPackageController.updatePackage,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_packages/adminTiffinSubscriptionPurchased/',
+    preHandler: [
+      webAuth('adminTiffinSubscriptionPurchased'),
+      validate(UserPurchasedTiffinSubscriptionValidation.purchasedSubscriptionListAdminValidation),
+    ],
+    handler: UserPurchasedTiffinSubscriptionController.getPurchaseListForAdmin,
+  });
+  route({
+    method: 'GET',
+    url: '/tiffin_packages/getTiffinSubscriptionPurchaseDetail/:id',
+    preHandler: [
+      webAuth('getTiffinSubscriptionPurchaseDetail'),
+      validate(UserPurchasedTiffinSubscriptionValidation.purchaseDetailValidation),
+    ],
+    handler: UserPurchasedTiffinSubscriptionController.getPurchaseDetailAdmin,
+  });
+  // Subscription Tiffin Package Routes //
+
+  // Cron Job Scheduler Controller Routes //
+  route({
+    method: 'GET',
+    url: '/cronScheduler/start',
+    preHandler: [webAuth('startScheduler')],
+    handler: CronJobSchedulerController.startScheduler,
+  });
+  route({
+    method: 'GET',
+    url: '/cronScheduler/stop',
+    preHandler: [webAuth('stopScheduler')],
+    handler: CronJobSchedulerController.stopScheduler,
+  });
+  route({
+    method: 'GET',
+    url: '/cronScheduler/getInfo',
+    preHandler: [webAuth('getSchedulerInfo')],
+    handler: CronJobSchedulerController.getSchedulerInfo,
+  });
+  // Cron Job Scheduler Controller Routes //
+
+  // Tiffin Subscription Cancellation Reason Routes //
+  route({
+    method: 'GET',
+    url: '/tiffin_subscription_cancel_reason/getAll',
+    preHandler: [
+      webAuth('getTiffinSubscriptionCancelReason'),
+      validate(TiffinSubscriptionCancellationReasonValidation.allValidation),
+    ],
+    handler: TiffinSubscriptionCancellationReasonController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_subscription_cancel_reason/save',
+    preHandler: [
+      webAuth('createTiffinSubscriptionCancelReason'),
+      validate(TiffinSubscriptionCancellationReasonValidation.createCancellationReason),
+    ],
+    handler: TiffinSubscriptionCancellationReasonController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/tiffin_subscription_cancel_reason/update/:reasonId',
+    preHandler: [
+      webAuth('updateTiffinSubscriptionCancelReason'),
+      validate(TiffinSubscriptionCancellationReasonValidation.idValidation),
+    ],
+    handler: TiffinSubscriptionCancellationReasonController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/tiffin_subscription_cancel_reason/delete/:reasonId',
+    preHandler: [
+      webAuth('deleteTiffinSubscriptionCancelReason'),
+      validate(TiffinSubscriptionCancellationReasonValidation.idValidation),
+    ],
+    handler: TiffinSubscriptionCancellationReasonController.drop,
+  });
+  // Tiffin Subscription Cancellation Reason Routes //
+
+  // Tiffin Subscription Refund Request Reason Routes //
+  route({
+    method: 'GET',
+    url: '/tiffin_subscription_refund_request_reason/getAll',
+    preHandler: [
+      webAuth('getTiffinSubscriptionRefundRequestReason'),
+      validate(TiffinSubscriptionRefundRequestReasonValidation.allValidation),
+    ],
+    handler: TiffinSubscriptionRefundRequestReasonController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_subscription_refund_request_reason/save',
+    preHandler: [
+      webAuth('createTiffinSubscriptionRefundRequestReason'),
+      validate(TiffinSubscriptionRefundRequestReasonValidation.createRefundRequestReason),
+    ],
+    handler: TiffinSubscriptionRefundRequestReasonController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/tiffin_subscription_refund_request_reason/update/:reasonId',
+    preHandler: [
+      webAuth('updateTiffinSubscriptionRefundRequestReason'),
+      validate(TiffinSubscriptionRefundRequestReasonValidation.idValidation),
+    ],
+    handler: TiffinSubscriptionRefundRequestReasonController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/tiffin_subscription_refund_request_reason/delete/:reasonId',
+    preHandler: [
+      webAuth('deleteTiffinSubscriptionRefundRequestReason'),
+      validate(TiffinSubscriptionRefundRequestReasonValidation.idValidation),
+    ],
+    handler: TiffinSubscriptionRefundRequestReasonController.drop,
+  });
+  // Tiffin Subscription Refund Request Reason Routes //
+
+  // Tiffin Subscription Refund Request Routes //
+  route({
+    method: 'GET',
+    url: '/tiffin_subscription_refund_request/active',
+    preHandler: [
+      webAuth('getActiveRefundRequest'),
+      validate(TiffinSubscriptionRefundRequestValidation.adminListValidation),
+    ],
+    handler: TiffinSubscriptionRefundRequestController.getActiveRefundRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/tiffin_subscription_refund_request/info/:requestId',
+    preHandler: [
+      webAuth('getTiffinSubscriptionRefundRequestInfo'),
+      validate(
+      TiffinSubscriptionRefundRequestValidation.getTiffinSubscriptionRefundRequestInfoValidation
+    ),
+    ],
+    handler: TiffinSubscriptionRefundRequestController.getTiffinSubscriptionRefundRequestInfo,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_subscription_refund_request/cancel',
+    preHandler: [
+      webAuth('cancelTiffinSubscriptionRefundRequest'),
+      validate(TiffinSubscriptionRefundRequestValidation.cancelRefundRequestValidation),
+    ],
+    handler: TiffinSubscriptionRefundRequestController.cancelRefundRequest,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_subscription_refund_request/refundFromMerchant',
+    preHandler: [
+      webAuth('refundTiffinSubscriptionFromMerchant'),
+      validate(TiffinSubscriptionRefundRequestValidation.refundFromMerchantValidation),
+    ],
+    handler: TiffinSubscriptionRefundRequestController.refundFromMerchant,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_subscription_refund_request/approve',
+    preHandler: [
+      webAuth('approveTiffinSubscriptionRefundRequest'),
+      validate(TiffinSubscriptionRefundRequestValidation.approveRefundRequestValidation),
+    ],
+    handler: TiffinSubscriptionRefundRequestController.approveRefundRequest,
+  });
+  // Tiffin Subscription Refund Request Routes //
+
+  // Dining Settings Routes //
+  route({
+    method: 'GET',
+    url: '/dining_settings/get',
+    preHandler: [webAuth('getDiningSettings')],
+    handler: DiningSettingController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_settings/save',
+    preHandler: [
+      webAuth('createOrUpdateDiningSettings'),
+      validate(DiningSettingValidation.createOrUpdateDiningSettings),
+    ],
+    handler: DiningSettingController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/dining_settings/update/:settingId',
+    preHandler: [
+      webAuth('createOrUpdateDiningSettings'),
+      validate(DiningSettingValidation.createOrUpdateDiningSettings),
+    ],
+    handler: DiningSettingController.update,
+  });
+  // Dining Settings Routes //
+
+  // Dining Cancellation Reason Routes //
+  route({
+    method: 'GET',
+    url: '/dining_cancel_reason/getAll',
+    preHandler: [
+      webAuth('getDiningCancelReason'),
+      validate(DiningCancellationReasonValidation.allValidation),
+    ],
+    handler: DiningCancellationReasonController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_cancel_reason/save',
+    preHandler: [
+      webAuth('createDiningCancelReason'),
+      validate(DiningCancellationReasonValidation.createCancellationReason),
+    ],
+    handler: DiningCancellationReasonController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/dining_cancel_reason/update/:reasonId',
+    preHandler: [
+      webAuth('updateDiningCancelReason'),
+      validate(DiningCancellationReasonValidation.idValidation),
+    ],
+    handler: DiningCancellationReasonController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/dining_cancel_reason/delete/:reasonId',
+    preHandler: [
+      webAuth('deletetDiningCancelReason'),
+      validate(DiningCancellationReasonValidation.idValidation),
+    ],
+    handler: DiningCancellationReasonController.drop,
+  });
+  // Dining Cancellation Reason Routes //
+
+  // Dining Category Routes //
+  route({
+    method: 'POST',
+    url: '/dining_category/save',
+    preHandler: [
+      webAuth('createDiningCategory'),
+      validate(DiningCategoryValidation.createCategory),
+    ],
+    handler: DiningCategoryController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_category/getAll',
+    preHandler: [
+      webAuth('getDiningCategories'),
+      validate(DiningCategoryValidation.allValidation),
+    ],
+    handler: DiningCategoryController.get,
+  });
+  route({
+    method: 'PATCH',
+    url: '/dining_category/update/:categoryId',
+    preHandler: [
+      webAuth('updateDiningCategory'),
+      validate(DiningCategoryValidation.idValidation),
+    ],
+    handler: DiningCategoryController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/dining_category/delete/:categoryId',
+    preHandler: [
+      webAuth('deleteDiningCategory'),
+      validate(DiningCategoryValidation.idValidation),
+    ],
+    handler: DiningCategoryController.drop,
+  });
+  // Dining Category Routes //
+
+  // Dining Notice Routes //
+  route({
+    method: 'GET',
+    url: '/dining/notice/getAll',
+    preHandler: [
+      webAuth('getDiningNotice'),
+      validate(DiningNoticeValidation.allValidation),
+    ],
+    handler: DiningNoticeController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/dining/notice/save',
+    preHandler: [
+      webAuth('createDiningNotice'),
+      validate(DiningNoticeValidation.createDiningNoticeReason),
+    ],
+    handler: DiningNoticeController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/dining/notice/update/:noticeId',
+    preHandler: [
+      webAuth('updateDiningNotice'),
+      validate(DiningNoticeValidation.idValidation),
+    ],
+    handler: DiningNoticeController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/dining/notice/delete/:noticeId',
+    preHandler: [
+      webAuth('deleteDiningNotice'),
+      validate(DiningNoticeValidation.idValidation),
+    ],
+    handler: DiningNoticeController.drop,
+  });
+  // Dining Notice Routes //
+
+  // Dining Campaign Routes //
+  route({
+    method: 'POST',
+    url: '/dining_campaign/save',
+    preHandler: [
+      webAuth('createDiningCampaign'),
+      validate(DiningCampaignValidation.createDiningCampaignValidation),
+    ],
+    handler: DiningCampaignController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_campaign/getAll',
+    preHandler: [
+      webAuth('getDiningCampaigns'),
+      validate(DiningCampaignValidation.allValidation),
+    ],
+    handler: DiningCampaignController.get,
+  });
+  route({
+    method: 'PATCH',
+    url: '/dining_campaign/updateStatus/:campaignId',
+    preHandler: [
+      webAuth('updateDiningCampaign'),
+      validate(DiningCampaignValidation.idValidation),
+    ],
+    handler: DiningCampaignController.updateStatus,
+  });
+  route({
+    method: 'DELETE',
+    url: '/dining_campaign/delete/:campaignId',
+    preHandler: [
+      webAuth('deleteDiningCampaign'),
+      validate(DiningCampaignValidation.idValidation),
+    ],
+    handler: DiningCampaignController.drop,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_campaign/getById/:campaignId',
+    preHandler: [
+      webAuth('getDiningCampaignById'),
+      validate(DiningCampaignValidation.idValidation),
+    ],
+    handler: DiningCampaignController.getById,
+  });
+  route({
+    method: 'PATCH',
+    url: '/dining_campaign/update/:campaignId',
+    preHandler: [
+      webAuth('updateDiningCampaign'),
+      validate(DiningCampaignValidation.idValidation),
+    ],
+    handler: DiningCampaignController.update,
+  });
+
+  route({
+    method: 'GET',
+    url: '/dining_campaign_request/get/:campaignId',
+    preHandler: [
+      webAuth('getDiningCampaignRequest'),
+      validate(DiningCampaignRequestValidation.idValidation),
+    ],
+    handler: DiningCampaignRequestController.get,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_campaign_request/accept/:campaignId/:restaurantId',
+    preHandler: [
+      webAuth('acceptDiningCampaign'),
+      validate(DiningCampaignValidation.leaveAndJoinCampaignValidation),
+    ],
+    handler: DiningCampaignController.joinCampaign,
+  });
+  route({
+    method: 'DELETE',
+    url: '/dining_campaign_request/reject/:campaignId',
+    preHandler: [
+      webAuth('rejectDiningCampaign'),
+      validate(DiningCampaignRequestValidation.idValidation),
+    ],
+    handler: DiningCampaignRequestController.drop,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_campaign/detail/:id',
+    preHandler: [
+      webAuth('campaignDetail'),
+      validate(DiningCampaignValidation.detailValidation),
+    ],
+    handler: DiningCampaignController.detail,
+  });
+  // Dining Campaign Routes //
+
+  // Restaurant Facilities Routes //
+  route({
+    method: 'GET',
+    url: '/restaurant/facilities/getAll',
+    preHandler: [
+      webAuth('getRestaurantFacility'),
+      validate(RestaurantFacilitiesValidation.allValidation),
+    ],
+    handler: RestaurantFacilitiesController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant/facilities/save',
+    preHandler: [
+      webAuth('createRestaurantFacility'),
+      validate(RestaurantFacilitiesValidation.createRestaurantFacility),
+    ],
+    handler: RestaurantFacilitiesController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/restaurant/facilities/update/:id',
+    preHandler: [
+      webAuth('updateRestaurantFacility'),
+      validate(RestaurantFacilitiesValidation.idValidation),
+    ],
+    handler: RestaurantFacilitiesController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/restaurant/facilities/delete/:id',
+    preHandler: [
+      webAuth('deleteRestaurantFacility'),
+      validate(RestaurantFacilitiesValidation.idValidation),
+    ],
+    handler: RestaurantFacilitiesController.drop,
+  });
+  // Restaurant Facilities Routes //
+
+  // Dining Coupon Routes //
+  route({
+    method: 'POST',
+    url: '/dining_coupon/save',
+    preHandler: [
+      webAuth('createDiningCoupon'),
+      validate(DiningCouponValidation.createCoupon),
+    ],
+    handler: DiningCouponController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_coupon/get',
+    preHandler: [
+      webAuth('getDiningCoupon'),
+      validate(DiningCouponValidation.allValidation),
+    ],
+    handler: DiningCouponController.get,
+  });
+  route({
+    method: 'PATCH',
+    url: '/dining_coupon/updateMeta/:id',
+    preHandler: [
+      webAuth('updateDiningCoupon'),
+      validate(DiningCouponValidation.idValidation),
+    ],
+    handler: DiningCouponController.updateMeta,
+  });
+  route({
+    method: 'DELETE',
+    url: '/dining_coupon/delete/:id',
+    preHandler: [
+      webAuth('deleteDiningCoupon'),
+      validate(DiningCouponValidation.idValidation),
+    ],
+    handler: DiningCouponController.drop,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_coupon/getInfo/:id',
+    preHandler: [
+      webAuth('getDiningCoupon'),
+      validate(DiningCouponValidation.idValidation),
+    ],
+    handler: DiningCouponController.getInfo,
+  });
+  route({
+    method: 'PATCH',
+    url: '/dining_coupon/update/:id',
+    preHandler: [
+      webAuth('updateDiningCoupon'),
+      validate(DiningCouponValidation.idValidation),
+    ],
+    handler: DiningCouponController.update,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_coupon/request',
+    preHandler: [
+      webAuth('getDiningCoupon'),
+      validate(DiningCouponValidation.allValidation),
+    ],
+    handler: DiningCouponController.getVendorCouponRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_coupon/detail/:id',
+    preHandler: [
+      webAuth('getDiningCoupon'),
+      validate(DiningCouponValidation.detailValidation),
+    ],
+    handler: DiningCouponController.couponDetail,
+  });
+  // Dining Coupon Routes //
+
+  // Dining Booking Refund Request Reason Routes //
+  route({
+    method: 'GET',
+    url: '/dining_booking_refund_request_reason/getAll',
+    preHandler: [
+      webAuth('getDiningBookingRefundRequestReason'),
+      validate(DiningBookingRefundRequestReasonValidation.allValidation),
+    ],
+    handler: DiningBookingRefundRequestReasonController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_booking_refund_request_reason/save',
+    preHandler: [
+      webAuth('createDiningBookingRefundRequestReason'),
+      validate(DiningBookingRefundRequestReasonValidation.createRefundRequestReason),
+    ],
+    handler: DiningBookingRefundRequestReasonController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/dining_booking_refund_request_reason/update/:reasonId',
+    preHandler: [
+      webAuth('updateDiningBookingRefundRequestReason'),
+      validate(DiningBookingRefundRequestReasonValidation.idValidation),
+    ],
+    handler: DiningBookingRefundRequestReasonController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/dining_booking_refund_request_reason/delete/:reasonId',
+    preHandler: [
+      webAuth('deleteDiningBookingRefundRequestReason'),
+      validate(DiningBookingRefundRequestReasonValidation.idValidation),
+    ],
+    handler: DiningBookingRefundRequestReasonController.drop,
+  });
+  // Dining Booking Refund Request Reason Routes //
+
+  // Dining Refund Request Routes //
+  route({
+    method: 'GET',
+    url: '/dining_booking_refund_request/active',
+    preHandler: [
+      webAuth('getActiveDiningBookingRefundRequest'),
+      validate(DiningBookingRefundRequestValidation.adminListValidation),
+    ],
+    handler: DiningBookingRefundRequestController.getActiveRefundRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_booking_refund_request/info/:requestId',
+    preHandler: [
+      webAuth('getDiningBookingRefundRequestInfo'),
+      validate(DiningBookingRefundRequestValidation.getRefundRequestInfoValidation),
+    ],
+    handler: DiningBookingRefundRequestController.getRefundRequestInfo,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_booking_refund_request/cancel',
+    preHandler: [
+      webAuth('cancelDiningBookingRefundRequest'),
+      validate(DiningBookingRefundRequestValidation.cancelRefundRequestValidation),
+    ],
+    handler: DiningBookingRefundRequestController.cancelRefundRequest,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_booking_refund_request/refundFromMerchant',
+    preHandler: [
+      webAuth('refundDiningBookingFromMerchant'),
+      validate(DiningBookingRefundRequestValidation.refundFromMerchantValidation),
+    ],
+    handler: DiningBookingRefundRequestController.refundFromMerchant,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_booking_refund_request/approve',
+    preHandler: [
+      webAuth('approveDiningBookingRefundRequest'),
+      validate(DiningBookingRefundRequestValidation.approveRefundRequestValidation),
+    ],
+    handler: DiningBookingRefundRequestController.approveRefundRequest,
+  });
+  // Dining Refund Request Routes //
+
+  /// Dining Booking Routes ///
+  route({
+    method: 'GET',
+    url: '/dining_booking/getDiningBookingCount',
+    preHandler: [webAuth('getDiningBookingCount')],
+    handler: DiningBookingController.adminDiningBookingCount,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_booking/getDiningBookingList',
+    preHandler: [
+      webAuth('getDiningBookingList'),
+      validate(DiningBookingValidation.adminBookingValidation),
+    ],
+    handler: DiningBookingController.adminDiningBookingList,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_booking/bookingInformation/:bookingId',
+    preHandler: [
+      webAuth('getDiningBookingInformation'),
+      validate(DiningBookingValidation.bookingInformationAdminValidation),
+    ],
+    handler: DiningBookingController.getDiningBookingInfoAdmin,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_booking/coupon/:id',
+    preHandler: [
+      webAuth('getDiningBookingList'),
+      validate(DiningBookingValidation.couponValidation),
+    ],
+    handler: DiningBookingController.couponBooking,
+  });
+  /// Dining Booking Routes ///
+
+  /// Feedback & Report Emergency Routes //
+  route({
+    method: 'GET',
+    url: '/feedback/list',
+    preHandler: [
+      webAuth('getFeedbackList'),
+      validate(FeedbackFormValidation.allValidation),
+    ],
+    handler: FeedbackFormController.feedbackListAdmin,
+  });
+  route({
+    method: 'DELETE',
+    url: '/feedback/delete/:id',
+    preHandler: [
+      webAuth('deleteFeedback'),
+      validate(FeedbackFormValidation.deleteFeedbackValidation),
+    ],
+    handler: FeedbackFormController.drop,
+  });
+  route({
+    method: 'PATCH',
+    url: '/feedback/update/',
+    preHandler: [
+      webAuth('updateFeedback'),
+      validate(FeedbackFormValidation.updateFeedbackValidation),
+    ],
+    handler: FeedbackFormController.update,
+  });
+
+  route({
+    method: 'GET',
+    url: '/report_emergency/list',
+    preHandler: [
+      webAuth('getReportEmergencyList'),
+      validate(ReportEmergencyValidation.allValidation),
+    ],
+    handler: ReportEmergencyController.reportEmergencyListAdmin,
+  });
+  route({
+    method: 'DELETE',
+    url: '/report_emergency/delete/:id',
+    preHandler: [
+      webAuth('deleteReportEmergency'),
+      validate(ReportEmergencyValidation.deleteReportEmergencyValidation),
+    ],
+    handler: ReportEmergencyController.drop,
+  });
+  route({
+    method: 'PATCH',
+    url: '/report_emergency/update/',
+    preHandler: [
+      webAuth('updateReportEmergency'),
+      validate(ReportEmergencyValidation.updateReportEmergencyValidation),
+    ],
+    handler: ReportEmergencyController.update,
+  });
+  /// Feedback & Report Emergency Routes //
+
+  // User Avatar Routes //
+  route({
+    method: 'GET',
+    url: '/user_avatar/list',
+    preHandler: [webAuth('getAvatarList')],
+    handler: UserAvatarController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/user_avatar/save',
+    preHandler: [
+      webAuth('saveUserAvatar'),
+      validate(UserAvatarValidation.saveAvatarValidation),
+    ],
+    handler: UserAvatarController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/user_avatar/updateDefault/:id',
+    preHandler: [
+      webAuth('updateDefaultAvatar'),
+      validate(UserAvatarValidation.idValidation),
+    ],
+    handler: UserAvatarController.updateDefault,
+  });
+  route({
+    method: 'PATCH',
+    url: '/user_avatar/update/:id',
+    preHandler: [
+      webAuth('updateAvatar'),
+      validate(UserAvatarValidation.idValidation),
+    ],
+    handler: UserAvatarController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/user_avatar/delete/:id',
+    preHandler: [
+      webAuth('deleteAvatar'),
+      validate(UserAvatarValidation.idValidation),
+    ],
+    handler: UserAvatarController.drop,
+  });
+  // User Avatar Routes //
+
+  // Waiter Routes //
+  route({
+    method: 'GET',
+    url: '/waiter/getAll',
+    preHandler: [
+      webAuth('getWaiter'),
+      validate(WaiterValidation.allValidation),
+    ],
+    handler: WaiterController.waiterListAdmin,
+  });
+  route({
+    method: 'PATCH',
+    url: '/waiter/updateWaiterStatus/:waiterId',
+    preHandler: [
+      webAuth('updateWaiterInfo'),
+      validate(WaiterValidation.updateWaiterStatusValidation),
+    ],
+    handler: WaiterController.updateWaiterStatus,
+  });
+  route({
+    method: 'GET',
+    url: '/waiter/getById/:waiterId',
+    preHandler: [
+      webAuth('getWaiterById'),
+      validate(WaiterValidation.idValidation),
+    ],
+    handler: WaiterController.getById,
+  });
+  route({
+    method: 'PATCH',
+    url: '/waiter/updateWaiterInfo/:userId',
+    preHandler: [
+      webAuth('updateWaiterInfo'),
+      validate(WaiterValidation.updateWaiterInfoValidation),
+    ],
+    handler: WaiterController.updateWaiterInfo,
+  });
+  // Waiter Routes //
+
+  // Kitchen Owner Routes //
+  route({
+    method: 'GET',
+    url: '/kitchen_owners/list',
+    preHandler: [
+      webAuth('get_kitchen_owner_list'),
+      validate(KitchenOwnerValidation.allValidation),
+    ],
+    handler: KitchenOwnerController.kitchenOwnerListAdmin,
+  });
+  route({
+    method: 'PATCH',
+    url: '/kitchen_owner/update_kitchen_status/:kitchenId',
+    preHandler: [
+      webAuth('update_kitchen_status'),
+      validate(KitchenOwnerValidation.updateKitchenOwnerStatusValidation),
+    ],
+    handler: KitchenOwnerController.updateKitchenOwnerStatus,
+  });
+  route({
+    method: 'GET',
+    url: '/kitchen_owner/info/:kitchenId',
+    preHandler: [
+      webAuth('kitchen_owner_info'),
+      validate(KitchenOwnerValidation.idValidation),
+    ],
+    handler: KitchenOwnerController.getById,
+  });
+  route({
+    method: 'PATCH',
+    url: '/kitchen_owner/update_detail/:userId',
+    preHandler: [
+      webAuth('update_kitchen_owner'),
+      validate(KitchenOwnerValidation.updateKitchenOwnerInfoValidation),
+    ],
+    handler: KitchenOwnerController.updateKitchenOwnerInfo,
+  });
+  // Kitchen Owner Routes //
+
+  // Waiter Settings Routes //
+  route({
+    method: 'GET',
+    url: '/waiter_settings/get',
+    preHandler: [webAuth('getWaiterSettings')],
+    handler: WaiterSettingController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/waiter_settings/save',
+    preHandler: [
+      webAuth('createWaiterSettings'),
+      validate(WaiterSettingValidation.createSettings),
+    ],
+    handler: WaiterSettingController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/waiter_settings/update/:settingId',
+    preHandler: [
+      webAuth('updateWaiterSettings'),
+      validate(WaiterSettingValidation.idValidation),
+    ],
+    handler: WaiterSettingController.update,
+  });
+  // Waiter Settings Routes //
+
+  // Kitchen Owner Setting Routes //
+  route({
+    method: 'GET',
+    url: '/kitchen_owner_setting/get',
+    preHandler: [webAuth('get_kitchen_owner_setting')],
+    handler: KitchenOwnerSettingController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/kitchen_owner_setting/save',
+    preHandler: [
+      webAuth('create_kitchen_owner_setting'),
+      validate(KitchenOwnerSettingValidation.createSettings),
+    ],
+    handler: KitchenOwnerSettingController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/kitchen_owner_setting/update/:settingId',
+    preHandler: [
+      webAuth('update_kitchen_owner_setting'),
+      validate(KitchenOwnerSettingValidation.idValidation),
+    ],
+    handler: KitchenOwnerSettingController.update,
+  });
+  // Kitchen Owner Setting Routes //
+
+  // Food Taxation Routes //
+  route({
+    method: 'GET',
+    url: '/food_taxation/getAll',
+    preHandler: [
+      webAuth('getFoodTaxationList'),
+      validate(FoodTaxationValidation.allValidation),
+    ],
+    handler: FoodTaxationController.getTaxationListAdmin,
+  });
+  route({
+    method: 'DELETE',
+    url: '/food_taxation/delete_restaurant_taxation/:restaurant',
+    preHandler: [
+      webAuth('deleteFoodTaxation'),
+      validate(FoodTaxationValidation.deleteAdminValidation),
+    ],
+    handler: FoodTaxationController.deleteTaxationAdmin,
+  });
+  // Food Taxation Routes //
+
+  // Cash In Hand Routes //
+  route({
+    method: 'GET',
+    url: '/cashCollection/list',
+    preHandler: [
+      webAuth('cashCollectionList'),
+      validate(CollectCashValidation.collectCashListValidation),
+    ],
+    handler: CollectCashController.get,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant/getRestaurantByCityCollectCash/:cityId',
+    preHandler: [
+      webAuth('getRestaurantByCity'),
+      validate(RestaurantValidation.restaurantByCityIdLimitedDetailsValidation),
+    ],
+    handler: RestaurantController.getRestaurantByCityIdFromCollectCash,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant/cashInHand/:vendor',
+    preHandler: [
+      webAuth('getRestaurantCashInHand'),
+      validate(RestaurantValidation.vendorCashInHandValidation),
+    ],
+    handler: RestaurantController.getRestaurantCashInHand,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant/clearCashInHand',
+    preHandler: [
+      webAuth('clearCashInHand'),
+      validate(RestaurantValidation.collectCashValidation),
+    ],
+    handler: RestaurantController.clearCashInHandAndUpdateWallet,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman/cashInHand/:deliveryman',
+    preHandler: [
+      webAuth('getDeliverymanCashInHand'),
+      validate(DriverValidation.deliverymanCashInHandValidation),
+    ],
+    handler: DriverController.getDeliverymanCashInHand,
+  });
+  route({
+    method: 'POST',
+    url: '/deliveryman/clearCashInHand',
+    preHandler: [
+      webAuth('clearCashInHand'),
+      validate(DriverValidation.collectCashValidation),
+    ],
+    handler: DriverController.clearCashInHand,
+  });
+  // Cash In Hand Routes //
+
+  // Withdrawal Method Routes //
+  route({
+    method: 'POST',
+    url: '/withdrawalMethod/create',
+    preHandler: [
+      webAuth('createWithdrawalMethod'),
+      validate(WithdrawalMethodValidation.createWithdrawalMethodValidation),
+    ],
+    handler: WithdrawalMethodController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/withdrawalMethod/list',
+    preHandler: [
+      webAuth('getWithdrawalMethodList'),
+      validate(WithdrawalMethodValidation.allValidation),
+    ],
+    handler: WithdrawalMethodController.methodList,
+  });
+  route({
+    method: 'GET',
+    url: '/withdrawalMethod/detail/:methodId',
+    preHandler: [
+      webAuth('getWithdrawalMethodList'),
+      validate(WithdrawalMethodValidation.idValidation),
+    ],
+    handler: WithdrawalMethodController.withdrawalMethodDetail,
+  });
+  route({
+    method: 'PATCH',
+    url: '/withdrawalMethod/update/:methodId',
+    preHandler: [
+      webAuth('updateWithdrawalMethod'),
+      validate(WithdrawalMethodValidation.idValidation),
+    ],
+    handler: WithdrawalMethodController.update,
+  });
+  route({
+    method: 'PATCH',
+    url: '/withdrawalMethod/updateDefault/:methodId',
+    preHandler: [
+      webAuth('updateDefaultWithdrawalMethod'),
+      validate(WithdrawalMethodValidation.idValidation),
+    ],
+    handler: WithdrawalMethodController.updateDefault,
+  });
+  route({
+    method: 'DELETE',
+    url: '/withdrawalMethod/delete/:methodId',
+    preHandler: [
+      webAuth('deleteWithdrawalMethod'),
+      validate(WithdrawalMethodValidation.idValidation),
+    ],
+    handler: WithdrawalMethodController.drop,
+  });
+  // Withdrawal Method Routes //
+
+  // Withdrawal Request Routes //
+  route({
+    method: 'GET',
+    url: '/withdrawalRequest/restaurant',
+    preHandler: [
+      webAuth('getRestaurantWithdrawalRequest'),
+      validate(WithdrawalRequestValidation.allValidation),
+    ],
+    handler: WithdrawalRequestController.getRestaurantWithdrawalRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/withdrawalRequest/deliveryman',
+    preHandler: [
+      webAuth('getDeliverymanWithdrawalRequest'),
+      validate(WithdrawalRequestValidation.allValidation),
+    ],
+    handler: WithdrawalRequestController.getDeliverymanWithdrawalRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/withdrawalRequest/detail/:id',
+    preHandler: [
+      webAuth('getWithdrawalRequestDetail'),
+      validate(WithdrawalRequestValidation.idValidation),
+    ],
+    handler: WithdrawalRequestController.withdrawalRequestDetail,
+  });
+  route({
+    method: 'POST',
+    url: '/withdrawalRequest/decline',
+    preHandler: [
+      webAuth('declineWithdrawalRequest'),
+      validate(WithdrawalRequestValidation.declineWithdrawalRequestValidation),
+    ],
+    handler: WithdrawalRequestController.declineWithdrawalRequest,
+  });
+  route({
+    method: 'POST',
+    url: '/withdrawalRequest/approve',
+    preHandler: [
+      webAuth('approveWithdrawalRequest'),
+      validate(WithdrawalRequestValidation.approveWithdrawalRequestValidation),
+    ],
+    handler: WithdrawalRequestController.approveWithdrawalRequest,
+  });
+  // Withdrawal Request Routes //
+
+  // Joining Form Routes //
+  route({
+    method: 'POST',
+    url: '/joining_form/restaurant',
+    preHandler: [
+      webAuth('saveJoiningForm'),
+      validate(JoiningFormValidation.saveRestaurantJoiningFormValidation),
+    ],
+    handler: JoiningFormController.saveRestaurantForm,
+  });
+  route({
+    method: 'POST',
+    url: '/joining_form/deliveryman',
+    preHandler: [
+      webAuth('saveJoiningForm'),
+      validate(JoiningFormValidation.saveRestaurantJoiningFormValidation),
+    ],
+    handler: JoiningFormController.saveDeliverymanForm,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_joining_form',
+    preHandler: [webAuth('getJoinigFormDetail')],
+    handler: JoiningFormController.getRestaurantForm,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_joining_form',
+    preHandler: [webAuth('getJoinigFormDetail')],
+    handler: JoiningFormController.getDeliverymanForm,
+  });
+  // Joining Form Routes //
+
+  // Joining Request Routes //
+  route({
+    method: 'GET',
+    url: '/restaurant_request/list/:status',
+    preHandler: [
+      webAuth('getRestaurantJoiningRequest'),
+      validate(RestaurantJoiningRequestValidation.statusValidation),
+    ],
+    handler: RestaurantJoiningRequestController.getJoiningRequestList,
+  });
+  route({
+    method: 'DELETE',
+    url: '/restaurant_request/delete/:id',
+    preHandler: [
+      webAuth('deleteRestaurantJoiningRequest'),
+      validate(RestaurantJoiningRequestValidation.idValidation),
+    ],
+    handler: RestaurantJoiningRequestController.deleteRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_request/detail/:id',
+    preHandler: [
+      webAuth('getRestaurantJoiningRequest'),
+      validate(RestaurantJoiningRequestValidation.idValidation),
+    ],
+    handler: RestaurantJoiningRequestController.getDetail,
+  });
+  route({
+    method: 'PATCH',
+    url: '/restaurant_request/reject/:id',
+    preHandler: [
+      webAuth('rejectRestaurantJoiningRequest'),
+      validate(RestaurantJoiningRequestValidation.rejectValidation),
+    ],
+    handler: RestaurantJoiningRequestController.rejectRequest,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant_request/approve/:id',
+    preHandler: [
+      webAuth('acceptRestaurantJoiningRequest'),
+      validate(RestaurantJoiningRequestValidation.approveValidation),
+    ],
+    handler: RestaurantJoiningRequestController.approveRequest,
+  });
+
+  route({
+    method: 'GET',
+    url: '/deliveryman_request/list/:status',
+    preHandler: [
+      webAuth('getDeliverymanJoiningRequest'),
+      validate(DeliverymanJoiningRequestValidation.statusValidation),
+    ],
+    handler: DeliverymanJoiningRequestController.getJoiningRequestList,
+  });
+  route({
+    method: 'DELETE',
+    url: '/deliveryman_request/delete/:id',
+    preHandler: [
+      webAuth('deleteDeliverymanJoiningRequest'),
+      validate(DeliverymanJoiningRequestValidation.idValidation),
+    ],
+    handler: DeliverymanJoiningRequestController.deleteRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_request/detail/:id',
+    preHandler: [
+      webAuth('getDeliverymanJoiningRequest'),
+      validate(DeliverymanJoiningRequestValidation.idValidation),
+    ],
+    handler: DeliverymanJoiningRequestController.getDetail,
+  });
+  route({
+    method: 'PATCH',
+    url: '/deliveryman_request/reject/:id',
+    preHandler: [
+      webAuth('rejectDeliverymanJoiningRequest'),
+      validate(DeliverymanJoiningRequestValidation.rejectValidation),
+    ],
+    handler: DeliverymanJoiningRequestController.rejectRequest,
+  });
+  route({
+    method: 'POST',
+    url: '/deliveryman_request/approve/:id',
+    preHandler: [
+      webAuth('acceptDeliverymanJoiningRequest'),
+      validate(DeliverymanJoiningRequestValidation.approveValidation),
+    ],
+    handler: DeliverymanJoiningRequestController.approveRequest,
+  });
+  // Joining Request Routes //
+
+  // Invoice Instructions Routes //
+  route({
+    method: 'GET',
+    url: '/invoice/instruction/getAll',
+    preHandler: [
+      webAuth('getInvoiceInstructions'),
+      validate(InvoiceInstructionValidation.allValidation),
+    ],
+    handler: InvoiceInstructionController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/invoice/instruction/save',
+    preHandler: [
+      webAuth('createInvoiceInstruction'),
+      validate(InvoiceInstructionValidation.createInvoiceInstructionValidation),
+    ],
+    handler: InvoiceInstructionController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/invoice/instruction/update/:noticeId',
+    preHandler: [
+      webAuth('updateInvoiceInstruction'),
+      validate(InvoiceInstructionValidation.idValidation),
+    ],
+    handler: InvoiceInstructionController.update,
+  });
+  route({
+    method: 'DELETE',
+    url: '/invoice/instruction/delete/:noticeId',
+    preHandler: [
+      webAuth('deleteInvoiceInstruction'),
+      validate(InvoiceInstructionValidation.idValidation),
+    ],
+    handler: InvoiceInstructionController.drop,
+  });
+  // Invoice Instructions Routes //
+
+  // Customer Routes //
+  route({
+    method: 'GET',
+    url: '/customer/getList',
+    preHandler: [webAuth('getCustomerList')],
+    handler: UserController.customerList,
+  });
+  route({
+    method: 'PATCH',
+    url: '/customer/update/:id',
+    preHandler: [
+      webAuth('updateCustomerStatus'),
+      validate(UserValidation.updateStatusValidation),
+    ],
+    handler: UserController.updateStatus,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/loyaltyPointsReport',
+    preHandler: [
+      webAuth('loyaltyPointsReport'),
+      validate(UserValidation.loyalityPointValidation),
+    ],
+    handler: LoyaltyPointsController.loyalityPointReport,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/walletFundList',
+    preHandler: [webAuth('walletFundList')],
+    handler: UserController.customerWalletFundList,
+  });
+  route({
+    method: 'POST',
+    url: '/customer/wallet/addFund',
+    preHandler: [
+      webAuth('addWalletFund'),
+      validate(WalletValidation.adminAddWalletFundValidation),
+    ],
+    handler: WalletController.adminAddWalletFund,
+  });
+  // Customer Routes //
+
+  // Wallet Bonus Routes //
+  route({
+    method: 'POST',
+    url: '/wallet/bonus/save',
+    preHandler: [
+      webAuth('createWalletBonus'),
+      validate(WalletBonusValidation.createBonusValidation),
+    ],
+    handler: WalletBonusController.create,
+  });
+  route({
+    method: 'GET',
+    url: '/wallet/bonus/getAll',
+    preHandler: [
+      webAuth('getWalletBonus'),
+      validate(WalletBonusValidation.allValidation),
+    ],
+    handler: WalletBonusController.getAll,
+  });
+  route({
+    method: 'PATCH',
+    url: '/wallet/bonus/updateStatus/:id',
+    preHandler: [
+      webAuth('updateWalletBonus'),
+      validate(WalletBonusValidation.updateStatusValidation),
+    ],
+    handler: WalletBonusController.updateStatus,
+  });
+  route({
+    method: 'DELETE',
+    url: '/wallet/bonus/delete/:id',
+    preHandler: [
+      webAuth('deleteBonus'),
+      validate(WalletBonusValidation.idValidation),
+    ],
+    handler: WalletBonusController.drop,
+  });
+  route({
+    method: 'PATCH',
+    url: '/wallet/bonus/update/:id',
+    preHandler: [
+      webAuth('updateWalletBonus'),
+      validate(WalletBonusValidation.updateValidation),
+    ],
+    handler: WalletBonusController.updateData,
+  });
+  // Wallet Bonus Routes //
+
+  // Admin Expense Routes //
+  route({
+    method: 'POST',
+    url: '/expense/save',
+    preHandler: [
+      webAuth('saveAdminExpense'),
+      validate(AdminExpenseValidation.saveExpenseValidation),
+    ],
+    handler: AdminExpenseController.create,
+  });
+  // Admin Expense Routes //
+
+  // Report Routes //
+  route({
+    method: 'GET',
+    url: '/reports/wallet_transaction/',
+    preHandler: [webAuth('walletTransactionReport')],
+    handler: WalletController.getTransactionReport,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/payment_transaction/',
+    preHandler: [
+      webAuth('paymentTransactionReport'),
+      validate(PaymentConfigValidation.allPaymentValidation),
+    ],
+    handler: PaymentInitiationController.getPaymentInitiateReport,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/food_report/',
+    preHandler: [webAuth('foodReport')],
+    handler: FoodController.foodReport,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/restaurantInitial',
+    preHandler: [webAuth('restaurantReport')],
+    handler: RestaurantController.restauratReportInitialFilter,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/restaurant',
+    preHandler: [webAuth('restaurantReport')],
+    handler: RestaurantController.restaurantReport,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/customer',
+    preHandler: [webAuth('customerReport')],
+    handler: UserController.customerReport,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/deliveryman',
+    preHandler: [webAuth('deliverymanReport')],
+    handler: DriverController.deliverymanReport,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/orders',
+    preHandler: [
+      webAuth('orderReport'),
+      validate(OrdersValidation.orderReportValidation),
+    ],
+    handler: OrdersController.orderReports,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/posOrders',
+    preHandler: [
+      webAuth('orderReport'),
+      validate(OrdersValidation.orderReportValidation),
+    ],
+    handler: PosOrTableOrderController.posOrderReport,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/tableOrders',
+    preHandler: [
+      webAuth('orderReport'),
+      validate(OrdersValidation.orderReportValidation),
+    ],
+    handler: TableOrderController.tableOrderReport,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/diningBooking',
+    preHandler: [webAuth('orderReport')],
+    handler: DiningBookingController.diningBookingReport,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/expenseInitial',
+    preHandler: [webAuth('expenseReport')],
+    handler: AdminExpenseController.getInitialResponse,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/expense',
+    preHandler: [webAuth('expenseReport')],
+    handler: AdminExpenseController.getExpenseList,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/disbursementReportInitial',
+    preHandler: [webAuth('disbursementReport')],
+    handler: DisbursementController.disbursementTransactionInitial,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/restaurantDisbursement',
+    preHandler: [webAuth('disbursementReport')],
+    handler: DisbursementController.restaurantDisbursementTransactionReport,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/deliverymanDisbursementReportInitial',
+    preHandler: [webAuth('disbursementReport')],
+    handler: DisbursementController.deliverymanDisbursementTransactionInitial,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/deliverymanDisbursement',
+    preHandler: [webAuth('disbursementReport')],
+    handler: DisbursementController.deliverymanDisbursementTransactionReport,
+  });
+  // Report Routes //
+
+  // Disbursement //
+  route({
+    method: 'GET',
+    url: '/disbursement/restaurant',
+    preHandler: [webAuth('restaurantDisbursement')],
+    handler: DisbursementController.restaurantDisbursement,
+  });
+  route({
+    method: 'GET',
+    url: '/disbursement/deliveryman',
+    preHandler: [webAuth('deliverymanDisbursement')],
+    handler: DisbursementController.deliverymanDisbursement,
+  });
+  route({
+    method: 'GET',
+    url: '/disbursement/restaurantReport/:id',
+    preHandler: [
+      webAuth('restaurantDisbursement'),
+      validate(DisbursementValidation.disbursementReportValidation),
+    ],
+    handler: DisbursementController.restaurantDisbursementReport,
+  });
+  route({
+    method: 'GET',
+    url: '/disbursement/deliverymanReport/:id',
+    preHandler: [
+      webAuth('deliverymanDisbursement'),
+      validate(DisbursementValidation.disbursementReportValidation),
+    ],
+    handler: DisbursementController.deliverymanDisbursementReport,
+  });
+  route({
+    method: 'GET',
+    url: '/disbursement/restaurantDisbursementDetail/:id',
+    preHandler: [
+      webAuth('restaurantDisbursement'),
+      validate(DisbursementValidation.disbursementReportValidation),
+    ],
+    handler: DisbursementController.restaurantDisbursementDetail,
+  });
+  route({
+    method: 'GET',
+    url: '/disbursement/deliverymanDisbursementDetail/:id',
+    preHandler: [
+      webAuth('deliverymanDisbursement'),
+      validate(DisbursementValidation.disbursementReportValidation),
+    ],
+    handler: DisbursementController.deliverymanDisbursementDetail,
+  });
+  route({
+    method: 'GET',
+    url: '/disbursement/acceptRestaurantDisbursement/:id',
+    preHandler: [
+      webAuth('restaurantDisbursement'),
+      validate(DisbursementValidation.disbursementReportValidation),
+    ],
+    handler: DisbursementController.acceptRestaurantDisburment,
+  });
+  route({
+    method: 'GET',
+    url: '/disbursement/rejectRestaurantDisbursement/:id',
+    preHandler: [
+      webAuth('restaurantDisbursement'),
+      validate(DisbursementValidation.disbursementReportValidation),
+    ],
+    handler: DisbursementController.rejectRestaurantDisburment,
+  });
+
+  route({
+    method: 'GET',
+    url: '/disbursement/acceptDeliverymanDisbursement/:id',
+    preHandler: [
+      webAuth('deliverymanDisbursement'),
+      validate(DisbursementValidation.disbursementReportValidation),
+    ],
+    handler: DisbursementController.acceptDeliverymanDisbursment,
+  });
+  route({
+    method: 'GET',
+    url: '/disbursement/rejectDeliverymanDisbursement/:id',
+    preHandler: [
+      webAuth('deliverymanDisbursement'),
+      validate(DisbursementValidation.disbursementReportValidation),
+    ],
+    handler: DisbursementController.rejectDeliverymanDisbursment,
+  });
+  // Disbursement //
+
+  // Customer Detail Routes //
+  route({
+    method: 'GET',
+    url: '/customer/orderList',
+    preHandler: [webAuth('customerDetail')],
+    handler: OrdersController.customerOrderList,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/diningBookingList',
+    preHandler: [webAuth('customerDetail')],
+    handler: DiningBookingController.customerDiningBooking,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/deliveryAddressList',
+    preHandler: [webAuth('customerDetail')],
+    handler: UserAddressController.customerAddressList,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/purchasedTiffinPackages',
+    preHandler: [webAuth('customerDetail')],
+    handler: UserPurchasedTiffinSubscriptionController.customerPurchasedPackages,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/customerAllRefundRequest',
+    preHandler: [webAuth('customerDetail')],
+    handler: OrdersController.customerAllRefundRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/customerOrderRefundList',
+    preHandler: [webAuth('customerDetail')],
+    handler: OrdersController.customerOrderRefundList,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/customerTiffinRefundList',
+    preHandler: [webAuth('customerDetail')],
+    handler: OrdersController.customerTiffinRefundList,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/customerBookingRefundList',
+    preHandler: [webAuth('customerDetail')],
+    handler: OrdersController.customerBookingRefundList,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/customerComplaintList',
+    preHandler: [webAuth('customerDetail')],
+    handler: ComplaintsController.customerComplaintList,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/customerAllFavourite',
+    preHandler: [webAuth('customerDetail')],
+    handler: FavouriteController.customerAllFavourite,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/customerFavouriteOrders',
+    preHandler: [webAuth('customerDetail')],
+    handler: FavouriteController.customerFavouriteOrders,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/customerFavouriteRestaurant',
+    preHandler: [webAuth('customerDetail')],
+    handler: FavouriteController.customerFavouriteRestaurant,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/customerFavouriteFood',
+    preHandler: [webAuth('customerDetail')],
+    handler: FavouriteController.customerFavouriteFood,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/customerHiddenRestaurants',
+    preHandler: [webAuth('customerDetail')],
+    handler: HideRestaurantController.customerHiddenRestaurants,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/detail/:user',
+    preHandler: [
+      webAuth('customerDetail'),
+      validate(UserValidation.idValidation),
+    ],
+    handler: UserController.customerDetail,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/customerMediaFiles',
+    preHandler: [webAuth('customerDetail')],
+    handler: MediaController.customerMediaFiles,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/customerAllReviews',
+    preHandler: [webAuth('customerDetail')],
+    handler: ReviewRatingController.customerAllReviews,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/customerRestaurantReview',
+    preHandler: [webAuth('customerDetail')],
+    handler: ReviewRatingController.customerRestaurantReview,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/customerFoodReview',
+    preHandler: [webAuth('customerDetail')],
+    handler: ReviewRatingController.customerFoodReview,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/customerDeliverymanReview',
+    preHandler: [webAuth('customerDetail')],
+    handler: ReviewRatingController.customerDeliverymanReview,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/wallet_transactions',
+    preHandler: [webAuth('customerDetail')],
+    handler: WalletController.customerTransactionList,
+  });
+  // Customer Detail Routes //
+
+  // Restaurant Detail Routes //
+  route({
+    method: 'GET',
+    url: '/vendor_detail/orderList',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: OrdersController.vendorOrderList,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/pos_order_list',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: PosOrTableOrderController.vendorPosOrderList,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/table_order_list',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: TableOrderController.vendorTableOrderList,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/booking_list',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: DiningBookingController.vendorBookingList,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/food_list',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: FoodController.vendorFoodList,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/waiter_list',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: WaiterController.vendorWaiterList,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/deliveryman_list',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: DriverController.vendorDeliverymanList,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/tiffin_package_list',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: SubscriptionTiffinPackageController.vendorTiffinPackageList,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/complaints',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: ComplaintsController.vendorComplaintList,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/complaint_orders',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: ComplaintsController.vendorUserOrderComplaintList,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/complaint_vendor',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: ComplaintsController.vendorOwnOrderComplaintList,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/all_refund_request',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: OrdersController.vendorAllRefundRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/order_refund_request',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: OrdersController.vendorOrderRefundRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/dining_refund_request',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: OrdersController.vendorDiningRefundRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/tiffin_subscription_refund_request',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: OrdersController.vendorTiffinRefundRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/media_files',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: MediaController.vendorMediaFiles,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/outlet_list',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: RestaurantController.vendorOutletList,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/disbursement_list',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: DisbursementController.vendorDisbursementList,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/collected_cash_list',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: CollectCashController.vendorCollectedCashList,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/withdrawal_request_list',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: WithdrawalRequestController.vendorWithdrawalRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/payout_accounts',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: RestaurantPayoutMethodController.vendorPayoutAccounts,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/all_reviews',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: ReviewRatingController.vendorAllReviews,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/vendor_reviews',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: ReviewRatingController.vendorReviews,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/vendor_food_reviews',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: ReviewRatingController.vendorFoodReviews,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/information/:id',
+    preHandler: [
+      webAuth('restaurantDetail'),
+      validate(RestaurantValidation.vendorInformationValidation),
+    ],
+    handler: RestaurantController.vendorInformation,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/wallet_transactions',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: WalletController.vendorTransactionList,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_detail/kitchen_owner_list',
+    preHandler: [webAuth('restaurantDetail')],
+    handler: KitchenOwnerController.vendorKitchenOwnerList,
+  });
+  // Restaurant Detail Routes //
+
+  // Deliveryman Detail Routes //
+  route({
+    method: 'GET',
+    url: '/deliveryman_detail/information/:id',
+    preHandler: [
+      webAuth('deliverymanDetail'),
+      validate(DriverValidation.deliverymanInformationValidation),
+    ],
+    handler: DriverController.deliverymanInformation,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_detail/order_list',
+    preHandler: [webAuth('deliverymanDetail')],
+    handler: OrdersController.deliverymanOrderList,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_detail/disbursement_list',
+    preHandler: [webAuth('deliverymanDetail')],
+    handler: DisbursementController.deliverymanDisbursementList,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_detail/collected_cash_list',
+    preHandler: [webAuth('deliverymanDetail')],
+    handler: CollectCashController.deliverymanCollectedCashList,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_detail/payout_accounts',
+    preHandler: [webAuth('deliverymanDetail')],
+    handler: DeliverymanPayoutMethodController.deliverymanPayoutAccounts,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_detail/withdrawal_request_list',
+    preHandler: [webAuth('deliverymanDetail')],
+    handler: WithdrawalRequestController.deliverymanWithdrawalRequest,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_detail/reviews',
+    preHandler: [webAuth('deliverymanDetail')],
+    handler: ReviewRatingController.deliverymanReviews,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_detail/media_files',
+    preHandler: [webAuth('deliverymanDetail')],
+    handler: MediaController.deliverymanMediaFiles,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_detail/complaints',
+    preHandler: [webAuth('deliverymanDetail')],
+    handler: ComplaintsController.deliverymanComplaintList,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_detail/complaint_orders',
+    preHandler: [webAuth('deliverymanDetail')],
+    handler: ComplaintsController.deliverymanUserOrderComplaintList,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_detail/complaint_vendor',
+    preHandler: [webAuth('deliverymanDetail')],
+    handler: ComplaintsController.deliverymanRestaurantComplaintList,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_detail/wallet_transactions',
+    preHandler: [webAuth('deliverymanDetail')],
+    handler: WalletController.deliverymanTransactionList,
+  });
+  //
+  // Deliveryman Detail Routes //
+
+  // POS Routes //
+  route({
+    method: 'GET',
+    url: '/pos/initial',
+    preHandler: [webAuth('posOrder')],
+    handler: CityController.posCities,
+  });
+  route({
+    method: 'GET',
+    url: '/pos/restaurants/:cityId',
+    preHandler: [
+      webAuth('posOrder'),
+      validate(RestaurantValidation.cityIdValidation),
+    ],
+    handler: RestaurantController.posRestaurantListFromCity,
+  });
+  route({
+    method: 'GET',
+    url: '/pos/categories/:restaurantId',
+    preHandler: [
+      webAuth('posOrder'),
+      validate(RestaurantValidation.idValidation),
+    ],
+    handler: RestaurantController.posRestaurantData,
+  });
+  route({
+    method: 'POST',
+    url: '/pos/food_list/',
+    preHandler: [
+      webAuth('posOrder'),
+      validate(RestaurantValidation.posFoodListWebValidation),
+    ],
+    handler: RestaurantController.getPosFoodDataWeb,
+  });
+  route({
+    method: 'GET',
+    url: '/pos/search/:vendor/:searchQuery',
+    preHandler: [
+      webAuth('posOrder'),
+      validate(RestaurantValidation.posFoodSearchValidation),
+    ],
+    handler: RestaurantController.posFoodSearch,
+  });
+  route({
+    method: 'POST',
+    url: '/pos/createCustomer',
+    preHandler: [
+      webAuth('createCustomer'),
+      validate(AuthValidation.adminAddCustomerValidation),
+    ],
+    handler: UserController.adminCreateCustomer,
+  });
+  route({
+    method: 'GET',
+    url: '/pos/customer_detail/:user',
+    preHandler: [
+      webAuth('posOrder'),
+      validate(UserValidation.idValidation),
+    ],
+    handler: UserController.adminPosCustomerDetail,
+  });
+  route({
+    method: 'POST',
+    url: '/pos/place_order',
+    preHandler: [
+      webAuth('posOrder'),
+      validate(OrdersValidation.adminPOSOrderValidation),
+    ],
+    handler: OrdersController.placePOSAdminOrder,
+  });
+  // POS Routes //
+
+  // Roles Routes //
+  route({
+    method: 'GET',
+    url: '/auth_roles/role_account_list',
+    preHandler: [
+      webAuth('manage_role'),
+      validate(AuthValidation.roleAccountListValidation),
+    ],
+    handler: AuthController.getRoleAccountList,
+  });
+  route({
+    method: 'POST',
+    url: '/auth_roles/new_admin',
+    preHandler: [
+      webAuth('manage_role'),
+      validate(AuthValidation.roleValidation),
+    ],
+    handler: AuthController.addAdminAccount,
+  });
+  route({
+    method: 'GET',
+    url: '/auth_roles/detail/:id',
+    preHandler: [
+      webAuth('manage_role'),
+      validate(AuthValidation.roleAccountDetailValidation),
+    ],
+    handler: AuthController.roleAccountDetail,
+  });
+  route({
+    method: 'PATCH',
+    url: '/auth_roles/update_status/:id',
+    preHandler: [
+      webAuth('manage_role'),
+      validate(AuthValidation.updateRoleStatusValidation),
+    ],
+    handler: AuthController.updateRoleStatus,
+  });
+  route({
+    method: 'PATCH',
+    url: '/auth_roles/update_detail/:id',
+    preHandler: [
+      webAuth('manage_role'),
+      validate(AuthValidation.updateRoleDetailValidation),
+    ],
+    handler: AuthController.updateRoleDetail,
+  });
+  route({
+    method: 'POST',
+    url: '/auth_roles/new_accountant',
+    preHandler: [
+      webAuth('manage_role'),
+      validate(AuthValidation.roleValidation),
+    ],
+    handler: AuthController.addAccountantAccount,
+  });
+  route({
+    method: 'POST',
+    url: '/auth_roles/new_support_team',
+    preHandler: [
+      webAuth('manage_role'),
+      validate(AuthValidation.roleValidation),
+    ],
+    handler: AuthController.addSupportTeamAccount,
+  });
+  route({
+    method: 'GET',
+    url: '/auth_roles/city_master_list',
+    preHandler: [
+      webAuth('manage_role'),
+      validate(AuthValidation.cityZenAccountListValidation),
+    ],
+    handler: AuthController.cityMasterList,
+  });
+  route({
+    method: 'POST',
+    url: '/auth_roles/new_city_master',
+    preHandler: [
+      webAuth('manage_role'),
+      validate(AuthValidation.cityRoleValidation),
+    ],
+    handler: AuthController.addCityMaterAccount,
+  });
+  route({
+    method: 'GET',
+    url: '/auth_roles/city_master_detail/:id',
+    preHandler: [
+      webAuth('manage_role'),
+      validate(AuthValidation.roleAccountDetailValidation),
+    ],
+    handler: AuthController.cityMasterAccountDetail,
+  });
+  route({
+    method: 'PATCH',
+    url: '/auth_roles/update_city_master/:id',
+    preHandler: [
+      webAuth('manage_role'),
+      validate(AuthValidation.updateCityMasterValidation),
+    ],
+    handler: AuthController.updateCityMasterDetail,
+  });
+  // Roles Routes //
+
+  // Admin Profile //
+  route({
+    method: 'GET',
+    url: '/admin_profile/:id',
+    preHandler: [
+      webAuth('admin_profile'),
+      validate(UserValidation.adminProfileValidation),
+    ],
+    handler: UserController.getAdminProfile,
+  });
+  route({
+    method: 'PATCH',
+    url: '/update_admin/:id',
+    preHandler: [
+      webAuth('update_admin'),
+      validate(UserValidation.updateAdminProfileValidation),
+    ],
+    handler: UserController.updateAdminProfile,
+  });
+  route({
+    method: 'PATCH',
+    url: '/update_admin_password/:id',
+    preHandler: [
+      webAuth('update_admin_password'),
+      validate(UserValidation.updateAdminPasswordValidation),
+    ],
+    handler: UserController.updateAdminPassword,
+  });
+  // Admin Profile //
+
+  // User Account Delete Reason Routes //
+  route({
+    method: 'POST',
+    url: '/delete_account_reason/save',
+    preHandler: [
+      webAuth('create_user_delete_account_reason'),
+      validate(UserAccountDeleteReasonValidation.createAccountDeleteReasonValidation),
+    ],
+    handler: UserDeleteAccountReasonController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/update_delete_account_reason/:reasonId',
+    preHandler: [
+      webAuth('update_delete_account_reason'),
+      validate(UserAccountDeleteReasonValidation.idValidation),
+    ],
+    handler: UserDeleteAccountReasonController.update,
+  });
+  route({
+    method: 'GET',
+    url: '/delete_account_reason_list',
+    preHandler: [
+      webAuth('delete_account_reason_list'),
+      validate(UserAccountDeleteReasonValidation.allValidation),
+    ],
+    handler: UserDeleteAccountReasonController.get,
+  });
+  route({
+    method: 'DELETE',
+    url: '/drop_delete_account_reason/:reasonId',
+    preHandler: [
+      webAuth('drop_delete_account_reason'),
+      validate(UserAccountDeleteReasonValidation.idValidation),
+    ],
+    handler: UserDeleteAccountReasonController.drop,
+  });
+  // User Account Delete Reason Routes //
+
+  // Deleted Account Routes //
+  route({
+    method: 'GET',
+    url: '/customer/deleted_accounts',
+    preHandler: [
+      webAuth('customer_deleted_accounts'),
+      validate(UserValidation.deletedAccountValidation),
+    ],
+    handler: UserController.customerDeletedAccount,
+  });
+  route({
+    method: 'GET',
+    url: '/waiters/deleted_waiter',
+    preHandler: [
+      webAuth('waiter_deleted_accounts'),
+      validate(UserValidation.deletedAccountValidation),
+    ],
+    handler: UserController.waiterDeletedAccount,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman/deleted_deliveryman',
+    preHandler: [
+      webAuth('deliveryman_deleted_accounts'),
+      validate(UserValidation.deletedAccountValidation),
+    ],
+    handler: UserController.deliverymanDeletedAccount,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurants/deleted_restaurants',
+    preHandler: [
+      webAuth('restaurant_deleted_accounts'),
+      validate(UserValidation.deletedAccountValidation),
+    ],
+    handler: UserController.restaurantDeletedAccount,
+  });
+  route({
+    method: 'GET',
+    url: '/kitchen/deleted_kitchen_owner',
+    preHandler: [
+      webAuth('deleted_kitchen_owner'),
+      validate(UserValidation.deletedAccountValidation),
+    ],
+    handler: UserController.kitchenDeletedAccount,
+  });
+  // Deleted Account Routes //
+
+  // Notification Routes //
+  route({
+    method: 'POST',
+    url: '/send_notification',
+    preHandler: [
+      webAuth('send_notification'),
+      validate(UserValidation.sendNotificationValidation),
+    ],
+    handler: FcmController.adminSendNotification,
+  });
+  route({
+    method: 'GET',
+    url: '/admin_header_content',
+    preHandler: [webAuth('admin_header_content')],
+    handler: NotificationListController.adminHeaderContent,
+  });
+  route({
+    method: 'GET',
+    url: '/notification_list',
+    preHandler: [webAuth('notification_list')],
+    handler: NotificationListController.adminNotificationList,
+  });
+  route({
+    method: 'GET',
+    url: '/regular_chat_list',
+    preHandler: [webAuth('regular_chat_list')],
+    handler: ChatRoomController.adminChatList,
+  });
+  route({
+    method: 'GET',
+    url: '/support_chat_list',
+    preHandler: [webAuth('support_chat_list')],
+    handler: SupportChatRoomController.adminSupportChatList,
+  });
+  route({
+    method: 'GET',
+    url: '/regular_chat_messages/:id',
+    preHandler: [
+      webAuth('regular_chat_messages'),
+      validate(ChatRoomValidation.adminChatMessagesValidation),
+    ],
+    handler: ChatRoomController.adminGetChatMessages,
+  });
+  route({
+    method: 'GET',
+    url: '/support_chat_messages/:id',
+    preHandler: [
+      webAuth('support_chat_messages'),
+      validate(ChatRoomValidation.adminChatMessagesValidation),
+    ],
+    handler: SupportChatRoomController.adminChatMessages,
+  });
+  route({
+    method: 'POST',
+    url: '/chat_room/send_regular_message/',
+    preHandler: [
+      webAuth('send_regular_message'),
+      validate(ChatRoomValidation.sendChatMessageValidation),
+    ],
+    handler: ChatRoomController.saveNewMessage,
+  });
+  route({
+    method: 'POST',
+    url: '/chat_room/send_support_message/',
+    preHandler: [
+      webAuth('send_support_message'),
+      validate(ChatRoomValidation.sendChatMessageValidation),
+    ],
+    handler: SupportChatRoomController.saveSupportMessage,
+  });
+  // Notification Routes //
+
+  // Admin User Contact Detail Routes //
+  route({
+    method: 'GET',
+    url: '/user_contact_detail/:id',
+    preHandler: [
+      webAuth('user_contact_detail'),
+      validate(UserValidation.adminUserContactDetailValidation),
+    ],
+    handler: UserController.adminUserContactDetail,
+  });
+  // Admin User Contact Detail Routes //
+  // Import & Export Routes //
+  route({
+    method: 'GET',
+    url: '/cities/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(CityValidation.exportValidation),
+    ],
+    handler: CityController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/localities/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(LocalityValidation.exportValidation),
+    ],
+    handler: LocalityController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/cuisine/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(CuisineValidation.exportValidation),
+    ],
+    handler: CuisineController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/report_issue/restaurant/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(ReportIssueRestaurantReasonValidation.exportValidation),
+    ],
+    handler: ReportIssueRestaurantReasonController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/hide_reason/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(HideRestaurantReasonValidation.exportValidation),
+    ],
+    handler: HideRestaurantReasonController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_type/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(RestaurantTypeValidation.exportValidation),
+    ],
+    handler: RestaurantTypeController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_facilities/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(RestaurantFacilitiesValidation.exportValidation),
+    ],
+    handler: RestaurantFacilitiesController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/category/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(CategoryValidation.exportValidation),
+    ],
+    handler: CategoryController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/sub_category/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(SubCategoryValidation.exportValidation),
+    ],
+    handler: SubCategoryController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/vehicle/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(VehicleValidation.exportValidation),
+    ],
+    handler: VehicleController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryshift_schedule/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DeliveryShiftScheduleValidation.exportValidation),
+    ],
+    handler: DeliveryShiftScheduleController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/auth_roles/admin/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.exportRoleValidation),
+    ],
+    handler: AuthController.exportCollectionAdminRole,
+  });
+  route({
+    method: 'GET',
+    url: '/auth_roles/accountant/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.exportRoleValidation),
+    ],
+    handler: AuthController.exportCollectionAccountantRole,
+  });
+  route({
+    method: 'GET',
+    url: '/auth_roles/support_team/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.exportRoleValidation),
+    ],
+    handler: AuthController.exportCollectionSupportRole,
+  });
+  route({
+    method: 'GET',
+    url: '/auth_roles/cityzen/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.exportRoleValidation),
+    ],
+    handler: AuthController.exportCollectionCityzenRole,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_all_data/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(RestaurantValidation.exportValidation),
+    ],
+    handler: RestaurantController.exportCollectionRestaurantAllData,
+  });
+  route({
+    method: 'GET',
+    url: '/outlet_all_data/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(RestaurantValidation.exportValidation),
+    ],
+    handler: RestaurantController.exportCollectionOutletAllData,
+  });
+  route({
+    method: 'GET',
+    url: '/report_issue_list/restaurant/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(ReportIssueRestaurantReasonValidation.restaurantReportExportValidation),
+    ],
+    handler: ReportIssueRestaurantController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/hidden_restaurants/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(HideRestaurantReasonValidation.exportValidation),
+    ],
+    handler: HideRestaurantController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/waiter/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(WaiterValidation.exportValidation),
+    ],
+    handler: WaiterController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/kitchen_owners/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(KitchenOwnerValidation.exportValidation),
+    ],
+    handler: KitchenOwnerController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_request/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(RestaurantJoiningRequestValidation.exportValidation),
+    ],
+    handler: RestaurantJoiningRequestController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/order_cancel_reason/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(OrderCancellationReasonValidation.exportValidation),
+    ],
+    handler: OrderCancellationReasonController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/order_rating_message/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(OrderRatingMessageValidation.exportValidation),
+    ],
+    handler: OrderRatingMessageController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/invoice_instruction/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(InvoiceInstructionValidation.exportValidation),
+    ],
+    handler: InvoiceInstructionController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_food_license/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(RestaurantFoodLicenseValidation.exportValidation),
+    ],
+    handler: RestaurantFoodLicenseController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_notice/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(RestaurantNoticeValidation.exportValidation),
+    ],
+    handler: RestaurantNoticeController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/delivery_instruction/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DeliveryInstructionValidation.exportValidation),
+    ],
+    handler: DeliveryInstructionController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/gratitude/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DeliveryGratitudeValidation.exportValidation),
+    ],
+    handler: DeliveryGratitudeController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/driver_incentive/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DriverIncentiveValidation.exportValidation),
+    ],
+    handler: DriverIncentiveController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/driver_offline_messages/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DriverOfflineMessagesValidation.exportValidation),
+    ],
+    handler: DriverOfflineMessagesController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/delete_account_reason_list/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserAccountDeleteReasonValidation.exportValidation),
+    ],
+    handler: UserDeleteAccountReasonController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_category/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DiningCategoryValidation.exportValidation),
+    ],
+    handler: DiningCategoryController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_cancel_reason/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DiningCancellationReasonValidation.exportValidation),
+    ],
+    handler: DiningCancellationReasonController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_notice/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DiningNoticeValidation.exportValidation),
+    ],
+    handler: DiningNoticeController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/language/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(LanguageValidation.exportValidation),
+    ],
+    handler: LangaugeController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/user_avatar/export/:type',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.exportValidation),
+    ],
+    handler: UserAvatarController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/addons/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(AddonsValidation.exportValidation),
+    ],
+    handler: AddonsController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/food_taxation/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(FoodTaxationValidation.exportValidation),
+    ],
+    handler: FoodTaxationController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/subscription/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(SubscriptionValidation.exportValidation),
+    ],
+    handler: SubscriptionController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/subscriber/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(SubscriberValidation.exportValidation),
+    ],
+    handler: SubscriberController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/foods/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(FoodValidation.exportValidation),
+    ],
+    handler: FoodController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/feedback/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(FeedbackFormValidation.exportValidation),
+    ],
+    handler: FeedbackFormController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/report_emergency/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(ReportEmergencyValidation.exportValidation),
+    ],
+    handler: ReportEmergencyController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/wallet_bonus/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(WalletBonusValidation.exportValidation),
+    ],
+    handler: WalletBonusController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/deleted_accounts/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.exportDeletedAccountValidation),
+    ],
+    handler: UserController.exportCollectionCustomerDeletedAccounts,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurants/deleted_restaurants/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.exportDeletedAccountValidation),
+    ],
+    handler: UserController.exportCollectionRestaurantDeletedAccounts,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman/deleted_deliveryman/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.exportDeletedAccountValidation),
+    ],
+    handler: UserController.exportCollectionDeliverymanDeletedAccounts,
+  });
+  route({
+    method: 'GET',
+    url: '/waiters/deleted_waiter/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.exportDeletedAccountValidation),
+    ],
+    handler: UserController.exportCollectionWaiterDeletedAccounts,
+  });
+  route({
+    method: 'GET',
+    url: '/kitchen/deleted_kitchen_owner/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.exportDeletedAccountValidation),
+    ],
+    handler: UserController.exportCollectionKitchenOwnerDeletedAccounts,
+  });
+  route({
+    method: 'GET',
+    url: '/medias/export/:type',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.exportValidation),
+    ],
+    handler: MediaController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_campaign/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(RestaurantCampaignValidation.exportValidation),
+    ],
+    handler: RestaurantCampaignController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_campaign/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DiningCampaignValidation.exportValidation),
+    ],
+    handler: DiningCampaignController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/food_campaign/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(FoodCampaignValidation.exportValidation),
+    ],
+    handler: FoodCampaignController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/banners/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(BannersValidation.exportValidation),
+    ],
+    handler: BannersController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/coupon/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(CouponValidation.exportValidation),
+    ],
+    handler: CouponController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_coupon/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DiningCouponValidation.exportValidation),
+    ],
+    handler: DiningCouponController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/cash_collected/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(CollectCashValidation.exportValidation),
+    ],
+    handler: CollectCashController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/complaints_reason/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(ComplaintsReasonValidation.exportValidation),
+    ],
+    handler: ComplaintsReasonController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/complaints/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.adminComplaintExportValidation),
+    ],
+    handler: ComplaintsController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_complaints/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.adminRestaurantComplaintExportValidation),
+    ],
+    handler: RestaurantComplaintsController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/refund_request_reason/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(RefundRequestReasonValidation.exportValidation),
+    ],
+    handler: RefundRequestReasonController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/tiffin_subscription_refund_request_reason/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(TiffinSubscriptionRefundRequestReasonValidation.exportValidation),
+    ],
+    handler: TiffinSubscriptionRefundRequestReasonController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_booking_refund_request_reason/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DiningBookingRefundRequestReasonValidation.exportValidation),
+    ],
+    handler: DiningBookingRefundRequestReasonController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/tiffin_subscription_cancel_reason/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(TiffinSubscriptionCancellationReasonValidation.exportValidation),
+    ],
+    handler: TiffinSubscriptionCancellationReasonController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/orders/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(OrdersValidation.exportValidation),
+    ],
+    handler: OrdersController.exportQueryCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/unassigned_orders/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(OrdersValidation.exportUnassignedValidation),
+    ],
+    handler: OrdersController.exportUnAssignedOrderCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/subscription_orders/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(OrdersValidation.exportUnassignedValidation),
+    ],
+    handler: OrdersController.exportSubscriptionOrderCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/pos_orders/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(PosOrTableOrderValidation.exportValidation),
+    ],
+    handler: PosOrTableOrderController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/table_orders/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(TableOrderValidation.exportValidation),
+    ],
+    handler: TableOrderController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/tiffin_packages/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(SubscriptionTiffinPackageValidation.exportValidation),
+    ],
+    handler: SubscriptionTiffinPackageController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_booking/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DiningBookingValidation.exportValidation),
+    ],
+    handler: DiningBookingController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/refund_request/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(RefundRequestValidation.exportValidation),
+    ],
+    handler: RefundRequestController.exportQueryCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/tiffin_subscription_refund_request/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(TiffinSubscriptionRefundRequestValidation.exportValidation),
+    ],
+    handler: TiffinSubscriptionRefundRequestController.exportQueryCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/dining_booking_refund_request/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DiningBookingRefundRequestValidation.exportValidation),
+    ],
+    handler: DiningBookingRefundRequestController.exportQueryCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/system_deliveryman/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DriverValidation.exportValidation),
+    ],
+    handler: DriverController.exportSystemDeliverymanCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/vendor_deliveryman/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DriverValidation.exportValidation),
+    ],
+    handler: DriverController.exportVendorDeliverymanCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/withdrawal_method/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(WithdrawalMethodValidation.exportValidation),
+    ],
+    handler: WithdrawalMethodController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_withdrawal_request/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(WithdrawalRequestValidation.exportValidation),
+    ],
+    handler: WithdrawalRequestController.exportRestaurantRequestCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_withdrawal_request/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(WithdrawalRequestValidation.exportValidation),
+    ],
+    handler: WithdrawalRequestController.exportDeliverymanRequestCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant_disbursement/export/:type/:status',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DisbursementValidation.exportValidation),
+    ],
+    handler: DisbursementController.exportRestaurantCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_disbursement/export/:type/:status',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DisbursementValidation.exportValidation),
+    ],
+    handler: DisbursementController.exportDeliverymanCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/expense/export/:type/:status',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(AdminExpenseValidation.exportValidation),
+    ],
+    handler: AdminExpenseController.exportQueryCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.exportCustomerValidation),
+    ],
+    handler: UserController.exportCustomerCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant/filter/export/:type/:kind/:id',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(RestaurantValidation.exportFilterValidation),
+    ],
+    handler: RestaurantController.exportRestaurantFilterTypeCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/restaurant/filter_restaurant/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(RestaurantValidation.exportFilterQueryValidation),
+    ],
+    handler: RestaurantController.exportRestaurantFilterQueryCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/driver/wallet_fund/export/:type/:query',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DriverValidation.fundExportValidation),
+    ],
+    handler: DriverController.exportDeliverymanFundCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/deliveryman_request/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DeliverymanJoiningRequestValidation.exportValidation),
+    ],
+    handler: DeliverymanJoiningRequestController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/wallet_fund/export/:type/:query',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.exportWalletFundValidation),
+    ],
+    handler: UserController.exportCustomerFundCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/customer/loyalty_points/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.exportLoyalityPointsValidation),
+    ],
+    handler: LoyaltyPointsController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/disbursement/restaurant_report/export/:id/:type',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DisbursementValidation.exportDisbursementReportValidation),
+    ],
+    handler: DisbursementController.exportRestaurantDisbursementCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/disbursement/deliveryman_report/export/:id/:type',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DisbursementValidation.exportDisbursementReportValidation),
+    ],
+    handler: DisbursementController.exportDeliverymanDisbursementCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/orders/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(OrdersValidation.exportOrderReportValidation),
+    ],
+    handler: OrdersController.exportRegularOrderReportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/pos_orders/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(OrdersValidation.exportOrderReportValidation),
+    ],
+    handler: PosOrTableOrderController.exportPOSOrderReportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/table_orders/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(TableOrderValidation.exportTableOrderValidation),
+    ],
+    handler: TableOrderController.exportTableOrderReportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/wallet_transaction/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(WalletValidation.exportTransactionValidation),
+    ],
+    handler: WalletController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/payment_transaction/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(PaymentConfigValidation.exportPaymentValidation),
+    ],
+    handler: PaymentInitiationController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/dining_booking/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DiningBookingValidation.exportReportValidation),
+    ],
+    handler: DiningBookingController.exportReportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/food_report/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(FoodValidation.exportReportValidation),
+    ],
+    handler: FoodController.exportReportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/restaurant/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(RestaurantValidation.exportReportValidation),
+    ],
+    handler: RestaurantController.exportRestaurantReportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/customer/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.exportCustomerReportValidation),
+    ],
+    handler: UserController.exportRawCustomerReportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/deliveryman/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DriverValidation.exportDeliverymanReportValidation),
+    ],
+    handler: DriverController.exportDeliverymanReportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/restaurant_disbursement/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DisbursementValidation.exportRestaurantReportValidation),
+    ],
+    handler: DisbursementController.exportRestaurantDisbursementReportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/reports/deliveryman_disbursement/export',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(DisbursementValidation.exportDeliverymanReportValidation),
+    ],
+    handler: DisbursementController.exportDeliverymanDisbursementReportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/tiffin_packages/purchased/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserPurchasedTiffinSubscriptionValidation.exportCollection),
+    ],
+    handler: UserPurchasedTiffinSubscriptionController.exportCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/regular_chat_list/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.chatExportValidation),
+    ],
+    handler: ChatRoomController.exportChatListCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/regular_chat_message/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.chatExportValidation),
+    ],
+    handler: ChatRoomController.exportChatMessageCollection,
+  });
+
+  route({
+    method: 'GET',
+    url: '/support_chat_list/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.chatExportValidation),
+    ],
+    handler: SupportChatRoomController.exportChatListCollection,
+  });
+  route({
+    method: 'GET',
+    url: '/support_chat_message/export/',
+    preHandler: [
+      webAuth('export_collection'),
+      validate(UserValidation.chatExportValidation),
+    ],
+    handler: SupportChatRoomController.exportChatMessageCollection,
+  });
+
+  route({
+    method: 'GET',
+    url: '/download_import_sample/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.downloadImportValidation),
+    ],
+    handler: UserController.downloadImportFile,
+  });
+  route({
+    method: 'POST',
+    url: '/cities/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: CityController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/localities/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: LocalityController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/cuisine/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: CuisineController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/order_cancel_reason/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: OrderCancellationReasonController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/order_rating_message/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: OrderRatingMessageController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/invoice_instruction/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: InvoiceInstructionController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant_food_license/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: RestaurantFoodLicenseController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant_notice/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: RestaurantNoticeController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/delivery_instruction/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: DeliveryInstructionController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/gratitude/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: DeliveryGratitudeController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/driver_incentive/import_collection',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: DriverIncentiveController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/driver_offline_messages/import_collection',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: DriverOfflineMessagesController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/delete_account_reason/import_collection',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: UserDeleteAccountReasonController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_category/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: DiningCategoryController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_cancel_reason/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: DiningCancellationReasonController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_notice/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: DiningNoticeController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/language/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: LangaugeController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/user_avatar/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: UserAvatarController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/subscription/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: SubscriptionController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/subscriber/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: SubscriberController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/report_issue_list/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: ReportIssueRestaurantController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/report_issue_restaurant/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: ReportIssueRestaurantReasonController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/customer/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: UserController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/loyality_points/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: LoyaltyPointsController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/hidden_restaurant/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: HideRestaurantController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/hide_restaurant_reason/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: HideRestaurantReasonController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant_type/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: RestaurantTypeController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant_facilities/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: RestaurantFacilitiesController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/vehicle/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: VehicleController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/delivery_shift_schedule/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: DeliveryShiftScheduleController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/auth_role/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importAuthRoleCollectionValidation),
+    ],
+    handler: UserController.importAuthRoleCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/customer_wallet_fund/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: UserController.importCustomerWalletFundCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/wallet_bonus/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: WalletBonusController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/refund_request_reason/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: RefundRequestReasonController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_subscription_refund_request_reason/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: TiffinSubscriptionRefundRequestReasonController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_booking_refund_request_reason/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: DiningBookingRefundRequestReasonController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/complaints_reason/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: ComplaintsReasonController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/medias/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: MediaController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/addons/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: AddonsController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/category/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: CategoryController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/sub_category/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: SubCategoryController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/food_taxation/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: FoodTaxationController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_subscription_cancel_reason/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: TiffinSubscriptionCancellationReasonController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/cash_collection/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: CollectCashController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/banners/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: BannersController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/deliveryman_wallet_fund/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: UserController.importDeliverymanWalletFundCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/system_deliveryman/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: DriverController.importSystemDeliverymanCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/vendor_deliveryman/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: DriverController.importVendorDeliverymanCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant_waiters/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: WaiterController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant_kitchen_owner/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: KitchenOwnerController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurants/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: RestaurantController.importRestaurantCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/outlets/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: RestaurantController.importRestaurantOutletCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/regular_chat_list/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: ChatRoomController.importChatListCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/regular_chat_messages/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: ChatRoomController.importChatMessagesCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/support_chat_list/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: SupportChatRoomController.importChatListCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/support_chat_messages/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: SupportChatRoomController.importChatMessagesCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/customer_complaints/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: ComplaintsController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant_complaints/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: RestaurantComplaintsController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/admin_expense/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: AdminExpenseController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/wallet_transactions/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: WalletController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/payment_transactions/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: PaymentInitiationController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/order_refund_request/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: RefundRequestController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_refund_request/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: TiffinSubscriptionRefundRequestController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_refund_request/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: DiningBookingRefundRequestController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/order_coupon/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: CouponController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_coupon/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: DiningCouponController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/restaurant_campaign/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: RestaurantCampaignController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_campaign/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: DiningCampaignController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/food_campaign/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: FoodCampaignController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/dining_booking/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: DiningBookingController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/withdrawal_methods/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: WithdrawalMethodController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_packages_list/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: SubscriptionTiffinPackageController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/tiffin_purchased_list/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: UserPurchasedTiffinSubscriptionController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/foods/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: FoodController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/regular_orders/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: OrdersController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/vendor_pos_order_list/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: PosOrTableOrderController.importCollection,
+  });
+  route({
+    method: 'POST',
+    url: '/vendor_table_order_list/import_collection/',
+    preHandler: [
+      webAuth('download_sample'),
+      validate(UserValidation.importCollectionValidation),
+    ],
+    handler: TableOrderController.importCollection,
+  });
+  // Import & Export Routes //
+
+  /// Chat Messages Routes //
+  route({
+    method: 'POST',
+    url: '/chat_room/fetch_messages/',
+    preHandler: [
+      webAuth('regular_chat_messages'),
+      validate(ChatRoomValidation.checkChatRoomValidation),
+    ],
+    handler: ChatRoomController.checkChatRoom,
+  });
+  /// Chat Messages Routes //
+
+  // Media Storage Setting Routes //
+  route({
+    method: 'GET',
+    url: '/media_storage_setting/get',
+    preHandler: [webAuth('media_storage_settings')],
+    handler: MediaStorageSettingController.get,
+  });
+  route({
+    method: 'POST',
+    url: '/media_storage_setting/save',
+    preHandler: [
+      webAuth('media_storage_settings'),
+      validate(MediaStorageSettingValidation.createOrUpdateSettings),
+    ],
+    handler: MediaStorageSettingController.create,
+  });
+  route({
+    method: 'PATCH',
+    url: '/media_storage_setting/update/:settingId',
+    preHandler: [
+      webAuth('media_storage_settings'),
+      validate(MediaStorageSettingValidation.createOrUpdateSettings),
+    ],
+    handler: MediaStorageSettingController.update,
+  });
+  // Media Storage Setting Routes //
+
+  // Landing Page Routes //
+  route({
+    method: 'GET',
+    url: '/landing_page/get_content',
+    preHandler: [webAuth('save_landing')],
+    handler: LandingPageController.getContent,
+  });
+  route({
+    method: 'POST',
+    url: '/landing_page/save_hero_content',
+    preHandler: [
+      webAuth('save_landing'),
+      validate(LandingPageValidation.heroValidation),
+    ],
+    handler: LandingPageController.saveHero,
+  });
+  route({
+    method: 'POST',
+    url: '/landing_page/save_service_content',
+    preHandler: [
+      webAuth('save_landing'),
+      validate(LandingPageValidation.serviceValidation),
+    ],
+    handler: LandingPageController.saveService,
+  });
+  route({
+    method: 'POST',
+    url: '/landing_page/save_faqs_content',
+    preHandler: [
+      webAuth('save_landing'),
+      validate(LandingPageValidation.faqsValidation),
+    ],
+    handler: LandingPageController.saveFaqs,
+  });
+  route({
+    method: 'POST',
+    url: '/landing_page/save_review_content',
+    preHandler: [
+      webAuth('save_landing'),
+      validate(LandingPageValidation.reviewValidation),
+    ],
+    handler: LandingPageController.saveReview,
+  });
+  route({
+    method: 'POST',
+    url: '/landing_page/save_scan_qr_content',
+    preHandler: [
+      webAuth('save_landing'),
+      validate(LandingPageValidation.scanQrValidation),
+    ],
+    handler: LandingPageController.saveScanQr,
+  });
+  route({
+    method: 'POST',
+    url: '/landing_page/save_app_feature_content',
+    preHandler: [
+      webAuth('save_landing'),
+      validate(LandingPageValidation.appFeatureValidation),
+    ],
+    handler: LandingPageController.saveAppFeatures,
+  });
+  route({
+    method: 'POST',
+    url: '/landing_page/save_feature_content',
+    preHandler: [
+      webAuth('save_landing'),
+      validate(LandingPageValidation.projectFeatureValidation),
+    ],
+    handler: LandingPageController.saveFeatures,
+  });
+  // Landing Page Routes //
+};
