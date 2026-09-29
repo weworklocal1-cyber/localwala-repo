@@ -262,15 +262,6 @@ function readBarrelExports(relPath) {
   return map;
 }
 
-/** Fallback export name for a module the barrel does not re-export. */
-function derivedName(relPath) {
-  const base = path.basename(relPath).replace(/\.(service|model)\.js$/, '');
-  return base
-    .split('.')
-    .map((part, i) => (i === 0 ? part : part.charAt(0).toUpperCase() + part.slice(1)))
-    .join('');
-}
-
 function renderFacade(domain, members, def) {
   const services = members.filter((m) => m.path.startsWith('services/')).sort((a, b) => a.path.localeCompare(b.path));
   const models = members.filter((m) => m.path.startsWith('models/')).sort((a, b) => a.path.localeCompare(b.path));
@@ -330,8 +321,19 @@ function buildFacades() {
   ]);
 
   const facades = {};
+  const internal = [];
   for (const [domain, v] of Object.entries(result.byDomain)) {
-    const members = v.modules.map((p) => ({ path: p, name: barrels.get(p) || derivedName(p) }));
+    // Only barrel members are part of the domain's public surface. A module
+    // that neither barrel re-exports is an internal kernel - orders.service
+    // splitting out its analytics queries is the first one - and it has no
+    // public name. The previous `|| derivedName(p)` fallback invented one and
+    // put it in the facade, which made the facade export a name no consumer
+    // could have imported and broke the "every barrel name exactly once"
+    // invariant. The fallback was dead code: all 275 modules were in a barrel.
+    const members = v.modules
+      .filter((p) => barrels.has(p))
+      .map((p) => ({ path: p, name: barrels.get(p) }));
+    for (const p of v.modules) if (!barrels.has(p)) internal.push({ domain, path: p });
 
     // Two members in one domain resolving to the same export name would emit
     // a facade that does not compile ("Duplicate identifier"). Fail here,
@@ -350,6 +352,7 @@ function buildFacades() {
 
     facades[domain] = renderFacade(domain, members, DOMAINS[domain]);
   }
+  facades.__internal = internal;
   return facades;
 }
 function walkDir(dir, out = []) {
@@ -582,7 +585,17 @@ function main() {
     const domainsDir = path.join(SRC, 'domains');
     const drift = [];
 
+    for (const x of facades.__internal || []) {
+      process.stdout.write(
+        `internal (not re-exported by any barrel, so absent from the facade): ` +
+          `${path.relative(API_ROOT, x.path).replace(/\\/g, '/')}  [${x.domain}]\n`
+      );
+    }
+
     for (const [domain, content] of Object.entries(facades)) {
+      // `__internal` is the list of classified modules that no barrel
+      // re-exports. It is reported, never written as a domain.
+      if (domain === '__internal') continue;
       const file = path.join(domainsDir, domain, 'index.ts');
       const current = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null;
       if (current === content) continue;
@@ -603,7 +616,9 @@ function main() {
         );
         return 1;
       }
-      process.stdout.write(`domain facades in sync (${Object.keys(facades).length} domains)\n`);
+      process.stdout.write(
+        `domain facades in sync (${Object.keys(facades).filter((d) => d !== '__internal').length} domains)\n`
+      );
     }
     return 0;
   }
