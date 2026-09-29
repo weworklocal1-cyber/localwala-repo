@@ -563,6 +563,40 @@
 
 ---
 
+#### Before 4.3 - the extraction order, re-derived from measured data
+
+`tools/extraction-analysis.js` answers the only question that matters for choosing a first service: **does a module read any model that its own domain does not own?** A module that does not is a self-contained extraction - its data moves with it. A module that does is not extractable, however few lines it has, because it would have to read another domain's collection.
+
+**Result: 86 of the 143 model-using modules are self-contained (24,688 lines); 57 are not (93,741 lines).** Self-contained lines per domain:
+
+| domain | self-contained | domain | self-contained |
+|---|---|---|---|
+| orders | 5,932 | delivery | 1,232 |
+| restaurant | 4,897 | notifications | 1,134 |
+| identity | 3,991 | dining | 565 |
+| catalog | 2,766 | payments | 278 |
+| settings | 2,418 | storage | 59 |
+| wallet | 1,416 | | |
+
+**The plan's first choice does not survive the measurement.** 4.3 picks notifications as "self-contained"; per-module it is not:
+
+| candidate | verdict | reads across domains |
+|---|---|---|
+| `fcm.notification.service` | **not extractable** | Orders, SubscriptionTiffinPackage (orders), Restaurant (restaurant), User, Driver, DriverSettings, DriverNewOrderStatus (identity), BusinessSettings (settings) |
+| `email.config.service` | **not extractable** | User (identity), Orders (orders), BusinessSettings (settings) |
+| `notification.list.service` | **not extractable** | Language (identity) |
+| `push.notification.token.service` | self-contained | - |
+| `otp.verification.service` | self-contained | - |
+| `sms.provider.config.service` | self-contained | - |
+
+FCM sends order, restaurant, driver and subscription notifications, so it *reads* those domains' data to decide what to send. That is the definition of not being extractable, whatever the file count says. So 4.3 as written would have produced a "notifications service" that reads five domains' collections - a shared-database coupling with a service boundary painted on top.
+
+**A first extraction exists, and it is much smaller than the plan's.** The self-contained candidates across the whole set are single-model services - `push.notification.token`, `otp.verification`, `sms.provider.config`, `collect.cash`, `transaction`, `addons`, `banners`, `food.taxation`, `admin.expense`, `restaurant.expense` and similar. Each is a few hundred to a thousand lines, owns exactly one collection, and is reached by HTTP already. **Recommendation: extract one of these as the proof, and sequence the domain-level extractions behind it**, because `orders` alone has 5,932 self-contained lines and is the largest coherent unit available.
+
+**Two measurement bugs worth recording, because both flattered the answer.** The first version of this analysis said almost everything was extractable, for two reasons: the models-require parser used a non-greedy `const \{([\s\S]*?)\}` that started at the first destructuring in the file and ran to the models require, capturing every name in between; and model domains were keyed by *filename* while being looked up by *binding name*, so every lookup missed and every cross-domain read came back empty. The second version then over-corrected and missed single-line `const { X } = require('../models')`, reporting three modules as using no models at all. **A measurement that flatters the conclusion is worse than no measurement** - the honest first cut of this said 4 of 40 were extractable, which was as wrong as the second, in the opposite direction.
+
+---
+
 #### 4.1 done - the gateway, and a measurement that changes the extraction order
 
 `apps/gateway` is a transparent reverse proxy in front of the monolith, with `SERVICE_ROUTES` as the map every later extraction plugs into. **The map is empty**, so the gateway is a pass-through and no behaviour changes: that is the point of doing 4.1 before anything is extracted. Adding an entry is the only change a later step makes to the gateway, which is why it is data rather than conditionals in the handler.
