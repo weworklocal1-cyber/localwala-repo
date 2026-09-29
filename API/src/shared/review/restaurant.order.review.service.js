@@ -17,8 +17,8 @@
  */
 
 const mongoose = require('mongoose');
-const { RestaurantOrderReview, Restaurant } = require('../models');
-const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
+const { RestaurantOrderReview, Restaurant } = require('../../models');
+const checkArrayNotEmpty = require('../../utils/arrayNotEmpty');
 
 const saveRestaurantReview = async (param) => {
   const review = new RestaurantOrderReview({

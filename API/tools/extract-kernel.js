@@ -78,6 +78,25 @@ const relFromSrc = (abs) => path.relative(SRC, abs).replace(/\\/g, '/');
 /** From an SRC-relative path back to an absolute one. */
 const absFromSrc = (rel) => path.join(SRC, rel);
 
+/**
+ * Resolve a relative specifier the way Node would, or null.
+ *
+ * A kernel index is a directory, so `../catalog` style resolution is not enough
+ * - the candidates have to include the extensionless form and index files, the
+ * same list the inventory uses. Verifying the move without this is what let a
+ * dangling `../models/otp.web.verification.model` reach 19 test files.
+ */
+const RESOLVE_CANDIDATES = ['', '.js', '.cjs', '.ts', '/index.js', '/index.ts'];
+function resolveRelative(fromAbs, spec) {
+  if (!spec.startsWith('.')) return null;
+  const base = path.resolve(path.dirname(fromAbs), spec);
+  for (const ext of RESOLVE_CANDIDATES) {
+    const candidate = base + ext;
+    if (fs.existsSync(candidate) && fs.statSync(candidate).isFile()) return candidate;
+  }
+  return null;
+}
+
 /** Every file under src/ that requires `basename`, as { rel, spec }. */
 function findImporters(basename) {
   const out = [];
@@ -292,18 +311,29 @@ ${bindings}
 
   for (const rel of [...importerSet].sort()) {
     const file = absFromSrc(rel);
+    const fromDir = path.dirname(file);
     const before = fs.readFileSync(file, 'utf8');
     let after = before;
     for (const member of spec.members) {
       const bare = destName(member).replace(/\.js$/, '');
-      // Substring replace only: it cannot disturb a line ending it did not
-      // match, which is what a whole-file rewrite did to services/index.js.
-      after = after
-        .split(`require('./${bare}')`)
-        .join(`require('../shared/${KERNEL_DIRNAME}/${bare}')`);
-      after = after
-        .split(`require("./${bare}")`)
-        .join(`require("../shared/${KERNEL_DIRNAME}/${bare}")`);
+      // Match on the specifier's BASENAME and rebuild the whole path, rather
+      // than pattern-matching './x'. The auth kernel is why: its model was
+      // required as `../models/otp.web.verification.model`, so a rewrite that
+      // only handled `./otp.web.verification.model` silently left the importer
+      // pointing at a file that no longer exists, and 19 test files failed on
+      // MODULE_NOT_FOUND.
+      const re = new RegExp(`require\\((['"])[^'"]*\\/${bare.replace(/\./g, '\\.')}\\1\\)`, 'g');
+      after = after.replace(re, () => {
+        // Extensionless, matching every other import in the repo - and the
+        // inventory's barrel reader appends `.js` itself, so a spec that keeps
+        // the extension resolves to `...service.js.js` and the name silently
+        // vanishes from its domain facade.
+        const to = path
+          .relative(fromDir, path.join(TARGET, destName(member)))
+          .replace(/\.js$/, '')
+          .replace(/\\/g, '/');
+        return `require('${to.startsWith('.') ? to : `./${to}`}')`;
+      });
     }
     if (after === before) {
       process.stdout.write(`no-match ${rel}\n`);
@@ -312,6 +342,29 @@ ${bindings}
     fs.writeFileSync(file, after, 'utf8');
     process.stdout.write(`updated  ${rel}  (+${after.length - before.length} bytes)\n`);
   }
+
+  // Verify the move by RESOLVING each remaining specifier, not by matching
+  // basenames. A basename check flags the correctly-rewired importers too,
+  // since a new spec ends with the same filename as the old one; what actually
+  // matters is whether the spec still points outside the kernel, or at nothing.
+  const dangling = [];
+  for (const member of spec.members) {
+    const bare = destName(member).replace(/\.js$/, '');
+    for (const im of findImporters(bare)) {
+      if (im.rel.startsWith(`shared/${KERNEL_DIRNAME}/`)) continue;
+      const from = absFromSrc(im.rel);
+      const resolved = resolveRelative(from, im.spec);
+      if (resolved && relFromSrc(resolved).startsWith(`shared/${KERNEL_DIRNAME}/`)) continue;
+      dangling.push(`  ${im.rel}  ->  ${im.spec}${resolved ? '' : '   (does not resolve)'}`);
+    }
+  }
+  if (dangling.length) {
+    process.stderr.write(
+      `STILL REFERENCING OUTSIDE THE KERNEL for shared/${KERNEL_DIRNAME}:\n${dangling.join('\n')}\n`
+    );
+    process.exit(1);
+  }
+  process.stdout.write('verified: every specifier resolves inside the kernel\n');
   process.exit(0);
 }
 

@@ -22,9 +22,9 @@ const otpGenerator = require('otp-generator');
 const { SmsProviderConfig } = require('../models');
 const ApiError = require('../utils/ApiError');
 const businessSettingsService = require('./business.settings.service');
-const otpVerificationService = require('./otp.verification.service');
+const otpVerificationService = require('../shared/auth/otp.verification.service');
 const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
-const OtpWebVerification = require('../models/otp.web.verification.model');
+const OtpWebVerification = require('../shared/auth/otp.web.verification.model');
 
 const createConfig = async (param) => {
   if (param.isDefault === true || param.isDefault === 'true') {

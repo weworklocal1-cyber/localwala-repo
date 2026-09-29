@@ -157,5 +157,5 @@ module.exports.KitchenOwnerSetting = require('./kitchen.owner.setting.model');
 module.exports.KitchenOrder = require('./kitchen.order.model');
 module.exports.MediaStorageSetting = require('./media.storage.setting.model');
 module.exports.LandingPage = require('./landing.page.model');
-module.exports.OtpWebVerification = require('./otp.web.verification.model');
+module.exports.OtpWebVerification = require('../shared/auth/otp.web.verification.model');
 

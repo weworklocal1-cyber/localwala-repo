@@ -16,9 +16,9 @@
  * LWL|WWL|2026|LOCALWALA|NODE
  */
 
-const foodOrderReviewService = require('./food.order.review.service');
+const foodOrderReviewService = require('../shared/review/food.order.review.service');
 const driverOrderReviewService = require('./driver.order.review.service');
-const restaurantOrderReviewService = require('./restaurant.order.review.service');
+const restaurantOrderReviewService = require('../shared/review/restaurant.order.review.service');
 const { Orders } = require('../models');
 const checkArrayNotEmpty = require('../utils/arrayNotEmpty');
 

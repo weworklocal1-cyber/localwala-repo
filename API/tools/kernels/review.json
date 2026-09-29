@@ -1,0 +1,8 @@
+{
+  "kernel": "review",
+  "note": "order reviews, for food and for restaurants - one idea with two implementations",
+  "members": [
+    "src/services/food.order.review.service.js",
+    "src/services/restaurant.order.review.service.js"
+  ]
+}

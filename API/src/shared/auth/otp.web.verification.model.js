@@ -17,7 +17,7 @@
  */
 
 const mongoose = require('mongoose');
-const { toJSON, paginate } = require('./plugins');
+const { toJSON, paginate } = require('../../models/plugins');
 
 const otpWebVerificationSchema = mongoose.Schema(
   {

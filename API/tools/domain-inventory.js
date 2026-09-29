@@ -203,8 +203,22 @@ const OVERRIDES = {
   'services/review.ratings.service.js': 'identity',
 
   // Identity/session data.
-  'models/guest.user.info.model.js': 'identity',
-  'services/guest.user.info.service.js': 'identity',
+  // Keyed by BASENAME where the file is likely to move. An override keyed by
+  // full path is lost the moment Phase 3.6 extracts the file into a shared
+  // kernel, and the module then classifies as null - which fails the inventory
+  // and drops the name out of its domain facade. The `auth` kernel is the case
+  // that forced this: otp.verification and otp.web.verification matched no
+  // filename prefix, so both went unclassified the moment they moved.
+  //
+  // Both spellings are kept for files that are not moving, so this is additive
+  // rather than a rename: dropping a path key while adding a basename key is
+  // only equivalent if the basename is unique, and the earlier attempt at that
+  // edit silently removed guest.user.info from the identity facade.
+  'guest.user.info.model.js': 'identity',
+  'guest.user.info.service.js': 'identity',
+  'otp.verification.model.js': 'identity',
+  'otp.verification.service.js': 'identity',
+  'otp.web.verification.model.js': 'identity',
   'models/otp.verification.model.js': 'identity',
   'services/otp.verification.service.js': 'identity',
   'models/otp.web.verification.model.js': 'identity',
@@ -262,9 +276,14 @@ function readBarrelExports(relPath) {
     // which the old pattern did not match at all, and the two names silently
     // vanished from every domain facade.
     const abs = path.resolve(path.dirname(file), m[2]);
-    for (const ext of ['.js', '.ts']) {
-      if (fs.existsSync(abs + ext)) {
-        map.set(path.relative(SRC, abs + ext).replace(/\\/g, '/'), m[1]);
+    // The exact path first: a specifier that already carries its extension
+    // (`./otp.web.verification.model.js`) must not be probed again as
+    // `...js.js`, which does not exist, and the name then silently vanishes
+    // from its domain facade.
+    const candidates = [abs, `${abs}.js`, `${abs}.ts`, path.join(abs, 'index.js')];
+    for (const candidate of candidates) {
+      if (fs.existsSync(candidate) && fs.statSync(candidate).isFile()) {
+        map.set(path.relative(SRC, candidate).replace(/\\/g, '/'), m[1]);
         break;
       }
     }
@@ -272,14 +291,20 @@ function readBarrelExports(relPath) {
   return map;
 }
 function renderFacade(domain, members, def) {
-  // Two import shapes, not three. Model modules do `module.exports = Model`, so
-  // they need a default import. Everything else - services, and the shared
-  // kernels that 3.6 moves out of them - exports a plain object of functions,
-  // which a namespace import captures correctly.
+  // Two import shapes. A model does `module.exports = Model` and needs a
+  // default import; a service exports an object of functions, which a namespace
+  // import captures correctly.
+  //
+  // The test is path OR filename, because a shared kernel may hold a model that
+  // no longer lives under models/ - and 141 of the 142 models are named
+  // `*.model.js` while one is `models/food.order.review.js`. Filename alone
+  // would silently flip that one to a namespace import; path alone would miss a
+  // model inside a kernel.
+  const isModelPath = (p) => /(^|\/)models\//.test(p) || /\.model\.(js|ts)$/.test(p);
   const namespaces = members
-    .filter((m) => !m.path.startsWith('models/'))
+    .filter((m) => !isModelPath(m.path))
     .sort((a, b) => a.path.localeCompare(b.path));
-  const models = members.filter((m) => m.path.startsWith('models/')).sort((a, b) =>
+  const models = members.filter((m) => isModelPath(m.path)).sort((a, b) =>
     a.path.localeCompare(b.path)
   );
 
@@ -436,6 +461,10 @@ function isBarrel(relPath) {
 
 function domainOf(relPath) {
   if (OVERRIDES[relPath]) return OVERRIDES[relPath];
+  // A basename-keyed override survives being moved into a shared kernel, which
+  // a path-keyed one does not - see the note on the identity OTP entries.
+  const base0 = path.basename(relPath);
+  if (OVERRIDES[base0]) return OVERRIDES[base0];
 
   // A shared kernel lives under src/shared/<kernel>/, so the usual
   // services/models prefixes cannot classify it. Its *home* domain is the

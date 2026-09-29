@@ -17,8 +17,8 @@
  */
 
 const { status: httpStatus } = require('http-status');
-const { OtpVerification, OtpWebVerification } = require('../models');
-const ApiError = require('../utils/ApiError');
+const { OtpVerification, OtpWebVerification } = require('../../models');
+const ApiError = require('../../utils/ApiError');
 
 const saveOTP = async (otpBody) => {
   const otpContent = new OtpVerification({
