@@ -17,7 +17,7 @@
  * It also records the coupling numbers the plan was written against, so a
  * future Phase 3 step that makes the boundaries worse is visible in review.
  */
-import { describe, it, expect, beforeAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterEach } from 'vitest';
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import fs from 'node:fs';
@@ -103,5 +103,101 @@ describe('Phase 3.1 - domain inventory', () => {
     expect(report.crossDomainEdges.length).toBeGreaterThan(0);
     expect(report.crossDomainEdges.length).toBeLessThan(60);
     expect(report.barrelEdges).toBeGreaterThan(0);
+  });
+});
+
+/**
+ * The lint gate has to be shown to fail, not just to pass. A boundary rule
+ * that never fires is indistinguishable from no rule at all, so each case here
+ * writes a real violating file into src/services (so it is linted by the real
+ * config), runs the real `npm run lint`, and asserts the message appears.
+ */
+describe('Phase 3.2 - the domain boundary rule actually fires', () => {
+  const servicesDir = path.join(apiRoot, 'src', 'services');
+  // The probe has to land *in* a domain or the rule correctly skips it: the
+  // filename is what the inventory classifies, so `food.boundary.probe`
+  // resolves to the `catalog` domain via the `food` prefix.
+  const probe = path.join(servicesDir, 'food.boundary.probe.service.js');
+  let lintOut;
+
+  // eslint's own entry point, invoked directly: going through `npm run` adds
+  // a shell layer that swallows stdout on Windows, and the point of these
+  // cases is to read the report.
+  const eslintBin = path.join(apiRoot, 'node_modules', 'eslint', 'bin', 'eslint.js');
+
+  function lint() {
+    try {
+      execFileSync(process.execPath, [eslintBin, 'src'], { cwd: apiRoot, encoding: 'utf8' });
+      return '';
+    } catch (err) {
+      return `${err.stdout || ''}${err.stderr || ''}`;
+    }
+  }
+
+  afterEach(() => {
+    if (fs.existsSync(probe)) fs.rmSync(probe);
+  });
+
+  it('passes on the real tree before any probe is added', () => {
+    expect(lint()).toBe('');
+  });
+
+  it('flags a new cross-domain service import', () => {
+    // The probe is in `catalog` (food.*); restaurant.service.js is in
+    // `restaurant`, and that edge is not in the allowlist.
+    fs.writeFileSync(
+      probe,
+      "'use strict';\nconst restaurant = require('./restaurant.service');\nmodule.exports = { restaurant };\n",
+      'utf8'
+    );
+    lintOut = lint();
+    expect(lintOut).toMatch(/must not import 'restaurant'/);
+    expect(lintOut).toMatch(/domain-boundary/);
+  });
+
+  it('does not flag a same-domain import', () => {
+    // food.taxation.service.js is also in `catalog`.
+    fs.writeFileSync(
+      probe,
+      "'use strict';\nconst food = require('./food.taxation.service');\nmodule.exports = { food };\n",
+      'utf8'
+    );
+    expect(lint()).toBe('');
+  });
+
+  it('tolerates the real cross-domain edges that already exist', () => {
+    // services/orders.service.js -> services/restaurant.service.js is one of
+    // the 22 edges in the allowlist, so linting the untouched tree must stay
+    // clean. (A synthetic probe could not prove this: the allowlist is keyed
+    // by the exact file pair, so only the real file exercises it.)
+    const allow = JSON.parse(
+      fs.readFileSync(path.join(apiRoot, 'tools', 'domain-boundary-allowlist.json'), 'utf8')
+    );
+    const tolerated = allow.edges.find(
+      (e) => e.from === 'services/orders.service.js' && e.to === 'services/restaurant.service.js'
+    );
+    expect(tolerated, 'the orders -> restaurant edge should still be tolerated').toBeTruthy();
+    expect(lint()).toBe('');
+  });
+
+  it('flags a facade importing another domain facade', () => {
+    const facadeProbe = path.join(apiRoot, 'src', 'domains', 'orders', '__probe.ts');
+    fs.writeFileSync(facadeProbe, "export * from '../catalog';\n", 'utf8');
+    try {
+      lintOut = lint();
+      expect(lintOut).toMatch(/must not import another domain's facade/);
+    } finally {
+      fs.rmSync(facadeProbe, { force: true });
+    }
+  });
+});
+
+describe('Phase 3.2 - the allowlist cannot drift', () => {
+  it('has no edges that no longer exist, and no missing ones', () => {
+    // Exits non-zero only when a *new* cross-domain edge appeared; stale
+    // entries are reported as progress, not failure.
+    expect(() =>
+      execFileSync(process.execPath, [tool, '--check-allowlist'], { cwd: apiRoot, encoding: 'utf8' })
+    ).not.toThrow();
   });
 });

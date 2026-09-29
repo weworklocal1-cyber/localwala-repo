@@ -24,7 +24,9 @@
     "codemod:route": "node tools/codemod-route.js",
     "domain:inventory": "node tools/domain-inventory.js",
     "domain:write": "node tools/domain-inventory.js --write-domains",
-    "domain:check": "node tools/domain-inventory.js --check-domains"
+    "domain:check": "node tools/domain-inventory.js --check-domains",
+    "domain:allowlist": "node tools/domain-inventory.js --write-allowlist",
+    "domain:allowlist:check": "node tools/domain-inventory.js --check-allowlist"
   },
   "author": "Elitecanyon InfoTech <elitecanyoninfotech@gmail.com>",
   "license": "MIT",

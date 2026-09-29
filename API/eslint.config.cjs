@@ -46,6 +46,18 @@ module.exports = [
       'no-useless-assignment': 'off',
     },
   },
+  // Phase 3.2: the domain boundary. A custom rule rather than
+  // `no-restricted-imports` because the rule needs to know which domain the
+  // file being linted belongs to - see tools/eslint-rules/domain-boundary.cjs.
+  {
+    files: ['src/services/**/*.js', 'src/models/**/*.js', 'src/domains/**/*.ts'],
+    plugins: {
+      local: { rules: { 'domain-boundary': require('./tools/eslint-rules/domain-boundary.cjs') } },
+    },
+    rules: {
+      'local/domain-boundary': 'error',
+    },
+  },
   // TypeScript: new code only. `tsc --noEmit` is the real gate; these rules
   // catch the things the type system lets through (floating promises aside,
   // ban-ts-comment, no-explicit-any usage, unused locals).
