@@ -415,6 +415,14 @@
 
 **Exit criteria:** `grep` shows zero cross-domain imports; lint rule enforces it.
 
+> **3.1a done - the domain inventory and generated facades (`tools/domain-inventory.js`, `src/domains/*/index.ts`, 5 assertions).** The plan's 3.1 says "replace the barrels with per-domain entry points", but nothing in the repo said which of the 275 modules belonged to which domain, so that was measured before anything moved. Four findings changed the shape of the phase:
+> - **Risk #9 is about size, not entanglement.** `orders.service.js` and `restaurant.service.js` really are 15,785 + 15,013 LOC, but at module level each has only **11** internal neighbours and `orders -> restaurant` is the *only* direct edge between them. Nothing about splitting them is risky; the risk is that they are large and 16 files depend on them.
+> - **The real coupling is the barrels.** 2,568 internal edges, of which **131** are "module reaches another domain's code through `require('../models')`" - one import hands a service all 142 models. That is load-time coupling with no domain meaning, and it is what 3.1 actually removes. The honest headline is **22 direct cross-domain edges** versus 131 barrel-mediated ones.
+> - **So the boundary is published first, files move later.** `tools/domain-inventory.js` holds the classification as data (prefix rules plus a justified `overrides` list for the 51 modules no rule can catch - pluralised, abbreviated, and the upstream misspelling `bussiness.settings.model.js`) and *measures* the edge graph from source rather than declaring it. `npm run domain:write` generates `src/domains/<domain>/index.ts` from it, `npm run domain:check` fails if a generated file drifts, and the tool exits non-zero on any unclassified module - because "zero cross-domain imports" is unfalsifiable if a module has no domain. 275/275 classified, 0 unclassified.
+> - **The facades are drop-in.** They re-export the *same names the barrels export today* (read out of `services/index.js` / `models/index.js`, not guessed - the first attempt derived names from filenames and produced four duplicate identifiers that `tsc` caught). `tests/domain-inventory.test.js` asserts the union of facade export names equals the union of barrel export names, so moving a consumer is a one-line change.
+>
+> Nothing is rewired yet: the barrels are untouched and no consumer imports a facade, so this step is additive and reversible. 3.2 can now add the `no-restricted-imports` rule with the 22 real edges as an explicit, documented allowlist that 3.3/3.4 drain to zero - which is the only way that rule can pass at all, since 3.2 as written would otherwise fail on edges that exist by design. **152 tests / 22 files**, both manifests PARITY OK, `domain:check` in sync, lint 0 errors, `tsc` clean, `git diff --check` clean.
+
 ---
 
 ### Phase 4 — Gateway + first extraction: **notifications**

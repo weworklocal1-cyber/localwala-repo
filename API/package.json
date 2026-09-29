@@ -21,7 +21,10 @@
     "manifest:fastify:check": "tsx tools/route-manifest.js --engine fastify --diff tools/route-manifest.baseline.json",
     "manifest:save": "node tools/route-manifest.js --out tools/route-manifest.baseline.json",
     "manifest:check": "node tools/route-manifest.js --diff tools/route-manifest.baseline.json",
-    "codemod:route": "node tools/codemod-route.js"
+    "codemod:route": "node tools/codemod-route.js",
+    "domain:inventory": "node tools/domain-inventory.js",
+    "domain:write": "node tools/domain-inventory.js --write-domains",
+    "domain:check": "node tools/domain-inventory.js --check-domains"
   },
   "author": "Elitecanyon InfoTech <elitecanyoninfotech@gmail.com>",
   "license": "MIT",
